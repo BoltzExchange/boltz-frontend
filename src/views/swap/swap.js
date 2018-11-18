@@ -68,6 +68,7 @@ const Controls = () => (
     <FaArrowRight size={40} color={'#FFF'} style={{ padding: '10px' }} />
   </View>
 );
+const steps = [<FirstStep key={1} />, <h1 key={2}>Hello</h1>];
 
 const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
   return (
@@ -76,14 +77,8 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
       {inSwapMode ? (
         <View className={classes.wrapper}>
           <DialogBox
-            progressControls={() => (
-              <FaArrowLeft
-                size={30}
-                style={{ padding: '10px' }}
-                onClick={() => toggleSwapMode()}
-              />
-            )}
-            content={() => <FirstStep />}
+            onExit={() => toggleSwapMode()}
+            steps={steps}
             controls={() => <Controls />}
           />
         </View>

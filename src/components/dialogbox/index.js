@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaArrowLeft } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
@@ -29,20 +30,68 @@ const styles = theme => ({
   },
 });
 
-const DialogBox = ({ classes, progressControls, content, controls }) => (
-  <View className={classes.wrapper}>
-    <View className={classes.progress}>
-      {progressControls ? progressControls() : null}
-      <ProgressBar progress={25} />
-    </View>
-    <View className={classes.content}>{content()}</View>
-    <View className={classes.controls}>{controls()}</View>
-  </View>
-);
+class DialogBox extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      navState: 0,
+      progress: this.increment(),
+    };
+  }
+
+  increment = () => {
+    return 100 / this.props.steps.length;
+  };
+
+  nextState = () => {
+    const { navState } = this.state;
+    if (navState != this.props.steps.length - 1) {
+      this.setState(pre => ({
+        navState: pre.navState + 1,
+        progress: pre.progress + this.increment(),
+      }));
+    }
+  };
+
+  prevState = () => {
+    const { navState } = this.state;
+    if (navState != 0) {
+      this.setState(pre => ({
+        navState: pre.navState - 1,
+        progress: pre.progress - this.increment(),
+      }));
+    }
+  };
+
+  render() {
+    const { classes, steps, onExit, controls } = this.props;
+    const { navState, progress } = this.state;
+    return (
+      <View className={classes.wrapper}>
+        <View className={classes.progress}>
+          {onExit ? (
+            <FaArrowLeft
+              size={30}
+              style={{ padding: '10px' }}
+              onClick={() => (navState != 0 ? this.prevState() : onExit())}
+            />
+          ) : null}
+          <ProgressBar progress={progress} />
+        </View>
+        <View className={classes.content}>{steps[navState]}</View>
+        <View className={classes.controls} onClick={() => this.nextState()}>
+          {() => controls(this.nextState)}
+        </View>
+      </View>
+    );
+  }
+}
 
 DialogBox.propTypes = {
   classes: PropTypes.object,
-  progressControls: PropTypes.func,
+  steps: PropTypes.arrayOf(PropTypes.object),
+  onExit: PropTypes.func,
   content: PropTypes.func.isRequired,
   controls: PropTypes.func.isRequired,
 };
