@@ -5,27 +5,33 @@ import { LinkButton } from '../button';
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 const styles = theme => ({
-    wrapper: {
-        height: 'auto',
-        width: '100vw',
-        justifyContent: 'space-between',
-        alignItems: 'center',        
-    },
-    buttons:{
-        marginRight: '10%'
-    },
+  wrapper: {
+    height: 'auto',
+    width: '100vw',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  buttons: {
+    marginRight: '10%',
+  },
 });
 
-const TaskBar = ({classes}) => (
-    <View className={classes.wrapper}>
-        <img src={boltz_logo} height={80} width={140} className={classes.logo} alt='logo'/>
-        <View className={classes.buttons}>
-            <LinkButton text='Swap' to='/swap'/>
-            <LinkButton text='Refund' to='/refund'/>
-            <LinkButton text='FAQ' to='/faq'/>
-            <LinkButton text='Blog' to='/blog'/>
-        </View>
+const TaskBar = ({ classes }) => (
+  <View className={classes.wrapper}>
+    <img
+      src={boltz_logo}
+      height={80}
+      width={140}
+      className={classes.logo}
+      alt="logo"
+    />
+    <View className={classes.buttons}>
+      <LinkButton text="Swap" to="/swap" />
+      <LinkButton text="Refund" to="/refund" />
+      <LinkButton text="FAQ" to="/faq" />
+      <LinkButton text="Blog" to="/blog" />
     </View>
+  </View>
 );
 
 export default injectSheet(styles)(TaskBar);
