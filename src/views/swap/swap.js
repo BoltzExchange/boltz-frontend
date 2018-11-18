@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import Background from '../../components/background';
@@ -94,7 +95,7 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
             </p>
             <p className={classes.description}>
               Trading <br />
-              <b>Shouldn't</b>
+              <b>{`Shouldn't`}</b>
               <br />
               require
               <br />
@@ -109,6 +110,10 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
   );
 };
 
-Swap.propTypes = {};
+Swap.propTypes = {
+  classes: PropTypes.object,
+  inSwapMode: PropTypes.bool,
+  toggleSwapMode: PropTypes.func,
+};
 
 export default injectSheet(styles)(Swap);

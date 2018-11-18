@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
 import Input from '../input';
@@ -79,5 +80,10 @@ const SwapTab = ({ classes, onClick }) => (
     </View>
   </View>
 );
+
+SwapTab.propTypes = {
+  classes: PropTypes.object,
+  onClick: PropTypes.func,
+};
 
 export default injectSheet(styles)(SwapTab);

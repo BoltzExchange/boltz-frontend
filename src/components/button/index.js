@@ -29,6 +29,7 @@ const StyledLinkButton = ({ classes, text, to, style }) => {
 };
 
 StyledLinkButton.propTypes = {
+  classes: PropTypes.object,
   text: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   style: PropTypes.object,

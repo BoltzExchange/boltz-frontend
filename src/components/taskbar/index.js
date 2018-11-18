@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
 import { LinkButton } from '../button';
+
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
-const styles = theme => ({
+const styles = () => ({
   wrapper: {
     height: 'auto',
     width: '100vw',
@@ -33,5 +35,9 @@ const TaskBar = ({ classes }) => (
     </View>
   </View>
 );
+
+TaskBar.propTypes = {
+  classes: PropTypes.object,
+};
 
 export default injectSheet(styles)(TaskBar);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import View from '../view';
 import injectSheet from 'react-jss';
 
-const styles = theme => ({
+const styles = () => ({
   wrapper: {
     backgroundImage:
       'linear-gradient(to bottom, #134357, #45587d, #846995, #c1799a, #ef9391)',
@@ -18,6 +18,7 @@ const Background = ({ classes, children }) => (
 );
 
 Background.propTypes = {
+  classes: PropTypes.object,
   children: PropTypes.node,
 };
 

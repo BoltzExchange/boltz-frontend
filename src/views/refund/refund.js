@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { FaArrowRight } from 'react-icons/fa';
 import Background from '../../components/background';
@@ -6,7 +7,7 @@ import TaskBar from '../../components/taskbar';
 import DialogBox from '../../components/dialogbox';
 import View from '../../components/view';
 
-const styles = theme => ({
+const styles = () => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
@@ -36,5 +37,9 @@ const Refund = ({ classes }) => (
     </View>
   </Background>
 );
+
+Refund.propTypes = {
+  classes: PropTypes.object,
+};
 
 export default injectSheet(styles)(Refund);

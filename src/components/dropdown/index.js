@@ -21,13 +21,16 @@ const DropDown = ({ classes, fields }) => {
   return (
     <select className={classes.wrapper}>
       {fields.map((field, i) => (
-        <option value={`${field}-${i}`}>{field}</option>
+        <option key={i} value={`${field}-${i}`}>
+          {field}
+        </option>
       ))}
     </select>
   );
 };
 
 DropDown.propTypes = {
+  classes: PropTypes.object,
   fields: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 };
 export default injectSheet(styles)(DropDown);

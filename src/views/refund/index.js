@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import Refund from './refund';
 
-const mapStateToProps = state => ({});
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = () => ({});
 
 export default connect(
   mapStateToProps,

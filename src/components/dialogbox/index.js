@@ -41,6 +41,7 @@ const DialogBox = ({ classes, progressControls, content, controls }) => (
 );
 
 DialogBox.propTypes = {
+  classes: PropTypes.object,
   progressControls: PropTypes.func,
   content: PropTypes.func.isRequired,
   controls: PropTypes.func.isRequired,

@@ -24,6 +24,7 @@ const ProgressBar = ({ classes, progress }) => (
 );
 
 ProgressBar.propTypes = {
+  classes: PropTypes.object,
   progress: PropTypes.number,
 };
 
