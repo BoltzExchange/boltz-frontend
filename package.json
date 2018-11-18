@@ -18,6 +18,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint src",
+    "lintfix": "eslint --fix src",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -29,5 +31,14 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint-config-google": "^0.11.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-html": "^5.0.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "prettier": "^1.15.2"
+  }
 }
