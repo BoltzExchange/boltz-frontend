@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
 import Background from '../../components/background';
 import View from '../../components/view';
 import { LinkButton } from '../../components/button';
 import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
-import DialogBox from '../../components/dialogbox';
+import StepsWizard from '../../components/stepswizard';
 
 const styles = theme => ({
   wrapper: {
@@ -68,7 +68,6 @@ const Controls = () => (
     <FaArrowRight size={40} color={'#FFF'} style={{ padding: '10px' }} />
   </View>
 );
-const steps = [<FirstStep key={1} />, <h1 key={2}>Hello</h1>];
 
 const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
   return (
@@ -76,11 +75,16 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
       <TaskBar />
       {inSwapMode ? (
         <View className={classes.wrapper}>
-          <DialogBox
-            onExit={() => toggleSwapMode()}
-            steps={steps}
-            controls={() => <Controls />}
-          />
+          <StepsWizard range={2} stage={1} onExit={() => toggleSwapMode()}>
+            <StepsWizard.Steps>
+              <StepsWizard.Step num={1} render={() => <FirstStep />} />
+              <StepsWizard.Step num={2} render={() => <h1>Hello</h1>} />
+            </StepsWizard.Steps>
+            <StepsWizard.Controls>
+              <StepsWizard.Control num={1} render={() => <Controls />} />
+              <StepsWizard.Control num={2} render={() => <Controls />} />
+            </StepsWizard.Controls>
+          </StepsWizard>
         </View>
       ) : (
         <View className={classes.wrapper}>

@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import { FaArrowRight } from 'react-icons/fa';
 import Background from '../../components/background';
 import TaskBar from '../../components/taskbar';
-import DialogBox from '../../components/dialogbox';
+import DialogBox from '../../components/stepswizard';
 import View from '../../components/view';
 
 const styles = () => ({
