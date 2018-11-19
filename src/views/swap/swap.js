@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import qr from '../../asset/icons/qr_code.png';
 import { FaArrowRight } from 'react-icons/fa';
 import Background from '../../components/background';
 import View from '../../components/view';
@@ -30,7 +31,7 @@ const styles = theme => ({
 });
 
 //TODO: refactor into multipe components.
-const FirstStep = () => (
+const InvoiceStep = () => (
   <View
     style={{
       flex: 1,
@@ -63,9 +64,46 @@ const FirstStep = () => (
   </View>
 );
 
-const Controls = () => (
-  <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
-    <FaArrowRight size={40} color={'#FFF'} style={{ padding: '10px' }} />
+const QrStep = () => (
+  <View
+    style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <View
+      style={{
+        flexDirection: 'column',
+        flex: 1,
+      }}
+    >
+      <img src={qr} alt={'qr code'} />
+    </View>
+    <View
+      style={{
+        flexDirection: 'column',
+        flex: 1,
+        justifyContent: 'space-around',
+      }}
+    >
+      <p></p>
+      <p></p>
+      <span style={{color: 'blue'}}>Copy</span>
+    </View>
+  </View>
+)
+// qr_code
+const Controls = ({ text }) => (
+  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
+    <FaArrowRight
+      size={20}
+      color={'#FFF'}
+      style={{
+        margin: '10px',
+      }}
+    />
   </View>
 );
 
@@ -77,12 +115,18 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
         <View className={classes.wrapper}>
           <StepsWizard range={2} stage={1} onExit={() => toggleSwapMode()}>
             <StepsWizard.Steps>
-              <StepsWizard.Step num={1} render={() => <FirstStep />} />
-              <StepsWizard.Step num={2} render={() => <h1>Hello</h1>} />
+              <StepsWizard.Step num={1} render={() => <InvoiceStep />} />
+              <StepsWizard.Step num={2} render={() => <QrStep />} />
             </StepsWizard.Steps>
             <StepsWizard.Controls>
-              <StepsWizard.Control num={1} render={() => <Controls />} />
-              <StepsWizard.Control num={2} render={() => <Controls />} />
+              <StepsWizard.Control
+                num={1}
+                render={() => <Controls text={'Fee: 0.0001 T-BTC'} />}
+              />
+              <StepsWizard.Control
+                num={2}
+                render={() => <Controls text={'Send'} />}
+              />
             </StepsWizard.Controls>
           </StepsWizard>
         </View>
