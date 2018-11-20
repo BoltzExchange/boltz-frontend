@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import qr from '../../asset/icons/qr_code.png';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
 import Background from '../../components/background';
 import View from '../../components/view';
 import { LinkButton } from '../../components/button';
@@ -76,24 +76,99 @@ const QrStep = () => (
       style={{
         flexDirection: 'column',
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
-      <img src={qr} alt={'qr code'} />
+      <img
+        style={{ width: '300px', height: '300px' }}
+        src={qr}
+        alt={'qr code'}
+      />
     </View>
     <View
       style={{
         flexDirection: 'column',
         flex: 1,
         justifyContent: 'space-around',
+        alignItems: 'flex-start',
       }}
     >
-      <p></p>
-      <p></p>
-      <span style={{color: 'blue'}}>Copy</span>
+      <p style={{ fontSize: '30px' }}>
+        Send <b>0.005 T-BTC</b> <br />
+        on <b>Bitcoin</b>
+        blockchain address:
+      </p>
+      <p style={{ fontSize: '20px', color: 'grey' }}>
+        1F1tAaz5x1HUXrCNLbt
+        <br />
+        MDqcw6o5GNn4xqX
+      </p>
+      <span
+        style={{
+          marginLeft: '50%',
+          color: 'blue',
+          fontWeight: 'bold',
+          fontSize: '28px',
+        }}
+      >
+        Copy
+      </span>
     </View>
   </View>
-)
-// qr_code
+);
+
+const WaitingForTx = () => (
+  <View
+    style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+    }}
+  >
+    <p
+      style={{
+        fontSize: '30px',
+      }}
+    >
+      Waiting for one confirmation on Blockchain
+      <br /> address:
+      <a
+        style={{
+          fontSize: '24px',
+        }}
+        href={
+          'https://www.blockchain.com/btc/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
+        }
+      >
+        1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX
+      </a>
+    </p>
+  </View>
+);
+
+const Complete = () => (
+  <View
+    style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+    }}
+  >
+    <FaCheckCircle size={240} color="lightgreen" />
+    <span
+      style={{
+        margin: '15px',
+        fontSize: '30px',
+      }}
+    >
+      Success!
+    </span>
+  </View>
+);
+
 const Controls = ({ text }) => (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
     <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
@@ -107,16 +182,22 @@ const Controls = ({ text }) => (
   </View>
 );
 
+Controls.propTypes = {
+  text: PropTypes.string,
+};
+
 const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
   return (
     <Background>
       <TaskBar />
       {inSwapMode ? (
         <View className={classes.wrapper}>
-          <StepsWizard range={2} stage={1} onExit={() => toggleSwapMode()}>
+          <StepsWizard range={4} stage={1} onExit={() => toggleSwapMode()}>
             <StepsWizard.Steps>
               <StepsWizard.Step num={1} render={() => <InvoiceStep />} />
               <StepsWizard.Step num={2} render={() => <QrStep />} />
+              <StepsWizard.Step num={3} render={() => <WaitingForTx />} />
+              <StepsWizard.Step num={4} render={() => <Complete />} />
             </StepsWizard.Steps>
             <StepsWizard.Controls>
               <StepsWizard.Control
@@ -126,6 +207,14 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
               <StepsWizard.Control
                 num={2}
                 render={() => <Controls text={'Send'} />}
+              />
+              <StepsWizard.Control
+                num={3}
+                render={() => <Controls text={'Download refund JSON'} />}
+              />
+              <StepsWizard.Control
+                num={4}
+                render={() => <Controls text={'Download refund JSON'} />}
               />
             </StepsWizard.Controls>
           </StepsWizard>
