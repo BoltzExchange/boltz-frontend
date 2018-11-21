@@ -107,7 +107,12 @@ const Refund = ({ classes }) => (
   <Background>
     <TaskBar />
     <View className={classes.wrapper}>
-      <StepsWizard range={4} stage={1}>
+      <StepsWizard
+        range={4}
+        stage={1}
+        alertOnExit={true}
+        message={'Are you sure?'}
+      >
         <StepsWizard.Steps>
           <StepsWizard.Step num={1} render={() => <StepOne />} />
           <StepsWizard.Step num={2} render={() => <StepTwo />} />

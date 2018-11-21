@@ -76,13 +76,16 @@ const QrStep = () => (
       style={{
         flexDirection: 'column',
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <img
-        style={{ width: '300px', height: '300px' }}
         src={qr}
+        style={{
+          width: '300px',
+          height: '300px',
+        }}
         alt={'qr code'}
       />
     </View>
@@ -91,25 +94,33 @@ const QrStep = () => (
         flexDirection: 'column',
         flex: 1,
         justifyContent: 'space-around',
-        alignItems: 'flex-start',
       }}
     >
-      <p style={{ fontSize: '30px' }}>
+      <p
+        style={{
+          fontSize: '30px',
+        }}
+      >
         Send <b>0.005 T-BTC</b> <br />
-        on <b>Bitcoin</b>
+        on <b>Bitcoin</b> <br />
         blockchain address:
       </p>
-      <p style={{ fontSize: '20px', color: 'grey' }}>
+      <p
+        style={{
+          fontSize: '28px',
+          color: 'grey',
+        }}
+      >
         1F1tAaz5x1HUXrCNLbt
         <br />
         MDqcw6o5GNn4xqX
       </p>
       <span
         style={{
-          marginLeft: '50%',
           color: 'blue',
-          fontWeight: 'bold',
-          fontSize: '28px',
+          fontWeight: '600',
+          fontSize: '30px',
+          marginLeft: '50%',
         }}
       >
         Copy
@@ -192,7 +203,14 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
       <TaskBar />
       {inSwapMode ? (
         <View className={classes.wrapper}>
-          <StepsWizard range={4} stage={1} onExit={() => toggleSwapMode()}>
+          <StepsWizard
+            range={4}
+            stage={1}
+            onExit={() => toggleSwapMode()}
+            alertOnExit={inSwapMode}
+            // TODO: change state isSwapMode
+            message={'Are you sure?'}
+          >
             <StepsWizard.Steps>
               <StepsWizard.Step num={1} render={() => <InvoiceStep />} />
               <StepsWizard.Step num={2} render={() => <QrStep />} />
