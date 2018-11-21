@@ -75,12 +75,14 @@ class StepsWizard extends Component {
 
   render() {
     const { stage } = this.state;
-    const { classes, onExit, alertOnExit, message } = this.props;
+    const { classes, onExit, alertOnExit, message, range } = this.props;
     const children = React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
         stage,
+        range,
         nextStage: this.nextStage,
         style: classes,
+        onExit: onExit,
       });
     });
     return (

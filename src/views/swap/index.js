@@ -7,7 +7,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleSwapMode: () => dispatch(actions.enterSwapMode()),
+  toggleSwapMode: () => dispatch(actions.toggleSwapMode()),
 });
 
 export default connect(

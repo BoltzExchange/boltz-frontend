@@ -103,14 +103,15 @@ Controls.propTypes = {
   text: PropTypes.string,
 };
 
-const Refund = ({ classes }) => (
+const Refund = ({ classes, inRefundMode, toggleRefundMode }) => (
   <Background>
     <TaskBar />
     <View className={classes.wrapper}>
       <StepsWizard
         range={4}
         stage={1}
-        alertOnExit={true}
+        alertOnExit={inRefundMode}
+        onExit={() => toggleRefundMode()}
         message={'Are you sure?'}
       >
         <StepsWizard.Steps>
@@ -141,6 +142,8 @@ const Refund = ({ classes }) => (
 
 Refund.propTypes = {
   classes: PropTypes.object,
+  inRefundMode: PropTypes.bool,
+  toggleRefundMode: PropTypes.func,
 };
 
 export default injectSheet(styles)(Refund);

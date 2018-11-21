@@ -14,14 +14,17 @@ Control.propTypes = {
   render: PropTypes.func,
 };
 
-const Controls = ({ style, stage, children, nextStage }) => {
+const Controls = ({ style, stage, range, children, nextStage, onExit }) => {
   const steps = React.Children.map(children, child => {
     return React.cloneElement(child, {
       stage,
     });
   });
   return (
-    <View className={style.controls} onClick={() => nextStage()}>
+    <View
+      className={style.controls}
+      onClick={() => (stage === range ? onExit() : nextStage())}
+    >
       {steps}
     </View>
   );
@@ -31,6 +34,8 @@ Controls.propTypes = {
   children: PropTypes.children,
   style: PropTypes.object,
   stage: PropTypes.number,
+  range: PropTypes.number,
+  onExit: PropTypes.func,
   nextStage: PropTypes.func,
 };
 
