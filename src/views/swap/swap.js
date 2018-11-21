@@ -24,9 +24,15 @@ const styles = theme => ({
   title: {
     fontSize: theme.fontSize.sizeXXL,
     color: theme.colors.white,
+    '@media (min-width: 1500px)': {
+      fontSize: theme.fontSize.sizeXXXL,
+    },
   },
   description: {
     fontSize: theme.fontSize.sizeXXL,
+    '@media (min-width: 1500px)': {
+      fontSize: theme.fontSize.sizeXXXL,
+    },
   },
 });
 

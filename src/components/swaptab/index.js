@@ -16,6 +16,10 @@ const styles = theme => ({
     width: '600px',
     flexDirection: 'column',
     backgroundColor: theme.colors.white,
+    '@media (min-width: 1500px)': {
+      width: '800px',
+      height: '600px',
+    },
   },
   stats: {
     backgroundColor: theme.colors.white,
