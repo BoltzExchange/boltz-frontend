@@ -20,16 +20,27 @@ const styles = theme => ({
   },
 });
 
-const StyledLinkButton = ({ classes, text, to, style }) => {
-  return (
+const StyledLinkButton = ({ classes, text, to, style, external }) => (
+  external ? (
+    <a
+      style={style ? style : undefined}
+      target="_blank"
+      rel="noopener noreferrer"
+      href={to}
+      className={classes.wrapper}
+    >
+      {text}
+    </a>
+  ) : (
     <Link style={style ? style : undefined} className={classes.wrapper} to={to}>
       {text}
     </Link>
-  );
-};
+  )
+);
 
 StyledLinkButton.propTypes = {
   classes: PropTypes.object,
+  external: PropTypes.bool,
   text: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   style: PropTypes.object,

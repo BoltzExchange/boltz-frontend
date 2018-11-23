@@ -57,6 +57,9 @@ const styles = theme => ({
       color: theme.colors.lightGrey,
     },
   },
+  text: {
+    fontSize: '20px',
+  },
 });
 
 const SwapTab = ({ classes, onClick }) => (
@@ -69,12 +72,12 @@ const SwapTab = ({ classes, onClick }) => (
     </View>
     <View className={classes.options}>
       <View className={classes.select}>
-        <Text text="You send:" />
+        <Text text="You send:" className={classes.text} />
         <Input />
         <DropDown fields={types} />
       </View>
       <View className={classes.select}>
-        <Text text="You receive:" />
+        <Text text="You receive:" className={classes.text} />
         <Input />
         <DropDown fields={types} />
       </View>

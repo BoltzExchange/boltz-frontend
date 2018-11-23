@@ -11,15 +11,15 @@ const styles = () => ({
   },
 });
 
-const Background = ({ classes, children }) => (
+const BackGround = ({ classes, children }) => (
   <View className={classes.wrapper} style={{ height: '100vh', width: '100vw' }}>
     {children}
   </View>
 );
 
-Background.propTypes = {
+BackGround.propTypes = {
   classes: PropTypes.object,
   children: PropTypes.node,
 };
 
-export default injectSheet(styles)(Background);
+export default injectSheet(styles)(BackGround);

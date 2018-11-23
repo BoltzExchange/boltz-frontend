@@ -3,36 +3,15 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import qr from '../../asset/icons/qr_code.png';
 import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
-import Background from '../../components/background';
 import View from '../../components/view';
-import { LinkButton } from '../../components/button';
-import TaskBar from '../../components/taskbar';
-import SwapTab from '../../components/swaptab';
+import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 
-const styles = theme => ({
+const styles = () => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-  },
-  infoWrapper: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: theme.fontSize.sizeXXL,
-    color: theme.colors.white,
-    '@media (min-width: 1500px)': {
-      fontSize: theme.fontSize.sizeXXXL,
-    },
-  },
-  description: {
-    fontSize: theme.fontSize.sizeXXL,
-    '@media (min-width: 1500px)': {
-      fontSize: theme.fontSize.sizeXXXL,
-    },
   },
 });
 
@@ -203,72 +182,55 @@ Controls.propTypes = {
   text: PropTypes.string,
 };
 
-const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
+const Swap = ({ classes, history, inSwapMode, toggleSwapMode }) => {
+  if (!inSwapMode) {
+    history.replace('/');
+  }
   return (
-    <Background>
-      <TaskBar />
-      {inSwapMode ? (
-        <View className={classes.wrapper}>
-          <StepsWizard
-            range={4}
-            stage={1}
-            onExit={() => toggleSwapMode()}
-            alertOnExit={inSwapMode}
-            // TODO: change state isSwapMode
-            message={'Are you sure?'}
-          >
-            <StepsWizard.Steps>
-              <StepsWizard.Step num={1} render={() => <InvoiceStep />} />
-              <StepsWizard.Step num={2} render={() => <QrStep />} />
-              <StepsWizard.Step num={3} render={() => <WaitingForTx />} />
-              <StepsWizard.Step num={4} render={() => <Complete />} />
-            </StepsWizard.Steps>
-            <StepsWizard.Controls>
-              <StepsWizard.Control
-                num={1}
-                render={() => <Controls text={'Fee: 0.0001 T-BTC'} />}
-              />
-              <StepsWizard.Control
-                num={2}
-                render={() => <Controls text={'Send'} />}
-              />
-              <StepsWizard.Control
-                num={3}
-                render={() => <Controls text={'Download refund JSON'} />}
-              />
-              <StepsWizard.Control
-                num={4}
-                render={() => <Controls text={'Download refund JSON'} />}
-              />
-            </StepsWizard.Controls>
-          </StepsWizard>
-        </View>
-      ) : (
-        <View className={classes.wrapper}>
-          <View className={classes.infoWrapper}>
-            <p className={classes.title}>
-              Instant, Low fee, & <br /> Non custodial.
-            </p>
-            <p className={classes.description}>
-              Trading <br />
-              <b>{`Shouldn't`}</b>
-              <br />
-              require
-              <br />
-              an account.
-            </p>
-            <LinkButton text="WHY?" to="/faq" />
-          </View>
-          <SwapTab onClick={() => toggleSwapMode()} />
-        </View>
-      )}
-    </Background>
+    <BackGround>
+      <View className={classes.wrapper}>
+        <StepsWizard
+          range={4}
+          stage={1}
+          onExit={() => toggleSwapMode()}
+          alertOnExit={inSwapMode}
+          // TODO: change state isSwapMode
+          message={'Are you sure?'}
+        >
+          <StepsWizard.Steps>
+            <StepsWizard.Step num={1} render={() => <InvoiceStep />} />
+            <StepsWizard.Step num={2} render={() => <QrStep />} />
+            <StepsWizard.Step num={3} render={() => <WaitingForTx />} />
+            <StepsWizard.Step num={4} render={() => <Complete />} />
+          </StepsWizard.Steps>
+          <StepsWizard.Controls>
+            <StepsWizard.Control
+              num={1}
+              render={() => <Controls text={'Fee: 0.0001 T-BTC'} />}
+            />
+            <StepsWizard.Control
+              num={2}
+              render={() => <Controls text={'Send'} />}
+            />
+            <StepsWizard.Control
+              num={3}
+              render={() => <Controls text={'Download refund JSON'} />}
+            />
+            <StepsWizard.Control
+              num={4}
+              render={() => <Controls text={'Download refund JSON'} />}
+            />
+          </StepsWizard.Controls>
+        </StepsWizard>
+      </View>
+    </BackGround>
   );
 };
 
 Swap.propTypes = {
-  classes: PropTypes.object,
-  inSwapMode: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  inSwapMode: PropTypes.bool.isRequired,
   toggleSwapMode: PropTypes.func,
 };
 

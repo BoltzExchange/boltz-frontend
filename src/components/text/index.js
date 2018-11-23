@@ -1,38 +1,55 @@
 import React from 'react';
+import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 import View from '../view';
 
 // TODO: refactor the generic text types
-const Text = ({ text, bold, size, style }) => (
-  <span
-    style={{
-      fontSize: size ? `${size}px` : '20px',
-      fontWeight: bold ? '500' : '400',
-      ...style,
-    }}
-  >
+const Text = ({ text, style, className }) => (
+  <span className={className} style={{ ...style }}>
     {text}
   </span>
 );
 
 Text.propTypes = {
   text: PropTypes.string.isRequired,
-  bold: PropTypes.bool,
-  size: PropTypes.number,
+  className: PropTypes.string.isRequired,
   style: PropTypes.object,
 };
 
-const InfoText = ({ title, text }) => (
-  <View style={{ flexDirection: 'column' }}>
-    <Text text={title} bold={true} size={16} />
-    <Text text={text} size={12} />
+const infoTextStyles = () => ({
+  wrapper: {
+    flexDirection: 'column',
+  },
+  title: {
+    fontSize: '16px',
+    fontWeight: 600,
+    '@media (min-width: 1500px)': {
+      fontSize: '18px',
+    },
+  },
+  text: {
+    fontSize: '12px',
+    fontWeight: 400,
+    '@media (min-width: 1500px)': {
+      fontSize: '16px',
+    },
+  },
+});
+
+const StyledInfoText = ({ title, text, classes }) => (
+  <View className={classes.wrapper}>
+    <Text text={title} className={classes.title} />
+    <Text text={text} className={classes.text} />
   </View>
 );
 
-InfoText.propTypes = {
+StyledInfoText.propTypes = {
+  classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   text: PropTypes.string,
 };
+
+const InfoText = injectSheet(infoTextStyles)(StyledInfoText);
 
 export default Text;
 

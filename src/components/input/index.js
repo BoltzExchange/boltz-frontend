@@ -31,14 +31,15 @@ class Input extends React.Component {
   };
 
   render() {
-    const { classes, isText, style } = this.props;
+    const { classes, isText, style, disable } = this.props;
     return (
       <input
+        disabled={disable}
         min="0"
         style={style ? style : undefined}
         className={classes.wrapper}
         onChange={e => this.onChange(e)}
-        autoComplete={false}
+        value={this.state.text}
         type={isText ? 'text' : 'number'}
       />
     );
@@ -46,9 +47,10 @@ class Input extends React.Component {
 }
 
 Input.propTypes = {
-  classes: PropTypes.object,
-  isText: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
+  isText: PropTypes.bool.isRequired,
   style: PropTypes.object,
+  disable: PropTypes.bool,
 };
 
 export default injectSheet(styles)(Input);

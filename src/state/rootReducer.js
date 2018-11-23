@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import swapReducer from '../views/swap/swapReducer';
+import swapReducer from '../views/landingPage/landingPageReducer';
 import refundReducer from '../views/refund/refundReducer';
 
 const rootReducer = combineReducers({
