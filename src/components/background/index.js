@@ -5,8 +5,7 @@ import injectSheet from 'react-jss';
 
 const styles = () => ({
   wrapper: {
-    backgroundImage:
-      'linear-gradient(to bottom, #134357, #45587d, #846995, #c1799a, #ef9391)',
+    backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
     flexDirection: 'column',
   },
 });

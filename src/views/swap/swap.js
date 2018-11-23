@@ -128,8 +128,17 @@ const WaitingForTx = () => (
         fontSize: '30px',
       }}
     >
+      <a href={'#0'}>Click here</a> is download of "file refund" didn't <br />{' '}
+      start automatically.
+    </p>
+    <p
+      style={{
+        fontSize: '30px',
+      }}
+    >
       Waiting for one confirmation on Blockchain
       <br /> address:
+      <br />
       <a
         style={{
           fontSize: '24px',
