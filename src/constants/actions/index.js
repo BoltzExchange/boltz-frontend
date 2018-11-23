@@ -1,0 +1,2 @@
+export const ENTER_SWAP_MODE = 'ENTER_SWAP_MODE';
+export const ENTER_REFUND_MODE = 'ENTER_REFUND_MODE';
