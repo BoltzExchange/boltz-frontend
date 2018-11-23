@@ -20,7 +20,7 @@ const styles = theme => ({
   },
 });
 
-const StyledLinkButton = ({ classes, text, to, style, external }) => (
+const StyledLinkButton = ({ classes, text, to, style, external }) =>
   external ? (
     <a
       style={style ? style : undefined}
@@ -35,8 +35,7 @@ const StyledLinkButton = ({ classes, text, to, style, external }) => (
     <Link style={style ? style : undefined} className={classes.wrapper} to={to}>
       {text}
     </Link>
-  )
-);
+  );
 
 StyledLinkButton.propTypes = {
   classes: PropTypes.object,
