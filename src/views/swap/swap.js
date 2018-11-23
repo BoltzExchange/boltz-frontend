@@ -128,8 +128,8 @@ const WaitingForTx = () => (
         fontSize: '30px',
       }}
     >
-      <a href={'#0'}>Click here</a> is download of "file refund" didn't <br />{' '}
-      start automatically.
+      <a href={'#0'}>Click here</a> is download of &lsquo;file refund&lsquo;
+      didn&apos;t <br /> start automatically.
     </p>
     <p
       style={{
