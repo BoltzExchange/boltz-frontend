@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import qr from '../../asset/icons/qr_code.png';
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
 
 //TODO: refactor into multipe components.
@@ -32,8 +32,9 @@ const stepOneStyles = () => ({
 const StyledStepOne = ({ classes }) => (
   <View className={classes.wrapper}>
     <p className={classes.title}>
-      Paste a <b>Bitcoin</b> lightning invoice of <br /> <b>0.0049 T-BTC</b> to
-      recieve it.
+      Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
+      invoice of <br />
+      <b>0.0049 T-BTC</b> to recieve it.
     </p>
     <p className={classes.invoice}>
       lnbc1pvjluezpp5qqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqypqdpl2pkx2ctnv5
@@ -134,7 +135,7 @@ const stepThreeStyles = () => ({
 const StyledStepThree = ({ classes }) => (
   <View className={classes.wrapper}>
     <p className={classes.info}>
-      <a href={'#0'}>Click here</a> is download of &lsquo;file refund&lsquo;
+      <a href={'#0'}>Click here</a> if download of &lsquo;Refund JSON&lsquo;
       didn&apos;t <br /> start automatically.
     </p>
     <p className={classes.address}>

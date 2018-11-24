@@ -50,7 +50,7 @@ const Refund = ({ classes, inRefundMode, toggleRefundMode }) => (
         <StepsWizard.Controls>
           <StepsWizard.Control
             num={1}
-            render={() => <Controls text={'hello'} />}
+            render={() => <Controls text={'Next'} />}
           />
           <StepsWizard.Control
             num={2}
@@ -58,7 +58,7 @@ const Refund = ({ classes, inRefundMode, toggleRefundMode }) => (
           />
           <StepsWizard.Control
             num={3}
-            render={() => <Controls text={'Claim Refund'} />}
+            render={() => <Controls text={'File Refund'} />}
           />
           <StepsWizard.Control
             num={4}

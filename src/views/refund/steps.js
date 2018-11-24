@@ -42,6 +42,7 @@ const StyledStepOne = ({ classes }) => (
   <View className={classes.wrapper}>
     <View className={classes.dropZone}>
       <p className={classes.info}>Drag the Refund JSON file here</p>
+      <span className={classes.info}>or</span>
       {/*TODO: add ability to upload*/}
       <span className={classes.uploadButton}>Select file</span>
     </View>
@@ -94,7 +95,7 @@ const StyledStepTwo = ({ classes }) => (
         1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX
       </a>
       <p className={classes.description}>
-        Please wait for Block <b>549843</b> to be mained <br />
+        Please wait for Block <b>549843</b> to be mined <br />
         and broadcast the transaction to claim <br />
         refund.
       </p>

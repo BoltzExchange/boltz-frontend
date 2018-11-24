@@ -56,15 +56,15 @@ const Swap = ({ classes, history, inSwapMode, toggleSwapMode }) => {
             />
             <StepsWizard.Control
               num={2}
-              render={() => <Controls text={'Send'} />}
+              render={() => <Controls text={'Next'} />}
             />
             <StepsWizard.Control
               num={3}
-              render={() => <Controls text={'Download refund JSON'} />}
+              render={() => <Controls text={'Next'} />}
             />
             <StepsWizard.Control
               num={4}
-              render={() => <Controls text={'Download refund JSON'} />}
+              render={() => <Controls text={'Download Refund JSON'} />}
             />
           </StepsWizard.Controls>
         </StepsWizard>
