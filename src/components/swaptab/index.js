@@ -42,11 +42,16 @@ const styles = theme => ({
     backgroundColor: theme.colors.matisseBlue,
     height: '15%',
     width: '100%',
-    justifyContent: 'flex-end',
     alignItems: 'center',
     '&:hover': {
       cursor: 'pointer',
     },
+  },
+  nextText: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: '30px',
+    color: theme.colors.white,
   },
   icon: {
     fontSize: theme.fontSize.sizeXL,
@@ -83,11 +88,11 @@ const SwapTab = ({ classes, onClick }) => (
       </View>
     </View>
     <View className={classes.next} onClick={() => onClick()}>
+      <Text text="Start swap" className={classes.nextText} />
       <FaArrowRight className={classes.icon} />
     </View>
   </View>
 );
-
 SwapTab.propTypes = {
   classes: PropTypes.object,
   onClick: PropTypes.func,

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { FaArrowRight, FaCheckCircle } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
 import Background from '../../components/background';
 import TaskBar from '../../components/taskbar';
 import StepsWizard from '../../components/stepswizard';
 import View from '../../components/view';
+import { StepOne, StepTwo, StepFour } from './steps';
 
 const styles = () => ({
   wrapper: {
@@ -15,87 +16,12 @@ const styles = () => ({
   },
 });
 
-const StepOne = () => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <p style={{ fontSize: '36px', color: '#505050' }}>
-      Choose the refund JSON file <br /> or drag it here.
-    </p>
-  </View>
-);
-
-const StepTwo = () => (
-  <View
-    style={{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-  >
-    <View
-      style={{
-        height: '200px',
-        width: 'auto',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-      }}
-    >
-      <span
-        style={{
-          fontSize: '30px',
-        }}
-      >
-        Your refund transaction is:
-      </span>
-      <a
-        style={{
-          fontSize: '18px',
-        }}
-        href={
-          'https://www.blockchain.com/btc/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
-        }
-      >
-        1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX
-      </a>
-      <p style={{ fontSize: '30px' }}>
-        Please wait for Block <b>549843</b> to be mained <br />
-        and broadcast the transaction to claim <br />
-        refund.
-      </p>
-    </View>
-  </View>
-);
-
-const StepFour = () => (
-  <View
-    style={{
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column',
-    }}
-  >
-    <FaCheckCircle size={240} color="lightgreen" />
-    <span
-      style={{
-        margin: '15px',
-        fontSize: '30px',
-      }}
-    >
-      Success!
-    </span>
-  </View>
-);
-
 const Controls = ({ text }) => (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
-    <FaArrowRight
-      size={20}
-      color={'#FFF'}
-      style={{
-        margin: '10px',
-      }}
-    />
+    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+      <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
+    </View>
+    <FaArrowRight size={30} color={'#FFF'} style={{ paddingRight: '10px' }} />
   </View>
 );
 
@@ -108,6 +34,7 @@ const Refund = ({ classes, inRefundMode, toggleRefundMode }) => (
     <TaskBar />
     <View className={classes.wrapper}>
       <StepsWizard
+        dark={true}
         range={4}
         stage={1}
         alertOnExit={inRefundMode}
@@ -121,14 +48,17 @@ const Refund = ({ classes, inRefundMode, toggleRefundMode }) => (
           <StepsWizard.Step num={4} render={() => <StepFour />} />
         </StepsWizard.Steps>
         <StepsWizard.Controls>
-          <StepsWizard.Control num={1} render={() => <Controls />} />
+          <StepsWizard.Control
+            num={1}
+            render={() => <Controls text={'Next'} />}
+          />
           <StepsWizard.Control
             num={2}
             render={() => <Controls text={'Waiting...'} />}
           />
           <StepsWizard.Control
             num={3}
-            render={() => <Controls text={'Claim Refund'} />}
+            render={() => <Controls text={'File Refund'} />}
           />
           <StepsWizard.Control
             num={4}

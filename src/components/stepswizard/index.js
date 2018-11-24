@@ -13,13 +13,13 @@ const styles = theme => ({
     height: '600px',
     width: '900px',
     boxShadow: '0px 0px 30px -6px rgba(0,0,0,0.52)',
-    backgroundColor: theme.colors.white,
+    backgroundColor: p => (p.dark ? theme.colors.aeroBlue : theme.colors.white),
     flexDirection: 'column',
   },
   progress: {
     width: '100%',
     height: '10%',
-    backgroundColor: theme.colors.white,
+    backgroundColor: p => (p.dark ? theme.colors.aeroBlue : theme.colors.white),
     alignItems: 'center',
   },
   content: {
@@ -112,6 +112,7 @@ StepsWizard.propTypes = {
   message: PropTypes.oneOfType(PropTypes.string, PropTypes.func),
   stage: PropTypes.number,
   range: PropTypes.number,
+  dark: PropTypes.bool,
 };
 
 export default injectSheet(styles)(StepsWizard);

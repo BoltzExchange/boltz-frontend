@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
  * Link button
  */
 
-const styles = theme => ({
+const LinkBtnStyles = theme => ({
   wrapper: {
     padding: '10px',
     color: theme.colors.white,
@@ -45,4 +45,4 @@ StyledLinkButton.propTypes = {
   style: PropTypes.object,
 };
 
-export const LinkButton = injectSheet(styles)(StyledLinkButton);
+export const LinkButton = injectSheet(LinkBtnStyles)(StyledLinkButton);
