@@ -18,14 +18,10 @@ const styles = () => ({
 
 const Controls = ({ text }) => (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
-    <FaArrowRight
-      size={20}
-      color={'#FFF'}
-      style={{
-        margin: '10px',
-      }}
-    />
+    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
+      <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
+    </View>
+    <FaArrowRight size={30} color={'#FFF'} style={{ paddingRight: '10px' }} />
   </View>
 );
 
@@ -38,6 +34,7 @@ const Refund = ({ classes, inRefundMode, toggleRefundMode }) => (
     <TaskBar />
     <View className={classes.wrapper}>
       <StepsWizard
+        dark={true}
         range={4}
         stage={1}
         alertOnExit={inRefundMode}
@@ -51,7 +48,10 @@ const Refund = ({ classes, inRefundMode, toggleRefundMode }) => (
           <StepsWizard.Step num={4} render={() => <StepFour />} />
         </StepsWizard.Steps>
         <StepsWizard.Controls>
-          <StepsWizard.Control num={1} render={() => <Controls />} />
+          <StepsWizard.Control
+            num={1}
+            render={() => <Controls text={'hello'} />}
+          />
           <StepsWizard.Control
             num={2}
             render={() => <Controls text={'Waiting...'} />}

@@ -9,7 +9,7 @@ const stepOneStyles = theme => ({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.aeroBlue,
   },
   dropZone: {
     height: '300px',
@@ -54,34 +54,39 @@ StyledStepOne.propTypes = {
 
 export const StepOne = injectSheet(stepOneStyles)(StyledStepOne);
 
-const stepTwoStyles = () => ({
+const stepTwoStyles = theme => ({
   wrapper: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: theme.colors.aeroBlue,
   },
   info: {
     height: '200px',
     width: 'auto',
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: '30px',
   },
   link: {
     fontSize: '18px',
+    textDecoration: 'none',
   },
   description: {
     fontSize: '30px',
   },
 });
+
 const StyledStepTwo = ({ classes }) => (
   <View className={classes.wrapper}>
-    <View classes={classes.info}>
+    <View className={classes.info}>
       <span className={classes.title}>Your refund transaction is:</span>
       <a
         className={classes.link}
+        target="_blank"
+        rel="noopener noreferrer"
         href={
           'https://www.blockchain.com/btc/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
         }
@@ -103,12 +108,16 @@ StyledStepTwo.propTypes = {
 
 export const StepTwo = injectSheet(stepTwoStyles)(StyledStepTwo);
 
-const stepFourStyles = () => ({
+const stepFourStyles = theme => ({
   wrapper: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    backgroundColor: theme.colors.aeroBlue,
+  },
+  icon: {
+    color: theme.colors.turquoise,
   },
   title: {
     margin: '15px',
@@ -118,7 +127,7 @@ const stepFourStyles = () => ({
 
 const StyledStepFour = ({ classes }) => (
   <View className={classes.wrapper}>
-    <FaCheckCircle size={240} color="lightgreen" />
+    <FaCheckCircle size={240} className={classes.icon} />
     <span className={classes.title}>Success!</span>
   </View>
 );
