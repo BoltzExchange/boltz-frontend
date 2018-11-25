@@ -7,7 +7,9 @@ const mapStateToProps = state => ({
   inSwapMode: state.swapReducer.inSwapMode,
 });
 
-const mapDispatchToProps = () => {};
+const mapDispatchToProps = dispatch => ({
+  toggleSwapMode: () => dispatch()
+});
 
 export default compose(
   connect(

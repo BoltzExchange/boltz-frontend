@@ -5,7 +5,7 @@ import { FaArrowRight } from 'react-icons/fa';
 import View from '../../components/view';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
-import { StepOne, StepTwo, StepThree, StepFour } from './steps';
+import { StepOne, StepTwo, StepThree, StepFour, Error } from './steps';
 
 const styles = () => ({
   wrapper: {
@@ -28,46 +28,47 @@ Controls.propTypes = {
   text: PropTypes.string,
 };
 
-const Swap = ({ classes, history, inSwapMode, toggleSwapMode }) => {
-  if (!inSwapMode) {
-    history.replace('/');
-  }
+const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
   return (
     <BackGround>
       <View className={classes.wrapper}>
-        <StepsWizard
-          range={4}
-          stage={1}
-          onExit={() => toggleSwapMode()}
-          alertOnExit={inSwapMode}
-          // TODO: change state isSwapMode
-          message={'Are you sure?'}
-        >
-          <StepsWizard.Steps>
-            <StepsWizard.Step num={1} render={() => <StepOne />} />
-            <StepsWizard.Step num={2} render={() => <StepTwo />} />
-            <StepsWizard.Step num={3} render={() => <StepThree />} />
-            <StepsWizard.Step num={4} render={() => <StepFour />} />
-          </StepsWizard.Steps>
-          <StepsWizard.Controls>
-            <StepsWizard.Control
-              num={1}
-              render={() => <Controls text={'Fee: 0.0001 T-BTC'} />}
-            />
-            <StepsWizard.Control
-              num={2}
-              render={() => <Controls text={'Next'} />}
-            />
-            <StepsWizard.Control
-              num={3}
-              render={() => <Controls text={'Next'} />}
-            />
-            <StepsWizard.Control
-              num={4}
-              render={() => <Controls text={'Download Refund JSON'} />}
-            />
-          </StepsWizard.Controls>
-        </StepsWizard>
+        {inSwapMode ? (
+          <StepsWizard
+            range={4}
+            stage={1}
+            onExit={() => toggleSwapMode()}
+            alertOnExit={inSwapMode}
+            // TODO: change state isSwapMode
+            message={'Are you sure?'}
+          >
+            <StepsWizard.Steps>
+              <StepsWizard.Step num={1} render={() => <StepOne />} />
+              <StepsWizard.Step num={2} render={() => <StepTwo />} />
+              <StepsWizard.Step num={3} render={() => <StepThree />} />
+              <StepsWizard.Step num={4} render={() => <StepFour />} />
+            </StepsWizard.Steps>
+            <StepsWizard.Controls>
+              <StepsWizard.Control
+                num={1}
+                render={() => <Controls text={'Fee: 0.0001 T-BTC'} />}
+              />
+              <StepsWizard.Control
+                num={2}
+                render={() => <Controls text={'Next'} />}
+              />
+              <StepsWizard.Control
+                num={3}
+                render={() => <Controls text={'Next'} />}
+              />
+              <StepsWizard.Control
+                num={4}
+                render={() => <Controls text={'Download Refund JSON'} />}
+              />
+            </StepsWizard.Controls>
+          </StepsWizard>
+        ) : (
+          <Error />
+        )}
       </View>
     </BackGround>
   );
