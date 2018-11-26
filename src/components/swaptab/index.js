@@ -5,6 +5,7 @@ import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
 import Text, { InfoText } from '../text';
+import { MIN, MAX } from '../../constants/fees';
 import { FaArrowRight } from 'react-icons/fa';
 
 const types = ['BTC', 'T-BTC'];
@@ -70,20 +71,20 @@ const styles = theme => ({
 const SwapTab = ({ classes, onClick }) => (
   <View className={classes.wrapper}>
     <View className={classes.stats}>
-      <InfoText title="min:" text="0.005 BTC" />
-      <InfoText title="max:" text="0.5 BTC" />
+      <InfoText title="min:" text={`${MIN} BTC`} />
+      <InfoText title="max:" text={`${MAX} BTC`} />
       <InfoText title="fee:" text="0.0001 BTC" />
       <InfoText title="rate:" text="1 BTC = 1 BTC" />
     </View>
     <View className={classes.options}>
       <View className={classes.select}>
         <Text text="You send:" className={classes.text} />
-        <Input />
+        <Input min={MIN} max={MAX} step={0.001} />
         <DropDown fields={types} />
       </View>
       <View className={classes.select}>
         <Text text="You receive:" className={classes.text} />
-        <Input />
+        <Input disable value={100} />
         <DropDown fields={types} />
       </View>
     </View>

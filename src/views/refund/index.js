@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleRefundMode: () => dispatch(actions.toggleRefundMode()),
-  push,
+  push: path => dispatch(push(path)),
 });
 
 export default connect(

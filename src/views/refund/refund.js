@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { FaArrowRight } from 'react-icons/fa';
 import Background from '../../components/background';
-import TaskBar from '../../components/taskbar';
 import StepsWizard from '../../components/stepswizard';
 import View from '../../components/view';
 import { StepOne, StepTwo, StepFour } from './steps';
@@ -37,11 +36,11 @@ class Refund extends React.Component {
   componentWillUnmount() {
     this.props.toggleRefundMode();
   }
+
   render() {
-    const { classes, inRefundMode, toggleRefundMode, push } = this.props;
+    const { classes, inRefundMode, push } = this.props;
     return (
       <Background>
-        <TaskBar />
         <View className={classes.wrapper}>
           <StepsWizard
             dark={true}
@@ -49,7 +48,6 @@ class Refund extends React.Component {
             stage={1}
             alertOnExit={inRefundMode}
             onExit={() => {
-              toggleRefundMode();
               push('/');
             }}
             message={'Are you sure?'}
