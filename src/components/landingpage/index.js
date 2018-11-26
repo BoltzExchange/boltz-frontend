@@ -59,7 +59,7 @@ const LandingPage = ({ classes, toggleSwapMode }) => {
 };
 
 LandingPage.propTypes = {
-  classes: PropTypes.object,
+  classes: PropTypes.object.isRequired,
   inSwapMode: PropTypes.bool,
   toggleSwapMode: PropTypes.func,
 };

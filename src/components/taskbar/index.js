@@ -28,7 +28,7 @@ const TaskBar = ({ classes }) => (
       alt="logo"
     />
     <View className={classes.buttons}>
-      <LinkButton text="Swap" to="/swap" />
+      <LinkButton text="Swap" to="/" />
       <LinkButton text="Refund" to="/refund" />
       <LinkButton text="FAQ" to="/faq" />
       <LinkButton

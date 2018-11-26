@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
-import swapReducer from '../views/landingPage/landingPageReducer';
+import { connectRouter } from 'connected-react-router';
+import swapReducer from '../views/swap/swapReducer';
 import refundReducer from '../views/refund/refundReducer';
 
-const rootReducer = combineReducers({
-  swapReducer,
-  refundReducer,
-});
+const createRootReducer = history =>
+  combineReducers({
+    router: connectRouter(history),
+    swapReducer,
+    refundReducer,
+  });
 
-export default rootReducer;
+export default createRootReducer;

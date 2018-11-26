@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { toggleSwapMode } from './swapActions';
 import Swap from './swap';
 
 const mapStateToProps = state => ({
@@ -8,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleSwapMode: () => dispatch()
+  toggleSwapMode: () => dispatch(toggleSwapMode()),
 });
 
 export default compose(

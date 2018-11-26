@@ -5,7 +5,8 @@ import { FaArrowRight } from 'react-icons/fa';
 import View from '../../components/view';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
-import { StepOne, StepTwo, StepThree, StepFour, Error } from './steps';
+import LandingPage from '../../components/landingpage';
+import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 
 const styles = () => ({
   wrapper: {
@@ -67,7 +68,7 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
             </StepsWizard.Controls>
           </StepsWizard>
         ) : (
-          <Error />
+          <LandingPage toggleSwapMode={toggleSwapMode} />
         )}
       </View>
     </BackGround>
