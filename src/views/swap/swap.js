@@ -37,9 +37,13 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
           <StepsWizard
             range={4}
             stage={1}
-            onExit={() => toggleSwapMode()}
+            onExit={() => {
+              const x = window.confirm('Sure you want to exit');
+              if (x) {
+                toggleSwapMode();
+              }
+            }}
             alertOnExit={inSwapMode}
-            // TODO: change state isSwapMode
             message={'Are you sure?'}
           >
             <StepsWizard.Steps>
