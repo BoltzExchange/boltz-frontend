@@ -12,9 +12,7 @@ const styles = theme => ({
     backgroundColor: theme.colors.lightGrey,
     width: '200px',
     height: '50px',
-    '&:focus': {
-      outline: 'none',
-    },
+    outline: p => (p.error ? '1px solid red' : 'none'),
   },
 });
 
@@ -25,8 +23,7 @@ class Input extends React.Component {
   }
 
   onChange = e => {
-    const { max, min } = this.props;
-    if (e.target.value >= min && e.target.value <= max) {
+    if (e.target.value) {
       this.setState({ value: e.target.value });
       this.props.onChange && this.props.onChange(e.target.value);
     }
@@ -60,6 +57,7 @@ Input.propTypes = {
   onChange: PropTypes.func,
   style: PropTypes.object,
   disable: PropTypes.bool,
+  error: PropTypes.bool,
   min: PropTypes.number,
   max: PropTypes.number,
   value: PropTypes.number,

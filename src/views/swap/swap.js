@@ -29,7 +29,13 @@ Controls.propTypes = {
   text: PropTypes.string,
 };
 
-const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
+const Swap = ({
+  classes,
+  inSwapMode,
+  toggleSwapMode,
+  setSwapAmount,
+  swapInfo,
+}) => {
   return (
     <BackGround>
       <View className={classes.wrapper}>
@@ -40,6 +46,7 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
             onExit={() => {
               const x = window.confirm('Sure you want to exit');
               if (x) {
+                setSwapAmount(null, null);
                 toggleSwapMode();
               }
             }}
@@ -47,8 +54,14 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
             message={'Are you sure?'}
           >
             <StepsWizard.Steps>
-              <StepsWizard.Step num={1} render={() => <StepOne />} />
-              <StepsWizard.Step num={2} render={() => <StepTwo />} />
+              <StepsWizard.Step
+                num={1}
+                render={() => <StepOne value={swapInfo.received} />}
+              />
+              <StepsWizard.Step
+                num={2}
+                render={() => <StepTwo value={swapInfo.sent} />}
+              />
               <StepsWizard.Step num={3} render={() => <StepThree />} />
               <StepsWizard.Step num={4} render={() => <StepFour />} />
             </StepsWizard.Steps>
@@ -72,7 +85,10 @@ const Swap = ({ classes, inSwapMode, toggleSwapMode }) => {
             </StepsWizard.Controls>
           </StepsWizard>
         ) : (
-          <LandingPage toggleSwapMode={toggleSwapMode} />
+          <LandingPage
+            toggleSwapMode={toggleSwapMode}
+            setSwapAmount={setSwapAmount}
+          />
         )}
       </View>
     </BackGround>
@@ -83,7 +99,9 @@ Swap.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   inSwapMode: PropTypes.bool.isRequired,
+  swapInfo: PropTypes.object,
   toggleSwapMode: PropTypes.func,
+  setSwapAmount: PropTypes.func,
 };
 
 export default injectSheet(styles)(Swap);

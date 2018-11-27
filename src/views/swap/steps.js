@@ -30,12 +30,12 @@ const stepOneStyles = () => ({
   },
 });
 
-const StyledStepOne = ({ classes }) => (
+const StyledStepOne = ({ classes, value }) => (
   <View className={classes.wrapper}>
     <p className={classes.title}>
       Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
       invoice of <br />
-      <b>0.0049 T-BTC</b> to recieve it.
+      <b>{value} T-BTC</b> to recieve it.
     </p>
     <p className={classes.invoice}>
       lnbc1pvjluezpp5qqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqypqdpl2pkx2ctnv5
@@ -47,6 +47,7 @@ const StyledStepOne = ({ classes }) => (
 
 StyledStepOne.propTypes = {
   classes: PropTypes.object.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
 export const StepOne = injectSheet(stepOneStyles)(StyledStepOne);
@@ -84,7 +85,7 @@ const stepTwoStyles = () => ({
   },
 });
 
-const StyledStepTwo = ({ classes }) => (
+const StyledStepTwo = ({ classes, value }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
       <img src={qr} className={classes.image} alt={'qr code'} />
@@ -95,7 +96,7 @@ const StyledStepTwo = ({ classes }) => (
           fontSize: '30px',
         }}
       >
-        Send <b>0.005 T-BTC</b> <br />
+        Send <b>{value} T-BTC</b> <br />
         on <b>Bitcoin</b> <br />
         blockchain address:
       </p>
@@ -111,6 +112,7 @@ const StyledStepTwo = ({ classes }) => (
 
 StyledStepTwo.propTypes = {
   classes: PropTypes.object.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
 export const StepTwo = injectSheet(stepTwoStyles)(StyledStepTwo);
