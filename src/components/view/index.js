@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const View = ({ children, style, className, ...otherProps }) => {
+const View = ({ children, style, className, inputRef, ...otherProps }) => {
   let newStyle = {
     display: otherProps.noFlex ? 'inline' : 'flex',
   };
@@ -9,7 +9,7 @@ const View = ({ children, style, className, ...otherProps }) => {
     newStyle = { ...newStyle, ...style };
   }
   return (
-    <div className={className} style={newStyle} {...otherProps}>
+    <div className={className} style={newStyle} ref={inputRef} {...otherProps}>
       {children}
     </div>
   );

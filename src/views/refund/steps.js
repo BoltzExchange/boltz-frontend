@@ -3,6 +3,8 @@ import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 import View from '../../components/view';
 import { FaCheckCircle } from 'react-icons/fa';
+import DropZone from '../../components/dropzone';
+import FileUpload from '../../components/fileupload';
 
 const stepOneStyles = theme => ({
   wrapper: {
@@ -13,6 +15,7 @@ const stepOneStyles = theme => ({
   },
   dropZone: {
     height: '300px',
+    zIndex: 2000,
     width: '700px',
     flexDirection: 'column',
     border: `3px dotted ${theme.colors.lightGrey}`,
@@ -23,29 +26,16 @@ const stepOneStyles = theme => ({
     fontSize: '30px',
     color: theme.colors.tundoraGrey,
   },
-  uploadButton: {
-    width: '260px',
-    height: '50px',
-    border: 'none',
-    outline: 'none',
-    backgroundColor: theme.colors.lightGrey,
-    color: theme.colors.tundoraGrey,
-    fontSize: '30px',
-    textAlign: 'center',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
 });
 
 const StyledStepOne = ({ classes }) => (
   <View className={classes.wrapper}>
-    <View className={classes.dropZone}>
+    <DropZone className={classes.dropZone}>
       <p className={classes.info}>Drag the Refund JSON file here</p>
       <span className={classes.info}>or</span>
       {/*TODO: add ability to upload*/}
-      <span className={classes.uploadButton}>Select file</span>
-    </View>
+      <FileUpload text={'Select file'} />
+    </DropZone>
   </View>
 );
 
