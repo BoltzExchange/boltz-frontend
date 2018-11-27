@@ -6,7 +6,7 @@ import { LinkButton } from '../button';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
-const styles = () => ({
+const styles = theme => ({
   wrapper: {
     height: 'auto',
     width: '100vw',
@@ -16,17 +16,43 @@ const styles = () => ({
   buttons: {
     marginRight: '10%',
   },
+  logo: {
+    width: 'auto',
+    height: 'auto',
+    margin: '20px',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+  },
+  img: {
+    alignSelf: 'center',
+  },
+  logoText: {
+    color: theme.colors.white,
+    fontSize: '38px',
+    fontfamily: 'SFProText',
+    margin: '2px',
+    fontWeight: '400',
+  },
+  subLogoText: {
+    color: theme.colors.white,
+    fontSize: '15px',
+    fontWeight: '100',
+  },
 });
 
 const TaskBar = ({ classes }) => (
   <View className={classes.wrapper}>
-    <img
-      src={boltz_logo}
-      height={80}
-      width={140}
-      className={classes.logo}
-      alt="logo"
-    />
+    <View className={classes.logo}>
+      <img
+        src={boltz_logo}
+        height={38}
+        width={38}
+        className={classes.img}
+        alt="logo"
+      />
+      <span className={classes.logoText}>Boltz</span>
+      <span className={classes.subLogoText}>ALPHA</span>
+    </View>
     <View className={classes.buttons}>
       <LinkButton text="Swap" to="/" />
       <LinkButton text="Refund" to="/refund" />
