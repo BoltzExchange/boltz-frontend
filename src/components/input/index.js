@@ -12,45 +12,56 @@ const styles = theme => ({
     backgroundColor: theme.colors.lightGrey,
     width: '200px',
     height: '50px',
-    '&:focus': {
-      outline: 'none',
-    },
+    outline: p => (p.error ? '1px solid red' : 'none'),
   },
 });
 
 class Input extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: 0 };
+    this.state = { value: 0 };
   }
 
   onChange = e => {
-    if (e.target.value >= 0) {
-      this.setState({ text: e.target.value });
+    if (e.target.value) {
+      this.setState({ value: e.target.value });
+      this.props.onChange && this.props.onChange(e.target.value);
     }
   };
 
   render() {
-    const { classes, isText, style, disable } = this.props;
+    const { classes, style, disable, min, step, value, max } = this.props;
     return (
       <input
         disabled={disable}
-        min="0"
+        step={step}
+        min={min}
+        max={max}
         style={style ? style : undefined}
         className={classes.wrapper}
         onChange={e => this.onChange(e)}
-        value={this.state.text}
-        type={isText ? 'text' : 'number'}
+        value={value ? value : this.state.value}
+        type={'number'}
       />
     );
   }
 }
 
+Input.defaultProps = {
+  min: 0,
+  step: 1,
+};
+
 Input.propTypes = {
   classes: PropTypes.object.isRequired,
-  isText: PropTypes.bool.isRequired,
+  onChange: PropTypes.func,
   style: PropTypes.object,
   disable: PropTypes.bool,
+  error: PropTypes.bool,
+  min: PropTypes.number,
+  max: PropTypes.number,
+  value: PropTypes.number,
+  step: PropTypes.number,
 };
 
 export default injectSheet(styles)(Input);

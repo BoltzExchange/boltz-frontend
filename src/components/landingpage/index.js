@@ -33,7 +33,7 @@ const styles = theme => ({
   },
 });
 
-const LandingPage = ({ classes, toggleSwapMode }) => {
+const LandingPage = ({ classes, toggleSwapMode, setSwapAmount }) => {
   return (
     <BackGround>
       <TaskBar />
@@ -52,16 +52,22 @@ const LandingPage = ({ classes, toggleSwapMode }) => {
           </p>
           <LinkButton text="WHY?" to="/faq" />
         </View>
-        <SwapTab onClick={() => toggleSwapMode()} />
+        <SwapTab
+          onClick={(sent, received) => {
+            setSwapAmount(sent, received);
+            toggleSwapMode();
+          }}
+        />
       </View>
     </BackGround>
   );
 };
 
 LandingPage.propTypes = {
-  classes: PropTypes.object,
+  classes: PropTypes.object.isRequired,
   inSwapMode: PropTypes.bool,
   toggleSwapMode: PropTypes.func,
+  setSwapAmount: PropTypes.func,
 };
 
 export default injectSheet(styles)(LandingPage);
