@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import Refund from './refund';
 import * as actions from './refundActions';
 
@@ -9,7 +8,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleRefundMode: () => dispatch(actions.toggleRefundMode()),
-  push: path => dispatch(push(path)),
 });
 
 export default connect(

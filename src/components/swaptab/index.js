@@ -92,7 +92,7 @@ class SwapTab extends React.Component {
   shouldSubmit = () => {
     const { error, sent, received } = this.state;
     if (!error && sent !== 0) {
-      this.props.onClick(sent, received);
+      this.props.onPress(sent, received);
     }
   };
 
@@ -135,7 +135,7 @@ class SwapTab extends React.Component {
 
 SwapTab.propTypes = {
   classes: PropTypes.object,
-  onClick: PropTypes.func,
+  onPress: PropTypes.func,
 };
 
 export default injectSheet(styles)(SwapTab);

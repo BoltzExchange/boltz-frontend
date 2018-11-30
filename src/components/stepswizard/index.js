@@ -3,7 +3,6 @@ import { FaArrowLeft } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
-import NavPrompt from '../navprompt';
 import ProgressBar from '../progressbar';
 import Steps, { Step } from './steps';
 import Controls, { Control } from './controls';
@@ -75,7 +74,7 @@ class StepsWizard extends Component {
 
   render() {
     const { stage } = this.state;
-    const { classes, onExit, alertOnExit, message, range } = this.props;
+    const { classes, onExit, range } = this.props;
     const children = React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
         stage,
@@ -87,7 +86,6 @@ class StepsWizard extends Component {
     });
     return (
       <View className={classes.wrapper}>
-        <NavPrompt when={alertOnExit} message={message} />
         <View className={classes.progress}>
           {onExit ? (
             <FaArrowLeft
@@ -108,8 +106,10 @@ StepsWizard.propTypes = {
   children: PropTypes.children,
   classes: PropTypes.object,
   onExit: PropTypes.func,
+  onClick: PropTypes.func,
+  await: PropTypes.bool,
   alertOnExit: PropTypes.bool,
-  message: PropTypes.oneOfType(PropTypes.string, PropTypes.func),
+  onExitmessage: PropTypes.oneOfType(PropTypes.string, PropTypes.func),
   stage: PropTypes.number,
   range: PropTypes.number,
   dark: PropTypes.bool,

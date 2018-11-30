@@ -1,23 +1,20 @@
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { withRouter } from 'react-router-dom';
-import { toggleSwapMode, setSwapAmount } from './swapActions';
+import { toggleSwapMode, setSwapAmount, startSwap } from './swapActions';
 import Swap from './swap';
 
 const mapStateToProps = state => ({
   inSwapMode: state.swapReducer.inSwapMode,
+  isFetching: state.swapReducer.isFetching,
   swapInfo: state.swapReducer.swapInfo,
 });
 
 const mapDispatchToProps = dispatch => ({
   toggleSwapMode: () => dispatch(toggleSwapMode()),
   setSwapAmount: (sent, received) => dispatch(setSwapAmount(sent, received)),
+  startSwap: () => dispatch(startSwap()),
 });
 
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  ),
-  withRouter
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(Swap);

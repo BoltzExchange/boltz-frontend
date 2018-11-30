@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { Link } from 'react-router-dom';
 import qr from '../../asset/icons/qr_code.png';
 import { FaCheckCircle, FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
@@ -35,7 +34,7 @@ const StyledStepOne = ({ classes, value }) => (
     <p className={classes.title}>
       Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
       invoice of <br />
-      <b>{value} T-BTC</b> to recieve it.
+      <b>{value} T-BTC</b> to receive it.
     </p>
     <p className={classes.invoice}>
       lnbc1pvjluezpp5qqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqypqdpl2pkx2ctnv5
@@ -188,7 +187,7 @@ StyledStepFour.propTypes = {
 };
 
 export const StepFour = injectSheet(stepFourStyles)(StyledStepFour);
-
+/*
 const errorStyles = theme => ({
   wrapper: {
     width: '700px',
@@ -243,3 +242,4 @@ StyledError.propTypes = {
 };
 
 export const Error = injectSheet(errorStyles)(StyledError);
+*/

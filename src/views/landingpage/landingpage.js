@@ -33,29 +33,37 @@ const styles = theme => ({
   },
 });
 
-const LandingPage = ({ classes, toggleSwapMode, setSwapAmount }) => {
+const LandingPage = ({
+  classes,
+  toggleSwapMode,
+  goHome,
+  goSwap,
+  goRefund,
+  setSwapAmount,
+}) => {
   return (
     <BackGround>
-      <TaskBar />
+      <TaskBar goRefund={goRefund} goHome={goHome} />
       <View className={classes.wrapper}>
         <View className={classes.infoWrapper}>
           <p className={classes.title}>
-            Instant, Low fee, & <br /> Non custodial.
+            Instant, Low Fee & <br /> Non-Custodial.
           </p>
           <p className={classes.description}>
             Trading <br />
             <b>{`Shouldn't`}</b>
             <br />
-            require
+            Require
             <br />
-            an account.
+            An Account.
           </p>
           <LinkButton text="WHY?" to="/faq" />
         </View>
         <SwapTab
-          onClick={(sent, received) => {
+          onPress={(sent, received) => {
             setSwapAmount(sent, received);
             toggleSwapMode();
+            goSwap();
           }}
         />
       </View>
@@ -65,9 +73,11 @@ const LandingPage = ({ classes, toggleSwapMode, setSwapAmount }) => {
 
 LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  inSwapMode: PropTypes.bool,
-  toggleSwapMode: PropTypes.func,
-  setSwapAmount: PropTypes.func,
+  toggleSwapMode: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
+  goSwap: PropTypes.func.isRequired,
+  goRefund: PropTypes.func.isRequired,
+  setSwapAmount: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(LandingPage);

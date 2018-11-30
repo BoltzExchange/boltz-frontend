@@ -61,6 +61,7 @@ class Refund extends React.Component {
             <StepsWizard.Controls>
               <StepsWizard.Control
                 num={1}
+                action={true}
                 render={() => <Controls text={'Next'} />}
               />
               <StepsWizard.Control

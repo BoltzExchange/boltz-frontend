@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
 import swapReducer from '../views/swap/swapReducer';
+import navReducer from '../views/root/navReducer';
 import refundReducer from '../views/refund/refundReducer';
 
-const createRootReducer = history =>
+const createRootReducer = () =>
   combineReducers({
-    router: connectRouter(history),
+    route: navReducer,
     swapReducer,
     refundReducer,
   });

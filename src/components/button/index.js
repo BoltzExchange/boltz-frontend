@@ -1,7 +1,6 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 /*
  * Link button
@@ -15,12 +14,13 @@ const LinkBtnStyles = theme => ({
     textDecoration: 'none',
     transition: '0.3s',
     '&:hover': {
-      color: theme.colors.lightGray,
+      cursor: 'pointer',
+      color: theme.colors.lightGrey,
     },
   },
 });
 
-const StyledLinkButton = ({ classes, text, to, style, external }) =>
+const StyledLinkButton = ({ classes, text, to, style, external, onPress }) =>
   external ? (
     <a
       style={style ? style : undefined}
@@ -32,16 +32,21 @@ const StyledLinkButton = ({ classes, text, to, style, external }) =>
       {text}
     </a>
   ) : (
-    <Link style={style ? style : undefined} className={classes.wrapper} to={to}>
+    <span
+      style={style ? style : undefined}
+      className={classes.wrapper}
+      onClick={() => onPress()}
+    >
       {text}
-    </Link>
+    </span>
   );
 
 StyledLinkButton.propTypes = {
   classes: PropTypes.object,
-  external: PropTypes.bool,
+  external: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
+  onPress: PropTypes.func,
   style: PropTypes.object,
 };
 
