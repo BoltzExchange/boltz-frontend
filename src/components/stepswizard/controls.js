@@ -17,7 +17,7 @@ Control.propTypes = {
 
 class Controls extends React.Component {
   render() {
-    const { children, stage, range, style, onExit, nextStage } = this.props;
+    const { children, style } = this.props;
     const steps = React.Children.map(children, child => {
       return React.cloneElement(child, {
         ...this.props,

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import {
-  toggleSwapMode,
   setSwapAmount,
   startSwap,
-  startSwapDemo,
+  // startSwapDemo,
+  setSwapInvoice,
 } from './swapActions';
 import { nav } from '../../action/index';
 import Swap from './swap';
@@ -15,8 +15,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleSwapMode: () => dispatch(toggleSwapMode()),
   setSwapAmount: (sent, received) => dispatch(setSwapAmount(sent, received)),
+  setSwapInvoice: invoice => dispatch(setSwapInvoice(invoice)),
   goHome: () => dispatch(nav.goHome()),
   startSwap: () => dispatch(startSwap()),
   //startSwap: () => dispatch(startSwapDemo()),

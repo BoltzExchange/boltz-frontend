@@ -6,12 +6,13 @@ import View from '../../components/view';
 import { LinkButton } from '../../components/button';
 import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
+import Networks from '../../constants/networks';
 
 const styles = theme => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   infoWrapper: {
     flexDirection: 'column',
@@ -35,11 +36,11 @@ const styles = theme => ({
 
 const LandingPage = ({
   classes,
-  toggleSwapMode,
   goHome,
   goSwap,
   goRefund,
   setSwapAmount,
+  setPublicKey,
 }) => {
   return (
     <BackGround>
@@ -62,7 +63,7 @@ const LandingPage = ({
         <SwapTab
           onPress={(sent, received) => {
             setSwapAmount(sent, received);
-            toggleSwapMode();
+            setPublicKey(Networks.bitcoinMainnet);
             goSwap();
           }}
         />
@@ -74,6 +75,7 @@ const LandingPage = ({
 LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
   toggleSwapMode: PropTypes.func.isRequired,
+  setPublicKey: PropTypes.func.isRequired,
   goHome: PropTypes.func.isRequired,
   goSwap: PropTypes.func.isRequired,
   goRefund: PropTypes.func.isRequired,

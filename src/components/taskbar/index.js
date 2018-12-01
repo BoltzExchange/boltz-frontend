@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
-import { networks } from 'bitcoinjs-lib';
-import { newKeys } from '../../scripts/newKeys';
 import { LinkButton } from '../button';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');

@@ -11,7 +11,7 @@ const styles = () => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
   },
 });
 

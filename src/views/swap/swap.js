@@ -11,7 +11,7 @@ const styles = () => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
   },
 });
 
@@ -39,8 +39,8 @@ Controls.propTypes = {
 
 const Swap = ({
   classes,
-  toggleSwapMode,
   setSwapAmount,
+  setSwapInvoice,
   goHome,
   swapInfo,
   startSwap,
@@ -55,7 +55,6 @@ const Swap = ({
           onExit={() => {
             if (window.confirm('Sure you want to exit')) {
               setSwapAmount(null, null);
-              toggleSwapMode();
               goHome();
             }
           }}
@@ -63,7 +62,9 @@ const Swap = ({
           <StepsWizard.Steps>
             <StepsWizard.Step
               num={1}
-              render={() => <StepOne value={swapInfo.received} />}
+              render={() => (
+                <StepOne value={swapInfo.received} onChange={setSwapInvoice} />
+              )}
             />
             <StepsWizard.Step
               num={2}
@@ -75,7 +76,7 @@ const Swap = ({
           <StepsWizard.Controls>
             <StepsWizard.Control
               num={1}
-              render={props => (
+              render={() => (
                 <Controls
                   loading={isFetching}
                   text={'Fee: 0.0001 T-BTC'}
@@ -109,7 +110,6 @@ const Swap = ({
             />
           </StepsWizard.Controls>
         </StepsWizard>
-        )
       </View>
     </BackGround>
   );
@@ -121,8 +121,10 @@ Swap.propTypes = {
   inSwapMode: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
   swapInfo: PropTypes.object,
-  toggleSwapMode: PropTypes.func,
   setSwapAmount: PropTypes.func,
+  setSwapInvoice: PropTypes.func,
+  onExit: PropTypes.func,
+  nextStage: PropTypes.func,
   startSwap: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
 };
