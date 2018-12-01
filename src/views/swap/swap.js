@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { FaArrowRight } from 'react-icons/fa';
+import { generateKeys } from '../../action';
 import View from '../../components/view';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
@@ -39,10 +40,11 @@ Controls.propTypes = {
 
 const Swap = ({
   classes,
-  setSwapAmount,
   setSwapInvoice,
+  completeSwap,
   goHome,
   swapInfo,
+  swapResponse,
   startSwap,
   isFetching,
 }) => {
@@ -54,7 +56,7 @@ const Swap = ({
           stage={1}
           onExit={() => {
             if (window.confirm('Sure you want to exit')) {
-              setSwapAmount(null, null);
+              completeSwap();
               goHome();
             }
           }}
@@ -68,21 +70,31 @@ const Swap = ({
             />
             <StepsWizard.Step
               num={2}
-              render={() => <StepTwo value={swapInfo.sent} />}
+              render={() => (
+                <StepTwo value={swapInfo.sent} address={swapResponse.address} />
+              )}
             />
-            <StepsWizard.Step num={3} render={() => <StepThree />} />
+            <StepsWizard.Step
+              num={3}
+              render={() => (
+                <StepThree
+                  address={swapResponse.address}
+                  content={swapResponse}
+                  privateKey={generateKeys.getPrivateKey(swapInfo.publicKey)}
+                />
+              )}
+            />
             <StepsWizard.Step num={4} render={() => <StepFour />} />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
               num={1}
-              render={() => (
+              render={props => (
                 <Controls
                   loading={isFetching}
                   text={'Fee: 0.0001 T-BTC'}
                   onPress={() => {
-                    startSwap();
-                    // setTimeout(() => props.nextStage(), 1200);
+                    startSwap(swapInfo, props.nextStage);
                   }}
                 />
               )}
@@ -121,7 +133,8 @@ Swap.propTypes = {
   inSwapMode: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
   swapInfo: PropTypes.object,
-  setSwapAmount: PropTypes.func,
+  swapResponse: PropTypes.object,
+  completeSwap: PropTypes.func,
   setSwapInvoice: PropTypes.func,
   onExit: PropTypes.func,
   nextStage: PropTypes.func,

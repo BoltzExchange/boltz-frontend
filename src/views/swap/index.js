@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import {
   setSwapAmount,
   startSwap,
-  // startSwapDemo,
+  completeSwap,
   setSwapInvoice,
 } from './swapActions';
 import { nav } from '../../action/index';
@@ -12,14 +12,15 @@ const mapStateToProps = state => ({
   inSwapMode: state.swapReducer.inSwapMode,
   isFetching: state.swapReducer.isFetching,
   swapInfo: state.swapReducer.swapInfo,
+  swapResponse: state.swapReducer.swapResponse.response,
 });
 
 const mapDispatchToProps = dispatch => ({
   setSwapAmount: (sent, received) => dispatch(setSwapAmount(sent, received)),
   setSwapInvoice: invoice => dispatch(setSwapInvoice(invoice)),
   goHome: () => dispatch(nav.goHome()),
-  startSwap: () => dispatch(startSwap()),
-  //startSwap: () => dispatch(startSwapDemo()),
+  completeSwap: () => dispatch(completeSwap()),
+  startSwap: (info, cb) => dispatch(startSwap(info, cb)),
 });
 
 export default connect(

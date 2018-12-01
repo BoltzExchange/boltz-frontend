@@ -73,6 +73,7 @@ const stepTwoStyles = () => ({
   address: {
     fontSize: '28px',
     color: 'grey',
+    wordBreak: 'break-word',
   },
   action: {
     color: 'blue',
@@ -82,7 +83,7 @@ const stepTwoStyles = () => ({
   },
 });
 
-const StyledStepTwo = ({ classes, value }) => (
+const StyledStepTwo = ({ classes, value, address }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
       <img src={qr} className={classes.image} alt={'qr code'} />
@@ -97,11 +98,7 @@ const StyledStepTwo = ({ classes, value }) => (
         on <b>Bitcoin</b> <br />
         blockchain address:
       </p>
-      <p className={classes.address}>
-        1F1tAaz5x1HUXrCNLbt
-        <br />
-        MDqcw6o5GNn4xqX
-      </p>
+      <p className={classes.address}>{address}</p>
       <span className={classes.action}>Copy</span>
     </View>
   </View>
@@ -110,6 +107,7 @@ const StyledStepTwo = ({ classes, value }) => (
 StyledStepTwo.propTypes = {
   classes: PropTypes.object.isRequired,
   value: PropTypes.number.isRequired,
+  address: PropTypes.string.isRequired,
 };
 
 export const StepTwo = injectSheet(stepTwoStyles)(StyledStepTwo);
@@ -142,13 +140,16 @@ class StyledStepThree extends React.Component {
   }
 
   render() {
-    const { classes, content } = this.props;
+    const { classes, content, address, privateKey } = this.props;
     return (
       <View className={classes.wrapper}>
         <p className={classes.info}>
           <a
             ref={this.ref}
-            href={`data:application/json;charset=utf-8,${content}`}
+            href={`data:application/json;charset=utf-8,${JSON.stringify({
+              ...content,
+              ...{ privateKey },
+            })}`}
             download={'refund.json'}
           >
             Click here
@@ -162,11 +163,10 @@ class StyledStepThree extends React.Component {
           <br />
           <a
             className={classes.link}
-            href={
-              'https://www.blockchain.com/btc/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
-            }
+            target={'_blank'}
+            href={`https://www.blockchain.com/btc/address/${address}`}
           >
-            1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX
+            {address}
           </a>
         </p>
       </View>
@@ -176,7 +176,9 @@ class StyledStepThree extends React.Component {
 
 StyledStepThree.propTypes = {
   classes: PropTypes.object.isRequired,
-  content: PropTypes.any.isRequired,
+  content: PropTypes.object.isRequired,
+  address: PropTypes.string.isRequired,
+  privateKey: PropTypes.string.isRequired,
 };
 
 export const StepThree = injectSheet(stepThreeStyles)(StyledStepThree);

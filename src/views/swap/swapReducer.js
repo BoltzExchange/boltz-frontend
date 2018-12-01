@@ -8,7 +8,7 @@ const initalState = {
     publicKey: null,
     invoice: null,
   },
-  swapResponse: null,
+  swapResponse: {},
 };
 
 const reducer = (state = initalState, action) => {
@@ -50,10 +50,7 @@ const reducer = (state = initalState, action) => {
         },
       };
     case actionTypes.COMPLETE_SWAP:
-      return {
-        ...state,
-        swapInfo: initalState.swapInfo,
-      };
+      return initalState;
     default:
       return state;
   }

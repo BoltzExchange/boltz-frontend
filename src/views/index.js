@@ -7,7 +7,6 @@ import theme from '../constants/theme';
 import Root from '../views/root';
 
 jss.setup(preset);
-console.log(store.getState());
 class App extends Component {
   render() {
     return (

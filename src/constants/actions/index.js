@@ -7,7 +7,7 @@ export const NEW_KEYS = 'NEW_KEYS';
 /**
  * Swap actions
  */
-export const COMPLETE_SWAP = 'ENTER_SWAP_MODE';
+export const COMPLETE_SWAP = 'COMPLETE_SWAP';
 export const SET_SWAP_AMOUNT = 'SET_SWAP_AMOUNT';
 export const SET_SWAP_INVOICE = 'SET_SWAP_INVOICE';
 export const SWAP_REQUEST = 'REQUEST_SWAP';

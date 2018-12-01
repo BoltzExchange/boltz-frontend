@@ -1,5 +1,13 @@
-import * as actionTypes from '../../constants/actions';
 import axios from 'axios';
+import { generateKeys } from '../../action';
+import * as actionTypes from '../../constants/actions';
+
+export const completeSwap = () => {
+  generateKeys.clearKeys();
+  return {
+    type: actionTypes.COMPLETE_SWAP,
+  };
+};
 
 /**
  * @param sent amount sent
@@ -13,6 +21,9 @@ export const setSwapAmount = (sent, received) => ({
   },
 });
 
+/**
+ * @param invoice swap invoice
+ */
 export const setSwapInvoice = invoice => ({
   type: actionTypes.SET_SWAP_INVOICE,
   payload: invoice,
@@ -34,7 +45,7 @@ export const swapRequest = () => ({
   type: actionTypes.SWAP_REQUEST,
 });
 
-export const startSwap = () => {
+export const startSwap = (swapInfo, cb) => {
   const url = 'http://localhost:9001/createswap';
   return dispatch => {
     dispatch(swapRequest());
@@ -42,18 +53,15 @@ export const startSwap = () => {
       .post(url, {
         pairId: 'LTC/BTC',
         orderSide: 0,
-        invoice:
-          'lnsb100u1pdlmsvqpp5000a3938aue8mhy8zq947ht8slwk5n5s7z5rpg79' +
-          'lqt6p3cs5x9sdqqcqzysefcuqwzq20ye8d0g4xfr8xap2geuq4lm9kmqxadweyxl2wn8a' +
-          'rh8snhey5nf0w33ym60urgrnwu65q46s7z94lsvdxct639lq0azvjspazg6g4',
-        refundPublicKey:
-          '03340f197bbe3664dcddefcd05ce49371f8d30ed31a6ca36e60abb887fbf66da20',
+        invoice: swapInfo.invoice,
+        refundPublicKey: swapInfo.publicKey,
       })
       .then(response => {
         window.alert('got it');
         console.log(response.data);
-        dispatch(swapResponse(true, response));
+        dispatch(swapResponse(true, response.data));
       })
+      .then(() => cb())
       .catch(error => {
         window.alert('Failed to execute swap.');
         dispatch(swapResponse(false, error.data));
