@@ -37,9 +37,6 @@ class GenerateKeys {
      * Clear keys
      */
     this.clearKeys = () => {
-      console.log('/////');
-      console.log(map.entries());
-      console.log('/////');
       map.clear();
     };
   }

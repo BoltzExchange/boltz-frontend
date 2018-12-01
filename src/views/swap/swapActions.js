@@ -57,8 +57,6 @@ export const startSwap = (swapInfo, cb) => {
         refundPublicKey: swapInfo.publicKey,
       })
       .then(response => {
-        window.alert('got it');
-        console.log(response.data);
         dispatch(swapResponse(true, response.data));
       })
       .then(() => cb())
