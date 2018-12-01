@@ -134,30 +134,51 @@ const stepThreeStyles = () => ({
   },
 });
 
-const StyledStepThree = ({ classes }) => (
-  <View className={classes.wrapper}>
-    <p className={classes.info}>
-      <a href={'#0'}>Click here</a> if download of &lsquo;Refund JSON&lsquo;
-      didn&apos;t <br /> start automatically.
-    </p>
-    <p className={classes.address}>
-      Waiting for one confirmation on Blockchain
-      <br /> address:
-      <br />
-      <a
-        className={classes.link}
-        href={
-          'https://www.blockchain.com/btc/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
-        }
-      >
-        1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX
-      </a>
-    </p>
-  </View>
-);
+class StyledStepThree extends React.Component {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+  }
+  componentDidMount() {
+    this.ref.current.click();
+  }
+
+  render() {
+    const { classes, content } = this.props;
+    return (
+      <View className={classes.wrapper}>
+        <p className={classes.info}>
+          <a
+            ref={this.ref}
+            href={`data:application/json;charset=utf-8,${content}`}
+            download={'refund.json'}
+          >
+            Click here
+          </a>{' '}
+          if download of &lsquo;Refund JSON&lsquo; didn&apos;t <br /> start
+          automatically.
+        </p>
+        <p className={classes.address}>
+          Waiting for one confirmation on Blockchain
+          <br /> address:
+          <br />
+          <a
+            className={classes.link}
+            href={
+              'https://www.blockchain.com/btc/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
+            }
+          >
+            1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX
+          </a>
+        </p>
+      </View>
+    );
+  }
+}
 
 StyledStepThree.propTypes = {
   classes: PropTypes.object.isRequired,
+  content: PropTypes.any.isRequired,
 };
 
 export const StepThree = injectSheet(stepThreeStyles)(StyledStepThree);

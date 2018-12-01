@@ -15,10 +15,17 @@ const styles = () => ({
   },
 });
 
-const Controls = ({ text }) => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+const Controls = ({ text, onPress, loading }) => (
+  <View
+    style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+    onClick={loading ? null : () => onPress()}
+  >
     <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
-      <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
+      {loading ? (
+        <h1 style={{ color: '#fff', fontWeight: '300' }}>Loading...</h1>
+      ) : (
+        <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
+      )}
     </View>
     <FaArrowRight size={30} color={'#FFF'} style={{ paddingRight: '10px' }} />
   </View>
@@ -26,14 +33,18 @@ const Controls = ({ text }) => (
 
 Controls.propTypes = {
   text: PropTypes.string,
+  onPress: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 const Swap = ({
   classes,
-  inSwapMode,
   toggleSwapMode,
   setSwapAmount,
+  goHome,
   swapInfo,
+  startSwap,
+  isFetching,
 }) => {
   return (
     <BackGround>
@@ -45,6 +56,7 @@ const Swap = ({
             if (window.confirm('Sure you want to exit')) {
               setSwapAmount(null, null);
               toggleSwapMode();
+              goHome();
             }
           }}
         >
@@ -63,20 +75,37 @@ const Swap = ({
           <StepsWizard.Controls>
             <StepsWizard.Control
               num={1}
-              action
-              render={() => <Controls text={'Fee: 0.0001 T-BTC'} />}
+              render={props => (
+                <Controls
+                  loading={isFetching}
+                  text={'Fee: 0.0001 T-BTC'}
+                  onPress={() => {
+                    startSwap();
+                    // setTimeout(() => props.nextStage(), 1200);
+                  }}
+                />
+              )}
             />
             <StepsWizard.Control
               num={2}
-              render={() => <Controls text={'Next'} />}
+              render={props => (
+                <Controls text={'Next'} onPress={() => props.nextStage()} />
+              )}
             />
             <StepsWizard.Control
               num={3}
-              render={() => <Controls text={'Next'} />}
+              render={props => (
+                <Controls text={'Next'} onPress={() => props.nextStage()} />
+              )}
             />
             <StepsWizard.Control
               num={4}
-              render={() => <Controls text={'Download Refund JSON'} />}
+              render={props => (
+                <Controls
+                  text={'Successfully completed swap!'}
+                  onPress={() => props.onExit()}
+                />
+              )}
             />
           </StepsWizard.Controls>
         </StepsWizard>
@@ -90,9 +119,12 @@ Swap.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   inSwapMode: PropTypes.bool.isRequired,
+  goHome: PropTypes.func.isRequired,
   swapInfo: PropTypes.object,
   toggleSwapMode: PropTypes.func,
   setSwapAmount: PropTypes.func,
+  startSwap: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(styles)(Swap);
