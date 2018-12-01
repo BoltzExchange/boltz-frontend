@@ -71,7 +71,11 @@ const Swap = ({
             <StepsWizard.Step
               num={2}
               render={() => (
-                <StepTwo value={swapInfo.sent} address={swapResponse.address} />
+                <StepTwo
+                  value={swapInfo.sent}
+                  address={swapResponse.address}
+                  link={swapInfo.invoice}
+                />
               )}
             />
             <StepsWizard.Step

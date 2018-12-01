@@ -6,6 +6,7 @@
     "bitcoinjs-lib": "^4.0.2",
     "connected-react-router": "^5.0.1",
     "prop-types": "^15.6.2",
+    "qrious": "^4.0.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-icons": "^3.2.2",
