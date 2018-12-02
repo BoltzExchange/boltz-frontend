@@ -59,8 +59,8 @@ const TaskBar = ({ classes }) => (
       <LinkButton text="FAQ" to="/faq" />
       <LinkButton
         external
-        text="Github"
-        to="https://github.com/BoltzExchange/boltz-frontend"
+        text="Source"
+        to="https://github.com/BoltzExchange"
       />
     </View>
   </View>
