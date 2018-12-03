@@ -58,11 +58,11 @@ const LandingPage = ({
             <br />
             An Account.
           </p>
-          <LinkButton text="WHY?" to="/faq" />
+          <LinkButton text="WHY?" onPress={() => window.alert('WIP')} />
         </View>
         <SwapTab
-          onPress={(sent, received) => {
-            setSwapAmount(sent, received);
+          onPress={state => {
+            setSwapAmount(state);
             setPublicKey(Networks.bitcoinMainnet);
             goSwap();
           }}

@@ -8,7 +8,7 @@ const styles = theme => ({
     width: p => `${p.width}px`,
     height: p => `${p.height}px`,
     padding: '6px 12px',
-    outline: 'none',
+    outline: p => (p.error ? '1px solid red' : 'none'),
     backgroundColor: theme.colors.lightGrey,
     fontSize: '18px',
     border: 'none',
@@ -30,6 +30,7 @@ InputArea.propTypes = {
   height: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(styles)(InputArea);

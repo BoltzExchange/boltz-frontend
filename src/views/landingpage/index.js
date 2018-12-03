@@ -7,7 +7,7 @@ const mapDispatchToProps = dispatch => ({
   goSwap: () => dispatch(nav.goSwap()),
   goRefund: () => dispatch(nav.goRefund()),
   goHome: () => dispatch(nav.goHome()),
-  setSwapAmount: (sent, received) => dispatch(setSwapAmount(sent, received)),
+  setSwapAmount: state => dispatch(setSwapAmount(state)),
   setPublicKey: () => dispatch(generateKeys.newKeys()),
 });
 

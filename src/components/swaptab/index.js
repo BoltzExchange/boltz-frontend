@@ -8,7 +8,7 @@ import Text, { InfoText } from '../text';
 import { MIN, MAX, FEE } from '../../constants/fees';
 import { FaArrowRight } from 'react-icons/fa';
 
-const types = ['BTC', 'T-BTC'];
+const types = ['BTC', 'LTC', 'T-BTC', 'T-LTC'];
 
 const styles = theme => ({
   wrapper: {
@@ -72,6 +72,8 @@ class SwapTab extends React.Component {
   state = {
     sent: 0,
     received: 0,
+    sentCurrency: 'BTC',
+    receivedCurrency: 'BTC',
     error: false,
   };
 
@@ -90,9 +92,9 @@ class SwapTab extends React.Component {
   };
 
   shouldSubmit = () => {
-    const { error, sent, received } = this.state;
+    const { error, sent } = this.state;
     if (!error && sent !== 0) {
-      this.props.onPress(sent, received);
+      this.props.onPress(this.state);
     }
   };
 
@@ -116,12 +118,18 @@ class SwapTab extends React.Component {
               error={this.state.error}
               onChange={e => this.setSwapData(e)}
             />
-            <DropDown fields={types} />
+            <DropDown
+              fields={['BTC']}
+              onChange={e => this.setState({ sentCurrency: e })}
+            />
           </View>
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
             <Input disable value={this.state.received} />
-            <DropDown fields={types} />
+            <DropDown
+              fields={types}
+              onChange={e => this.setState({ receivedCurrency: e })}
+            />
           </View>
         </View>
         <View className={classes.next} onClick={() => this.shouldSubmit()}>

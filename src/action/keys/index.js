@@ -4,23 +4,23 @@ import { getHexString } from '../../scripts/utils';
 
 class GenerateKeys {
   constructor() {
-    const map = new Map();
+    let map = {};
 
     /**
      * @param network network to generate key for
      * @returns publicKey
      */
     this.newKeys = network => {
-      map.clear(); /* make sure there is only one key pair */
+      this.clearKeys(); /* make sure there is only one key pair */
       const keyPair = ECPair.makeRandom({ network });
-      map.set(
-        getHexString(keyPair.publicKey),
-        getHexString(keyPair.privateKey)
-      );
+      map = {
+        publicKey: getHexString(keyPair.publicKey),
+        privateKey: getHexString(keyPair.privateKey),
+      };
 
       return {
         type: NEW_KEYS,
-        payload: getHexString(keyPair.publicKey),
+        payload: map.publicKey,
       };
     };
 
@@ -29,15 +29,16 @@ class GenerateKeys {
      * @returns private key
      */
     this.getPrivateKey = publicHexKey => {
-      const privateKey = map.get(publicHexKey);
-      return privateKey;
+      if (map.publicKey === publicHexKey) {
+        return map.privateKey;
+      }
     };
 
     /**
      * Clear keys
      */
     this.clearKeys = () => {
-      map.clear();
+      map = {};
     };
   }
 }

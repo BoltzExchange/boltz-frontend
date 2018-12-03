@@ -6,7 +6,7 @@ import { FaCheckCircle, FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
 import InputArea from '../../components/inputarea';
 
-// TODO: refactor into multipe components.
+// TODO: refactor into multiple components.
 const stepOneStyles = () => ({
   wrapper: {
     flex: 1,
@@ -30,20 +30,50 @@ const stepOneStyles = () => ({
   },
 });
 
-const StyledStepOne = ({ classes, value, onChange }) => (
-  <View className={classes.wrapper}>
-    <p className={classes.title}>
-      Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
-      invoice of <br />
-      <b>{value} T-BTC</b> to receive it.
-    </p>
-    <InputArea width={600} height={150} onChange={onChange} />
-  </View>
-);
+class StyledStepOne extends React.Component {
+  state = {
+    error: false,
+  };
+
+  onChange = input => {
+    const valid = input.slice(0, 2);
+    if (valid === 'ln') {
+      this.props.onChange(input);
+      if (this.state.error) {
+        this.setState({ error: false });
+      }
+    } else {
+      this.setState({ error: true });
+    }
+  };
+
+  render() {
+    const { classes, value } = this.props;
+    const { error } = this.state;
+    return (
+      <View className={classes.wrapper}>
+        <p className={classes.title}>
+          Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
+          invoice of <br />
+          <b>
+            {value.received} {value.receivedCurrency}
+          </b>{' '}
+          to receive it.
+        </p>
+        <InputArea
+          width={600}
+          height={150}
+          onChange={this.onChange}
+          error={error}
+        />
+      </View>
+    );
+  }
+}
 
 StyledStepOne.propTypes = {
   classes: PropTypes.object.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
@@ -94,7 +124,11 @@ const StyledStepTwo = ({ classes, value, address, link }) => (
           fontSize: '30px',
         }}
       >
-        Send <b>{value} T-BTC</b> <br />
+        Send{' '}
+        <b>
+          {value.sent} {value.sentCurrency}
+        </b>{' '}
+        <br />
         on <b>Bitcoin</b> <br />
         blockchain address:
       </p>
@@ -106,7 +140,7 @@ const StyledStepTwo = ({ classes, value, address, link }) => (
 
 StyledStepTwo.propTypes = {
   classes: PropTypes.object.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.object.isRequired,
   address: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
 };
@@ -141,15 +175,16 @@ class StyledStepThree extends React.Component {
   }
 
   render() {
-    const { classes, content, address, privateKey } = this.props;
+    const { classes, redeemScript, address, currency, privateKey } = this.props;
     return (
       <View className={classes.wrapper}>
         <p className={classes.info}>
           <a
             ref={this.ref}
             href={`data:application/json;charset=utf-8,${JSON.stringify({
-              ...content,
-              ...{ privateKey },
+              redeemScript,
+              privateKey,
+              currency,
             })}`}
             download={'refund.json'}
           >
@@ -165,7 +200,7 @@ class StyledStepThree extends React.Component {
           <a
             className={classes.link}
             target={'_blank'}
-            href={`https://www.blockchain.com/btc/address/${address}`}
+            href={`https://blockstream.info/address/${address}`}
           >
             {address}
           </a>
@@ -177,8 +212,9 @@ class StyledStepThree extends React.Component {
 
 StyledStepThree.propTypes = {
   classes: PropTypes.object.isRequired,
-  content: PropTypes.object.isRequired,
+  redeemScript: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
+  currency: PropTypes.string.isRequired,
   privateKey: PropTypes.string.isRequired,
 };
 

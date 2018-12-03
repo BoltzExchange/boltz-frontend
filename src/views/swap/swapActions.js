@@ -13,11 +13,13 @@ export const completeSwap = () => {
  * @param sent amount sent
  * @param received amount received
  */
-export const setSwapAmount = (sent, received) => ({
+export const setSwapAmount = state => ({
   type: actionTypes.SET_SWAP_AMOUNT,
   payload: {
-    sent,
-    received,
+    sent: state.sent,
+    received: state.received,
+    sentCurrency: state.sentCurrency,
+    receivedCurrency: state.receivedCurrency,
   },
 });
 

@@ -59,8 +59,8 @@ const TaskBar = ({ classes, goHome, goRefund }) => (
       <LinkButton text="FAQ" onPress={() => window.alert('WIP')} />
       <LinkButton
         external
-        text="Github"
-        to="https://github.com/BoltzExchange/boltz-frontend"
+        text="Source"
+        to="https://github.com/BoltzExchange"
       />
     </View>
   </View>

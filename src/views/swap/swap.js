@@ -6,6 +6,7 @@ import { generateKeys } from '../../action';
 import View from '../../components/view';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
+import { FEE } from '../../constants/fees';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 
 const styles = () => ({
@@ -65,14 +66,14 @@ const Swap = ({
             <StepsWizard.Step
               num={1}
               render={() => (
-                <StepOne value={swapInfo.received} onChange={setSwapInvoice} />
+                <StepOne value={swapInfo} onChange={setSwapInvoice} />
               )}
             />
             <StepsWizard.Step
               num={2}
               render={() => (
                 <StepTwo
-                  value={swapInfo.sent}
+                  value={swapInfo}
                   address={swapResponse.address}
                   link={swapInfo.invoice}
                 />
@@ -83,7 +84,8 @@ const Swap = ({
               render={() => (
                 <StepThree
                   address={swapResponse.address}
-                  content={swapResponse}
+                  redeemScript={swapResponse.redeemScript}
+                  currency={swapInfo.sentCurrency}
                   privateKey={generateKeys.getPrivateKey(swapInfo.publicKey)}
                 />
               )}
@@ -96,7 +98,7 @@ const Swap = ({
               render={props => (
                 <Controls
                   loading={isFetching}
-                  text={'Fee: 0.0001 T-BTC'}
+                  text={`Fee: ${FEE} ${swapInfo.sentCurrency}`}
                   onPress={() => {
                     startSwap(swapInfo, props.nextStage);
                   }}

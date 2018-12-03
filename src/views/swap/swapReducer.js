@@ -5,6 +5,8 @@ const initalState = {
   swapInfo: {
     sent: null,
     received: null,
+    sentCurrency: null,
+    receivedCurrency: null,
     publicKey: null,
     invoice: null,
   },
@@ -31,6 +33,8 @@ const reducer = (state = initalState, action) => {
           ...state.swapInfo,
           sent: action.payload.sent,
           received: action.payload.received,
+          sentCurrency: action.payload.sentCurrency,
+          receivedCurrency: action.payload.receivedCurrency,
         },
       };
     case actionTypes.SET_SWAP_INVOICE:

@@ -17,11 +17,14 @@ const styles = theme => ({
   },
 });
 
-const DropDown = ({ classes, fields }) => {
+const DropDown = ({ classes, fields, onChange }) => {
   return (
-    <select className={classes.wrapper}>
+    <select
+      className={classes.wrapper}
+      onChange={e => onChange(e.target.value)}
+    >
       {fields.map((field, i) => (
-        <option key={i} value={`${field}-${i}`}>
+        <option key={i} value={field}>
           {field}
         </option>
       ))}
@@ -31,6 +34,7 @@ const DropDown = ({ classes, fields }) => {
 
 DropDown.propTypes = {
   classes: PropTypes.object,
+  onChange: PropTypes.func.isRequired,
   fields: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 };
 export default injectSheet(styles)(DropDown);
