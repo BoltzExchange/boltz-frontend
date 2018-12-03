@@ -8,8 +8,6 @@ import Text, { InfoText } from '../text';
 import { MIN, MAX, FEE } from '../../constants/fees';
 import { FaArrowRight } from 'react-icons/fa';
 
-const types = ['BTC', 'LTC', 'T-BTC', 'T-LTC'];
-
 const styles = theme => ({
   wrapper: {
     margin: '15px',
@@ -127,7 +125,7 @@ class SwapTab extends React.Component {
             <Text text="You receive:" className={classes.text} />
             <Input disable value={this.state.received} />
             <DropDown
-              fields={types}
+              fields={['LTC', 'T-LTC', 'T-BTC']}
               onChange={e => this.setState({ receivedCurrency: e })}
             />
           </View>
