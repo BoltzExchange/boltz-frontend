@@ -38,7 +38,7 @@ class Refund extends React.Component {
   }
 
   render() {
-    const { classes, inRefundMode, push } = this.props;
+    const { classes, inRefundMode, goHome } = this.props;
     return (
       <Background>
         <View className={classes.wrapper}>
@@ -48,7 +48,7 @@ class Refund extends React.Component {
             stage={1}
             alertOnExit={inRefundMode}
             onExit={() => {
-              push('/');
+              goHome();
             }}
             message={'Are you sure?'}
           >
@@ -86,7 +86,7 @@ class Refund extends React.Component {
 
 Refund.propTypes = {
   classes: PropTypes.object,
-  push: PropTypes.func,
+  goHome: PropTypes.func.isRequired,
   inRefundMode: PropTypes.bool,
   toggleRefundMode: PropTypes.func,
 };
