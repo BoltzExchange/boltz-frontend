@@ -48,7 +48,7 @@ export const swapRequest = () => ({
 });
 
 export const startSwap = (swapInfo, cb) => {
-  const url = 'http://5c02d5175dca6b00130ffac5.mockapi.io/createswap';
+  const url = 'http://localhost:9001/createswap';
   return dispatch => {
     dispatch(swapRequest());
     axios
