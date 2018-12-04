@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import View from '../view';
 
-const Control = ({ render, stage, num }) => {
+const Control = props => {
+  const { stage, num, render } = props;
   if (stage === num) {
-    return render();
+    return render(props);
   } else return null;
 };
 
@@ -14,29 +15,28 @@ Control.propTypes = {
   render: PropTypes.func,
 };
 
-const Controls = ({ style, stage, range, children, nextStage, onExit }) => {
-  const steps = React.Children.map(children, child => {
-    return React.cloneElement(child, {
-      stage,
+class Controls extends React.Component {
+  render() {
+    const { children, style } = this.props;
+    const steps = React.Children.map(children, child => {
+      return React.cloneElement(child, {
+        ...this.props,
+      });
     });
-  });
-  return (
-    <View
-      className={style.controls}
-      onClick={() => (stage === range ? onExit() : nextStage())}
-    >
-      {steps}
-    </View>
-  );
-};
+
+    return <View className={style.controls}>{steps}</View>;
+  }
+}
 
 Controls.propTypes = {
+  nextStage: PropTypes.func,
+  disable: PropTypes.bool,
+  canExit: PropTypes.bool,
+  onExit: PropTypes.func,
   children: PropTypes.children,
   style: PropTypes.object,
   stage: PropTypes.number,
   range: PropTypes.number,
-  onExit: PropTypes.func,
-  nextStage: PropTypes.func,
 };
 
 export { Control };

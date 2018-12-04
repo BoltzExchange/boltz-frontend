@@ -6,12 +6,13 @@ import View from '../../components/view';
 import { LinkButton } from '../../components/button';
 import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
+import Networks from '../../constants/networks';
 
 const styles = theme => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   infoWrapper: {
     flexDirection: 'column',
@@ -33,29 +34,37 @@ const styles = theme => ({
   },
 });
 
-const LandingPage = ({ classes, toggleSwapMode, setSwapAmount }) => {
+const LandingPage = ({
+  classes,
+  goHome,
+  goSwap,
+  goRefund,
+  setSwapAmount,
+  setPublicKey,
+}) => {
   return (
     <BackGround>
-      <TaskBar />
+      <TaskBar goRefund={goRefund} goHome={goHome} />
       <View className={classes.wrapper}>
         <View className={classes.infoWrapper}>
           <p className={classes.title}>
-            Instant, Low fee, & <br /> Non custodial.
+            Instant, Low Fee & <br /> Non-Custodial.
           </p>
           <p className={classes.description}>
             Trading <br />
             <b>{`Shouldn't`}</b>
             <br />
-            require
+            Require
             <br />
-            an account.
+            An Account.
           </p>
-          <LinkButton text="WHY?" to="/faq" />
+          <LinkButton text="WHY?" onPress={() => window.alert('WIP')} />
         </View>
         <SwapTab
-          onClick={(sent, received) => {
-            setSwapAmount(sent, received);
-            toggleSwapMode();
+          onPress={state => {
+            setSwapAmount(state);
+            setPublicKey(Networks.bitcoinMainnet);
+            goSwap();
           }}
         />
       </View>
@@ -65,9 +74,12 @@ const LandingPage = ({ classes, toggleSwapMode, setSwapAmount }) => {
 
 LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  inSwapMode: PropTypes.bool,
-  toggleSwapMode: PropTypes.func,
-  setSwapAmount: PropTypes.func,
+  toggleSwapMode: PropTypes.func.isRequired,
+  setPublicKey: PropTypes.func.isRequired,
+  goHome: PropTypes.func.isRequired,
+  goSwap: PropTypes.func.isRequired,
+  goRefund: PropTypes.func.isRequired,
+  setSwapAmount: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(LandingPage);

@@ -11,7 +11,7 @@ const styles = () => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
   },
 });
 
@@ -61,6 +61,7 @@ class Refund extends React.Component {
             <StepsWizard.Controls>
               <StepsWizard.Control
                 num={1}
+                action={true}
                 render={() => <Controls text={'Next'} />}
               />
               <StepsWizard.Control

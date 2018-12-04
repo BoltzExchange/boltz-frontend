@@ -40,7 +40,7 @@ const styles = theme => ({
   },
 });
 
-const TaskBar = ({ classes }) => (
+const TaskBar = ({ classes, goHome, goRefund }) => (
   <View className={classes.wrapper}>
     <View className={classes.logo}>
       <img
@@ -54,12 +54,12 @@ const TaskBar = ({ classes }) => (
       <span className={classes.subLogoText}>ALPHA</span>
     </View>
     <View className={classes.buttons}>
-      <LinkButton text="Swap" to="/" />
-      <LinkButton text="Refund" to="/refund" />
-      <LinkButton text="FAQ" to="/faq" />
+      <LinkButton text="Swap" onPress={() => goHome()} />
+      <LinkButton text="Refund" onPress={() => goRefund()} />
+      <LinkButton text="FAQ" onPress={() => window.alert('WIP')} />
       <LinkButton
         external
-        text="Source"
+        text="Github"
         to="https://github.com/BoltzExchange"
       />
     </View>
@@ -68,6 +68,8 @@ const TaskBar = ({ classes }) => (
 
 TaskBar.propTypes = {
   classes: PropTypes.object,
+  goHome: PropTypes.func.isRequired,
+  goRefund: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(TaskBar);

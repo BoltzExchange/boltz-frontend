@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { Link } from 'react-router-dom';
-import qr from '../../asset/icons/qr_code.png';
+import QrCode from '../../components/qrcode';
 import { FaCheckCircle, FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
+import InputArea from '../../components/inputarea';
 
-//TODO: refactor into multipe components.
+// TODO: refactor into multiple components.
 const stepOneStyles = () => ({
   wrapper: {
     flex: 1,
@@ -30,24 +30,51 @@ const stepOneStyles = () => ({
   },
 });
 
-const StyledStepOne = ({ classes, value }) => (
-  <View className={classes.wrapper}>
-    <p className={classes.title}>
-      Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
-      invoice of <br />
-      <b>{value} T-BTC</b> to recieve it.
-    </p>
-    <p className={classes.invoice}>
-      lnbc1pvjluezpp5qqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqqqsyqcyq5rqwzqfqypqdpl2pkx2ctnv5
-      sxxmmwwd5kgetjypeh2ursdae8g6twvus8g6rfwvs8qun0dfjkxaq8rkx3yf5tcsyz3d73gafnh3cax
-      9rn449d9p5uxz9ezhhypd0elx87sjle52x86fux2ypatgddc6k63n7erqz25le42c4u4ecky03ylcqca784w
-    </p>
-  </View>
-);
+class StyledStepOne extends React.Component {
+  state = {
+    error: false,
+  };
+
+  onChange = input => {
+    const valid = input.slice(0, 2);
+    if (valid === 'ln') {
+      this.props.onChange(input);
+      if (this.state.error) {
+        this.setState({ error: false });
+      }
+    } else {
+      this.setState({ error: true });
+    }
+  };
+
+  render() {
+    const { classes, value } = this.props;
+    const { error } = this.state;
+    return (
+      <View className={classes.wrapper}>
+        <p className={classes.title}>
+          Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
+          invoice of <br />
+          <b>
+            {value.received} {value.receivedCurrency}
+          </b>{' '}
+          to receive it.
+        </p>
+        <InputArea
+          width={600}
+          height={150}
+          onChange={this.onChange}
+          error={error}
+        />
+      </View>
+    );
+  }
+}
 
 StyledStepOne.propTypes = {
   classes: PropTypes.object.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export const StepOne = injectSheet(stepOneStyles)(StyledStepOne);
@@ -76,6 +103,7 @@ const stepTwoStyles = () => ({
   address: {
     fontSize: '28px',
     color: 'grey',
+    wordBreak: 'break-word',
   },
   action: {
     color: 'blue',
@@ -85,10 +113,10 @@ const stepTwoStyles = () => ({
   },
 });
 
-const StyledStepTwo = ({ classes, value }) => (
+const StyledStepTwo = ({ classes, value, address, link }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
-      <img src={qr} className={classes.image} alt={'qr code'} />
+      <QrCode size={300} link={link} />
     </View>
     <View className={classes.info}>
       <p
@@ -96,15 +124,15 @@ const StyledStepTwo = ({ classes, value }) => (
           fontSize: '30px',
         }}
       >
-        Send <b>{value} T-BTC</b> <br />
+        Send{' '}
+        <b>
+          {value.sent} {value.sentCurrency}
+        </b>{' '}
+        <br />
         on <b>Bitcoin</b> <br />
         blockchain address:
       </p>
-      <p className={classes.address}>
-        1F1tAaz5x1HUXrCNLbt
-        <br />
-        MDqcw6o5GNn4xqX
-      </p>
+      <p className={classes.address}>{address}</p>
       <span className={classes.action}>Copy</span>
     </View>
   </View>
@@ -112,7 +140,9 @@ const StyledStepTwo = ({ classes, value }) => (
 
 StyledStepTwo.propTypes = {
   classes: PropTypes.object.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.object.isRequired,
+  address: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
 };
 
 export const StepTwo = injectSheet(stepTwoStyles)(StyledStepTwo);
@@ -135,30 +165,57 @@ const stepThreeStyles = () => ({
   },
 });
 
-const StyledStepThree = ({ classes }) => (
-  <View className={classes.wrapper}>
-    <p className={classes.info}>
-      <a href={'#0'}>Click here</a> if download of &lsquo;Refund JSON&lsquo;
-      didn&apos;t <br /> start automatically.
-    </p>
-    <p className={classes.address}>
-      Waiting for one confirmation on Blockchain
-      <br /> address:
-      <br />
-      <a
-        className={classes.link}
-        href={
-          'https://www.blockchain.com/btc/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
-        }
-      >
-        1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX
-      </a>
-    </p>
-  </View>
-);
+class StyledStepThree extends React.Component {
+  constructor(props) {
+    super(props);
+    this.ref = React.createRef();
+  }
+  componentDidMount() {
+    this.ref.current.click();
+  }
+
+  render() {
+    const { classes, redeemScript, address, currency, privateKey } = this.props;
+    return (
+      <View className={classes.wrapper}>
+        <p className={classes.info}>
+          <a
+            ref={this.ref}
+            href={`data:application/json;charset=utf-8,${JSON.stringify({
+              redeemScript,
+              privateKey,
+              currency,
+            })}`}
+            download={'refund.json'}
+          >
+            Click here
+          </a>{' '}
+          if download of &lsquo;Refund JSON&lsquo; didn&apos;t <br /> start
+          automatically.
+        </p>
+        <p className={classes.address}>
+          Waiting for one confirmation on Blockchain
+          <br /> address:
+          <br />
+          <a
+            className={classes.link}
+            target={'_blank'}
+            href={`https://blockstream.info/address/${address}`}
+          >
+            {address}
+          </a>
+        </p>
+      </View>
+    );
+  }
+}
 
 StyledStepThree.propTypes = {
   classes: PropTypes.object.isRequired,
+  redeemScript: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  currency: PropTypes.string.isRequired,
+  privateKey: PropTypes.string.isRequired,
 };
 
 export const StepThree = injectSheet(stepThreeStyles)(StyledStepThree);
@@ -188,58 +245,3 @@ StyledStepFour.propTypes = {
 };
 
 export const StepFour = injectSheet(stepFourStyles)(StyledStepFour);
-
-const errorStyles = theme => ({
-  wrapper: {
-    width: '700px',
-    height: '400px',
-    boxShadow: '0px 0px 30px -6px rgba(0,0,0,0.52)',
-    backgroundColor: theme.colors.white,
-    flexDirection: 'column',
-  },
-  content: {
-    width: '100%',
-    height: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    width: '100%',
-    height: '20%',
-    backgroundColor: theme.colors.matisseBlue,
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-  info: {
-    fontSize: '30px',
-  },
-  link: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textDecoration: 'none',
-    color: theme.colors.white,
-  },
-});
-
-const StyledError = ({ classes }) => (
-  <View className={classes.wrapper}>
-    <View className={classes.content}>
-      <p className={classes.info}> You cannot begin a swap.</p>
-    </View>
-    <View className={classes.button}>
-      <Link className={classes.link} to={'/'} replace>
-        <h1>Back</h1>
-      </Link>
-    </View>
-  </View>
-);
-
-StyledError.propTypes = {
-  classes: PropTypes.object.isRequired,
-  text: PropTypes.string,
-};
-
-export const Error = injectSheet(errorStyles)(StyledError);
