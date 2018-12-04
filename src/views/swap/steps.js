@@ -139,7 +139,7 @@ const StyledStepTwo = ({ classes, value, address, link }) => (
           {value.sent} {value.sentCurrency}
         </b>{' '}
         <br />
-        on <b>Bitcoin</b> <br />
+        on <b>Litecoin</b> <br />
         blockchain address:
       </p>
       <p className={classes.address} id="copy-address">
