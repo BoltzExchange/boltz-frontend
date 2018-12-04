@@ -110,8 +110,18 @@ const stepTwoStyles = () => ({
     fontWeight: '600',
     fontSize: '30px',
     marginLeft: '50%',
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
 });
+
+const copyToClipBoard = () => {
+  const range = document.getSelection().getRangeAt(0);
+  range.selectNode(document.getElementById('copy-address'));
+  window.getSelection().addRange(range);
+  document.execCommand('copy');
+};
 
 const StyledStepTwo = ({ classes, value, address, link }) => (
   <View className={classes.wrapper}>
@@ -132,8 +142,13 @@ const StyledStepTwo = ({ classes, value, address, link }) => (
         on <b>Bitcoin</b> <br />
         blockchain address:
       </p>
-      <p className={classes.address}>{address}</p>
-      <span className={classes.action}>Copy</span>
+      <p className={classes.address} id="copy-address">
+        {address}
+      </p>
+      {/* TODO: refactor how we copy */}
+      <span className={classes.action} onClick={() => copyToClipBoard()}>
+        Copy
+      </span>
     </View>
   </View>
 );
