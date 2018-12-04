@@ -75,7 +75,7 @@ const Swap = ({
                 <StepTwo
                   value={swapInfo}
                   address={swapResponse.address}
-                  link={swapInfo.invoice}
+                  link={swapResponse.bip21}
                 />
               )}
             />
