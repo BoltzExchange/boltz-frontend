@@ -6,7 +6,7 @@ import Swap from '../swap';
 import Refund from '../refund';
 import LandingPage from '../landingpage';
 
-const Root = ({ route }) => {
+const Router = ({ route }) => {
   return (
     <Container>
       {route === routes.home && <LandingPage />}
@@ -16,8 +16,8 @@ const Root = ({ route }) => {
   );
 };
 
-Root.propTypes = {
+Router.propTypes = {
   route: PropTypes.string.isRequired,
 };
 
-export default Root;
+export default Router;

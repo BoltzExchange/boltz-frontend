@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import swapReducer from '../views/swap/swapReducer';
-import navReducer from '../views/root/navReducer';
+import routerReducer from '../views/root/routerReducer';
 import refundReducer from '../views/refund/refundReducer';
 
 const createRootReducer = () =>
   combineReducers({
-    route: navReducer,
+    route: routerReducer,
     swapReducer,
     refundReducer,
   });
