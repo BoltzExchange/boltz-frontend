@@ -17,9 +17,10 @@ const styles = theme => ({
   },
 });
 
-const DropDown = ({ classes, fields, onChange }) => {
+const DropDown = ({ classes, fields, onChange, defaultValue }) => {
   return (
     <select
+      defaultValue={defaultValue}
       className={classes.wrapper}
       onChange={e => onChange(e.target.value)}
     >
@@ -35,6 +36,7 @@ const DropDown = ({ classes, fields, onChange }) => {
 DropDown.propTypes = {
   classes: PropTypes.object,
   onChange: PropTypes.func.isRequired,
+  defaultValue: PropTypes.string.isRequired,
   fields: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 };
 export default injectSheet(styles)(DropDown);
