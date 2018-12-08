@@ -19,7 +19,7 @@ const Controls = ({ text, onPress, loading }) => (
         <h1 style={styles.loading}>{text}</h1>
       )}
     </View>
-    <img src={NextArrow} style={styles.nextIcon} />
+    <img alt={'next_button'} src={NextArrow} style={styles.nextIcon} />
   </View>
 );
 

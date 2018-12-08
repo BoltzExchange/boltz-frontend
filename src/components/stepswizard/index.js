@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import BackArrow from '../../asset/icons/back_arrow.png';
-// import { FaArrowLeft } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
@@ -99,6 +98,7 @@ class StepsWizard extends Component {
         <View className={classes.progress}>
           {onExit ? (
             <img
+              alt={'back_button'}
               className={classes.backButton}
               src={BackArrow}
               onClick={() => (stage !== 1 ? this.prevStage() : onExit())}
