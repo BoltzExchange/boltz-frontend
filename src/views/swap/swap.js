@@ -6,6 +6,7 @@ import { generateKeys } from '../../action';
 import View from '../../components/view';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
+import Prompt from '../../components/prompt';
 import { FEE } from '../../constants/fees';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 
@@ -51,6 +52,7 @@ const Swap = ({
 }) => {
   return (
     <BackGround>
+      <Prompt />
       <View className={classes.wrapper}>
         <StepsWizard
           range={4}
