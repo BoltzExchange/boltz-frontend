@@ -53,10 +53,10 @@ class StyledStepOne extends React.Component {
     return (
       <View className={classes.wrapper}>
         <p className={classes.title}>
-          Paste a <b>Litecoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
+          Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
           invoice of <br />
           <b>
-            {value.received} {value.receivedCurrency}
+            {value.sent} {value.sentCurrency}
           </b>{' '}
           to receive it.
         </p>
@@ -141,10 +141,10 @@ const StyledStepTwo = ({ classes, value, address, link }) => (
       >
         Send{' '}
         <b>
-          {value.sent} {value.sentCurrency}
+          {value.received} {value.receivedCurrency}
         </b>{' '}
         <br />
-        on <b>Bitcoin</b> <br />
+        on <b>Litecoin</b> <br />
         blockchain address:
       </p>
       <p className={classes.address} id="copy-address">
