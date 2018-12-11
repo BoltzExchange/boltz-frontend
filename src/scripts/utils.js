@@ -7,3 +7,13 @@
 export const getHexString = input => {
   return input.toString('hex');
 };
+
+/**
+ * Convert BTC to Satoshi.
+ *
+ * @param btc btc
+ * @returns satoshi
+ */
+export const toSatoshi = btc => {
+  return btc / 0.00000001;
+};

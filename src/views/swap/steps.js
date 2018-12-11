@@ -5,6 +5,7 @@ import QrCode from '../../components/qrcode';
 import { FaCheckCircle, FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
 import InputArea from '../../components/inputarea';
+import { toSatoshi } from '../../scripts/utils';
 
 // TODO: refactor into multiple components.
 const stepOneStyles = () => ({
@@ -55,10 +56,7 @@ class StyledStepOne extends React.Component {
         <p className={classes.title}>
           Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
           invoice of <br />
-          <b>
-            {value.sent} {value.sentCurrency}
-          </b>{' '}
-          to receive it.
+          <b>{toSatoshi(value.sent)} Satoshis</b> to receive it.
         </p>
         <InputArea
           width={600}

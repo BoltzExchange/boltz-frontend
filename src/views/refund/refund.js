@@ -4,6 +4,7 @@ import injectSheet from 'react-jss';
 import { FaArrowRight } from 'react-icons/fa';
 import Background from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
+import Prompt from '../../components/prompt';
 import View from '../../components/view';
 import { StepOne, StepTwo, StepFour } from './steps';
 
@@ -41,6 +42,7 @@ class Refund extends React.Component {
     const { classes, inRefundMode, goHome } = this.props;
     return (
       <Background>
+        <Prompt />
         <View className={classes.wrapper}>
           <StepsWizard
             dark={true}

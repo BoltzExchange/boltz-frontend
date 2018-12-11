@@ -6,6 +6,8 @@ import View from '../../components/view';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Controls from '../../components/controls';
+import Prompt from '../../components/prompt';
+import { toSatoshi } from '../../scripts/utils';
 import { FEE } from '../../constants/fees';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 
@@ -29,6 +31,7 @@ const Swap = ({
 }) => {
   return (
     <BackGround>
+      <Prompt />
       <View className={classes.wrapper}>
         <StepsWizard
           range={4}
@@ -76,7 +79,7 @@ const Swap = ({
               render={props => (
                 <Controls
                   loading={isFetching}
-                  text={`Fee: ${FEE} ${swapInfo.sentCurrency}`}
+                  text={`Fee: ${Math.floor(toSatoshi(FEE))} Satoshi`}
                   onPress={() => {
                     startSwap(swapInfo, props.nextStage);
                   }}
