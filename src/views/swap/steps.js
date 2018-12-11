@@ -137,11 +137,7 @@ const StyledStepTwo = ({ classes, value, address, link }) => (
           fontSize: '30px',
         }}
       >
-        Send{' '}
-        <b>
-          {value.received} {value.receivedCurrency}
-        </b>{' '}
-        <br />
+        Send <b>`${toSatoshi(value.received)} Satoshis`</b> <br />
         on <b>Litecoin</b> <br />
         blockchain address:
       </p>
