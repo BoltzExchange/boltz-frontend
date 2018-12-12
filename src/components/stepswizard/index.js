@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BackArrow from '../../asset/icons/back_arrow.png';
+import { MdArrowBack } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
@@ -35,8 +35,8 @@ const styles = theme => ({
   },
   backButton: {
     padding: '10px',
-    width: '29px',
-    height: '24px',
+    width: '40px',
+    height: '40px',
     objectFit: 'contain',
     '&:hover': {
       cursor: 'pointer',
@@ -97,10 +97,8 @@ class StepsWizard extends Component {
       <View className={classes.wrapper}>
         <View className={classes.progress}>
           {onExit ? (
-            <img
-              alt={'back_button'}
+            <MdArrowBack
               className={classes.backButton}
-              src={BackArrow}
               onClick={() => (stage !== 1 ? this.prevStage() : onExit())}
             />
           ) : null}

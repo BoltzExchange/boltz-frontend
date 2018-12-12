@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import View from '../view';
-import NextArrow from '../../asset/icons/next_arrow.png';
+import { MdArrowForward } from 'react-icons/md';
 
 const styles = {
   wrapper: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   controls: { flex: 2, justifyContent: 'center', alignItems: 'center' },
   loading: { color: '#fff', fontWeight: '300' },
-  nextIcon: { paddingRight: '10px', heigt: '25px', width: '25px' },
+  nextIcon: {
+    paddingRight: '10px',
+    height: '30px',
+    width: '30px',
+    color: '#fff',
+  },
 };
 
 const Controls = ({ text, onPress, loading }) => (
@@ -19,7 +24,7 @@ const Controls = ({ text, onPress, loading }) => (
         <h1 style={styles.loading}>{text}</h1>
       )}
     </View>
-    <img alt={'next_button'} src={NextArrow} style={styles.nextIcon} />
+    <MdArrowForward style={styles.nextIcon} />
   </View>
 );
 
