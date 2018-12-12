@@ -36,13 +36,18 @@ const StyledStepOne = ({ classes, setRefundFile, setTransactionHash }) => (
     <DropZone className={classes.dropZone} onFileRead={setRefundFile}>
       <p className={classes.info}>Drag the Refund JSON file here</p>
       <span className={classes.info}>or</span>
-
-      {/*TODO: add ability to upload*/}
       <FileUpload text={'Select file'} onFileRead={setRefundFile} />
     </DropZone>
 
     <p className={classes.info}>Lockup transaction hash</p>
-    <InputArea height={150} width={500} onChange={setTransactionHash} />
+    <InputArea
+      height={150}
+      width={500}
+      onChange={setTransactionHash}
+      placeholder={
+        '0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098'
+      }
+    />
   </View>
 );
 
@@ -72,7 +77,12 @@ const stepTwoStyles = theme => ({
 const StyledStepTwo = ({ classes, setDestinationAddress }) => (
   <View className={classes.wrapper}>
     <p className={classes.info}>Destination address</p>
-    <InputArea height={150} width={500} onChange={setDestinationAddress} />
+    <InputArea
+      height={150}
+      width={500}
+      onChange={setDestinationAddress}
+      placeholder={'tb1qjnxa3c36s524qv4uqsclcjefuxrgzktcrky4zd'}
+    />
   </View>
 );
 
@@ -98,6 +108,11 @@ const stepThreeStyles = theme => ({
     margin: '15px',
     fontSize: '30px',
   },
+  transaction: {
+    wordBreak: 'break-all',
+    paddingLeft: '1vw',
+    paddingRight: '1vw',
+  },
 });
 
 const StyledStepThree = ({
@@ -108,9 +123,8 @@ const StyledStepThree = ({
   <View className={classes.wrapper}>
     <FaCheckCircle size={240} className={classes.icon} />
     <span className={classes.title}>Success!</span>
-    <p>
-      Your refund transaction: <code>{refundTransaction}</code>
-    </p>
+    <p>Your refund transaction:</p>
+    <code className={classes.transaction}>{refundTransaction}</code>
 
     <p>
       <a

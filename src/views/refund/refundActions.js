@@ -60,28 +60,35 @@ export const startRefund = (
       })
       .then(response => {
         const redeemScript = getHexBuffer(refundFile.redeemScript);
+        const lockupTransaction = Transaction.fromHex(
+          response.data.transactionHex
+        );
+
         const refundTransaction = constructRefundTransaction(
           ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
           redeemScript,
           refundFile.timeoutBlockHeight,
           // TODO: make sure the provided lockup transaction hash was correct and show more specific error is not
-          detectSwap(
-            getHexBuffer(refundFile.redeemScript),
-            Transaction.fromHex(response.data.transactionHex)
-          ),
-          address.toOutputScript(destinationAddress, Networks.bitcoinSimnet)
+          {
+            txHash: lockupTransaction.getHash(),
+            ...detectSwap(redeemScript, lockupTransaction),
+          },
+          address.toOutputScript(destinationAddress, Networks.litecoinSimnet)
         );
+
+        console.log(refundTransaction.toHex());
 
         const refundTransactionHex = refundTransaction.toHex();
         const refundTransactionHash = refundTransaction.getId();
 
+        dispatch(setRefundTransaction(refundTransactionHex));
+        dispatch(setRefundTransactionHash(refundTransactionHash));
+        dispatch(refundResponse(true, response.data));
+
         broadcastRefund(currency, refundTransactionHex);
 
-        setRefundTransaction(refundTransactionHex);
-        setRefundTransactionHash(refundTransactionHash);
-        dispatch(refundResponse(true, response.data));
+        cb();
       })
-      .then(() => cb())
       .catch(error => {
         console.log(error);
         window.alert('Failed to refund swap');

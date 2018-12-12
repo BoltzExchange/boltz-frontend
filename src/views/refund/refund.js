@@ -88,7 +88,7 @@ const Refund = ({
                       refundFile,
                       transactionHash,
                       destinationAddress,
-                      props.nextStage()
+                      props.nextStage
                     )
                   }
                 />
