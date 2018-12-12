@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { FaArrowRight } from 'react-icons/fa';
+import Controls from '../../components/controls';
 import Background from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Prompt from '../../components/prompt';
@@ -15,19 +15,6 @@ const styles = () => ({
     justifyContent: 'center',
   },
 });
-
-const Controls = ({ text }) => (
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
-      <h1 style={{ color: '#fff', fontWeight: '300' }}>{text}</h1>
-    </View>
-    <FaArrowRight size={30} color={'#FFF'} style={{ paddingRight: '10px' }} />
-  </View>
-);
-
-Controls.propTypes = {
-  text: PropTypes.string,
-};
 
 class Refund extends React.Component {
   UNSAFE_componentWillMount() {
