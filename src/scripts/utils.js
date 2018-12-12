@@ -18,7 +18,7 @@ export const toSatoshi = btc => {
   return btc * 100000000;
 };
 
-/*
+/**
  * Get a hex encoded Buffer from a string
  *
  * @param input {string} input
@@ -26,4 +26,20 @@ export const toSatoshi = btc => {
  */
 export const getHexBuffer = input => {
   return Buffer.from(input, 'hex');
+};
+
+/**
+ * Read the content of a file
+ *
+ * @param file file that should be read
+ * @param cb callback that will be called once the file is read
+ */
+export const readFile = (file, cb) => {
+  const reader = new window.FileReader();
+
+  reader.onload = () => {
+    cb(reader.result);
+  };
+
+  reader.readAsText(file);
 };

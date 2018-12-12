@@ -38,7 +38,7 @@ const StyledStepOne = ({ classes, setRefundFile, setTransactionHash }) => (
       <span className={classes.info}>or</span>
 
       {/*TODO: add ability to upload*/}
-      <FileUpload text={'Select file'} />
+      <FileUpload text={'Select file'} onFileRead={setRefundFile} />
     </DropZone>
 
     <p className={classes.info}>Lockup transaction hash</p>
