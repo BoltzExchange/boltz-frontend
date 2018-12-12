@@ -4,9 +4,9 @@ import injectSheet from 'react-jss';
 import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
+import Controls from '../controls';
 import Text, { InfoText } from '../text';
 import { MIN, MAX, FEE } from '../../constants/fees';
-import { FaArrowRight } from 'react-icons/fa';
 
 const styles = theme => ({
   wrapper: {
@@ -71,7 +71,7 @@ class SwapTab extends React.Component {
     sent: 0,
     received: 0,
     sentCurrency: 'BTC',
-    receivedCurrency: 'BTC',
+    receivedCurrency: 'LTC',
     error: false,
   };
 
@@ -83,7 +83,7 @@ class SwapTab extends React.Component {
     } else {
       this.setState({
         sent,
-        received: Number.parseFloat(sent - FEE).toFixed(4),
+        received: Number.parseFloat(sent - FEE).toFixed(5),
         error: false,
       });
     }
@@ -98,6 +98,7 @@ class SwapTab extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { error, received, receivedCurrency, sentCurrency } = this.state;
     return (
       <View className={classes.wrapper}>
         <View className={classes.stats}>
@@ -113,26 +114,27 @@ class SwapTab extends React.Component {
               min={MIN}
               max={MAX}
               step={0.001}
-              error={this.state.error}
+              error={error}
               onChange={e => this.setSwapData(e)}
             />
             <DropDown
-              fields={['BTC']}
+              defaultValue={sentCurrency}
+              fields={['BTC', 'T-BTC']}
               onChange={e => this.setState({ sentCurrency: e })}
             />
           </View>
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
-            <Input disable value={this.state.received} />
+            <Input disable value={received} />
             <DropDown
-              fields={['LTC', 'T-LTC', 'T-BTC']}
+              defaultValue={receivedCurrency}
+              fields={['LTC', 'T-LTC']}
               onChange={e => this.setState({ receivedCurrency: e })}
             />
           </View>
         </View>
-        <View className={classes.next} onClick={() => this.shouldSubmit()}>
-          <Text text="Start swap" className={classes.nextText} />
-          <FaArrowRight className={classes.icon} />
+        <View className={classes.next}>
+          <Controls text={'Start swap'} onPress={() => this.shouldSubmit()} />
         </View>
       </View>
     );

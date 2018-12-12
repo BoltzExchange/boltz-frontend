@@ -16,8 +16,9 @@ const styles = theme => ({
   },
 });
 
-const InputArea = ({ classes, height, width, onChange }) => (
+const InputArea = ({ classes, height, width, onChange, placeholder }) => (
   <textarea
+    placeholder={placeholder}
     className={classes.wrapper}
     rows={height}
     cols={width}
@@ -31,6 +32,7 @@ InputArea.propTypes = {
   width: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.bool.isRequired,
+  placeholder: PropTypes.string,
 };
 
 export default injectSheet(styles)(InputArea);

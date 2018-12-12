@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FaArrowLeft } from 'react-icons/fa';
+import BackArrow from '../../asset/icons/back_arrow.png';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
@@ -29,6 +29,15 @@ const styles = theme => ({
     width: '100%',
     height: '15%',
     backgroundColor: theme.colors.matisseBlue,
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  backButton: {
+    padding: '10px',
+    width: '29px',
+    height: '24px',
+    objectFit: 'contain',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -88,9 +97,10 @@ class StepsWizard extends Component {
       <View className={classes.wrapper}>
         <View className={classes.progress}>
           {onExit ? (
-            <FaArrowLeft
-              size={30}
-              style={{ padding: '10px' }}
+            <img
+              alt={'back_button'}
+              className={classes.backButton}
+              src={BackArrow}
               onClick={() => (stage !== 1 ? this.prevStage() : onExit())}
             />
           ) : null}

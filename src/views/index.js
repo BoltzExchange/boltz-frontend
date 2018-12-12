@@ -4,7 +4,7 @@ import { ThemeProvider, preset, jss } from 'react-jss';
 import store from '../state';
 import theme from '../constants/theme';
 
-import Root from '../views/root';
+import Router from '../views/router';
 
 jss.setup(preset);
 class App extends Component {
@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <Root />
+          <Router />
         </ThemeProvider>
       </Provider>
     );

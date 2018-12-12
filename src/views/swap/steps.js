@@ -5,6 +5,7 @@ import QrCode from '../../components/qrcode';
 import { FaCheckCircle, FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
 import InputArea from '../../components/inputarea';
+import { toSatoshi } from '../../scripts/utils';
 
 // TODO: refactor into multiple components.
 const stepOneStyles = () => ({
@@ -55,16 +56,18 @@ class StyledStepOne extends React.Component {
         <p className={classes.title}>
           Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
           invoice of <br />
-          <b>
-            {value.received} {value.receivedCurrency}
-          </b>{' '}
-          to receive it.
+          <b>{toSatoshi(value.sent)} Satoshis</b> to receive it.
         </p>
         <InputArea
           width={600}
           height={150}
           onChange={this.onChange}
           error={error}
+          placeholder={
+            'lntb20n1pwqhmchpp5v9tsdn62ptl47z8wvzj7xakw09wmj5yax05pv5z2alhpqgdmedlsd' +
+            'qqcqzys2wuh6vnuu8f6c94mx7wlduh8kge8ftuarg23nnkpuhgdjpw96hdj2qem2mcztny8vxng6gdc5xsfh2' +
+            'z6rf2rt42hc3k5udm2jcynjyspr262hk'
+          }
         />
       </View>
     );
@@ -134,11 +137,7 @@ const StyledStepTwo = ({ classes, value, address, link }) => (
           fontSize: '30px',
         }}
       >
-        Send{' '}
-        <b>
-          {value.sent} {value.sentCurrency}
-        </b>{' '}
-        <br />
+        Send <b>`${toSatoshi(value.received)} Satoshi`</b> <br />
         on <b>Litecoin</b> <br />
         blockchain address:
       </p>
