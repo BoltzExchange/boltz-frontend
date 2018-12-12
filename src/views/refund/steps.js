@@ -5,12 +5,15 @@ import View from '../../components/view';
 import { FaCheckCircle } from 'react-icons/fa';
 import DropZone from '../../components/dropzone';
 import FileUpload from '../../components/fileupload';
+import InputArea from '../../components/inputarea';
 
 const stepOneStyles = theme => ({
   wrapper: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: '1vh',
     backgroundColor: theme.colors.aeroBlue,
   },
   dropZone: {
@@ -28,19 +31,25 @@ const stepOneStyles = theme => ({
   },
 });
 
-const StyledStepOne = ({ classes }) => (
+const StyledStepOne = ({ classes, setRefundFile, setTransactionHash }) => (
   <View className={classes.wrapper}>
-    <DropZone className={classes.dropZone}>
+    <DropZone className={classes.dropZone} onFileRead={setRefundFile}>
       <p className={classes.info}>Drag the Refund JSON file here</p>
       <span className={classes.info}>or</span>
+
       {/*TODO: add ability to upload*/}
       <FileUpload text={'Select file'} />
     </DropZone>
+
+    <p className={classes.info}>Lockup transaction hash</p>
+    <InputArea height={150} width={500} onChange={setTransactionHash} />
   </View>
 );
 
 StyledStepOne.propTypes = {
   classes: PropTypes.object.isRequired,
+  setRefundFile: PropTypes.func.isRequired,
+  setTransactionHash: PropTypes.func.isRequired,
 };
 
 export const StepOne = injectSheet(stepOneStyles)(StyledStepOne);
@@ -48,58 +57,33 @@ export const StepOne = injectSheet(stepOneStyles)(StyledStepOne);
 const stepTwoStyles = theme => ({
   wrapper: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: '1vh',
     backgroundColor: theme.colors.aeroBlue,
   },
   info: {
-    height: '200px',
-    width: 'auto',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  title: {
     fontSize: '30px',
-  },
-  link: {
-    fontSize: '18px',
-    textDecoration: 'none',
-  },
-  description: {
-    fontSize: '30px',
+    color: theme.colors.tundoraGrey,
   },
 });
 
-const StyledStepTwo = ({ classes }) => (
+const StyledStepTwo = ({ classes, setDestinationAddress }) => (
   <View className={classes.wrapper}>
-    <View className={classes.info}>
-      <span className={classes.title}>Your refund transaction is:</span>
-      <a
-        className={classes.link}
-        target="_blank"
-        rel="noopener noreferrer"
-        href={
-          'https://www.blockchain.com/btc/address/1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX'
-        }
-      >
-        1F1tAaz5x1HUXrCNLbtMDqcw6o5GNn4xqX
-      </a>
-      <p className={classes.description}>
-        Please wait for Block <b>549843</b> to be mined <br />
-        and broadcast the transaction to claim <br />
-        refund.
-      </p>
-    </View>
+    <p className={classes.info}>Destination address</p>
+    <InputArea height={150} width={500} onChange={setDestinationAddress} />
   </View>
 );
 
 StyledStepTwo.propTypes = {
   classes: PropTypes.object.isRequired,
+  setDestinationAddress: PropTypes.func.isRequired,
 };
 
 export const StepTwo = injectSheet(stepTwoStyles)(StyledStepTwo);
 
-const stepFourStyles = theme => ({
+const stepThreeStyles = theme => ({
   wrapper: {
     flex: 1,
     justifyContent: 'center',
@@ -116,15 +100,34 @@ const stepFourStyles = theme => ({
   },
 });
 
-const StyledStepFour = ({ classes }) => (
+const StyledStepThree = ({
+  classes,
+  refundTransaction,
+  refundTransactionHash,
+}) => (
   <View className={classes.wrapper}>
     <FaCheckCircle size={240} className={classes.icon} />
     <span className={classes.title}>Success!</span>
+    <p>
+      Your refund transaction: <code>{refundTransaction}</code>
+    </p>
+
+    <p>
+      <a
+        className={classes.link}
+        target={'_blank'}
+        href={`https://chain.so/tx/LTCTEST/${refundTransactionHash}`}
+      >
+        {refundTransactionHash}
+      </a>
+    </p>
   </View>
 );
 
-StyledStepFour.propTypes = {
+StyledStepThree.propTypes = {
   classes: PropTypes.object.isRequired,
+  refundTransaction: PropTypes.string.isRequired,
+  refundTransactionHash: PropTypes.string.isRequired,
 };
 
-export const StepFour = injectSheet(stepFourStyles)(StyledStepFour);
+export const StepThree = injectSheet(stepThreeStyles)(StyledStepThree);

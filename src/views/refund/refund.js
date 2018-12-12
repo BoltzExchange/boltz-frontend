@@ -6,7 +6,7 @@ import Background from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Prompt from '../../components/prompt';
 import View from '../../components/view';
-import { StepOne, StepTwo, StepFour } from './steps';
+import { StepOne, StepTwo, StepThree } from './steps';
 
 const styles = () => ({
   wrapper: {
@@ -16,68 +16,114 @@ const styles = () => ({
   },
 });
 
-class Refund extends React.Component {
-  UNSAFE_componentWillMount() {
-    this.props.toggleRefundMode();
-  }
-
-  componentWillUnmount() {
-    this.props.toggleRefundMode();
-  }
-
-  render() {
-    const { classes, inRefundMode, goHome } = this.props;
-    return (
-      <Background>
-        <Prompt />
-        <View className={classes.wrapper}>
-          <StepsWizard
-            dark={true}
-            range={4}
-            stage={1}
-            alertOnExit={inRefundMode}
-            onExit={() => {
-              goHome();
-            }}
-            message={'Are you sure?'}
-          >
-            <StepsWizard.Steps>
-              <StepsWizard.Step num={1} render={() => <StepOne />} />
-              <StepsWizard.Step num={2} render={() => <StepTwo />} />
-              <StepsWizard.Step num={3} render={() => <StepTwo />} />
-              <StepsWizard.Step num={4} render={() => <StepFour />} />
-            </StepsWizard.Steps>
-            <StepsWizard.Controls>
-              <StepsWizard.Control
-                num={1}
-                action={true}
-                render={() => <Controls text={'Next'} />}
-              />
-              <StepsWizard.Control
-                num={2}
-                render={() => <Controls text={'Waiting...'} />}
-              />
-              <StepsWizard.Control
-                num={3}
-                render={() => <Controls text={'File Refund'} />}
-              />
-              <StepsWizard.Control
-                num={4}
-                render={() => <Controls text={'Show Refund Transaction'} />}
-              />
-            </StepsWizard.Controls>
-          </StepsWizard>
-        </View>
-      </Background>
-    );
-  }
-}
+const Refund = ({
+  classes,
+  goHome,
+  inRefundMode,
+  refundFile,
+  setRefundFile,
+  transactionHash,
+  setTransactionHash,
+  destinationAddress,
+  setDestinationAddress,
+  startRefund,
+  refundTransaction,
+  refundTransactionHash,
+}) => {
+  return (
+    <Background>
+      <Prompt />
+      <View className={classes.wrapper}>
+        <StepsWizard
+          dark={true}
+          range={3}
+          stage={1}
+          alertOnExit={inRefundMode}
+          onExit={() => {
+            goHome();
+          }}
+          message={'Are you sure?'}
+        >
+          <StepsWizard.Steps>
+            <StepsWizard.Step
+              num={1}
+              render={() => (
+                <StepOne
+                  setRefundFile={setRefundFile}
+                  setTransactionHash={setTransactionHash}
+                />
+              )}
+            />
+            <StepsWizard.Step
+              num={2}
+              render={() => (
+                <StepTwo setDestinationAddress={setDestinationAddress} />
+              )}
+            />
+            <StepsWizard.Step
+              num={3}
+              render={() => (
+                <StepThree
+                  refundTransaction={refundTransaction}
+                  refundTransactionHash={refundTransactionHash}
+                />
+              )}
+            />
+          </StepsWizard.Steps>
+          <StepsWizard.Controls>
+            <StepsWizard.Control
+              num={1}
+              action={true}
+              render={props => (
+                <Controls text={'Next'} onPress={() => props.nextStage()} />
+              )}
+            />
+            <StepsWizard.Control
+              num={2}
+              render={props => (
+                <Controls
+                  text={'Generate refund transaction'}
+                  onPress={() =>
+                    startRefund(
+                      refundFile,
+                      transactionHash,
+                      destinationAddress,
+                      props.nextStage()
+                    )
+                  }
+                />
+              )}
+            />
+            <StepsWizard.Control
+              num={3}
+              render={() => (
+                <Controls
+                  text={'Successfully completed refund!'}
+                  onPress={() => goHome()}
+                />
+              )}
+            />
+          </StepsWizard.Controls>
+        </StepsWizard>
+      </View>
+    </Background>
+  );
+};
 
 Refund.propTypes = {
   classes: PropTypes.object,
   goHome: PropTypes.func.isRequired,
+  nextStage: PropTypes.func,
   inRefundMode: PropTypes.bool,
-  toggleRefundMode: PropTypes.func,
+  refundFile: PropTypes.object,
+  setRefundFile: PropTypes.func.isRequired,
+  transactionHash: PropTypes.string,
+  setTransactionHash: PropTypes.func.isRequired,
+  destinationAddress: PropTypes.string,
+  setDestinationAddress: PropTypes.func.isRequired,
+  startRefund: PropTypes.func.isRequired,
+  refundTransaction: PropTypes.string,
+  refundTransactionHash: PropTypes.string,
 };
 
 export default injectSheet(styles)(Refund);

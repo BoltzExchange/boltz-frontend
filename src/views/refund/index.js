@@ -4,12 +4,23 @@ import * as actions from './refundActions';
 import { nav } from '../../action';
 
 const mapStateToProps = state => ({
-  inRefundMode: state.refundReducer.inRefundMode,
+  refundFile: state.refundReducer.refundFile,
+  transactionHash: state.refundReducer.transactionHash,
+  destinationAddress: state.refundReducer.destinationAddress,
+  refundTransaction: state.refundReducer.refundTransaction,
+  refundTransactionHash: state.refundReducer.refundTransactionHash,
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleRefundMode: () => dispatch(actions.toggleRefundMode()),
   goHome: () => dispatch(nav.goHome()),
+  setRefundFile: file => dispatch(actions.setRefundFile(file)),
+  setTransactionHash: hash => dispatch(actions.setTransactionHash(hash)),
+  setDestinationAddress: address =>
+    dispatch(actions.setDestinationAddress(address)),
+  startRefund: (refundFile, transactionHash, destinationAddress, cb) =>
+    dispatch(
+      actions.startRefund(refundFile, transactionHash, destinationAddress, cb)
+    ),
 });
 
 export default connect(

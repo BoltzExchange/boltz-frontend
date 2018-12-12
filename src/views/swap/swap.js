@@ -65,9 +65,10 @@ const Swap = ({
               render={() => (
                 <StepThree
                   address={swapResponse.address}
-                  redeemScript={swapResponse.redeemScript}
                   currency={swapInfo.sentCurrency}
+                  redeemScript={swapResponse.redeemScript}
                   privateKey={generateKeys.getPrivateKey(swapInfo.publicKey)}
+                  timeoutBlockHeight={swapResponse.timeoutBlockHeight}
                 />
               )}
             />

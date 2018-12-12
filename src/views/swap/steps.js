@@ -189,16 +189,24 @@ class StyledStepThree extends React.Component {
   }
 
   render() {
-    const { classes, redeemScript, address, currency, privateKey } = this.props;
+    const {
+      classes,
+      address,
+      currency,
+      redeemScript,
+      privateKey,
+      timeoutBlockHeight,
+    } = this.props;
     return (
       <View className={classes.wrapper}>
         <p className={classes.info}>
           <a
             ref={this.ref}
             href={`data:application/json;charset=utf-8,${JSON.stringify({
+              currency,
               redeemScript,
               privateKey,
-              currency,
+              timeoutBlockHeight,
             })}`}
             download={'refund.json'}
           >
@@ -214,7 +222,7 @@ class StyledStepThree extends React.Component {
           <a
             className={classes.link}
             target={'_blank'}
-            href={`https://blockstream.info/address/${address}`}
+            href={`https://chain.so/address/LTCTEST/${address}`}
           >
             {address}
           </a>
@@ -226,10 +234,11 @@ class StyledStepThree extends React.Component {
 
 StyledStepThree.propTypes = {
   classes: PropTypes.object.isRequired,
-  redeemScript: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,
   currency: PropTypes.string.isRequired,
+  redeemScript: PropTypes.string.isRequired,
   privateKey: PropTypes.string.isRequired,
+  timeoutBlockHeight: PropTypes.number.isRequired,
 };
 
 export const StepThree = injectSheet(stepThreeStyles)(StyledStepThree);

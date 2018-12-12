@@ -9,11 +9,21 @@ export const getHexString = input => {
 };
 
 /**
- * Convert BTC to Satoshi.
+ * Convert BTC to satoshi
  *
  * @param btc btc
- * @returns satoshi
+ * @returns amount in satoshi
  */
 export const toSatoshi = btc => {
   return btc * 100000000;
+};
+
+/*
+ * Get a hex encoded Buffer from a string
+ *
+ * @param input {string} input
+ * @returns a hex encoded Buffer
+ */
+export const getHexBuffer = input => {
+  return Buffer.from(input, 'hex');
 };
