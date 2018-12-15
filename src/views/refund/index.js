@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   destinationAddress: state.refundReducer.destinationAddress,
   refundTransaction: state.refundReducer.refundTransaction,
   refundTransactionHash: state.refundReducer.refundTransactionHash,
+  isFetching: state.refundReducer.isFetching,
 });
 
 const mapDispatchToProps = dispatch => ({

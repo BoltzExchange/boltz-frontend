@@ -76,21 +76,19 @@ export const startRefund = (
           address.toOutputScript(destinationAddress, Networks.litecoinSimnet)
         );
 
-        console.log(refundTransaction.toHex());
-
         const refundTransactionHex = refundTransaction.toHex();
         const refundTransactionHash = refundTransaction.getId();
 
         dispatch(setRefundTransaction(refundTransactionHex));
         dispatch(setRefundTransactionHash(refundTransactionHash));
-        dispatch(refundResponse(true, response.data));
 
-        broadcastRefund(currency, refundTransactionHex);
+        broadcastRefund(currency, refundTransactionHex, () => {
+          dispatch(refundResponse(true, response.data));
 
-        cb();
+          cb();
+        });
       })
       .catch(error => {
-        console.log(error);
         window.alert('Failed to refund swap');
         dispatch(refundResponse(false, error.data));
       });

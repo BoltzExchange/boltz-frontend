@@ -1,6 +1,7 @@
 import * as actionTypes from '../../constants/actions';
 
 const initalState = {
+  isFetching: false,
   refundFile: {},
   transactionHash: null,
   destinationAddress: null,
@@ -10,6 +11,18 @@ const initalState = {
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {
+    case actionTypes.REFUND_REQUEST:
+      return {
+        ...state,
+        isFetching: true,
+      };
+
+    case actionTypes.REFUND_RESPONSE:
+      return {
+        ...state,
+        isFetching: false,
+      };
+
     case actionTypes.SET_REFUND_FILE:
       return {
         ...state,

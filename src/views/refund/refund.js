@@ -19,7 +19,6 @@ const styles = () => ({
 const Refund = ({
   classes,
   goHome,
-  inRefundMode,
   refundFile,
   setRefundFile,
   transactionHash,
@@ -29,6 +28,7 @@ const Refund = ({
   startRefund,
   refundTransaction,
   refundTransactionHash,
+  isFetching,
 }) => {
   return (
     <Background>
@@ -38,9 +38,10 @@ const Refund = ({
           dark={true}
           range={3}
           stage={1}
-          alertOnExit={inRefundMode}
           onExit={() => {
-            goHome();
+            if (window.confirm('Are you sure you want to exit')) {
+              goHome();
+            }
           }}
           message={'Are you sure?'}
         >
@@ -82,6 +83,7 @@ const Refund = ({
               num={2}
               render={props => (
                 <Controls
+                  loading={isFetching}
                   text={'Generate refund transaction'}
                   onPress={() =>
                     startRefund(
@@ -114,7 +116,7 @@ Refund.propTypes = {
   classes: PropTypes.object,
   goHome: PropTypes.func.isRequired,
   nextStage: PropTypes.func,
-  inRefundMode: PropTypes.bool,
+  isFetching: PropTypes.bool,
   refundFile: PropTypes.object,
   setRefundFile: PropTypes.func.isRequired,
   transactionHash: PropTypes.string,
