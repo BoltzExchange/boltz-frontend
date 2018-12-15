@@ -9,11 +9,37 @@ export const getHexString = input => {
 };
 
 /**
- * Convert BTC to Satoshi.
+ * Convert BTC to satoshi
  *
  * @param btc btc
- * @returns satoshi
+ * @returns amount in satoshi
  */
 export const toSatoshi = btc => {
   return btc * 100000000;
+};
+
+/**
+ * Get a hex encoded Buffer from a string
+ *
+ * @param input {string} input
+ * @returns a hex encoded Buffer
+ */
+export const getHexBuffer = input => {
+  return Buffer.from(input, 'hex');
+};
+
+/**
+ * Read the content of a file
+ *
+ * @param file file that should be read
+ * @param cb callback that will be called once the file is read
+ */
+export const readFile = (file, cb) => {
+  const reader = new window.FileReader();
+
+  reader.onload = () => {
+    cb(reader.result);
+  };
+
+  reader.readAsText(file);
 };

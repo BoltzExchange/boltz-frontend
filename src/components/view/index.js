@@ -8,6 +8,7 @@ const View = ({ children, style, className, inputRef, ...otherProps }) => {
   if (style !== undefined) {
     newStyle = { ...newStyle, ...style };
   }
+
   return (
     <div className={className} style={newStyle} ref={inputRef} {...otherProps}>
       {children}

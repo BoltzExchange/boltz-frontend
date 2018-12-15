@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { generateKeys } from '../../action';
+import { boltzApi } from '../../constants';
 import * as actionTypes from '../../constants/actions';
 
 export const completeSwap = () => {
@@ -48,7 +49,7 @@ export const swapRequest = () => ({
 });
 
 export const startSwap = (swapInfo, cb) => {
-  const url = 'http://localhost:9001/createswap';
+  const url = `${boltzApi}/createswap`;
   return dispatch => {
     dispatch(swapRequest());
     axios

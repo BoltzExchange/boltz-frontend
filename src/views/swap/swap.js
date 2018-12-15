@@ -37,7 +37,7 @@ const Swap = ({
           range={4}
           stage={1}
           onExit={() => {
-            if (window.confirm('Sure you want to exit')) {
+            if (window.confirm('Are you sure you want to exit')) {
               completeSwap();
               goHome();
             }
@@ -65,9 +65,10 @@ const Swap = ({
               render={() => (
                 <StepThree
                   address={swapResponse.address}
+                  currency={swapInfo.receivedCurrency}
                   redeemScript={swapResponse.redeemScript}
-                  currency={swapInfo.sentCurrency}
                   privateKey={generateKeys.getPrivateKey(swapInfo.publicKey)}
+                  timeoutBlockHeight={swapResponse.timeoutBlockHeight}
                 />
               )}
             />
@@ -100,10 +101,13 @@ const Swap = ({
             />
             <StepsWizard.Control
               num={4}
-              render={props => (
+              render={() => (
                 <Controls
                   text={'Successfully completed swap!'}
-                  onPress={() => props.onExit()}
+                  onPress={() => {
+                    completeSwap();
+                    goHome();
+                  }}
                 />
               )}
             />
@@ -117,7 +121,7 @@ const Swap = ({
 Swap.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  inSwapMode: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,
@@ -126,7 +130,6 @@ Swap.propTypes = {
   onExit: PropTypes.func,
   nextStage: PropTypes.func,
   startSwap: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(styles)(Swap);

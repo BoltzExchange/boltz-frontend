@@ -1,21 +1,6 @@
 {
   "name": "boltz-frontend",
   "version": "1.0.0",
-  "dependencies": {
-    "axios": "^0.18.0",
-    "bitcoinjs-lib": "^4.0.2",
-    "prop-types": "^15.6.2",
-    "qrious": "^4.0.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-icons": "^3.2.2",
-    "react-jss": "^8.6.1",
-    "react-redux": "^5.1.1",
-    "react-scripts": "2.1.1",
-    "redux": "^4.0.1",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -33,6 +18,27 @@
     "not ie <= 11",
     "not op_mini all"
   ],
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BoltzExchange/boltz-frontend.git"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bitcoinjs-lib": "^4.0.2",
+    "boltz-core": "0.0.3",
+    "prop-types": "^15.6.2",
+    "qrious": "^4.0.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-icons": "^3.2.2",
+    "react-jss": "^8.6.1",
+    "react-redux": "^5.1.1",
+    "react-scripts": "2.1.1",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
+  },
   "devDependencies": {
     "@babel/plugin-syntax-decorators": "^7.1.0",
     "babel-eslint": "^10.0.1",

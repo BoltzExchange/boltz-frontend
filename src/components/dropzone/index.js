@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import View from '../view';
+import { readFile } from '../../scripts/utils';
 
 class DropZone extends React.Component {
   constructor(props) {
@@ -10,12 +11,14 @@ class DropZone extends React.Component {
     };
     this.ref = React.createRef();
   }
+
   componentDidMount() {
     this.ref.current.addEventListener('mouseup', this.onDragLeave);
     this.ref.current.addEventListener('dragenter', this.onDragEnter);
     this.ref.current.addEventListener('dragover', this.onDragOver);
     this.ref.current.addEventListener('drop', this.onDrop);
   }
+
   componentWillUnmount() {
     this.ref.current.removeEventListener('mouseup', this.onDragLeave);
     this.ref.current.removeEventListener('dragenter', this.onDragEnter);
@@ -23,11 +26,14 @@ class DropZone extends React.Component {
     this.ref.current.removeEventListener('drop', this.onDrop);
   }
 
-  // TODO: Extract data from files.
   onDrop = e => {
     e.preventDefault();
-    const files = e.dataTransfer.files;
-    window.alert(`Files dropped: ${files}`);
+    const file = e.dataTransfer.items[0].getAsFile();
+
+    readFile(file, content => {
+      this.props.onFileRead(content);
+    });
+
     this.setState({ active: false });
     return false;
   };
@@ -80,6 +86,7 @@ DropZone.protoTypes = {
   style: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
+  onFileRead: PropTypes.func.isRequired,
 };
 
 export default DropZone;

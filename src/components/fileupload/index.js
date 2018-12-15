@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { readFile } from '../../scripts/utils';
 
 const fileBtnStyles = theme => ({
   wrapper: {
@@ -31,16 +32,25 @@ const fileBtnStyles = theme => ({
   },
 });
 
-const FileUpload = ({ classes, text }) => (
+const FileUpload = ({ classes, text, onFileRead }) => (
   <div className={classes.wrapper}>
     {text}
-    <input className={classes.input} type="file" />
+    <input
+      className={classes.input}
+      onChange={event => {
+        readFile(event.target.files[0], content => {
+          onFileRead(content);
+        });
+      }}
+      type="file"
+    />
   </div>
 );
 
 FileUpload.propTypes = {
   classes: PropTypes.object.isRequired,
   text: PropTypes.string.isRequired,
+  onFileRead: PropTypes.func.isRequired,
 };
 
 export default injectSheet(fileBtnStyles)(FileUpload);
