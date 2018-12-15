@@ -53,6 +53,9 @@ const reducer = (state = initalState, action) => {
         refundTransactionHash: action.payload,
       };
 
+    case actionTypes.COMPLETE_REFUND:
+      return initalState;
+
     default:
       return state;
   }

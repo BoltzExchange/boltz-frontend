@@ -5,6 +5,12 @@ import * as actionTypes from '../../constants/actions';
 import { boltzApi } from '../../constants';
 import { getHexBuffer } from '../../scripts/utils';
 
+export const completeRefund = () => {
+  return {
+    type: actionTypes.COMPLETE_REFUND,
+  };
+};
+
 export const setRefundFile = file => ({
   type: actionTypes.SET_REFUND_FILE,
   payload: JSON.parse(file),

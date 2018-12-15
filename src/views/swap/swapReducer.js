@@ -20,12 +20,14 @@ const reducer = (state = initalState, action) => {
         ...state,
         isFetching: true,
       };
+
     case actionTypes.SWAP_RESPONSE:
       return {
         ...state,
         isFetching: false,
         swapResponse: action.payload,
       };
+
     case actionTypes.SET_SWAP_AMOUNT:
       return {
         ...state,
@@ -37,6 +39,7 @@ const reducer = (state = initalState, action) => {
           receivedCurrency: action.payload.receivedCurrency,
         },
       };
+
     case actionTypes.SET_SWAP_INVOICE:
       return {
         ...state,
@@ -45,6 +48,7 @@ const reducer = (state = initalState, action) => {
           invoice: action.payload,
         },
       };
+
     case actionTypes.NEW_KEYS:
       return {
         ...state,
@@ -53,8 +57,10 @@ const reducer = (state = initalState, action) => {
           publicKey: action.payload,
         },
       };
+
     case actionTypes.COMPLETE_SWAP:
       return initalState;
+
     default:
       return state;
   }

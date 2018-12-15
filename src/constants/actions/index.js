@@ -16,6 +16,7 @@ export const SWAP_RESPONSE = 'SWAP_RESPONSE';
 /**
  * Refund actions
  */
+export const COMPLETE_REFUND = 'COMPLETE_REFUND';
 export const SET_REFUND_FILE = 'SET_REFUND_FILE';
 export const SET_REFUND_TXHASH = 'SET_REFUND_TXHASH';
 export const SET_REFUND_DESTINATION = 'SET_REFUND_DESTINATION';

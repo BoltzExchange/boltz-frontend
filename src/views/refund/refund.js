@@ -26,6 +26,7 @@ const Refund = ({
   destinationAddress,
   setDestinationAddress,
   startRefund,
+  completeRefund,
   refundTransaction,
   refundTransactionHash,
   isFetching,
@@ -40,6 +41,7 @@ const Refund = ({
           stage={1}
           onExit={() => {
             if (window.confirm('Are you sure you want to exit')) {
+              completeRefund();
               goHome();
             }
           }}
@@ -101,7 +103,10 @@ const Refund = ({
               render={() => (
                 <Controls
                   text={'Successfully completed refund!'}
-                  onPress={() => goHome()}
+                  onPress={() => {
+                    completeRefund();
+                    goHome();
+                  }}
                 />
               )}
             />
@@ -124,6 +129,7 @@ Refund.propTypes = {
   destinationAddress: PropTypes.string,
   setDestinationAddress: PropTypes.func.isRequired,
   startRefund: PropTypes.func.isRequired,
+  completeRefund: PropTypes.func.isRequired,
   refundTransaction: PropTypes.string,
   refundTransactionHash: PropTypes.string,
 };

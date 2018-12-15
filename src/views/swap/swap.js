@@ -101,10 +101,13 @@ const Swap = ({
             />
             <StepsWizard.Control
               num={4}
-              render={props => (
+              render={() => (
                 <Controls
                   text={'Successfully completed swap!'}
-                  onPress={() => props.onExit()}
+                  onPress={() => {
+                    completeSwap();
+                    goHome();
+                  }}
                 />
               )}
             />

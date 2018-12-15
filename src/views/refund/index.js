@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       actions.startRefund(refundFile, transactionHash, destinationAddress, cb)
     ),
+  completeRefund: () => dispatch(actions.completeRefund()),
 });
 
 export default connect(
