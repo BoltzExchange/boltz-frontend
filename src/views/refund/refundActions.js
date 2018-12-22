@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { ECPair, address, Transaction } from 'bitcoinjs-lib';
-import { Networks, constructRefundTransaction, detectSwap } from 'boltz-core';
+import { constructRefundTransaction, detectSwap } from 'boltz-core';
 import * as actionTypes from '../../constants/actions';
-import { boltzApi } from '../../constants';
+import { boltzApi, bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { getHexBuffer } from '../../scripts/utils';
 
 export const completeRefund = () => {
@@ -57,6 +57,8 @@ export const startRefund = (
   const url = `${boltzApi}/gettransaction`;
   const currency = refundFile.currency;
 
+  const network = currency === 'BTC' ? bitcoinNetwork : litecoinNetwork;
+
   return dispatch => {
     dispatch(refundRequest());
     axios
@@ -79,7 +81,7 @@ export const startRefund = (
             txHash: lockupTransaction.getHash(),
             ...detectSwap(redeemScript, lockupTransaction),
           },
-          address.toOutputScript(destinationAddress, Networks.litecoinSimnet)
+          address.toOutputScript(destinationAddress, network)
         );
 
         const refundTransactionHex = refundTransaction.toHex();

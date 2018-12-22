@@ -43,3 +43,29 @@ export const readFile = (file, cb) => {
 
   reader.readAsText(file);
 };
+
+/**
+ * Get the quote and base asset of a pair id
+ */
+export const splitPairId = pairId => {
+  const split = pairId.split('/');
+
+  return {
+    base: split[0],
+    quote: split[1],
+  };
+};
+
+/**
+ * Get the full name of a currency
+ */
+export const getCurrencyName = symbol => {
+  return symbol === 'BTC' ? 'Bitcoin' : 'Litecoin';
+};
+
+/**
+ * Get the denomination of a currency
+ */
+export const getCurrencyDenomination = symbol => {
+  return symbol === 'BTC' ? 'Satoshis' : 'Litoshis';
+};

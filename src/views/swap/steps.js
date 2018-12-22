@@ -5,7 +5,11 @@ import QrCode from '../../components/qrcode';
 import { FaCheckCircle, FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
 import InputArea from '../../components/inputarea';
-import { toSatoshi } from '../../scripts/utils';
+import {
+  toSatoshi,
+  getCurrencyName,
+  getCurrencyDenomination,
+} from '../../scripts/utils';
 
 // TODO: refactor into multiple components.
 const stepOneStyles = () => ({
@@ -49,14 +53,18 @@ class StyledStepOne extends React.Component {
   };
 
   render() {
-    const { classes, value } = this.props;
+    const { classes, swapInfo } = this.props;
     const { error } = this.state;
+
     return (
       <View className={classes.wrapper}>
         <p className={classes.title}>
-          Paste a <b>Bitcoin</b> lightning <FaBolt size={30} color="#FFFF00" />{' '}
-          invoice of <br />
-          <b>{toSatoshi(value.sent)} Satoshis</b> to receive it.
+          Paste a <b>{getCurrencyName(swapInfo.quote)}</b> Lightning {}
+          <FaBolt size={30} color="#FFFF00" /> invoice for <br />
+          <b>
+            {toSatoshi(swapInfo.quoteAmount)}{' '}
+            {getCurrencyDenomination(swapInfo.quote)}
+          </b>
         </p>
         <InputArea
           width={600}
@@ -76,7 +84,7 @@ class StyledStepOne extends React.Component {
 
 StyledStepOne.propTypes = {
   classes: PropTypes.object.isRequired,
-  value: PropTypes.object.isRequired,
+  swapInfo: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 
@@ -104,7 +112,7 @@ const stepTwoStyles = () => ({
     justifyContent: 'space-around',
   },
   address: {
-    fontSize: '28px',
+    fontSize: '20px',
     color: 'grey',
     wordBreak: 'break-word',
   },
@@ -126,10 +134,10 @@ const copyToClipBoard = () => {
   document.execCommand('copy');
 };
 
-const StyledStepTwo = ({ classes, value, address, link }) => (
+const StyledStepTwo = ({ classes, swapInfo, swapResponse }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
-      <QrCode size={300} link={link} />
+      <QrCode size={300} link={swapResponse.bip21} />
     </View>
     <View className={classes.info}>
       <p
@@ -137,26 +145,36 @@ const StyledStepTwo = ({ classes, value, address, link }) => (
           fontSize: '30px',
         }}
       >
-        Send <b>{toSatoshi(value.received)} Litoshi</b> <br />
-        on <b>Litecoin</b> <br />
-        blockchain address:
+        Send {}
+        <b>
+          {swapResponse.expectedAmount} {getCurrencyDenomination(swapInfo.base)}
+        </b>{' '}
+        to:
       </p>
       <p className={classes.address} id="copy-address">
-        {address}
+        {swapResponse.address}
       </p>
       {/* TODO: refactor how we copy */}
       <span className={classes.action} onClick={() => copyToClipBoard()}>
         Copy
       </span>
+      <p>
+        If the address does not work with your wallet:{' '}
+        <a
+          target={'_blank'}
+          href="https://litecoin-project.github.io/p2sh-convert/"
+        >
+          use this tool
+        </a>
+      </p>
     </View>
   </View>
 );
 
 StyledStepTwo.propTypes = {
   classes: PropTypes.object.isRequired,
-  value: PropTypes.object.isRequired,
-  address: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
+  swapInfo: PropTypes.object.isRequired,
+  swapResponse: PropTypes.object.swapResponse,
 };
 
 export const StepTwo = injectSheet(stepTwoStyles)(StyledStepTwo);
@@ -212,12 +230,11 @@ class StyledStepThree extends React.Component {
           >
             Click here
           </a>{' '}
-          if download of &lsquo;Refund JSON&lsquo; didn&apos;t <br /> start
+          if the download of &lsquo;refund.json&lsquo; didn&apos;t <br /> start
           automatically.
         </p>
         <p className={classes.address}>
-          Waiting for one confirmation on Blockchain
-          <br /> address:
+          Waiting for a confirmed transaction to:
           <br />
           <a
             className={classes.link}

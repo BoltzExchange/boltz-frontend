@@ -17,21 +17,39 @@ const styles = theme => ({
   },
 });
 
-const DropDown = ({ classes, fields, onChange, defaultValue }) => {
-  return (
-    <select
-      defaultValue={defaultValue}
-      className={classes.wrapper}
-      onChange={e => onChange(e.target.value)}
-    >
-      {fields.map((field, i) => (
-        <option key={i} value={field}>
-          {field}
-        </option>
-      ))}
-    </select>
-  );
-};
+class DropDown extends React.Component {
+  state = {
+    value: undefined,
+  };
+
+  render() {
+    let { value } = this.state;
+    const { classes, onChange, defaultValue, fields } = this.props;
+
+    if (value === undefined) {
+      value = defaultValue;
+    }
+
+    return (
+      <select
+        value={value}
+        className={classes.wrapper}
+        onChange={e => {
+          const value = e.target.value;
+
+          onChange(value);
+          this.setState({ value });
+        }}
+      >
+        {fields.map((field, i) => (
+          <option key={i} value={field}>
+            {field}
+          </option>
+        ))}
+      </select>
+    );
+  }
+}
 
 DropDown.propTypes = {
   classes: PropTypes.object,
@@ -39,4 +57,5 @@ DropDown.propTypes = {
   defaultValue: PropTypes.string.isRequired,
   fields: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 };
+
 export default injectSheet(styles)(DropDown);
