@@ -9,6 +9,7 @@ const reducer = (state = initalState, action) => {
         return action.payload;
       }
       return state;
+
     default:
       return state;
   }

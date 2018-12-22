@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { generateKeys } from '../../action';
 import View from '../../components/view';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Controls from '../../components/controls';
 import Prompt from '../../components/prompt';
-import { toSatoshi } from '../../scripts/utils';
-import { FEE } from '../../constants/fees';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 
 const styles = () => ({
@@ -28,6 +25,7 @@ const Swap = ({
   swapResponse,
   startSwap,
   isFetching,
+  swapStatus,
 }) => {
   return (
     <BackGround>
@@ -47,17 +45,13 @@ const Swap = ({
             <StepsWizard.Step
               num={1}
               render={() => (
-                <StepOne value={swapInfo} onChange={setSwapInvoice} />
+                <StepOne swapInfo={swapInfo} onChange={setSwapInvoice} />
               )}
             />
             <StepsWizard.Step
               num={2}
               render={() => (
-                <StepTwo
-                  value={swapInfo}
-                  address={swapResponse.address}
-                  link={swapResponse.bip21}
-                />
+                <StepTwo swapInfo={swapInfo} swapResponse={swapResponse} />
               )}
             />
             <StepsWizard.Step
@@ -65,9 +59,9 @@ const Swap = ({
               render={() => (
                 <StepThree
                   address={swapResponse.address}
-                  currency={swapInfo.receivedCurrency}
+                  currency={swapInfo.base}
                   redeemScript={swapResponse.redeemScript}
-                  privateKey={generateKeys.getPrivateKey(swapInfo.publicKey)}
+                  privateKey={swapInfo.keys.privateKey}
                   timeoutBlockHeight={swapResponse.timeoutBlockHeight}
                 />
               )}
@@ -80,7 +74,7 @@ const Swap = ({
               render={props => (
                 <Controls
                   loading={isFetching}
-                  text={`Fee: ${Math.floor(toSatoshi(FEE))} Satoshi`}
+                  text={`Next`}
                   onPress={() => {
                     startSwap(swapInfo, props.nextStage);
                   }}
@@ -96,7 +90,14 @@ const Swap = ({
             <StepsWizard.Control
               num={3}
               render={props => (
-                <Controls text={'Next'} onPress={() => props.nextStage()} />
+                <Controls
+                  text={swapStatus}
+                  onPress={() => {
+                    if (swapStatus === 'Done') {
+                      props.nextStage();
+                    }
+                  }}
+                />
               )}
             />
             <StepsWizard.Control
@@ -130,6 +131,7 @@ Swap.propTypes = {
   onExit: PropTypes.func,
   nextStage: PropTypes.func,
   startSwap: PropTypes.func.isRequired,
+  swapStatus: PropTypes.string.isRequired,
 };
 
 export default injectSheet(styles)(Swap);

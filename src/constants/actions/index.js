@@ -2,7 +2,6 @@
  * Global actions
  */
 export const NAVIGATE = 'NAVIGATE';
-export const NEW_KEYS = 'NEW_KEYS';
 
 /**
  * Landing page actions
@@ -15,8 +14,9 @@ export const PAIRS_RESPONSE = 'PAIRS_RESPONSE';
  * Swap actions
  */
 export const COMPLETE_SWAP = 'COMPLETE_SWAP';
-export const SET_SWAP_AMOUNT = 'SET_SWAP_AMOUNT';
+export const INIT_SWAP = 'INIT_SWAP';
 export const SET_SWAP_INVOICE = 'SET_SWAP_INVOICE';
+export const SET_SWAP_STATUS = 'SET_SWAP_STATUS';
 export const SWAP_REQUEST = 'REQUEST_SWAP';
 export const SWAP_RESPONSE = 'SWAP_RESPONSE';
 

@@ -3,14 +3,16 @@ import * as actionTypes from '../../constants/actions';
 const initalState = {
   isFetching: false,
   swapInfo: {
-    sent: null,
-    received: null,
-    sentCurrency: null,
-    receivedCurrency: null,
-    publicKey: null,
+    base: null,
+    quote: null,
+    baseAmount: null,
+    quoteAmount: null,
+    keys: null,
+    pair: null,
     invoice: null,
   },
   swapResponse: {},
+  swapStatus: 'Waiting for transaction...',
 };
 
 const reducer = (state = initalState, action) => {
@@ -28,15 +30,17 @@ const reducer = (state = initalState, action) => {
         swapResponse: action.payload,
       };
 
-    case actionTypes.SET_SWAP_AMOUNT:
+    case actionTypes.INIT_SWAP:
       return {
         ...state,
         swapInfo: {
           ...state.swapInfo,
-          sent: action.payload.sent,
-          received: action.payload.received,
-          sentCurrency: action.payload.sentCurrency,
-          receivedCurrency: action.payload.receivedCurrency,
+          base: action.payload.base,
+          quote: action.payload.quote,
+          baseAmount: action.payload.baseAmount,
+          quoteAmount: action.payload.quoteAmount,
+          keys: action.payload.keys,
+          pair: action.payload.pair,
         },
       };
 
@@ -49,13 +53,10 @@ const reducer = (state = initalState, action) => {
         },
       };
 
-    case actionTypes.NEW_KEYS:
+    case actionTypes.SET_SWAP_STATUS:
       return {
         ...state,
-        swapInfo: {
-          ...state.swapInfo,
-          publicKey: action.payload,
-        },
+        swapStatus: action.payload,
       };
 
     case actionTypes.COMPLETE_SWAP:

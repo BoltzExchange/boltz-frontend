@@ -6,7 +6,8 @@ import View from '../../components/view';
 import { LinkButton } from '../../components/button';
 import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
-import Networks from '../../constants/networks';
+import { bitcoinNetwork, litecoinNetwork } from '../../constants';
+import { generateKeys } from '../../action';
 
 const styles = theme => ({
   wrapper: {
@@ -44,11 +45,10 @@ class LandingPage extends React.Component {
   render() {
     const {
       classes,
-      setPublicKey,
       goHome,
       goSwap,
       goRefund,
-      setSwapAmount,
+      initSwap,
       rates,
       currencies,
     } = this.props;
@@ -73,8 +73,15 @@ class LandingPage extends React.Component {
           </View>
           <SwapTab
             onPress={state => {
-              setSwapAmount(state);
-              setPublicKey(Networks.bitcoinMainnet);
+              const keys = generateKeys(
+                state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
+              );
+
+              initSwap({
+                ...state,
+                keys,
+              });
+
               goSwap();
             }}
             rates={rates}
@@ -88,11 +95,10 @@ class LandingPage extends React.Component {
 
 LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  setPublicKey: PropTypes.func.isRequired,
   goHome: PropTypes.func.isRequired,
   goSwap: PropTypes.func.isRequired,
   goRefund: PropTypes.func.isRequired,
-  setSwapAmount: PropTypes.func.isRequired,
+  initSwap: PropTypes.func.isRequired,
   getPairs: PropTypes.func.isRequired,
   rates: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,

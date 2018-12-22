@@ -55,3 +55,17 @@ export const splitPairId = pairId => {
     quote: split[1],
   };
 };
+
+/**
+ * Get the full name of a currency
+ */
+export const getCurrencyName = symbol => {
+  return symbol === 'BTC' ? 'Bitcoin' : 'Litecoin';
+};
+
+/**
+ * Get the denomination of a currency
+ */
+export const getCurrencyDenomination = symbol => {
+  return symbol === 'BTC' ? 'Satoshis' : 'Litoshis';
+};

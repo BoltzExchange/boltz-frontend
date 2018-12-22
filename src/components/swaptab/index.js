@@ -67,7 +67,8 @@ const styles = theme => ({
 });
 
 class SwapTab extends React.Component {
-  rate = 0;
+  rate = {};
+  quoteAmount = 0;
 
   state = {
     error: false,
@@ -92,10 +93,22 @@ class SwapTab extends React.Component {
   };
 
   shouldSubmit = () => {
-    const { error, sent } = this.state;
+    const { error } = this.state;
 
-    if (!error && sent !== 0) {
-      this.props.onPress(this.state);
+    if (error !== undefined && this.rate !== 'Not found') {
+      const state = {
+        ...this.state,
+        pair: this.rate.pair,
+      };
+
+      if (this.state.quoteAmount === 0) {
+        this.props.onPress({
+          ...state,
+          quoteAmount: this.quoteAmount,
+        });
+      } else {
+        this.props.onPress(state);
+      }
     }
   };
 
@@ -110,7 +123,7 @@ class SwapTab extends React.Component {
   };
 
   calculateQuoteAmount = baseAmount => {
-    return (Number.parseFloat(baseAmount) * this.rate).toFixed(8);
+    return (Number.parseFloat(baseAmount) * this.rate.rate).toFixed(8);
   };
 
   render() {
@@ -120,7 +133,8 @@ class SwapTab extends React.Component {
     this.rate = this.getRate(rates, `${base}/${quote}`);
 
     if (quoteAmount === 0) {
-      quoteAmount = this.calculateQuoteAmount(baseAmount);
+      this.quoteAmount = this.calculateQuoteAmount(baseAmount);
+      quoteAmount = this.quoteAmount;
     }
 
     return (
@@ -129,7 +143,7 @@ class SwapTab extends React.Component {
           <InfoText title="Min amount:" text={`${MIN}`} />
           <InfoText title="Max amount:" text={`${MAX}`} />
           <InfoText title="Fee:" text={'0'} />
-          <InfoText title="Rate:" text={`${this.rate}`} />
+          <InfoText title="Rate:" text={`${this.rate.rate}`} />
         </View>
         <View className={classes.options}>
           <View className={classes.select}>
