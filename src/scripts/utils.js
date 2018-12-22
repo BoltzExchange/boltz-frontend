@@ -43,3 +43,15 @@ export const readFile = (file, cb) => {
 
   reader.readAsText(file);
 };
+
+/**
+ * Get the quote and base asset of a pair id
+ */
+export const splitPairId = pairId => {
+  const split = pairId.split('/');
+
+  return {
+    base: split[0],
+    quote: split[1],
+  };
+};

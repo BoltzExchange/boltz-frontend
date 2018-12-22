@@ -6,7 +6,7 @@ import Input from '../input';
 import DropDown from '../dropdown';
 import Controls from '../controls';
 import Text, { InfoText } from '../text';
-import { MIN, MAX, FEE } from '../../constants/fees';
+import { MIN, MAX } from '../../constants/fees';
 
 const styles = theme => ({
   wrapper: {
@@ -67,45 +67,69 @@ const styles = theme => ({
 });
 
 class SwapTab extends React.Component {
+  rate = 0;
+
   state = {
-    sent: 0,
-    received: 0,
-    sentCurrency: 'BTC',
-    receivedCurrency: 'LTC',
     error: false,
+    base: 'LTC',
+    quote: 'BTC',
+    baseAmount: 0.001,
+    quoteAmount: 0,
   };
 
-  setSwapData = sent => {
-    if (sent > MAX || sent < MIN) {
+  setSwapData = baseAmount => {
+    if (baseAmount <= MAX && baseAmount >= MIN) {
       this.setState({
-        error: true,
+        baseAmount,
+        quoteAmount: this.calculateQuoteAmount(baseAmount),
+        error: false,
       });
     } else {
       this.setState({
-        sent,
-        received: Number.parseFloat(sent - FEE).toFixed(5),
-        error: false,
+        error: true,
       });
     }
   };
 
   shouldSubmit = () => {
     const { error, sent } = this.state;
+
     if (!error && sent !== 0) {
       this.props.onPress(this.state);
     }
   };
 
+  getRate = (rates, pairId) => {
+    const rate = rates[pairId];
+
+    if (rate) {
+      return rate;
+    } else {
+      return 'Not found';
+    }
+  };
+
+  calculateQuoteAmount = baseAmount => {
+    return (Number.parseFloat(baseAmount) * this.rate).toFixed(8);
+  };
+
   render() {
-    const { classes } = this.props;
-    const { error, received, receivedCurrency, sentCurrency } = this.state;
+    const { classes, rates, currencies } = this.props;
+    let { error, base, quote, baseAmount, quoteAmount } = this.state;
+
+    this.rate = this.getRate(rates, `${base}/${quote}`);
+
+    if (quoteAmount === 0) {
+      quoteAmount = this.calculateQuoteAmount(baseAmount);
+    }
+
     return (
       <View className={classes.wrapper}>
         <View className={classes.stats}>
-          <InfoText title="min:" text={`${MIN} BTC`} />
-          <InfoText title="max:" text={`${MAX} BTC`} />
-          <InfoText title="fee:" text={`${FEE} BTC`} />
-          <InfoText title="rate:" text="1 BTC = 1 BTC" />
+          <InfoText title="Min amount:" text={`${MIN}`} />
+          <InfoText title="Max amount:" text={`${MAX}`} />
+          <InfoText title="Fee:" text={'0'} />
+          <InfoText title="Rate:" text={`${this.rate}`} />
         </View>
         <View className={classes.options}>
           <View className={classes.select}>
@@ -113,23 +137,24 @@ class SwapTab extends React.Component {
             <Input
               min={MIN}
               max={MAX}
-              step={0.001}
+              step={0.0001}
               error={error}
+              value={baseAmount}
               onChange={e => this.setSwapData(e)}
             />
             <DropDown
-              defaultValue={sentCurrency}
-              fields={['BTC', 'T-BTC']}
-              onChange={e => this.setState({ sentCurrency: e })}
+              defaultValue={base}
+              fields={currencies}
+              onChange={e => this.setState({ base: e })}
             />
           </View>
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
-            <Input disable value={received} />
+            <Input disable value={quoteAmount} />
             <DropDown
-              defaultValue={receivedCurrency}
-              fields={['LTC', 'T-LTC']}
-              onChange={e => this.setState({ receivedCurrency: e })}
+              defaultValue={quote}
+              fields={currencies}
+              onChange={e => this.setState({ quote: e })}
             />
           </View>
         </View>
@@ -144,6 +169,8 @@ class SwapTab extends React.Component {
 SwapTab.propTypes = {
   classes: PropTypes.object,
   onPress: PropTypes.func,
+  rates: PropTypes.object.isRequired,
+  currencies: PropTypes.array.isRequired,
 };
 
 export default injectSheet(styles)(SwapTab);

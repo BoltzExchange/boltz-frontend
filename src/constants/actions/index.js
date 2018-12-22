@@ -5,6 +5,13 @@ export const NAVIGATE = 'NAVIGATE';
 export const NEW_KEYS = 'NEW_KEYS';
 
 /**
+ * Landing page actions
+ */
+export const SET_PAIRS = 'SET_PAIRS';
+export const PAIRS_REQUEST = 'PAIRS_REQUEST';
+export const PAIRS_RESPONSE = 'PAIRS_RESPONSE';
+
+/**
  * Swap actions
  */
 export const COMPLETE_SWAP = 'COMPLETE_SWAP';

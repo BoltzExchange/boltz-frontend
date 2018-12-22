@@ -34,52 +34,68 @@ const styles = theme => ({
   },
 });
 
-const LandingPage = ({
-  classes,
-  goHome,
-  goSwap,
-  goRefund,
-  setSwapAmount,
-  setPublicKey,
-}) => {
-  return (
-    <BackGround>
-      <TaskBar goRefund={goRefund} goHome={goHome} />
-      <View className={classes.wrapper}>
-        <View className={classes.infoWrapper}>
-          <p className={classes.title}>
-            Instant, Low Fee & <br /> Non-Custodial.
-          </p>
-          <p className={classes.description}>
-            Trading <br />
-            <b>{`Shouldn't`}</b>
-            <br />
-            Require
-            <br />
-            An Account.
-          </p>
-          <LinkButton text="WHY?" onPress={() => window.alert('WIP')} />
+class LandingPage extends React.Component {
+  componentDidMount() {
+    this.props.getPairs(() => {
+      this.forceUpdate();
+    });
+  }
+
+  render() {
+    const {
+      classes,
+      setPublicKey,
+      goHome,
+      goSwap,
+      goRefund,
+      setSwapAmount,
+      rates,
+      currencies,
+    } = this.props;
+
+    return (
+      <BackGround>
+        <TaskBar goRefund={goRefund} goHome={goHome} />
+        <View className={classes.wrapper}>
+          <View className={classes.infoWrapper}>
+            <p className={classes.title}>
+              Instant, Low Fee & <br /> Non-Custodial.
+            </p>
+            <p className={classes.description}>
+              Trading <br />
+              <b>{`Shouldn't`}</b>
+              <br />
+              Require
+              <br />
+              An Account.
+            </p>
+            <LinkButton text="WHY?" onPress={() => window.alert('WIP')} />
+          </View>
+          <SwapTab
+            onPress={state => {
+              setSwapAmount(state);
+              setPublicKey(Networks.bitcoinMainnet);
+              goSwap();
+            }}
+            rates={rates}
+            currencies={currencies}
+          />
         </View>
-        <SwapTab
-          onPress={state => {
-            setSwapAmount(state);
-            setPublicKey(Networks.bitcoinMainnet);
-            goSwap();
-          }}
-        />
-      </View>
-    </BackGround>
-  );
-};
+      </BackGround>
+    );
+  }
+}
 
 LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  toggleSwapMode: PropTypes.func.isRequired,
   setPublicKey: PropTypes.func.isRequired,
   goHome: PropTypes.func.isRequired,
   goSwap: PropTypes.func.isRequired,
   goRefund: PropTypes.func.isRequired,
   setSwapAmount: PropTypes.func.isRequired,
+  getPairs: PropTypes.func.isRequired,
+  rates: PropTypes.object.isRequired,
+  currencies: PropTypes.array.isRequired,
 };
 
 export default injectSheet(styles)(LandingPage);
