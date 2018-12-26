@@ -74,7 +74,7 @@ class SwapTab extends React.Component {
     error: false,
     base: 'LTC',
     quote: 'BTC',
-    baseAmount: 0.001,
+    baseAmount: MIN,
     quoteAmount: 0,
   };
 
@@ -151,7 +151,7 @@ class SwapTab extends React.Component {
             <Input
               min={MIN}
               max={MAX}
-              step={0.0001}
+              step={MIN}
               error={error}
               value={baseAmount}
               onChange={e => this.setSwapData(e)}
