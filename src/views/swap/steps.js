@@ -72,7 +72,7 @@ class StyledStepOne extends React.Component {
           onChange={this.onChange}
           error={error}
           placeholder={
-            'lntb20n1pwqhmchpp5v9tsdn62ptl47z8wvzj7xakw09wmj5yax05pv5z2alhpqgdmedlsd' +
+            'Paste you invoice here: lntb20n1pwqhmchpp5v9tsdn62ptl47z8wvzj7xakw09wmj5yax05pv5z2alhpqgdmedlsd' +
             'qqcqzys2wuh6vnuu8f6c94mx7wlduh8kge8ftuarg23nnkpuhgdjpw96hdj2qem2mcztny8vxng6gdc5xsfh2' +
             'z6rf2rt42hc3k5udm2jcynjyspr262hk'
           }
