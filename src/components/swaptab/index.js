@@ -116,7 +116,8 @@ class SwapTab extends React.Component {
     const rate = rates[pairId];
 
     if (rate) {
-      return rate;
+      this.rate = rate;
+      return rate.rate.toFixed(5);
     } else {
       return 'Not found';
     }
@@ -130,8 +131,6 @@ class SwapTab extends React.Component {
     const { classes, rates, currencies } = this.props;
     let { error, base, quote, baseAmount, quoteAmount } = this.state;
 
-    this.rate = this.getRate(rates, `${base}/${quote}`);
-
     if (quoteAmount === 0) {
       this.quoteAmount = this.calculateQuoteAmount(baseAmount);
       quoteAmount = this.quoteAmount;
@@ -143,7 +142,10 @@ class SwapTab extends React.Component {
           <InfoText title="Min amount:" text={`${MIN}`} />
           <InfoText title="Max amount:" text={`${MAX}`} />
           <InfoText title="Fee:" text={'0'} />
-          <InfoText title="Rate:" text={`${this.rate.rate}`} />
+          <InfoText
+            title="Rate:"
+            text={`${this.getRate(rates, `${base}/${quote}`)}`}
+          />
         </View>
         <View className={classes.options}>
           <View className={classes.select}>

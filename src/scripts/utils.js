@@ -15,7 +15,7 @@ export const getHexString = input => {
  * @returns amount in satoshi
  */
 export const toSatoshi = btc => {
-  return btc * 100000000;
+  return Math.ceil(btc * 100000000);
 };
 
 /**
