@@ -76,7 +76,7 @@ export const startListening = (dispatch, swapId) => {
   source.onmessage = event => {
     const data = JSON.parse(event.data);
 
-    let message = 'Paying Lightning invoice';
+    let message = 'Paying Lightning invoice...';
 
     if (data.message.startsWith('Invoice paid:')) {
       message = 'Done';
