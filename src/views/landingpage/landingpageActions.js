@@ -20,7 +20,7 @@ const getRates = pairs => {
 
     // Set the rate for a buy order
     rates[pair] = {
-      rate: rate.toFixed(5),
+      rate: rate,
       pair: {
         id: pair,
         orderSide: 1,
@@ -30,7 +30,7 @@ const getRates = pairs => {
     // And for a sell order
     const { base, quote } = splitPairId(pair);
     rates[`${quote}/${base}`] = {
-      rate: (1 / rate).toFixed(5),
+      rate: 1 / rate,
       pair: {
         id: pair,
         orderSide: 0,
