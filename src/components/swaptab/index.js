@@ -198,7 +198,7 @@ class SwapTab extends React.Component {
           </View>
           <MdArrowForward
             className={error ? classes.nextErrorIcon : classes.nextIcon}
-            />
+          />
         </View>
       </View>
     );
