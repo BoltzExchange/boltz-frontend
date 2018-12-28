@@ -9,16 +9,6 @@ export const getHexString = input => {
 };
 
 /**
- * Convert BTC to satoshi
- *
- * @param btc btc
- * @returns amount in satoshi
- */
-export const toSatoshi = btc => {
-  return Math.ceil(btc * 100000000);
-};
-
-/**
  * Get a hex encoded Buffer from a string
  *
  * @param input {string} input
@@ -67,5 +57,5 @@ export const getCurrencyName = symbol => {
  * Get the denomination of a currency
  */
 export const getCurrencyDenomination = symbol => {
-  return symbol === 'BTC' ? 'Satoshis' : 'Litoshis';
+  return symbol === 'BTC' ? 'BTC' : 'LTC';
 };
