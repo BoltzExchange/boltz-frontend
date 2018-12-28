@@ -8,11 +8,15 @@ import Prompt from '../../components/prompt';
 import View from '../../components/view';
 import { StepOne, StepTwo, StepThree } from './steps';
 
-const styles = () => ({
+const styles = theme => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  loading: {
+    color: theme.colors.white,
+    fontWeight: '300',
   },
 });
 
@@ -78,7 +82,14 @@ const Refund = ({
               num={1}
               action={true}
               render={props => (
-                <Controls text={'Next'} onPress={() => props.nextStage()} />
+                <Controls
+                  text={'Next'}
+                  onPress={() => props.nextStage()}
+                  customBtn={
+                    <h1 className={classes.loading}>Upload refund file</h1>
+                  }
+                  loading={Object.keys(refundFile).length === 0}
+                />
               )}
             />
             <StepsWizard.Control

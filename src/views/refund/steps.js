@@ -76,7 +76,7 @@ const stepTwoStyles = theme => ({
 
 const StyledStepTwo = ({ classes, setDestinationAddress }) => (
   <View className={classes.wrapper}>
-    <p className={classes.info}>Destination address</p>
+    <p className={classes.info}>Litecoin Destintion Address</p>
     <InputArea
       height={150}
       width={500}
