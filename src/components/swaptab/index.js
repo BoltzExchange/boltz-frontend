@@ -8,6 +8,8 @@ import Controls from '../controls';
 import Text, { InfoText } from '../text';
 import { MIN, MAX } from '../../constants/fees';
 
+const boltz_logo = require('../../asset/icons/boltz_logo.png');
+
 const styles = theme => ({
   wrapper: {
     margin: '15px',
@@ -63,6 +65,21 @@ const styles = theme => ({
   },
   text: {
     fontSize: '20px',
+  },
+  loading: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '400px',
+    width: '600px',
+    backgroundColor: theme.colors.white,
+    '@media (min-width: 1500px)': {
+      width: '800px',
+      height: '600px',
+    },
+  },
+  loadingLogo: {
+    width: '200px',
+    height: '200px',
   },
 });
 
@@ -128,7 +145,7 @@ class SwapTab extends React.Component {
   };
 
   render() {
-    const { classes, rates, currencies } = this.props;
+    const { classes, rates, currencies, loading } = this.props;
     let { error, base, quote, baseAmount, quoteAmount } = this.state;
 
     if (quoteAmount === 0) {
@@ -136,7 +153,17 @@ class SwapTab extends React.Component {
       quoteAmount = this.quoteAmount;
     }
 
-    return (
+    return loading ? (
+      <View className={classes.loading}>
+        <img
+          src={boltz_logo}
+          height={100}
+          width={100}
+          className={classes.loadingLogo}
+          alt="logo"
+        />
+      </View>
+    ) : (
       <View className={classes.wrapper}>
         <View className={classes.stats}>
           <InfoText title="Min amount:" text={`${MIN}`} />
@@ -187,6 +214,7 @@ SwapTab.propTypes = {
   onPress: PropTypes.func,
   rates: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(styles)(SwapTab);
