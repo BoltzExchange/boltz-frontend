@@ -24,7 +24,6 @@ export const setRefundFile = file => {
     'privateKey',
     'timeoutBlockHeight',
   ]);
-  console.log(verifyFile);
   return {
     type: actionTypes.SET_REFUND_FILE,
     payload: verifyFile ? fileJSON : {},
