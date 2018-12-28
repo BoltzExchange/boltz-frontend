@@ -19,18 +19,23 @@ const styles = theme => ({
 class Input extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: 0 };
+    this.state = { value: props.value ? props.value : 0 };
   }
 
-  onChange = e => {
-    if (e.target.value) {
-      this.setState({ value: e.target.value });
-      this.props.onChange && this.props.onChange(e.target.value);
+  static getDerivedStateFromProps = nextProps => {
+    if (nextProps.value && nextProps.disable) {
+      return { value: nextProps.value };
     }
   };
 
+  onChange = e => {
+    this.setState({ value: e.target.value }, () => {
+      this.props.onChange(this.state.value);
+    });
+  };
+
   render() {
-    const { classes, style, disable, min, step, value, max } = this.props;
+    const { classes, style, disable, min, step, max } = this.props;
     return (
       <input
         disabled={disable}
@@ -40,7 +45,7 @@ class Input extends React.Component {
         style={style ? style : undefined}
         className={classes.wrapper}
         onChange={e => this.onChange(e)}
-        value={value ? value : this.state.value}
+        value={this.state.value}
         type={'number'}
       />
     );
