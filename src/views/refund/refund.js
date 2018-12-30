@@ -14,7 +14,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loading: {
+  fileUpload: {
     color: theme.colors.white,
     fontWeight: '300',
   },
@@ -64,7 +64,10 @@ const Refund = ({
             <StepsWizard.Step
               num={2}
               render={() => (
-                <StepTwo setDestinationAddress={setDestinationAddress} />
+                <StepTwo
+                  currency={refundFile.currency}
+                  setDestinationAddress={setDestinationAddress}
+                />
               )}
             />
             <StepsWizard.Step
@@ -85,9 +88,8 @@ const Refund = ({
                 <Controls
                   text={'Next'}
                   onPress={() => props.nextStage()}
-                  customBtn={
-                    <h1 className={classes.loading}>Upload refund file</h1>
-                  }
+                  loadingText={'Upload refund file'}
+                  loadingStyle={classes.fileUpload}
                   loading={Object.keys(refundFile).length === 0}
                 />
               )}

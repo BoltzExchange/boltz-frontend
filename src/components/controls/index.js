@@ -1,43 +1,56 @@
 import React from 'react';
+import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 import View from '../view';
 import { MdArrowForward } from 'react-icons/md';
 
-const styles = {
-  wrapper: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+const styles = theme => ({
+  wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: p => (p.loading ? theme.colors.tundoraGrey : 'none'),
+  },
   controls: { flex: 2, justifyContent: 'center', alignItems: 'center' },
-  loading: { color: '#fff', fontWeight: '300' },
+  text: { color: '#fff', fontWeight: '300' },
   nextIcon: {
     paddingRight: '10px',
     height: '30px',
     width: '30px',
-    color: '#fff',
+    color: theme.colors.white,
   },
-};
+});
 
-const Controls = ({ text, onPress, loading, customBtn }) => {
-  const loadingElement = () => {
-    if (customBtn) {
-      return customBtn;
-    } else {
-      return <h1 style={styles.loading}>Loading...</h1>;
-    }
-  };
+const Controls = ({
+  classes,
+  text,
+  onPress,
+  loading,
+  loadingText,
+  loadingStyle,
+}) => {
   return (
-    <View style={styles.wrapper} onClick={loading ? null : () => onPress()}>
-      <View style={styles.controls}>
-        {loading ? loadingElement() : <h1 style={styles.loading}>{text}</h1>}
+    <View
+      className={classes.wrapper}
+      onClick={loading ? null : () => onPress()}
+    >
+      <View className={classes.controls}>
+        <h1 className={loading ? loadingStyle : classes.text}>
+          {loading ? loadingText : text}
+        </h1>
       </View>
-      <MdArrowForward style={styles.nextIcon} />
+      <MdArrowForward className={classes.nextIcon} />
     </View>
   );
 };
 
 Controls.propTypes = {
+  classes: PropTypes.object.isRequired,
   text: PropTypes.string,
   onPress: PropTypes.func,
   loading: PropTypes.bool,
-  customBtn: PropTypes.func,
+  loadingText: PropTypes.string,
+  loadingStyle: PropTypes.string,
 };
 
-export default Controls;
+export default injectSheet(styles)(Controls);

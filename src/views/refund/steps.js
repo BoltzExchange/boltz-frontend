@@ -1,6 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
+import { getCurrencyName } from '../../scripts/utils';
 import View from '../../components/view';
 import { FaCheckCircle } from 'react-icons/fa';
 import DropZone from '../../components/dropzone';
@@ -74,9 +75,11 @@ const stepTwoStyles = theme => ({
   },
 });
 
-const StyledStepTwo = ({ classes, setDestinationAddress }) => (
+const StyledStepTwo = ({ classes, setDestinationAddress, currency }) => (
   <View className={classes.wrapper}>
-    <p className={classes.info}>Litecoin Destintion Address</p>
+    <p className={classes.info}>
+      {getCurrencyName(currency)} Destintion Address
+    </p>
     <InputArea
       height={150}
       width={500}
@@ -88,6 +91,7 @@ const StyledStepTwo = ({ classes, setDestinationAddress }) => (
 
 StyledStepTwo.propTypes = {
   classes: PropTypes.object.isRequired,
+  currency: PropTypes.string.isRequired,
   setDestinationAddress: PropTypes.func.isRequired,
 };
 
