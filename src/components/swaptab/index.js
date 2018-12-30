@@ -47,6 +47,13 @@ const styles = theme => ({
       cursor: 'pointer',
     },
   },
+  nextError: {
+    backgroundColor: theme.colors.tundoraGrey,
+    height: '15%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   controls: {
     flex: 2,
     justifyContent: 'center',
@@ -54,10 +61,6 @@ const styles = theme => ({
   },
   nextText: {
     color: theme.colors.white,
-    fontWeight: '300',
-  },
-  nextError: {
-    color: theme.colors.lightGrey,
     fontWeight: '300',
   },
   nextIcon: {
@@ -188,13 +191,11 @@ class SwapTab extends React.Component {
           </View>
         </View>
         <View
-          className={classes.next}
+          className={error ? classes.nextError : classes.next}
           onClick={error ? null : () => this.shouldSubmit()}
         >
           <View className={classes.controls}>
-            <h1 className={error ? classes.nextError : classes.nextText}>
-              Start swap
-            </h1>
+            <h1 className={classes.nextText}> Start swap </h1>
           </View>
           <MdArrowForward
             className={error ? classes.nextErrorIcon : classes.nextIcon}
