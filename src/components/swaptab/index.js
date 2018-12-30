@@ -4,8 +4,8 @@ import injectSheet from 'react-jss';
 import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
-import Controls from '../controls';
 import Text, { InfoText } from '../text';
+import { MdArrowForward } from 'react-icons/md';
 import { MIN, MAX } from '../../constants/fees';
 
 const styles = theme => ({
@@ -41,18 +41,29 @@ const styles = theme => ({
     backgroundColor: theme.colors.matisseBlue,
     height: '15%',
     width: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
     '&:hover': {
       cursor: 'pointer',
     },
   },
-  nextText: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: '30px',
-    color: theme.colors.white,
+  nextError: {
+    backgroundColor: theme.colors.tundoraGrey,
+    height: '15%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  icon: {
+  controls: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  nextText: {
+    color: theme.colors.white,
+    fontWeight: '300',
+  },
+  nextIcon: {
     fontSize: theme.fontSize.sizeXL,
     padding: '10px',
     transition: '0.3s',
@@ -60,6 +71,11 @@ const styles = theme => ({
     '&:hover': {
       color: theme.colors.lightGrey,
     },
+  },
+  nextErrorIcon: {
+    fontSize: theme.fontSize.sizeXL,
+    padding: '10px',
+    color: theme.colors.lightGrey,
   },
   text: {
     fontSize: '20px',
@@ -174,8 +190,16 @@ class SwapTab extends React.Component {
             />
           </View>
         </View>
-        <View className={classes.next}>
-          <Controls text={'Start swap'} onPress={() => this.shouldSubmit()} />
+        <View
+          className={error ? classes.nextError : classes.next}
+          onClick={error ? null : () => this.shouldSubmit()}
+        >
+          <View className={classes.controls}>
+            <h1 className={classes.nextText}> Start swap </h1>
+          </View>
+          <MdArrowForward
+            className={error ? classes.nextErrorIcon : classes.nextIcon}
+          />
         </View>
       </View>
     );
