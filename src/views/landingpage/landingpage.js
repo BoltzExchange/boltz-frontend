@@ -72,6 +72,7 @@ class LandingPage extends React.Component {
             <LinkButton text="WHY?" onPress={() => window.alert('WIP')} />
           </View>
           <SwapTab
+            loading={Object.keys(rates).length === 0 || currencies.length === 0}
             onPress={state => {
               const keys = generateKeys(
                 state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
