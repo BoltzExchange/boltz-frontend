@@ -8,11 +8,15 @@ import Prompt from '../../components/prompt';
 import View from '../../components/view';
 import { StepOne, StepTwo, StepThree } from './steps';
 
-const styles = () => ({
+const styles = theme => ({
   wrapper: {
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  fileUpload: {
+    color: theme.colors.white,
+    fontWeight: '300',
   },
 });
 
@@ -60,7 +64,10 @@ const Refund = ({
             <StepsWizard.Step
               num={2}
               render={() => (
-                <StepTwo setDestinationAddress={setDestinationAddress} />
+                <StepTwo
+                  currency={refundFile.currency}
+                  setDestinationAddress={setDestinationAddress}
+                />
               )}
             />
             <StepsWizard.Step
@@ -78,7 +85,13 @@ const Refund = ({
               num={1}
               action={true}
               render={props => (
-                <Controls text={'Next'} onPress={() => props.nextStage()} />
+                <Controls
+                  text={'Next'}
+                  onPress={() => props.nextStage()}
+                  loadingText={'Upload refund file'}
+                  loadingStyle={classes.fileUpload}
+                  loading={Object.keys(refundFile).length === 0}
+                />
               )}
             />
             <StepsWizard.Control

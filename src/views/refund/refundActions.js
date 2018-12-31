@@ -5,16 +5,30 @@ import * as actionTypes from '../../constants/actions';
 import { boltzApi, bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { getHexBuffer } from '../../scripts/utils';
 
+const verifyRefundFile = (fileJSON, keys) => {
+  const verify = keys.every(key => fileJSON.hasOwnProperty(key));
+  return verify;
+};
+
 export const completeRefund = () => {
   return {
     type: actionTypes.COMPLETE_REFUND,
   };
 };
 
-export const setRefundFile = file => ({
-  type: actionTypes.SET_REFUND_FILE,
-  payload: JSON.parse(file),
-});
+export const setRefundFile = file => {
+  const fileJSON = JSON.parse(file);
+  const verifyFile = verifyRefundFile(fileJSON, [
+    'currency',
+    'redeemScript',
+    'privateKey',
+    'timeoutBlockHeight',
+  ]);
+  return {
+    type: actionTypes.SET_REFUND_FILE,
+    payload: verifyFile ? fileJSON : {},
+  };
+};
 
 export const setTransactionHash = hash => ({
   type: actionTypes.SET_REFUND_TXHASH,
