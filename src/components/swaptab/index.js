@@ -5,8 +5,8 @@ import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
 import Text, { InfoText } from '../text';
-import { MdArrowForward } from 'react-icons/md';
 import { MIN, MAX } from '../../constants/fees';
+import Controls from '../controls';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
@@ -73,11 +73,6 @@ const styles = theme => ({
     '&:hover': {
       color: theme.colors.lightGrey,
     },
-  },
-  nextErrorIcon: {
-    fontSize: theme.fontSize.sizeXL,
-    padding: '10px',
-    color: theme.colors.lightGrey,
   },
   text: {
     fontSize: '20px',
@@ -217,15 +212,13 @@ class SwapTab extends React.Component {
             />
           </View>
         </View>
-        <View
-          className={error ? classes.nextError : classes.next}
-          onClick={error ? null : () => this.shouldSubmit()}
-        >
-          <View className={classes.controls}>
-            <h1 className={classes.nextText}> Start swap </h1>
-          </View>
-          <MdArrowForward
-            className={error ? classes.nextErrorIcon : classes.nextIcon}
+        <View className={classes.next}>
+          <Controls
+            text={'Start swap'}
+            loading={error}
+            onPress={error ? null : () => this.shouldSubmit()}
+            loadingText={'Start swap'}
+            loadingStyle={classes.nextText}
           />
         </View>
       </View>

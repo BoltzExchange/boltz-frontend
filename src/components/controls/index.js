@@ -7,6 +7,7 @@ import { MdArrowForward } from 'react-icons/md';
 const styles = theme => ({
   wrapper: {
     flex: 1,
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: p => (p.loading ? theme.colors.tundoraGrey : 'none'),
