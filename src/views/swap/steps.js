@@ -5,7 +5,7 @@ import QrCode from '../../components/qrcode';
 import { FaCheckCircle, FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
 import InputArea from '../../components/inputarea';
-import { getCurrencyName, getCurrencyDenomination } from '../../scripts/utils';
+import { getCurrencyName, toWholeCoins } from '../../scripts/utils';
 
 // TODO: refactor into multiple components.
 const stepOneStyles = () => ({
@@ -58,7 +58,7 @@ class StyledStepOne extends React.Component {
           Paste a <b>{getCurrencyName(swapInfo.quote)}</b> Lightning {}
           <FaBolt size={30} color="#FFFF00" /> invoice for <br />
           <b>
-            {swapInfo.quoteAmount} {getCurrencyDenomination(swapInfo.quote)}
+            {swapInfo.quoteAmount} {swapInfo.quote}
           </b>
         </p>
         <InputArea
@@ -142,7 +142,7 @@ const StyledStepTwo = ({ classes, swapInfo, swapResponse }) => (
       >
         Send {}
         <b>
-          {swapResponse.expectedAmount} {getCurrencyDenomination(swapInfo.base)}
+          {toWholeCoins(swapResponse.expectedAmount)} {swapInfo.base}
         </b>{' '}
         to:
       </p>

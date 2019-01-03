@@ -47,15 +47,15 @@ export const splitPairId = pairId => {
 };
 
 /**
+ * Convert satoshis and litoshis to whole coins
+ */
+export const toWholeCoins = satoshis => {
+  return (satoshis / 100000000).toFixed(8);
+};
+
+/**
  * Get the full name of a currency
  */
 export const getCurrencyName = symbol => {
   return symbol === 'BTC' ? 'Bitcoin' : 'Litecoin';
-};
-
-/**
- * Get the denomination of a currency
- */
-export const getCurrencyDenomination = symbol => {
-  return symbol === 'BTC' ? 'BTC' : 'LTC';
 };
