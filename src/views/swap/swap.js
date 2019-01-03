@@ -6,7 +6,7 @@ import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Controls from '../../components/controls';
 import Prompt from '../../components/prompt';
-import { StepOne, StepTwo, StepThree, StepFour } from './steps';
+import { StepOne, StepTwo, StepThree } from './steps';
 
 const styles = () => ({
   wrapper: {
@@ -32,7 +32,7 @@ const Swap = ({
       <Prompt />
       <View className={classes.wrapper}>
         <StepsWizard
-          range={4}
+          range={3}
           stage={1}
           onExit={() => {
             if (window.confirm('Are you sure you want to exit')) {
@@ -66,7 +66,6 @@ const Swap = ({
                 />
               )}
             />
-            <StepsWizard.Step num={4} render={() => <StepFour />} />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
@@ -89,25 +88,14 @@ const Swap = ({
             />
             <StepsWizard.Control
               num={3}
-              render={props => (
+              render={() => (
                 <Controls
                   text={swapStatus}
                   onPress={() => {
                     if (swapStatus === 'Done') {
-                      props.nextStage();
+                      completeSwap();
+                      goHome();
                     }
-                  }}
-                />
-              )}
-            />
-            <StepsWizard.Control
-              num={4}
-              render={() => (
-                <Controls
-                  text={'Successfully completed swap!'}
-                  onPress={() => {
-                    completeSwap();
-                    goHome();
                   }}
                 />
               )}
