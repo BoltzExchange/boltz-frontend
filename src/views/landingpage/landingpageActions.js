@@ -18,22 +18,22 @@ const getRates = pairs => {
   for (const pair in pairs) {
     const rate = pairs[pair];
 
-    // Set the rate for a buy order
+    // Set the rate for a sell order
     rates[pair] = {
       rate: rate,
       pair: {
         id: pair,
-        orderSide: 1,
+        orderSide: 'sell',
       },
     };
 
-    // And for a sell order
+    // And for a buy order
     const { base, quote } = splitPairId(pair);
     rates[`${quote}/${base}`] = {
       rate: 1 / rate,
       pair: {
         id: pair,
-        orderSide: 0,
+        orderSide: 'buy',
       },
     };
   }
