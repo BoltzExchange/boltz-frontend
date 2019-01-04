@@ -41,5 +41,10 @@
         "parser": "babylon"
       }],
       "no-console": "off"
+    },
+    "settings": {
+      "react": {
+        "version": "16.7.0"
+      }
     }
   }
