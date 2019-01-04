@@ -95,73 +95,95 @@ const styles = theme => ({
 });
 
 class SwapTab extends React.Component {
-  rate = {};
-  quoteAmount = 0;
+  constructor(props) {
+    super(props);
 
-  state = {
-    error: false,
-    base: 'LTC',
-    quote: 'BTC',
-    baseAmount: MIN,
-    quoteAmount: 0,
+    this.state = {
+      error: false,
+      base: 'LTC',
+      quote: 'BTC',
+      baseAmount: MIN,
+      quoteAmount: 0,
+    };
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    // Update the rate if the request finished or the currencies changed
+    if (
+      prevProps.loading ||
+      prevState.base !== this.state.base ||
+      prevState.quote !== this.state.quote
+    ) {
+      this.setState({
+        rate: this.props.rates[`${this.state.base}/${this.state.quote}`],
+      });
+    }
   };
 
-  setSwapData = baseAmount => {
-    if (baseAmount <= MAX && baseAmount >= MIN) {
-      this.setState({
-        baseAmount,
-        quoteAmount: this.calculateQuoteAmount(baseAmount),
-        error: false,
-      });
-    } else {
+  checkBaseAmount = baseAmount => {
+    const valid = baseAmount <= MAX && baseAmount >= MIN;
+
+    if (!valid) {
       this.setState({
         error: true,
+      });
+    }
+    return valid;
+  };
+
+  updateBaseAmount = quoteAmount => {
+    const newBaseAmount = (quoteAmount / this.state.rate.rate).toFixed(8);
+
+    if (this.checkBaseAmount(newBaseAmount)) {
+      this.setState({
+        quoteAmount: Number.parseFloat(quoteAmount).toFixed(8),
+        baseAmount: newBaseAmount,
+        error: false,
+      });
+    }
+  };
+
+  updateQuoteAmount = baseAmount => {
+    const newQuoteAmount = (baseAmount * this.state.rate.rate).toFixed(8);
+
+    if (this.checkBaseAmount(baseAmount)) {
+      this.setState({
+        quoteAmount: newQuoteAmount,
+        baseAmount: Number.parseFloat(baseAmount).toFixed(8),
+        error: false,
       });
     }
   };
 
   shouldSubmit = () => {
-    const { error } = this.state;
+    const { error, rate } = this.state;
 
-    if (error !== undefined && this.rate !== 'Not found') {
+    if (error === false && this.rate !== 'Not found') {
       const state = {
         ...this.state,
-        pair: this.rate.pair,
+        pair: rate.pair,
       };
 
-      if (this.state.quoteAmount === 0) {
-        this.props.onPress({
-          ...state,
-          quoteAmount: this.quoteAmount,
-        });
-      } else {
-        this.props.onPress(state);
-      }
+      this.props.onPress(state);
     }
   };
 
-  getRate = (rates, pairId) => {
-    const rate = rates[pairId];
+  getRate = () => {
+    const rate = this.state.rate;
 
     if (rate) {
-      this.rate = rate;
       return rate.rate.toFixed(5);
     } else {
       return 'Not found';
     }
   };
 
-  calculateQuoteAmount = baseAmount => {
-    return (Number.parseFloat(baseAmount) * this.rate.rate).toFixed(8);
-  };
-
   render() {
     const { classes, rates, currencies, loading } = this.props;
-    let { error, base, quote, baseAmount, quoteAmount } = this.state;
+    let { error, base, quote, baseAmount, quoteAmount, rate } = this.state;
 
-    if (quoteAmount === 0) {
-      this.quoteAmount = this.calculateQuoteAmount(baseAmount);
-      quoteAmount = this.quoteAmount;
+    if (quoteAmount === 0 && rate !== undefined) {
+      this.updateQuoteAmount(baseAmount);
     }
 
     return loading ? (
@@ -180,10 +202,7 @@ class SwapTab extends React.Component {
           <InfoText title="Min amount:" text={`${MIN}`} />
           <InfoText title="Max amount:" text={`${MAX}`} />
           <InfoText title="Fee:" text={'0'} />
-          <InfoText
-            title="Rate:"
-            text={`${this.getRate(rates, `${base}/${quote}`)}`}
-          />
+          <InfoText title="Rate:" text={`${this.getRate(rates)}`} />
         </View>
         <View className={classes.options}>
           <View className={classes.select}>
@@ -194,7 +213,7 @@ class SwapTab extends React.Component {
               step={MIN}
               error={error}
               value={baseAmount}
-              onChange={e => this.setSwapData(e)}
+              onChange={e => this.updateQuoteAmount(e)}
             />
             <DropDown
               defaultValue={base}
@@ -204,7 +223,14 @@ class SwapTab extends React.Component {
           </View>
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
-            <Input disable value={quoteAmount} />
+            <Input
+              min={0.00000001}
+              max={MAX}
+              step={0.00000001}
+              error={error}
+              value={quoteAmount}
+              onChange={e => this.updateBaseAmount(e)}
+            />
             <DropDown
               defaultValue={quote}
               fields={currencies}
