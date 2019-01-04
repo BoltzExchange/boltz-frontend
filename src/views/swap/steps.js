@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import QrCode from '../../components/qrcode';
-import { FaCheckCircle, FaBolt } from 'react-icons/fa';
+import { FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
 import InputArea from '../../components/inputarea';
 import { getCurrencyName, toWholeCoins } from '../../scripts/utils';
@@ -254,29 +254,3 @@ StyledStepThree.propTypes = {
 };
 
 export const StepThree = injectSheet(stepThreeStyles)(StyledStepThree);
-
-const stepFourStyles = () => ({
-  wrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  info: {
-    margin: '15px',
-    fontSize: '30px',
-  },
-});
-
-const StyledStepFour = ({ classes }) => (
-  <View className={classes.wrapper}>
-    <FaCheckCircle size={240} color="#50E3C2" />
-    <span className={classes.info}>Success!</span>
-  </View>
-);
-
-StyledStepFour.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export const StepFour = injectSheet(stepFourStyles)(StyledStepFour);
