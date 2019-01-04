@@ -48,13 +48,6 @@ export const startSwap = (swapInfo, cb) => {
   return dispatch => {
     const { pair, invoice, keys } = swapInfo;
 
-    console.log({
-      pairId: pair.id,
-      orderSide: pair.orderSide,
-      invoice: invoice,
-      refundPublicKey: keys.publicKey,
-    });
-
     dispatch(swapRequest());
     axios
       .post(url, {
