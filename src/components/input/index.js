@@ -17,16 +17,8 @@ const styles = theme => ({
 });
 
 class Input extends React.Component {
-  static getDerivedStateFromProps = nextProps => {
-    if (nextProps.value && nextProps.disable) {
-      return { value: nextProps.value };
-    }
-  };
-
   onChange = e => {
-    this.setState({ value: e.target.value }, () => {
-      this.props.onChange(this.state.value);
-    });
+    this.props.onChange(e.target.value);
   };
 
   render() {

@@ -9,6 +9,8 @@ import SwapTab from '../../components/swaptab';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { generateKeys } from '../../action';
 
+const boltz_logo = require('../../asset/icons/boltz_logo.png');
+
 const styles = theme => ({
   wrapper: {
     height: '100%',
@@ -32,6 +34,21 @@ const styles = theme => ({
     '@media (min-width: 1500px)': {
       fontSize: theme.fontSize.sizeXXXL,
     },
+  },
+  loading: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '400px',
+    width: '600px',
+    backgroundColor: theme.colors.white,
+    '@media (min-width: 1500px)': {
+      width: '800px',
+      height: '600px',
+    },
+  },
+  loadingLogo: {
+    width: '200px',
+    height: '200px',
   },
 });
 
@@ -71,23 +88,34 @@ class LandingPage extends React.Component {
             </p>
             <LinkButton text="WHY?" onPress={() => window.alert('WIP')} />
           </View>
-          <SwapTab
-            loading={Object.keys(rates).length === 0 || currencies.length === 0}
-            onPress={state => {
-              const keys = generateKeys(
-                state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
-              );
+          {Object.keys(rates).length === 0 || currencies.length === 0 ? (
+            <View className={classes.loading}>
+              <img
+                src={boltz_logo}
+                height={100}
+                width={100}
+                className={classes.loadingLogo}
+                alt="logo"
+              />
+            </View>
+          ) : (
+            <SwapTab
+              onPress={state => {
+                const keys = generateKeys(
+                  state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
+                );
 
-              initSwap({
-                ...state,
-                keys,
-              });
+                initSwap({
+                  ...state,
+                  keys,
+                });
 
-              goSwap();
-            }}
-            rates={rates}
-            currencies={currencies}
-          />
+                goSwap();
+              }}
+              rates={rates}
+              currencies={currencies}
+            />
+          )}
         </View>
       </BackGround>
     );
