@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { BigNumber } from 'bignumber.js';
 import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
@@ -116,7 +117,8 @@ class SwapTab extends React.Component {
   };
 
   updateBaseAmount = quoteAmount => {
-    const newBaseAmount = quoteAmount / this.state.rate.rate;
+    const rate = new BigNumber(this.state.rate.rate);
+    const newBaseAmount = new BigNumber(quoteAmount).dividedBy(rate).toNumber();
     const error = !this.checkBaseAmount(newBaseAmount);
     console.log(`baseAmount: error: ${error} new: ${newBaseAmount}`);
     this.setState({
@@ -127,7 +129,8 @@ class SwapTab extends React.Component {
   };
 
   updateQuoteAmount = baseAmount => {
-    const newQuoteAmount = baseAmount * this.state.rate.rate;
+    const rate = new BigNumber(this.state.rate.rate);
+    const newQuoteAmount = new BigNumber(baseAmount).times(rate).toFixed(8);
     const error = !this.checkBaseAmount(baseAmount);
     console.log(`///////////// ${baseAmount}`);
     console.log(`qouteAmount: error: ${error} new: ${newQuoteAmount}`);
