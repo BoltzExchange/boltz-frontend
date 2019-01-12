@@ -120,7 +120,6 @@ class SwapTab extends React.Component {
     const rate = new BigNumber(this.state.rate.rate);
     const newBaseAmount = new BigNumber(quoteAmount).dividedBy(rate).toNumber();
     const error = !this.checkBaseAmount(newBaseAmount);
-    console.log(`baseAmount: error: ${error} new: ${newBaseAmount}`);
     this.setState({
       quoteAmount: Number.parseFloat(quoteAmount),
       baseAmount: newBaseAmount,
@@ -132,8 +131,6 @@ class SwapTab extends React.Component {
     const rate = new BigNumber(this.state.rate.rate);
     const newQuoteAmount = new BigNumber(baseAmount).times(rate).toFixed(8);
     const error = !this.checkBaseAmount(baseAmount);
-    console.log(`///////////// ${baseAmount}`);
-    console.log(`qouteAmount: error: ${error} new: ${newQuoteAmount}`);
     this.setState({
       quoteAmount: newQuoteAmount,
       baseAmount: Number.parseFloat(baseAmount),
