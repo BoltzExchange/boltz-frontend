@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { BigNumber } from 'bignumber.js';
 import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
 import Text, { InfoText } from '../text';
 import { MIN, MAX } from '../../constants/fees';
 import Controls from '../controls';
-
-const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 const styles = theme => ({
   wrapper: {
@@ -77,21 +76,6 @@ const styles = theme => ({
   text: {
     fontSize: '20px',
   },
-  loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '400px',
-    width: '600px',
-    backgroundColor: theme.colors.white,
-    '@media (min-width: 1500px)': {
-      width: '800px',
-      height: '600px',
-    },
-  },
-  loadingLogo: {
-    width: '200px',
-    height: '200px',
-  },
 });
 
 class SwapTab extends React.Component {
@@ -107,10 +91,18 @@ class SwapTab extends React.Component {
     };
   }
 
+  componentDidMount = () => {
+    this.setState(
+      {
+        rate: this.props.rates[`${this.state.base}/${this.state.quote}`],
+      },
+      () => this.updateQuoteAmount(this.state.baseAmount)
+    );
+  };
+
   componentDidUpdate = (prevProps, prevState) => {
     // Update the rate if the request finished or the currencies changed
     if (
-      prevProps.loading ||
       prevState.base !== this.state.base ||
       prevState.quote !== this.state.quote
     ) {
@@ -121,38 +113,29 @@ class SwapTab extends React.Component {
   };
 
   checkBaseAmount = baseAmount => {
-    const valid = baseAmount <= MAX && baseAmount >= MIN;
-
-    if (!valid) {
-      this.setState({
-        error: true,
-      });
-    }
-    return valid;
+    return baseAmount <= MAX && baseAmount >= MIN;
   };
 
   updateBaseAmount = quoteAmount => {
-    const newBaseAmount = (quoteAmount / this.state.rate.rate).toFixed(8);
-
-    if (this.checkBaseAmount(newBaseAmount)) {
-      this.setState({
-        quoteAmount: Number.parseFloat(quoteAmount).toFixed(8),
-        baseAmount: newBaseAmount,
-        error: false,
-      });
-    }
+    const rate = new BigNumber(this.state.rate.rate);
+    const newBaseAmount = new BigNumber(quoteAmount).dividedBy(rate).toNumber();
+    const error = !this.checkBaseAmount(newBaseAmount);
+    this.setState({
+      quoteAmount: Number.parseFloat(quoteAmount),
+      baseAmount: newBaseAmount,
+      error,
+    });
   };
 
   updateQuoteAmount = baseAmount => {
-    const newQuoteAmount = (baseAmount * this.state.rate.rate).toFixed(8);
-
-    if (this.checkBaseAmount(baseAmount)) {
-      this.setState({
-        quoteAmount: newQuoteAmount,
-        baseAmount: Number.parseFloat(baseAmount).toFixed(8),
-        error: false,
-      });
-    }
+    const rate = new BigNumber(this.state.rate.rate);
+    const newQuoteAmount = new BigNumber(baseAmount).times(rate).toFixed(8);
+    const error = !this.checkBaseAmount(baseAmount);
+    this.setState({
+      quoteAmount: newQuoteAmount,
+      baseAmount: Number.parseFloat(baseAmount),
+      error,
+    });
   };
 
   shouldSubmit = () => {
@@ -179,24 +162,10 @@ class SwapTab extends React.Component {
   };
 
   render() {
-    const { classes, rates, currencies, loading } = this.props;
-    let { error, base, quote, baseAmount, quoteAmount, rate } = this.state;
+    const { classes, rates, currencies } = this.props;
+    const { error, base, quote, baseAmount, quoteAmount } = this.state;
 
-    if (quoteAmount === 0 && rate !== undefined) {
-      this.updateQuoteAmount(baseAmount);
-    }
-
-    return loading ? (
-      <View className={classes.loading}>
-        <img
-          src={boltz_logo}
-          height={100}
-          width={100}
-          className={classes.loadingLogo}
-          alt="logo"
-        />
-      </View>
-    ) : (
+    return (
       <View className={classes.wrapper}>
         <View className={classes.stats}>
           <InfoText title="Min amount:" text={`${MIN}`} />
@@ -257,7 +226,6 @@ SwapTab.propTypes = {
   onPress: PropTypes.func,
   rates: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(styles)(SwapTab);
