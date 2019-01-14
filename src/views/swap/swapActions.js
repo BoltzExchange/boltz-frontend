@@ -45,9 +45,9 @@ export const swapRequest = () => ({
 
 export const startSwap = (swapInfo, cb) => {
   const url = `${boltzApi}/createswap`;
-  return dispatch => {
-    const { pair, invoice, keys } = swapInfo;
+  const { pair, invoice, keys } = swapInfo;
 
+  return dispatch => {
     dispatch(swapRequest());
     axios
       .post(url, {
@@ -69,7 +69,7 @@ export const startSwap = (swapInfo, cb) => {
   };
 };
 
-export const startListening = (dispatch, swapId) => {
+const startListening = (dispatch, swapId) => {
   const source = new EventSource(`${boltzApi}/swapstatus?id=${swapId}`);
 
   source.onmessage = event => {

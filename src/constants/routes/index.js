@@ -12,6 +12,11 @@ export const swapDownloadRefund = 'SwapDownloadRefund';
 export const swapDone = 'SwapDone';
 
 /**
+ * Reverse Swap routes
+ */
+export const reverseSwap = 'ReverseSwap';
+
+/**
  * Refund routes
  */
 export const refund = 'Refund';

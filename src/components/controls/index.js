@@ -3,6 +3,7 @@ import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 import View from '../view';
 import { MdArrowForward } from 'react-icons/md';
+import Loader from 'react-loader-spinner';
 
 const styles = theme => ({
   wrapper: {
@@ -20,27 +21,27 @@ const styles = theme => ({
     width: '30px',
     color: theme.colors.white,
   },
+  spinner: {
+    marginRight: '20px',
+  },
 });
 
-const Controls = ({
-  classes,
-  text,
-  onPress,
-  loading,
-  loadingText,
-  loadingStyle,
-}) => {
+const Controls = ({ classes, text, onPress, loading, loadingText }) => {
   return (
     <View
       className={classes.wrapper}
       onClick={loading ? null : () => onPress()}
     >
       <View className={classes.controls}>
-        <h1 className={loading ? loadingStyle : classes.text}>
-          {loading ? loadingText : text}
-        </h1>
+        <h1 className={classes.text}>{loading ? loadingText : text}</h1>
       </View>
-      <MdArrowForward className={classes.nextIcon} />
+      {loading ? (
+        <View className={classes.spinner}>
+          <Loader type="TailSpin" color="#fff" height={50} width={50} />
+        </View>
+      ) : (
+        <MdArrowForward className={classes.nextIcon} />
+      )}
     </View>
   );
 };
@@ -51,7 +52,6 @@ Controls.propTypes = {
   onPress: PropTypes.func,
   loading: PropTypes.bool,
   loadingText: PropTypes.string,
-  loadingStyle: PropTypes.string,
 };
 
 export default injectSheet(styles)(Controls);
