@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { ECPair, address, Transaction } from 'bitcoinjs-lib';
 import { constructRefundTransaction, detectSwap } from 'boltz-core';
+import { boltzApi } from '../../constants';
 import * as actionTypes from '../../constants/actions';
-import { boltzApi, bitcoinNetwork, litecoinNetwork } from '../../constants';
-import { getHexBuffer } from '../../scripts/utils';
+import { getHexBuffer, getNetwork } from '../../scripts/utils';
 
 const verifyRefundFile = (fileJSON, keys) => {
   const verify = keys.every(key => fileJSON.hasOwnProperty(key));
@@ -71,8 +71,6 @@ export const startRefund = (
   const url = `${boltzApi}/gettransaction`;
   const currency = refundFile.currency;
 
-  const network = currency === 'BTC' ? bitcoinNetwork : litecoinNetwork;
-
   return dispatch => {
     dispatch(refundRequest());
     axios
@@ -86,16 +84,17 @@ export const startRefund = (
           response.data.transactionHex
         );
 
+        // TODO: refactor for new version of core library
         const refundTransaction = constructRefundTransaction(
           ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
           redeemScript,
           refundFile.timeoutBlockHeight,
-          // TODO: make sure the provided lockup transaction hash was correct and show more specific error is not
+          // TODO: make sure the provided lockup transaction hash was correct and show more specific error if not
           {
             txHash: lockupTransaction.getHash(),
             ...detectSwap(redeemScript, lockupTransaction),
           },
-          address.toOutputScript(destinationAddress, network)
+          address.toOutputScript(destinationAddress, getNetwork(currency))
         );
 
         const refundTransactionHex = refundTransaction.toHex();
@@ -125,9 +124,6 @@ const broadcastRefund = (currency, refundTransaction, cb) => {
       .post(url, {
         currency,
         transactionHex: refundTransaction,
-      })
-      .then(response => {
-        dispatch(refundResponse(true, response.data));
       })
       .then(() => cb())
       .catch(error => {

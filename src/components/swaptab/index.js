@@ -6,7 +6,7 @@ import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
 import Text, { InfoText } from '../text';
-import { MIN, MAX, FEE } from '../../constants/fees';
+import { MIN, MAX } from '../../constants/fees';
 import Controls from '../controls';
 
 const styles = theme => ({
@@ -79,22 +79,59 @@ const styles = theme => ({
 });
 
 class SwapTab extends React.Component {
+  baseAsset = {};
+  quoteAsset = {};
+
   constructor(props) {
     super(props);
 
     this.state = {
       error: false,
       base: 'LTC',
-      quote: 'BTC',
+      quote: 'BTC ⚡',
       baseAmount: MIN,
       quoteAmount: 0,
     };
   }
 
+  updateAssets = (isBase, symbol, isLightning) => {
+    if (isBase) {
+      this.baseAsset = {
+        symbol,
+        isLightning,
+      };
+    } else {
+      this.quoteAsset = {
+        symbol,
+        isLightning,
+      };
+    }
+  };
+
+  parseBoltSuffix = (entry, isBase) => {
+    const index = entry.lastIndexOf('⚡');
+    const isLightning = index !== -1;
+
+    const symbol = isLightning ? entry.substr(0, index - 1) : entry;
+
+    this.updateAssets(isBase, symbol, isLightning);
+
+    return symbol;
+  };
+
+  getRate = () => {
+    return this.props.rates[
+      `${this.parseBoltSuffix(this.state.base, true)}/${this.parseBoltSuffix(
+        this.state.quote,
+        false
+      )}`
+    ];
+  };
+
   componentDidMount = () => {
     this.setState(
       {
-        rate: this.props.rates[`${this.state.base}/${this.state.quote}`],
+        rate: this.getRate(),
       },
       () => this.updateQuoteAmount(this.state.baseAmount)
     );
@@ -106,9 +143,20 @@ class SwapTab extends React.Component {
       prevState.base !== this.state.base ||
       prevState.quote !== this.state.quote
     ) {
-      this.setState({
-        rate: this.props.rates[`${this.state.base}/${this.state.quote}`],
-      });
+      const rate = this.getRate();
+
+      // Swapping from chain to chain or from Lightning to Lightning is not supported right now
+      if (this.baseAsset.isLightning !== this.quoteAsset.isLightning) {
+        this.setState({
+          rate,
+          error: false,
+        });
+      } else {
+        this.setState({
+          rate: undefined,
+          error: true,
+        });
+      }
     }
   };
 
@@ -118,7 +166,7 @@ class SwapTab extends React.Component {
 
   updateBaseAmount = quoteAmount => {
     const rate = new BigNumber(this.state.rate.rate);
-    const newBaseAmount = new BigNumber(quoteAmount).dividedBy(rate).toNumber();
+    const newBaseAmount = new BigNumber(quoteAmount).dividedBy(rate).toFixed(8);
     const error = !this.checkBaseAmount(newBaseAmount);
     this.setState({
       quoteAmount: Number.parseFloat(quoteAmount),
@@ -144,6 +192,9 @@ class SwapTab extends React.Component {
     if (error === false && this.rate !== 'Not found') {
       const state = {
         ...this.state,
+        base: this.baseAsset.symbol,
+        quote: this.quoteAsset.symbol,
+        isReverseSwap: this.baseAsset.isLightning,
         pair: rate.pair,
       };
 
@@ -151,7 +202,7 @@ class SwapTab extends React.Component {
     }
   };
 
-  getRate = () => {
+  parseRate = () => {
     const rate = this.state.rate;
 
     if (rate) {
@@ -170,8 +221,8 @@ class SwapTab extends React.Component {
         <View className={classes.stats}>
           <InfoText title="Min amount:" text={`${MIN}`} />
           <InfoText title="Max amount:" text={`${MAX}`} />
-          <InfoText title="Fee:" text={FEE} />
-          <InfoText title="Rate:" text={`${this.getRate(rates)}`} />
+          <InfoText title="Fee:" text={'0'} />
+          <InfoText title="Rate:" text={`${this.parseRate(rates)}`} />
         </View>
         <View className={classes.options}>
           <View className={classes.select}>

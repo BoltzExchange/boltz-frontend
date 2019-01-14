@@ -1,3 +1,8 @@
+import { bitcoinNetwork, litecoinNetwork } from '../constants';
+
+// Number satohis and litoshis in a whole coin
+const decimals = 100000000;
+
 /**
  * Get a hex encoded string from a Buffer
  *
@@ -50,7 +55,14 @@ export const splitPairId = pairId => {
  * Convert satoshis and litoshis to whole coins
  */
 export const toWholeCoins = satoshis => {
-  return (satoshis / 100000000).toFixed(8);
+  return (satoshis / decimals).toFixed(8);
+};
+
+/**
+ * Convert whole coins into satoshis or litoshis
+ */
+export const toSatoshi = coins => {
+  return Math.floor(coins * decimals);
 };
 
 /**
@@ -58,4 +70,22 @@ export const toWholeCoins = satoshis => {
  */
 export const getCurrencyName = symbol => {
   return symbol === 'BTC' ? 'Bitcoin' : 'Litecoin';
+};
+
+// TODO: refactor how we copy
+/**
+ * Copy the content of the element "copy" into the clipboard
+ */
+export const copyToClipBoard = () => {
+  const range = document.getSelection().getRangeAt(0);
+  range.selectNode(document.getElementById('copy'));
+  window.getSelection().addRange(range);
+  document.execCommand('copy');
+};
+
+/**
+ * Get the network for a symbol
+ */
+export const getNetwork = symbol => {
+  return symbol === 'BTC' ? bitcoinNetwork : litecoinNetwork;
 };

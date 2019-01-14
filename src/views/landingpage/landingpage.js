@@ -63,9 +63,11 @@ class LandingPage extends React.Component {
     const {
       classes,
       goHome,
+      goReverseSwap,
       goSwap,
       goRefund,
       initSwap,
+      initReverseSwap,
       rates,
       currencies,
     } = this.props;
@@ -105,12 +107,21 @@ class LandingPage extends React.Component {
                   state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
                 );
 
-                initSwap({
-                  ...state,
-                  keys,
-                });
+                if (state.isReverseSwap) {
+                  initReverseSwap({
+                    ...state,
+                    keys,
+                  });
 
-                goSwap();
+                  goReverseSwap();
+                } else {
+                  initSwap({
+                    ...state,
+                    keys,
+                  });
+
+                  goSwap();
+                }
               }}
               rates={rates}
               currencies={currencies}
@@ -126,8 +137,10 @@ LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
   goHome: PropTypes.func.isRequired,
   goSwap: PropTypes.func.isRequired,
+  goReverseSwap: PropTypes.func.isRequired,
   goRefund: PropTypes.func.isRequired,
   initSwap: PropTypes.func.isRequired,
+  initReverseSwap: PropTypes.func.isRequired,
   getPairs: PropTypes.func.isRequired,
   rates: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,

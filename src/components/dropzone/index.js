@@ -80,7 +80,7 @@ class DropZone extends React.Component {
   }
 }
 
-DropZone.protoTypes = {
+DropZone.propTypes = {
   className: PropTypes.string,
   children: PropTypes.children,
   style: PropTypes.object,
