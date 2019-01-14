@@ -156,6 +156,15 @@ const StyledStepTwo = ({ classes, swapInfo, swapResponse }) => (
       <span className={classes.action} onClick={() => copyToClipBoard()}>
         Copy
       </span>
+      <p>
+        If the address does not work with your wallet:{' '} <br />
+        <a
+          target={'_blank'}
+          href="https://litecoin-project.github.io/p2sh-convert/"
+        >
+          use this tool
+        </a>
+      </p>
     </View>
   </View>
 );
