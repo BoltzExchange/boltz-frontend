@@ -100,7 +100,7 @@ const Swap = ({
               num={3}
               render={props => (
                 <Controls
-                  text={'Ive downloaded the refund file'}
+                  text={'I have downloaded the refund file'}
                   onPress={() => {
                     completeSwap();
                     props.nextStage();
