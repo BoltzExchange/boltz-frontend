@@ -81,7 +81,7 @@ export const startListening = (dispatch, swapId, callback) => {
   source.onmessage = event => {
     const data = JSON.parse(event.data);
 
-    if (data.message.startsWith('Invoice paid:')) {
+    if (data.message.startsWith('Transaction confirmed:')) {
       message = {
         pending: false,
         message: 'Confirmed!',
@@ -90,6 +90,7 @@ export const startListening = (dispatch, swapId, callback) => {
       callback();
     } else {
       message = {
+        error: true,
         pending: true,
         message: 'Boltz failed to confirm the trasnsaction',
       };

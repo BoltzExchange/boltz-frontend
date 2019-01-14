@@ -89,6 +89,9 @@ const Swap = ({
                 <Controls
                   text={swapStatus.message}
                   loading={swapStatus.pending}
+                  error={swapStatus.error}
+                  errorText={swapStatus.message}
+                  errorAction={() => startSwap(swapInfo, props.nextStage)}
                   onPress={() => props.nextStage()}
                 />
               )}

@@ -9,6 +9,7 @@ const colors = {
   mischkaGrey: '#DDD9DF',
   tundoraGrey: '#4A4A4A',
   white: '#fff',
+  red: '#FF0000',
 };
 
 export default colors;
