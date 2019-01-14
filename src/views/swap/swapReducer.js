@@ -12,7 +12,11 @@ const initalState = {
     invoice: null,
   },
   swapResponse: {},
-  swapStatus: 'Waiting for confirmation...',
+  swapStatus: {
+    error: false,
+    pending: false,
+    message: 'Waiting for one confirmation...',
+  },
 };
 
 const reducer = (state = initalState, action) => {
@@ -56,7 +60,10 @@ const reducer = (state = initalState, action) => {
     case actionTypes.SET_SWAP_STATUS:
       return {
         ...state,
-        swapStatus: action.payload,
+        swapStatus: {
+          ...state.swapStatus,
+          ...action.payload,
+        },
       };
 
     case actionTypes.COMPLETE_SWAP:

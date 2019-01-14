@@ -16,8 +16,16 @@ const styles = theme => ({
   },
 });
 
-const InputArea = ({ classes, height, width, onChange, placeholder }) => (
+const InputArea = ({
+  classes,
+  autoFocus,
+  height,
+  width,
+  onChange,
+  placeholder,
+}) => (
   <textarea
+    autoFocus={autoFocus}
     placeholder={placeholder}
     className={classes.wrapper}
     rows={height}
@@ -32,6 +40,7 @@ InputArea.propTypes = {
   width: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.bool.isRequired,
+  autoFocus: PropTypes.bool,
   placeholder: PropTypes.string,
 };
 

@@ -13,8 +13,19 @@ const styles = theme => ({
     alignItems: 'center',
     backgroundColor: p => (p.loading ? theme.colors.tundoraGrey : 'none'),
   },
+  error: {
+    flex: 1,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.red,
+  },
   controls: { flex: 2, justifyContent: 'center', alignItems: 'center' },
   text: { color: '#fff', fontWeight: '300' },
+  errorCommand: {
+    fontSize: '25px',
+    color: theme.colors.white,
+  },
   nextIcon: {
     paddingRight: '10px',
     height: '30px',
@@ -26,19 +37,46 @@ const styles = theme => ({
   },
 });
 
-const Controls = ({ classes, text, onPress, loading, loadingText }) => {
+// TODO: refactor to use render props due to complexity
+const Controls = ({
+  classes,
+  text,
+  error,
+  errorText,
+  errorAction,
+  onPress,
+  loading,
+  loadingText,
+  loadingStyle,
+}) => {
+  const loadingStyleSelect = loadingStyle ? loadingStyle : classes.text;
+  const loadingTextSelect = loadingText ? loadingText : text;
   return (
     <View
-      className={classes.wrapper}
+      className={error ? classes.error : classes.wrapper}
       onClick={loading ? null : () => onPress()}
     >
       <View className={classes.controls}>
-        <h1 className={classes.text}>{loading ? loadingText : text}</h1>
+        {error ? (
+          <h1 className={classes.text}> {errorText} </h1>
+        ) : (
+          <h1 className={loading ? loadingStyleSelect : classes.text}>
+            {loading ? loadingTextSelect : text}
+          </h1>
+        )}
       </View>
-      {loading ? (
-        <View className={classes.spinner}>
-          <Loader type="TailSpin" color="#fff" height={50} width={50} />
-        </View>
+      {error ? (
+        <span className={classes.errorCommand} onClick={() => errorAction()}>
+          Retry
+        </span>
+      ) : loading ? (
+        <Loader
+          style={{ marginRight: '5px' }}
+          type="TailSpin"
+          color="#fff"
+          height={50}
+          width={50}
+        />
       ) : (
         <MdArrowForward className={classes.nextIcon} />
       )}
@@ -49,9 +87,13 @@ const Controls = ({ classes, text, onPress, loading, loadingText }) => {
 Controls.propTypes = {
   classes: PropTypes.object.isRequired,
   text: PropTypes.string,
+  error: PropTypes.bool,
+  errorText: PropTypes.string,
+  errorAction: PropTypes.func,
   onPress: PropTypes.func,
   loading: PropTypes.bool,
   loadingText: PropTypes.string,
+  loadingStyle: PropTypes.string,
 };
 
 export default injectSheet(styles)(Controls);
