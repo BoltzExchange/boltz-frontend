@@ -21,6 +21,7 @@ View.propTypes = {
   style: PropTypes.object,
   className: PropTypes.string,
   otherProps: PropTypes.array,
+  inputRef: PropTypes.string,
 };
 
 export default View;

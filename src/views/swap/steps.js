@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import QrCode from '../../components/qrcode';
 import { FaBolt } from 'react-icons/fa';
 import View from '../../components/view';
+import QrCode from '../../components/qrcode';
 import InputArea from '../../components/inputarea';
-import { getCurrencyName, toWholeCoins } from '../../scripts/utils';
+import {
+  getCurrencyName,
+  toWholeCoins,
+  copyToClipBoard,
+} from '../../scripts/utils';
 
 // TODO: refactor into multiple components.
 const stepOneStyles = () => ({
@@ -67,7 +71,7 @@ class StyledStepOne extends React.Component {
           onChange={this.onChange}
           error={error}
           placeholder={
-            'Paste you invoice here: lntb20n1pwqhmchpp5v9tsdn62ptl47z8wvzj7xakw09wmj5yax05pv5z2alhpqgdmedlsd' +
+            'Paste your invoice here: lntb20n1pwqhmchpp5v9tsdn62ptl47z8wvzj7xakw09wmj5yax05pv5z2alhpqgdmedlsd' +
             'qqcqzys2wuh6vnuu8f6c94mx7wlduh8kge8ftuarg23nnkpuhgdjpw96hdj2qem2mcztny8vxng6gdc5xsfh2' +
             'z6rf2rt42hc3k5udm2jcynjyspr262hk'
           }
@@ -122,13 +126,6 @@ const stepTwoStyles = () => ({
   },
 });
 
-const copyToClipBoard = () => {
-  const range = document.getSelection().getRangeAt(0);
-  range.selectNode(document.getElementById('copy-address'));
-  window.getSelection().addRange(range);
-  document.execCommand('copy');
-};
-
 const StyledStepTwo = ({ classes, swapInfo, swapResponse }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
@@ -146,10 +143,9 @@ const StyledStepTwo = ({ classes, swapInfo, swapResponse }) => (
         </b>{' '}
         to:
       </p>
-      <p className={classes.address} id="copy-address">
+      <p className={classes.address} id="copy">
         {swapResponse.address}
       </p>
-      {/* TODO: refactor how we copy */}
       <span className={classes.action} onClick={() => copyToClipBoard()}>
         Copy
       </span>

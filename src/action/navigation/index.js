@@ -13,6 +13,7 @@ class Navigation {
 
   goHome = () => navAction(routes.home);
   goSwap = () => navAction(routes.swap);
+  goReverseSwap = () => navAction(routes.reverseSwap);
   goSwapConfirm = () => navAction(routes.swapConfirm);
   goSwapDownloadRefund = () => navAction(routes.swapDownloadRefund);
   goSwapDone = () => navAction(routes.swapDone);

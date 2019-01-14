@@ -9,7 +9,7 @@ const initalState = {
     quoteAmount: null,
     keys: null,
     pair: null,
-    invoice: null,
+    address: null,
   },
   swapResponse: {},
   swapStatus: 'Waiting for confirmation...',
@@ -17,20 +17,20 @@ const initalState = {
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {
-    case actionTypes.SWAP_REQUEST:
+    case actionTypes.REVERSE_SWAP_REQUEST:
       return {
         ...state,
         isFetching: true,
       };
 
-    case actionTypes.SWAP_RESPONSE:
+    case actionTypes.REVERSE_SWAP_RESPONSE:
       return {
         ...state,
         isFetching: false,
         swapResponse: action.payload,
       };
 
-    case actionTypes.INIT_SWAP:
+    case actionTypes.INIT_REVERSE_SWAP:
       return {
         ...state,
         swapInfo: {
@@ -44,22 +44,22 @@ const reducer = (state = initalState, action) => {
         },
       };
 
-    case actionTypes.SET_SWAP_INVOICE:
+    case actionTypes.SET_REVERSE_SWAP_ADDRESS:
       return {
         ...state,
         swapInfo: {
           ...state.swapInfo,
-          invoice: action.payload,
+          address: action.payload,
         },
       };
 
-    case actionTypes.SET_SWAP_STATUS:
+    case actionTypes.SET_REVERSE_SWAP_STATUS:
       return {
         ...state,
         swapStatus: action.payload,
       };
 
-    case actionTypes.COMPLETE_SWAP:
+    case actionTypes.COMPLETE_REVERSE_SWAP:
       return initalState;
 
     default:

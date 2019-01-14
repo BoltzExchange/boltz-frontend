@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import * as routes from '../../constants/routes';
 import Container from '../../components/container';
 import Swap from '../swap';
+import ReverseSwap from '../reverse';
 import Refund from '../refund';
 import LandingPage from '../landingpage';
 
@@ -11,6 +12,7 @@ const Router = ({ route }) => {
     <Container>
       {route === routes.home && <LandingPage />}
       {route === routes.swap && <Swap />}
+      {route === routes.reverseSwap && <ReverseSwap />}
       {route === routes.refund && <Refund />}
     </Container>
   );

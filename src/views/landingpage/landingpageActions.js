@@ -44,11 +44,16 @@ const getRates = pairs => {
 const getCurrencies = pairs => {
   const currencies = [];
 
+  const pushCurrency = currency => {
+    currencies.push(currency);
+    currencies.push(`${currency} ⚡`);
+  };
+
   for (const pair in pairs) {
     const { base, quote } = splitPairId(pair);
 
-    currencies.push(base);
-    currencies.push(quote);
+    pushCurrency(base);
+    pushCurrency(quote);
   }
 
   return currencies;
