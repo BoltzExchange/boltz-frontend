@@ -157,7 +157,7 @@ const StyledStepTwo = ({ classes, swapInfo, swapResponse }) => (
         Copy
       </span>
       <p>
-        If the address does not work with your wallet:{' '} <br />
+        If the address does not work with your wallet: <br />
         <a
           target={'_blank'}
           href="https://litecoin-project.github.io/p2sh-convert/"

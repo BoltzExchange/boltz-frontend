@@ -52,12 +52,6 @@ const Swap = ({
             <StepsWizard.Step
               num={2}
               render={() => (
-                <StepTwo swapInfo={swapInfo} swapResponse={swapResponse} />
-              )}
-            />
-            <StepsWizard.Step
-              num={3}
-              render={() => (
                 <StepThree
                   address={swapResponse.address}
                   currency={swapInfo.base}
@@ -65,6 +59,12 @@ const Swap = ({
                   privateKey={swapInfo.keys.privateKey}
                   timeoutBlockHeight={swapResponse.timeoutBlockHeight}
                 />
+              )}
+            />
+            <StepsWizard.Step
+              num={3}
+              render={() => (
+                <StepTwo swapInfo={swapInfo} swapResponse={swapResponse} />
               )}
             />
             <StepsWizard.Step num={4} render={() => <StepFour />} />
@@ -87,12 +87,10 @@ const Swap = ({
               num={2}
               render={props => (
                 <Controls
-                  text={swapStatus.message}
-                  loading={swapStatus.pending}
-                  error={swapStatus.error}
-                  errorText={swapStatus.message}
-                  errorAction={() => startSwap(swapInfo, props.nextStage)}
-                  onPress={() => props.nextStage()}
+                  text={'Ive downloaded the refund file'}
+                  onPress={() => {
+                    props.nextStage();
+                  }}
                 />
               )}
             />
@@ -100,7 +98,11 @@ const Swap = ({
               num={3}
               render={props => (
                 <Controls
-                  text={'Ive downloaded the refund file'}
+                  text={swapStatus.message}
+                  loading={swapStatus.pending}
+                  error={swapStatus.error}
+                  errorText={swapStatus.message}
+                  errorAction={() => startSwap(swapInfo, props.nextStage)}
                   onPress={() => {
                     completeSwap();
                     props.nextStage();
