@@ -238,7 +238,7 @@ class StyledStepThree extends React.Component {
             start automatically.
           </p>
           <p className={classes.address}>
-            This refund file can be used to trsutlessly <br />
+            This refund file can be used to trustlessly <br />
             claim your coins back in case of failure of this <br />
             swap. It is recommended to not delete this <br />
             file until after the completion of this swap.

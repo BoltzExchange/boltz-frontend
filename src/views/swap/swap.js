@@ -87,7 +87,7 @@ const Swap = ({
               num={2}
               render={props => (
                 <Controls
-                  text={'Ive downloaded the refund file'}
+                  text={'I have downloaded the refund file'}
                   onPress={() => {
                     props.nextStage();
                   }}
