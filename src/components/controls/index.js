@@ -47,13 +47,6 @@ const Controls = ({
 }) => {
   const loadingStyleSelect = loadingStyle ? loadingStyle : classes.text;
   const loadingTextSelect = loadingText ? loadingText : text;
-  const Icon = error ? (
-    <span className={classes.errorCommand} onClick={() => errorAction()}>
-      Retry
-    </span>
-  ) : (
-    <MdArrowForward className={classes.nextIcon} />
-  );
   return (
     <View
       className={error ? classes.error : classes.wrapper}
@@ -68,7 +61,13 @@ const Controls = ({
           </h1>
         )}
       </View>
-      <Icon />
+      {error ? (
+        <span className={classes.errorCommand} onClick={() => errorAction()}>
+          Retry
+        </span>
+      ) : (
+        <MdArrowForward className={classes.nextIcon} />
+      )}
     </View>
   );
 };
