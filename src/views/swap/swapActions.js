@@ -58,8 +58,7 @@ export const startSwap = (swapInfo, cb) => {
       })
       .then(response => {
         dispatch(swapResponse(true, response.data));
-        startListening(dispatch, response.data.id);
-
+        startListening(dispatch, response.data.id, cb);
         cb();
       })
       .catch(error => {
@@ -70,17 +69,31 @@ export const startSwap = (swapInfo, cb) => {
   };
 };
 
-export const startListening = (dispatch, swapId) => {
+export const startListening = (dispatch, swapId, callback) => {
   const source = new EventSource(`${boltzApi}/swapstatus?id=${swapId}`);
+
+  let message = {
+    pending: true,
+    message: 'Waiting for one confirmation...',
+  };
+
+  dispatch(setSwapStatus(message));
 
   source.onmessage = event => {
     const data = JSON.parse(event.data);
 
-    let message = 'Paying Lightning invoice...';
-
     if (data.message.startsWith('Invoice paid:')) {
-      message = 'Done';
+      message = {
+        pending: false,
+        message: 'Confirmed!',
+      };
       source.close();
+      callback();
+    } else {
+      message = {
+        pending: true,
+        message: 'Boltz failed to confirm the trasnsaction',
+      };
     }
 
     dispatch(setSwapStatus(message));

@@ -12,7 +12,10 @@ const initalState = {
     invoice: null,
   },
   swapResponse: {},
-  swapStatus: 'Waiting for transaction...',
+  swapStatus: {
+    pending: false,
+    message: 'Waiting for one confirmation...',
+  },
 };
 
 const reducer = (state = initalState, action) => {

@@ -5,7 +5,7 @@ import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
 import Text, { InfoText } from '../text';
-import { MIN, MAX } from '../../constants/fees';
+import { MIN, MAX, FEE } from '../../constants/fees';
 import Controls from '../controls';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
@@ -201,7 +201,7 @@ class SwapTab extends React.Component {
         <View className={classes.stats}>
           <InfoText title="Min amount:" text={`${MIN}`} />
           <InfoText title="Max amount:" text={`${MAX}`} />
-          <InfoText title="Fee:" text={'0'} />
+          <InfoText title="Fee:" text={FEE} />
           <InfoText title="Rate:" text={`${this.getRate(rates)}`} />
         </View>
         <View className={classes.options}>

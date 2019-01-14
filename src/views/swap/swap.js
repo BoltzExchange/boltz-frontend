@@ -6,7 +6,8 @@ import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Controls from '../../components/controls';
 import Prompt from '../../components/prompt';
-import { StepOne, StepTwo, StepThree } from './steps';
+import { StepOne, StepTwo, StepThree, StepFour } from './steps';
+import { FEE } from '../../constants/fees';
 
 const styles = () => ({
   wrapper: {
@@ -32,7 +33,7 @@ const Swap = ({
       <Prompt />
       <View className={classes.wrapper}>
         <StepsWizard
-          range={3}
+          range={4}
           stage={1}
           onExit={() => {
             if (window.confirm('Are you sure you want to exit')) {
@@ -66,6 +67,7 @@ const Swap = ({
                 />
               )}
             />
+            <StepsWizard.Step num={4} render={() => <StepFour />} />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
@@ -73,7 +75,8 @@ const Swap = ({
               render={props => (
                 <Controls
                   loading={isFetching}
-                  text={`Next`}
+                  text={`Fee: ${FEE} ${swapInfo.base}`}
+                  loadingText={'Loading...'}
                   onPress={() => {
                     startSwap(swapInfo, props.nextStage);
                   }}
@@ -83,21 +86,29 @@ const Swap = ({
             <StepsWizard.Control
               num={2}
               render={props => (
-                <Controls text={'Next'} onPress={() => props.nextStage()} />
+                <Controls
+                  text={swapStatus.message}
+                  loading={swapStatus.pending}
+                  onPress={() => props.nextStage()}
+                />
               )}
             />
             <StepsWizard.Control
               num={3}
-              render={() => (
+              render={props => (
                 <Controls
-                  text={swapStatus}
+                  text={'Ive downloaded the refund file'}
                   onPress={() => {
-                    if (swapStatus === 'Done') {
-                      completeSwap();
-                      goHome();
-                    }
+                    completeSwap();
+                    props.nextStage();
                   }}
                 />
+              )}
+            />
+            <StepsWizard.Control
+              num={4}
+              render={() => (
+                <Controls text={'Swap Again!'} onPress={() => goHome()} />
               )}
             />
           </StepsWizard.Controls>

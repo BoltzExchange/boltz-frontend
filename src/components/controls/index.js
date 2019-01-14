@@ -30,14 +30,16 @@ const Controls = ({
   loadingText,
   loadingStyle,
 }) => {
+  const loadingStyleSelect = loadingStyle ? loadingStyle : classes.text;
+  const loadingTextSelect = loadingText ? loadingText : text;
   return (
     <View
       className={classes.wrapper}
       onClick={loading ? null : () => onPress()}
     >
       <View className={classes.controls}>
-        <h1 className={loading ? loadingStyle : classes.text}>
-          {loading ? loadingText : text}
+        <h1 className={loading ? loadingStyleSelect : classes.text}>
+          {loading ? loadingTextSelect : text}
         </h1>
       </View>
       <MdArrowForward className={classes.nextIcon} />

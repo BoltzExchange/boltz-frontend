@@ -62,6 +62,7 @@ class StyledStepOne extends React.Component {
           </b>
         </p>
         <InputArea
+          autoFocus={true}
           width={600}
           height={150}
           onChange={this.onChange}
@@ -106,8 +107,12 @@ const stepTwoStyles = () => ({
     flex: 1,
     justifyContent: 'space-around',
   },
+  text: {
+    fontSize: '30px',
+  },
   address: {
-    fontSize: '20px',
+    width: '300px',
+    fontSize: '25px',
     color: 'grey',
     wordBreak: 'break-word',
   },
@@ -135,33 +140,22 @@ const StyledStepTwo = ({ classes, swapInfo, swapResponse }) => (
       <QrCode size={300} link={swapResponse.bip21} />
     </View>
     <View className={classes.info}>
-      <p
-        style={{
-          fontSize: '30px',
-        }}
-      >
-        Send {}
+      <p className={classes.text}>
+        Send{' '}
         <b>
-          {toWholeCoins(swapResponse.expectedAmount)} {swapInfo.base}
+          {' '}
+          {toWholeCoins(swapResponse.expectedAmount)} {swapInfo.base}{' '}
         </b>{' '}
-        to:
+        <br />
+        on <b>{getCurrencyName(swapInfo.base)}</b> <br />
+        blockchain address:
       </p>
-      <p className={classes.address} id="copy-address">
+      <p id="copy-address" className={classes.address}>
         {swapResponse.address}
       </p>
-      {/* TODO: refactor how we copy */}
       <span className={classes.action} onClick={() => copyToClipBoard()}>
         Copy
       </span>
-      <p>
-        If the address does not work with your wallet:{' '}
-        <a
-          target={'_blank'}
-          href="https://litecoin-project.github.io/p2sh-convert/"
-        >
-          use this tool
-        </a>
-      </p>
     </View>
   </View>
 );
@@ -179,13 +173,19 @@ const stepThreeStyles = () => ({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  placer: {
+    justifyContent: 'center',
+    alignItems: 'center',
     flexDirection: 'column',
   },
   info: {
     fontSize: '30px',
+    alignSelf: 'flex-start',
   },
   address: {
     fontSize: '30px',
+    alignSelf: 'flex-start',
   },
   link: {
     fontSize: '24px',
@@ -204,7 +204,6 @@ class StyledStepThree extends React.Component {
   render() {
     const {
       classes,
-      address,
       currency,
       redeemScript,
       privateKey,
@@ -212,33 +211,30 @@ class StyledStepThree extends React.Component {
     } = this.props;
     return (
       <View className={classes.wrapper}>
-        <p className={classes.info}>
-          <a
-            ref={this.ref}
-            href={`data:application/json;charset=utf-8,${JSON.stringify({
-              currency,
-              redeemScript,
-              privateKey,
-              timeoutBlockHeight,
-            })}`}
-            download={'refund.json'}
-          >
-            Click here
-          </a>{' '}
-          if the download of &lsquo;refund.json&lsquo; didn&apos;t <br /> start
-          automatically.
-        </p>
-        <p className={classes.address}>
-          Waiting for a confirmed transaction to:
-          <br />
-          <a
-            className={classes.link}
-            target={'_blank'}
-            href={`https://chain.so/address/LTCTEST/${address}`}
-          >
-            {address}
-          </a>
-        </p>
+        <View className={classes.placer}>
+          <p className={classes.info}>
+            <a
+              ref={this.ref}
+              href={`data:application/json;charset=utf-8,${JSON.stringify({
+                currency,
+                redeemScript,
+                privateKey,
+                timeoutBlockHeight,
+              })}`}
+              download={'refund.json'}
+            >
+              Click here
+            </a>{' '}
+            if the download of &lsquo;refund.json&lsquo; <br /> didn&apos;t
+            start automatically.
+          </p>
+          <p className={classes.address}>
+            This refund file can be used to trsutlessly <br />
+            claim your coins back in case of failure of this <br />
+            swap. It is recommended to not delete this <br />
+            file until after the completion of this swap.
+          </p>
+        </View>
       </View>
     );
   }
@@ -254,3 +250,27 @@ StyledStepThree.propTypes = {
 };
 
 export const StepThree = injectSheet(stepThreeStyles)(StyledStepThree);
+
+const stepFourStyles = () => ({
+  wrapper: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: '30px',
+  },
+});
+
+const StyledStepFour = ({ classes }) => (
+  <View className={classes.wrapper}>
+    <span className={classes.text}>Viola! Swap is successful!</span>
+  </View>
+);
+
+StyledStepFour.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export const StepFour = injectSheet(stepFourStyles)(StyledStepFour);
