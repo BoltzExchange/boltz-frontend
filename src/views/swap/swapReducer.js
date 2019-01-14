@@ -53,17 +53,17 @@ const reducer = (state = initalState, action) => {
         ...state,
         swapInfo: {
           ...state.swapInfo,
-          invoice: {
-            ...state.swapInfo,
-            ...action.payload,
-          },
+          invoice: action.payload,
         },
       };
 
     case actionTypes.SET_SWAP_STATUS:
       return {
         ...state,
-        swapStatus: action.payload,
+        swapStatus: {
+          ...state.swapStatus,
+          ...action.payload,
+        },
       };
 
     case actionTypes.COMPLETE_SWAP:
