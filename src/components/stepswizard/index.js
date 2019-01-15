@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MdArrowBack } from 'react-icons/md';
+import { MdArrowBack, MdClose } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
@@ -97,10 +97,17 @@ class StepsWizard extends Component {
       <View className={classes.wrapper}>
         <View className={classes.progress}>
           {onExit ? (
-            <MdArrowBack
-              className={classes.backButton}
-              onClick={() => (stage !== 1 ? this.prevStage() : onExit())}
-            />
+            stage !== range ? (
+              <MdArrowBack
+                className={classes.backButton}
+                onClick={() => (stage !== 1 ? this.prevStage() : onExit())}
+              />
+            ) : (
+              <MdClose
+                className={classes.backButton}
+                onClick={() => onExit()}
+              />
+            )
           ) : null}
           <ProgressBar progress={this.state.progress} />
         </View>
