@@ -6,7 +6,11 @@ import Background from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Prompt from '../../components/prompt';
 import View from '../../components/view';
-import { StepOne, StepTwo, StepThree } from './steps';
+import {
+  InputDestintionAddress,
+  UploadRefundFile,
+  CompleteRefund,
+} from './steps';
 
 const styles = theme => ({
   wrapper: {
@@ -55,7 +59,7 @@ const Refund = ({
             <StepsWizard.Step
               num={1}
               render={() => (
-                <StepOne
+                <UploadRefundFile
                   setRefundFile={setRefundFile}
                   setTransactionHash={setTransactionHash}
                 />
@@ -64,7 +68,7 @@ const Refund = ({
             <StepsWizard.Step
               num={2}
               render={() => (
-                <StepTwo
+                <InputDestintionAddress
                   currency={refundFile.currency}
                   setDestinationAddress={setDestinationAddress}
                 />
@@ -73,7 +77,7 @@ const Refund = ({
             <StepsWizard.Step
               num={3}
               render={() => (
-                <StepThree
+                <CompleteRefund
                   refundTransaction={refundTransaction}
                   refundTransactionHash={refundTransactionHash}
                 />
