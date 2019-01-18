@@ -51,7 +51,7 @@ const TaskBar = ({ classes, goHome, goRefund }) => (
         alt="logo"
       />
       <span className={classes.logoText}>Boltz</span>
-      <span className={classes.subLogoText}>ALPHA</span>
+      <span className={classes.subLogoText}>TESTNET ALPHA</span>
     </View>
     <View className={classes.buttons}>
       <LinkButton text="Swap" onPress={() => goHome()} />
