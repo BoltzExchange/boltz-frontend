@@ -5,7 +5,7 @@ import { getCurrencyName } from '../../../scripts/utils';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
 
-const InputDestintionAddressStyles = theme => ({
+const InputDestinationAddressStyles = theme => ({
   wrapper: {
     flex: 1,
     flexDirection: 'column',
@@ -20,14 +20,14 @@ const InputDestintionAddressStyles = theme => ({
   },
 });
 
-const StyledInputDestintionAddress = ({
+const StyledInputDestinationAddress = ({
   classes,
   setDestinationAddress,
   currency,
 }) => (
   <View className={classes.wrapper}>
     <p className={classes.info}>
-      {getCurrencyName(currency)} Destintion Address
+      {getCurrencyName(currency)} Destination Address
     </p>
     <InputArea
       height={150}
@@ -38,14 +38,14 @@ const StyledInputDestintionAddress = ({
   </View>
 );
 
-StyledInputDestintionAddress.propTypes = {
+StyledInputDestinationAddress.propTypes = {
   classes: PropTypes.object.isRequired,
   currency: PropTypes.string.isRequired,
   setDestinationAddress: PropTypes.func.isRequired,
 };
 
-const InputDestintionAddress = injectSheet(InputDestintionAddressStyles)(
-  StyledInputDestintionAddress
+const InputDestinationAddress = injectSheet(InputDestinationAddressStyles)(
+  StyledInputDestinationAddress
 );
 
-export default InputDestintionAddress;
+export default InputDestinationAddress;

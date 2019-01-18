@@ -1,5 +1,5 @@
-import InputDestintionAddress from './inputDestintionAddress';
+import InputDestinationAddress from './InputDestinationAddress';
 import CompleteRefund from './completeRefund';
 import UploadRefundFile from './uploadRefundFile';
 
-export { InputDestintionAddress, UploadRefundFile, CompleteRefund };
+export { InputDestinationAddress, UploadRefundFile, CompleteRefund };

@@ -7,7 +7,7 @@ import StepsWizard from '../../components/stepswizard';
 import Prompt from '../../components/prompt';
 import View from '../../components/view';
 import {
-  InputDestintionAddress,
+  InputDestinationAddress,
   UploadRefundFile,
   CompleteRefund,
 } from './steps';
@@ -68,7 +68,7 @@ const Refund = ({
             <StepsWizard.Step
               num={2}
               render={() => (
-                <InputDestintionAddress
+                <InputDestinationAddress
                   currency={refundFile.currency}
                   setDestinationAddress={setDestinationAddress}
                 />
