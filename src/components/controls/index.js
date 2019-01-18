@@ -3,7 +3,6 @@ import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 import View from '../view';
 import { MdArrowForward } from 'react-icons/md';
-import Loader from 'react-loader-spinner';
 
 const styles = theme => ({
   wrapper: {
@@ -48,6 +47,7 @@ const Controls = ({
   loading,
   loadingText,
   loadingStyle,
+  loadingRender,
 }) => {
   const loadingStyleSelect = loadingStyle ? loadingStyle : classes.text;
   const loadingTextSelect = loadingText ? loadingText : text;
@@ -69,14 +69,8 @@ const Controls = ({
         <span className={classes.errorCommand} onClick={() => errorAction()}>
           Retry
         </span>
-      ) : loading ? (
-        <Loader
-          style={{ marginRight: '5px' }}
-          type="TailSpin"
-          color="#fff"
-          height={50}
-          width={50}
-        />
+      ) : loading && loadingRender ? (
+        loadingRender()
       ) : (
         <MdArrowForward className={classes.nextIcon} />
       )}
@@ -94,6 +88,7 @@ Controls.propTypes = {
   loading: PropTypes.bool,
   loadingText: PropTypes.string,
   loadingStyle: PropTypes.string,
+  loadingRender: PropTypes.func,
 };
 
 export default injectSheet(styles)(Controls);
