@@ -30,7 +30,6 @@ const Swap = ({
   swapInfo,
   swapResponse,
   startSwap,
-  isFetching,
   swapStatus,
 }) => {
   return (
@@ -82,9 +81,9 @@ const Swap = ({
               num={1}
               render={props => (
                 <Controls
-                  loading={isFetching}
+                  loading={swapStatus.error}
                   text={`Fee: ${FEE} ${swapInfo.base}`}
-                  loadingText={'Loading...'}
+                  loadingText={'Invalid invoice'}
                   onPress={() => {
                     startSwap(swapInfo, props.nextStage);
                   }}
@@ -134,7 +133,6 @@ const Swap = ({
 Swap.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,

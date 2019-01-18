@@ -21,9 +21,12 @@ export const initSwap = state => ({
   },
 });
 
-export const setSwapInvoice = invoice => ({
+export const setSwapInvoice = (invoice, error) => ({
   type: actionTypes.SET_SWAP_INVOICE,
-  payload: invoice,
+  payload: {
+    invoice,
+    error,
+  },
 });
 
 export const setSwapStatus = status => ({
