@@ -5,7 +5,7 @@ import View from '../../components/view';
 import Prompt from '../../components/prompt';
 import Controls from '../../components/controls';
 import BackGround from '../../components/background';
-import { StepOne, StepTwo } from './steps';
+import { InputAddress, PayInvoice } from './steps';
 import StepsWizard from '../../components/stepswizard';
 
 const styles = () => ({
@@ -45,13 +45,19 @@ const ReverseSwap = ({
             <StepsWizard.Step
               num={1}
               render={() => (
-                <StepOne swapInfo={swapInfo} onChange={setReverseSwapAddress} />
+                <InputAddress
+                  swapInfo={swapInfo}
+                  onChange={setReverseSwapAddress}
+                />
               )}
             />
             <StepsWizard.Step
               num={2}
               render={() => (
-                <StepTwo asset={swapInfo.base} invoice={swapResponse.invoice} />
+                <PayInvoice
+                  asset={swapInfo.base}
+                  invoice={swapResponse.invoice}
+                />
               )}
             />
           </StepsWizard.Steps>

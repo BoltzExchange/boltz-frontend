@@ -6,7 +6,12 @@ import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Controls from '../../components/controls';
 import Prompt from '../../components/prompt';
-import { StepOne, StepTwo, StepThree, StepFour } from './steps';
+import {
+  InputInvoice,
+  SendTransaction,
+  DownloadRefund,
+  CompleteSwap,
+} from './steps';
 import { FEE } from '../../constants/fees';
 
 const styles = () => ({
@@ -46,13 +51,13 @@ const Swap = ({
             <StepsWizard.Step
               num={1}
               render={() => (
-                <StepOne swapInfo={swapInfo} onChange={setSwapInvoice} />
+                <InputInvoice swapInfo={swapInfo} onChange={setSwapInvoice} />
               )}
             />
             <StepsWizard.Step
               num={2}
               render={() => (
-                <StepThree
+                <DownloadRefund
                   address={swapResponse.address}
                   currency={swapInfo.base}
                   redeemScript={swapResponse.redeemScript}
@@ -64,10 +69,13 @@ const Swap = ({
             <StepsWizard.Step
               num={3}
               render={() => (
-                <StepTwo swapInfo={swapInfo} swapResponse={swapResponse} />
+                <SendTransaction
+                  swapInfo={swapInfo}
+                  swapResponse={swapResponse}
+                />
               )}
             />
-            <StepsWizard.Step num={4} render={() => <StepFour />} />
+            <StepsWizard.Step num={4} render={() => <CompleteSwap />} />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
