@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { BigNumber } from 'bignumber.js';
-import Loading from '../../components/loader';
 import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
@@ -262,11 +261,10 @@ class SwapTab extends React.Component {
         <View className={classes.next}>
           <Controls
             text={'Start swap'}
-            loading={error}
-            onPress={error ? null : () => this.shouldSubmit()}
-            loadingText={'Start swap'}
-            loadingStyle={classes.nextText}
-            loadingRender={() => <Loading />}
+            error={error}
+            onPress={error ? () => {} : () => this.shouldSubmit()}
+            errorText={'Inccorect amount'}
+            errorRender={() => {}}
           />
         </View>
       </View>

@@ -23,6 +23,7 @@ const styles = theme => ({
   text: { color: '#fff', fontWeight: '300' },
   errorCommand: {
     fontSize: '25px',
+    paddingRight: '10px',
     color: theme.colors.white,
   },
   nextIcon: {
@@ -40,10 +41,11 @@ const styles = theme => ({
 const Controls = ({
   classes,
   text,
+  onPress,
   error,
   errorText,
   errorAction,
-  onPress,
+  errorRender,
   loading,
   loadingText,
   loadingStyle,
@@ -66,9 +68,13 @@ const Controls = ({
         )}
       </View>
       {error ? (
-        <span className={classes.errorCommand} onClick={() => errorAction()}>
-          Retry
-        </span>
+        errorRender ? (
+          errorRender(classes.errorCommand, errorAction)
+        ) : (
+          <span className={classes.errorCommand} onClick={() => errorAction()}>
+            Retry
+          </span>
+        )
       ) : loading && loadingRender ? (
         loadingRender()
       ) : (
@@ -89,6 +95,7 @@ Controls.propTypes = {
   loadingText: PropTypes.string,
   loadingStyle: PropTypes.string,
   loadingRender: PropTypes.func,
+  errorRender: PropTypes.func,
 };
 
 export default injectSheet(styles)(Controls);
