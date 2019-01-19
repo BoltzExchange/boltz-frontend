@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../components/view';
+import Loading from '../../components/loader';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Controls from '../../components/controls';
@@ -110,6 +111,7 @@ const Swap = ({
                   error={swapStatus.error}
                   errorText={swapStatus.message}
                   errorAction={() => startSwap(swapInfo, props.nextStage)}
+                  loadingRender={() => <Loading />}
                   onPress={() => {
                     completeSwap();
                     props.nextStage();
