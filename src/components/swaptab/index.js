@@ -263,7 +263,7 @@ class SwapTab extends React.Component {
             text={'Start swap'}
             error={error}
             onPress={error ? () => {} : () => this.shouldSubmit()}
-            errorText={'Inccorect amount'}
+            errorText={'Invalid amount'}
             errorRender={() => {}}
           />
         </View>
