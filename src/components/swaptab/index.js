@@ -261,10 +261,10 @@ class SwapTab extends React.Component {
         <View className={classes.next}>
           <Controls
             text={'Start swap'}
-            loading={error}
-            onPress={error ? null : () => this.shouldSubmit()}
-            loadingText={'Start swap'}
-            loadingStyle={classes.nextText}
+            error={error}
+            onPress={error ? () => {} : () => this.shouldSubmit()}
+            errorText={'Invalid amount'}
+            errorRender={() => {}}
           />
         </View>
       </View>

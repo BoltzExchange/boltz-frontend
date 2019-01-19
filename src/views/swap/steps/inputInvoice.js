@@ -37,12 +37,9 @@ class StyledInputInvoice extends React.Component {
   onChange = input => {
     const valid = input.slice(0, 2);
     if (valid === 'ln') {
-      this.props.onChange(input);
-      if (this.state.error) {
-        this.setState({ error: false });
-      }
+      this.setState({ error: false }, () => this.props.onChange(input, false));
     } else {
-      this.setState({ error: true });
+      this.setState({ error: true }, () => this.props.onChange(input, true));
     }
   };
 

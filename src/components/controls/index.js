@@ -3,7 +3,6 @@ import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 import View from '../view';
 import { MdArrowForward } from 'react-icons/md';
-import Loader from 'react-loader-spinner';
 
 const styles = theme => ({
   wrapper: {
@@ -24,6 +23,7 @@ const styles = theme => ({
   text: { color: '#fff', fontWeight: '300' },
   errorCommand: {
     fontSize: '25px',
+    paddingRight: '10px',
     color: theme.colors.white,
   },
   nextIcon: {
@@ -41,13 +41,15 @@ const styles = theme => ({
 const Controls = ({
   classes,
   text,
+  onPress,
   error,
   errorText,
   errorAction,
-  onPress,
+  errorRender,
   loading,
   loadingText,
   loadingStyle,
+  loadingRender,
 }) => {
   const loadingStyleSelect = loadingStyle ? loadingStyle : classes.text;
   const loadingTextSelect = loadingText ? loadingText : text;
@@ -66,17 +68,15 @@ const Controls = ({
         )}
       </View>
       {error ? (
-        <span className={classes.errorCommand} onClick={() => errorAction()}>
-          Retry
-        </span>
-      ) : loading ? (
-        <Loader
-          style={{ marginRight: '5px' }}
-          type="TailSpin"
-          color="#fff"
-          height={50}
-          width={50}
-        />
+        errorRender ? (
+          errorRender(classes.errorCommand, errorAction)
+        ) : (
+          <span className={classes.errorCommand} onClick={() => errorAction()}>
+            Retry
+          </span>
+        )
+      ) : loading && loadingRender ? (
+        loadingRender()
       ) : (
         <MdArrowForward className={classes.nextIcon} />
       )}
@@ -94,6 +94,8 @@ Controls.propTypes = {
   loading: PropTypes.bool,
   loadingText: PropTypes.string,
   loadingStyle: PropTypes.string,
+  loadingRender: PropTypes.func,
+  errorRender: PropTypes.func,
 };
 
 export default injectSheet(styles)(Controls);

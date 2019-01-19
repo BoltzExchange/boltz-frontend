@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../components/view';
+import Loading from '../../components/loader';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import Controls from '../../components/controls';
@@ -30,7 +31,6 @@ const Swap = ({
   swapInfo,
   swapResponse,
   startSwap,
-  isFetching,
   swapStatus,
 }) => {
   return (
@@ -82,9 +82,9 @@ const Swap = ({
               num={1}
               render={props => (
                 <Controls
-                  loading={isFetching}
+                  loading={swapStatus.error}
                   text={`Fee: ${FEE} ${swapInfo.base}`}
-                  loadingText={'Loading...'}
+                  loadingText={'Invalid invoice'}
                   onPress={() => {
                     startSwap(swapInfo, props.nextStage);
                   }}
@@ -111,6 +111,7 @@ const Swap = ({
                   error={swapStatus.error}
                   errorText={swapStatus.message}
                   errorAction={() => startSwap(swapInfo, props.nextStage)}
+                  loadingRender={() => <Loading />}
                   onPress={() => {
                     completeSwap();
                     props.nextStage();
@@ -134,7 +135,6 @@ const Swap = ({
 Swap.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,
