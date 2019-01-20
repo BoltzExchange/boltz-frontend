@@ -10,6 +10,7 @@
 
 # production
 /build
+.env.production
 
 # misc
 .DS_Store
