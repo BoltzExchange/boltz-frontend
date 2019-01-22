@@ -42,6 +42,11 @@ const styles = theme => ({
       cursor: 'pointer',
     },
   },
+  id: {
+    color: 'gray',
+    fontSize: '20px',
+    justifyContent: 'center',
+  },
 });
 
 class StepsWizard extends Component {
@@ -84,6 +89,7 @@ class StepsWizard extends Component {
   render() {
     const { stage } = this.state;
     const { classes, onExit, range } = this.props;
+
     const children = React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
         stage,
@@ -93,6 +99,7 @@ class StepsWizard extends Component {
         onExit: onExit,
       });
     });
+
     return (
       <View className={classes.wrapper}>
         <View className={classes.progress}>
@@ -111,6 +118,9 @@ class StepsWizard extends Component {
           ) : null}
           <ProgressBar progress={this.state.progress} />
         </View>
+        {this.props.id ? (
+          <View className={classes.id}>ID: {this.props.id}</View>
+        ) : null}
         {children}
       </View>
     );
@@ -120,6 +130,7 @@ class StepsWizard extends Component {
 StepsWizard.propTypes = {
   children: PropTypes.children,
   classes: PropTypes.object,
+  id: PropTypes.string,
   onExit: PropTypes.func,
   onClick: PropTypes.func,
   await: PropTypes.bool,
