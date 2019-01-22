@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { Set } from 'core-js';
 import { boltzApi } from '../../constants';
-import * as actionTypes from '../../constants/actions';
 import { splitPairId } from '../../scripts/utils';
+import * as actionTypes from '../../constants/actions';
 
 const pairsRequest = () => ({
   type: actionTypes.PAIRS_REQUEST,
@@ -43,10 +44,18 @@ const getRates = pairs => {
 
 const getCurrencies = pairs => {
   const currencies = [];
+  const contains = new Set();
+
+  const addToArray = currency => {
+    if (!contains.has(currency)) {
+      contains.add(currency);
+      currencies.push(currency);
+    }
+  };
 
   const pushCurrency = currency => {
-    currencies.push(currency);
-    currencies.push(`${currency} ⚡`);
+    addToArray(currency);
+    addToArray(`${currency} ⚡`);
   };
 
   for (const pair in pairs) {

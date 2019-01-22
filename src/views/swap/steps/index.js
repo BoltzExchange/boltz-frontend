@@ -1,6 +1,5 @@
 import InputInvoice from './inputInvoice';
-import SendTransaction from './sendTransaction';
 import DownloadRefund from './downloadRefund';
-import CompleteSwap from './completeSwap';
+import SendTransaction from './sendTransaction';
 
-export { InputInvoice, SendTransaction, DownloadRefund, CompleteSwap };
+export { InputInvoice, SendTransaction, DownloadRefund };

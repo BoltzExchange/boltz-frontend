@@ -95,7 +95,7 @@ export const startListening = (dispatch, swapId, callback) => {
       message = {
         error: true,
         pending: true,
-        message: 'Boltz failed to confirm the trasnsaction',
+        message: 'Boltz could not find the transaction',
       };
     }
 

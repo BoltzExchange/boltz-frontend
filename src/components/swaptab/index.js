@@ -137,7 +137,7 @@ class SwapTab extends React.Component {
     );
   };
 
-  componentDidUpdate = (prevProps, prevState) => {
+  componentDidUpdate = (_, prevState) => {
     // Update the rate if the request finished or the currencies changed
     if (
       prevState.base !== this.state.base ||
@@ -147,10 +147,13 @@ class SwapTab extends React.Component {
 
       // Swapping from chain to chain or from Lightning to Lightning is not supported right now
       if (this.baseAsset.isLightning !== this.quoteAsset.isLightning) {
-        this.setState({
-          rate,
-          error: false,
-        });
+        this.setState(
+          {
+            rate,
+            error: false,
+          },
+          () => this.updateQuoteAmount(this.state.baseAmount)
+        );
       } else {
         this.setState({
           rate: undefined,
@@ -168,6 +171,7 @@ class SwapTab extends React.Component {
     const rate = new BigNumber(this.state.rate.rate);
     const newBaseAmount = new BigNumber(quoteAmount).dividedBy(rate).toFixed(8);
     const error = !this.checkBaseAmount(newBaseAmount);
+
     this.setState({
       quoteAmount: Number.parseFloat(quoteAmount),
       baseAmount: newBaseAmount,
@@ -179,6 +183,7 @@ class SwapTab extends React.Component {
     const rate = new BigNumber(this.state.rate.rate);
     const newQuoteAmount = new BigNumber(baseAmount).times(rate).toFixed(8);
     const error = !this.checkBaseAmount(baseAmount);
+
     this.setState({
       quoteAmount: newQuoteAmount,
       baseAmount: Number.parseFloat(baseAmount),

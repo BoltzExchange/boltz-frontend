@@ -2,17 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../components/view';
+import Prompt from '../../components/prompt';
 import Loading from '../../components/loader';
+import Controls from '../../components/controls';
+import Confetti from '../../components/confetti';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
-import Controls from '../../components/controls';
-import Prompt from '../../components/prompt';
-import {
-  InputInvoice,
-  SendTransaction,
-  DownloadRefund,
-  CompleteSwap,
-} from './steps';
+import { InputInvoice, SendTransaction, DownloadRefund } from './steps';
 import { FEE } from '../../constants/fees';
 
 const styles = () => ({
@@ -75,7 +71,7 @@ const Swap = ({
                 />
               )}
             />
-            <StepsWizard.Step num={4} render={() => <CompleteSwap />} />
+            <StepsWizard.Step num={4} render={() => <Confetti />} />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
