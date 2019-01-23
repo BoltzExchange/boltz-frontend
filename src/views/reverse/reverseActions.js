@@ -108,6 +108,7 @@ const startListening = (dispatch, swapInfo, response, nextStage) => {
       dispatch(
         broadcastClaim(swapInfo.quote, claimTx.toHex(), () => {
           dispatch(reverseSwapResponse(true, response));
+          nextStage();
         })
       );
     }

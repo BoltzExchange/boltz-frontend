@@ -4,8 +4,9 @@ import injectSheet from 'react-jss';
 import View from '../../components/view';
 import Prompt from '../../components/prompt';
 import Controls from '../../components/controls';
-import BackGround from '../../components/background';
+import Confetti from '../../components/confetti';
 import { InputAddress, PayInvoice } from './steps';
+import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 
 const styles = () => ({
@@ -22,6 +23,7 @@ const ReverseSwap = ({
   startReverseSwap,
   completeSwap,
   goHome,
+  nextStage,
   swapInfo,
   swapResponse,
   isFetching,
@@ -32,7 +34,7 @@ const ReverseSwap = ({
       <Prompt />
       <View className={classes.wrapper}>
         <StepsWizard
-          range={2}
+          range={3}
           stage={1}
           id={swapResponse ? swapResponse.id : null}
           onExit={() => {
@@ -61,6 +63,7 @@ const ReverseSwap = ({
                 />
               )}
             />
+            <StepsWizard.Step num={3} render={() => <Confetti />} />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
@@ -84,9 +87,16 @@ const ReverseSwap = ({
                   text={'Done'}
                   loadingText={swapStatus}
                   onPress={() => {
-                    goHome();
+                    completeSwap();
+                    nextStage();
                   }}
                 />
+              )}
+            />
+            <StepsWizard.Control
+              num={3}
+              render={() => (
+                <Controls text={'Swap Again!'} onPress={() => goHome()} />
               )}
             />
           </StepsWizard.Controls>

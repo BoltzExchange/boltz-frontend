@@ -32,6 +32,7 @@
     "prop-types": "^15.6.2",
     "qrious": "^4.0.2",
     "react": "^16.7.0",
+    "react-confetti": "^2.3.0",
     "react-dom": "^16.7.0",
     "react-icons": "^3.3.0",
     "react-jss": "^8.6.1",
