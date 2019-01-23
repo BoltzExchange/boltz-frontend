@@ -40,6 +40,7 @@ const Swap = ({
         <StepsWizard
           range={4}
           stage={1}
+          id={swapResponse ? swapResponse.id : null}
           onExit={() => {
             if (window.confirm('Are you sure you want to exit')) {
               completeSwap();
