@@ -84,17 +84,19 @@ export const startRefund = (
           response.data.transactionHex
         );
 
-        // TODO: refactor for new version of core library
+        // TODO: make sure the provided lockup transaction hash was correct and show more specific error if not
         const refundTransaction = constructRefundTransaction(
-          ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
-          redeemScript,
+          [
+            {
+              redeemScript,
+              txHash: lockupTransaction.getHash(),
+              keys: ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
+              ...detectSwap(redeemScript, lockupTransaction),
+            },
+          ],
+          address.toOutputScript(destinationAddress, getNetwork(currency)),
           refundFile.timeoutBlockHeight,
-          // TODO: make sure the provided lockup transaction hash was correct and show more specific error if not
-          {
-            txHash: lockupTransaction.getHash(),
-            ...detectSwap(redeemScript, lockupTransaction),
-          },
-          address.toOutputScript(destinationAddress, getNetwork(currency))
+          1
         );
 
         const refundTransactionHex = refundTransaction.toHex();
@@ -103,11 +105,13 @@ export const startRefund = (
         dispatch(setRefundTransaction(refundTransactionHex));
         dispatch(setRefundTransactionHash(refundTransactionHash));
 
-        broadcastRefund(currency, refundTransactionHex, () => {
-          dispatch(refundResponse(true, response.data));
+        dispatch(
+          broadcastRefund(currency, refundTransactionHex, () => {
+            dispatch(refundResponse(true, response.data));
 
-          cb();
-        });
+            cb();
+          })
+        );
       })
       .catch(error => {
         window.alert('Failed to refund swap');

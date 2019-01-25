@@ -94,7 +94,10 @@ const Refund = ({
                   onPress={() => props.nextStage()}
                   loadingText={'Upload refund file'}
                   loadingStyle={classes.fileUpload}
-                  loading={Object.keys(refundFile).length === 0}
+                  loading={
+                    Object.keys(refundFile).length === 0 ||
+                    transactionHash === ''
+                  }
                 />
               )}
             />
@@ -119,7 +122,7 @@ const Refund = ({
               num={3}
               render={() => (
                 <Controls
-                  text={'Successfully completed refund!'}
+                  text={'Try another Swap!'}
                   onPress={() => {
                     completeRefund();
                     goHome();

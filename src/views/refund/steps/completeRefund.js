@@ -33,18 +33,17 @@ const StyledCompleteRefund = ({
 }) => (
   <View className={classes.wrapper}>
     <FaCheckCircle size={240} className={classes.icon} />
-    <span className={classes.title}>Success!</span>
-    <p>Your refund transaction:</p>
-    <code className={classes.transaction}>{refundTransaction}</code>
+    <span className={classes.title}>
+      Refund transaction successfully broadcasted!
+    </span>
+    <p>
+      Your refund transaction hash: <br />
+      <code className={classes.transaction}>{refundTransactionHash}</code>
+    </p>
 
     <p>
-      <a
-        className={classes.link}
-        target={'_blank'}
-        href={`https://chain.so/tx/LTCTEST/${refundTransactionHash}`}
-      >
-        {refundTransactionHash}
-      </a>
+      Raw transaction: <br />
+      <code className={classes.transaction}>{refundTransaction}</code>
     </p>
   </View>
 );
