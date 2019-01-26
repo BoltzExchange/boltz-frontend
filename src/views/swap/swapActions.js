@@ -84,13 +84,14 @@ export const startListening = (dispatch, swapId, callback) => {
   source.onmessage = event => {
     const data = JSON.parse(event.data);
 
-    if (data.message.startsWith('Transaction confirmed:')) {
-      message = {
-        pending: false,
-        message: 'Confirmed!',
-      };
+    if (data.message.startsWith('Invoice paid:')) {
       source.close();
       callback();
+    } else if (data.message.startsWith('Transaction confirmed:')) {
+      message = {
+        pending: true,
+        message: 'Waiting for invoice to be paid...',
+      };
     } else {
       message = {
         error: true,

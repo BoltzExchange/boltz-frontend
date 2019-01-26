@@ -3,7 +3,7 @@ import * as actionTypes from '../../constants/actions';
 const initalState = {
   isFetching: false,
   refundFile: {},
-  transactionHash: null,
+  transactionHash: '',
   destinationAddress: null,
   refundTransaction: null,
   refundTransactionHash: null,
