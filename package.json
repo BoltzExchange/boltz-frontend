@@ -5,6 +5,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:unit": "mocha --compilers src/test/unit/*.spec.js",
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
@@ -46,11 +47,15 @@
   "devDependencies": {
     "@babel/plugin-syntax-decorators": "^7.2.0",
     "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
     "eslint-config-google": "^0.11.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-html": "^5.0.0",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.3",
+    "mocha": "^5.2.0",
     "prettier": "^1.15.3"
   }
 }
