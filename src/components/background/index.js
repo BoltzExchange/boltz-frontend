@@ -25,7 +25,7 @@ const styles = theme => ({
 const BackGround = ({ classes, children }) => (
   <View className={classes.wrapper} style={{ height: '100vh', width: '100vw' }}>
     {children}
-    <span className={classes.boltz}>@ 2019 Boltz.app. All rights reserved</span>
+    <span className={classes.boltz}>@ 2019 Boltz</span>
   </View>
 );
 
