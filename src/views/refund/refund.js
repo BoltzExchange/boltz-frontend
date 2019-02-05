@@ -25,11 +25,11 @@ const styles = theme => ({
 });
 
 const uploadRefundFileText = (refundFile, txHash) => {
-  const hasRefundFile = Object.keys(refundFile).length === 0;
-  const hasTxHash = txHash === '';
-  if (hasRefundFile && !hasTxHash) {
+  const invalidRefundFile = Object.keys(refundFile).length === 0;
+  const invalidTxHash = txHash === '';
+  if (invalidRefundFile && !invalidTxHash) {
     return 'Upload refund file';
-  } else if (!hasRefundFile && hasTxHash) {
+  } else if (!invalidRefundFile && invalidTxHash) {
     return 'Input transaction hash';
   } else {
     return 'Upload refund file';
