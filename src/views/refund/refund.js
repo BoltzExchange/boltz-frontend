@@ -29,8 +29,6 @@ const uploadRefundFileText = (refundFile, txHash) => {
     return 'Upload refund file';
   } else if (txHash === '') {
     return 'Input transaction hash';
-  } else {
-    return 'Upload refund file';
   }
 };
 
