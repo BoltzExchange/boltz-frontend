@@ -173,7 +173,7 @@ class SwapTab extends React.Component {
     if (quote === base) {
       this.setState({
         error: true,
-        errorMessage: 'Choose different asset',
+        errorMessage: 'Choose a different asset',
       });
       return;
     }
