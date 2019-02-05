@@ -87,10 +87,12 @@ class SwapTab extends React.Component {
 
     this.state = {
       error: false,
+      inputError: false,
       base: 'LTC',
       quote: 'BTC ⚡',
       baseAmount: MIN,
       quoteAmount: 0,
+      errorMessage: '',
     };
   }
 
@@ -167,27 +169,48 @@ class SwapTab extends React.Component {
     return baseAmount <= MAX && baseAmount >= MIN;
   };
 
+  checkValidPair = (quote, base) => {
+    if (quote === base) {
+      this.setState({
+        error: true,
+        errorMessage: 'Choose a different asset',
+      });
+      return;
+    }
+
+    const pair = `${quote}/${base}`;
+    if (pair === 'BTC/LTC' || pair === 'LTC/BTC') {
+      this.setState({
+        error: true,
+        errorMessage: 'Coming soon',
+      });
+      return;
+    }
+
+    this.setState({ base, quote, error: false, errorMessage: '' });
+  };
+
   updateBaseAmount = quoteAmount => {
     const rate = new BigNumber(this.state.rate.rate);
     const newBaseAmount = new BigNumber(quoteAmount).dividedBy(rate).toFixed(8);
-    const error = !this.checkBaseAmount(newBaseAmount);
+    const inputError = !this.checkBaseAmount(newBaseAmount);
 
     this.setState({
       quoteAmount: Number.parseFloat(quoteAmount),
       baseAmount: newBaseAmount,
-      error,
+      inputError,
     });
   };
 
   updateQuoteAmount = baseAmount => {
     const rate = new BigNumber(this.state.rate.rate);
     const newQuoteAmount = new BigNumber(baseAmount).times(rate).toFixed(8);
-    const error = !this.checkBaseAmount(baseAmount);
+    const inputError = !this.checkBaseAmount(baseAmount);
 
     this.setState({
       quoteAmount: newQuoteAmount,
       baseAmount: Number.parseFloat(baseAmount),
-      error,
+      inputError,
     });
   };
 
@@ -219,7 +242,15 @@ class SwapTab extends React.Component {
 
   render() {
     const { classes, rates, currencies } = this.props;
-    const { error, base, quote, baseAmount, quoteAmount } = this.state;
+    const {
+      error,
+      base,
+      quote,
+      baseAmount,
+      quoteAmount,
+      errorMessage,
+      inputError,
+    } = this.state;
 
     return (
       <View className={classes.wrapper}>
@@ -236,14 +267,14 @@ class SwapTab extends React.Component {
               min={MIN}
               max={MAX}
               step={MIN}
-              error={error}
+              error={inputError}
               value={baseAmount}
               onChange={e => this.updateQuoteAmount(e)}
             />
             <DropDown
               defaultValue={base}
               fields={currencies}
-              onChange={e => this.setState({ base: e })}
+              onChange={e => this.checkValidPair(quote, e)}
             />
           </View>
           <View className={classes.select}>
@@ -252,23 +283,23 @@ class SwapTab extends React.Component {
               min={0.00000001}
               max={MAX}
               step={0.00000001}
-              error={error}
+              error={inputError}
               value={quoteAmount}
               onChange={e => this.updateBaseAmount(e)}
             />
             <DropDown
               defaultValue={quote}
               fields={currencies}
-              onChange={e => this.setState({ quote: e })}
+              onChange={e => this.checkValidPair(e, base)}
             />
           </View>
         </View>
         <View className={classes.next}>
           <Controls
             text={'Start swap'}
-            error={error}
+            error={error || inputError}
             onPress={error ? () => {} : () => this.shouldSubmit()}
-            errorText={'Invalid amount'}
+            errorText={inputError ? 'Invalid amount' : errorMessage}
             errorRender={() => {}}
           />
         </View>
