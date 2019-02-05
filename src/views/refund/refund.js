@@ -24,6 +24,14 @@ const styles = theme => ({
   },
 });
 
+const uploadRefundFileText = (refundFile, txHash) => {
+  if (Object.keys(refundFile).length === 0) {
+    return 'Upload refund file';
+  } else if (txHash === '') {
+    return 'Input transaction hash';
+  }
+};
+
 const Refund = ({
   classes,
   goHome,
@@ -35,7 +43,6 @@ const Refund = ({
   setDestinationAddress,
   startRefund,
   completeRefund,
-  refundTransaction,
   refundTransactionHash,
   isFetching,
 }) => {
@@ -61,6 +68,7 @@ const Refund = ({
               render={() => (
                 <UploadRefundFile
                   setRefundFile={setRefundFile}
+                  isUploaded={Object.keys(refundFile).length !== 0}
                   setTransactionHash={setTransactionHash}
                 />
               )}
@@ -77,10 +85,7 @@ const Refund = ({
             <StepsWizard.Step
               num={3}
               render={() => (
-                <CompleteRefund
-                  refundTransaction={refundTransaction}
-                  refundTransactionHash={refundTransactionHash}
-                />
+                <CompleteRefund refundTransactionHash={refundTransactionHash} />
               )}
             />
           </StepsWizard.Steps>
@@ -92,7 +97,10 @@ const Refund = ({
                 <Controls
                   text={'Next'}
                   onPress={() => props.nextStage()}
-                  loadingText={'Upload refund file'}
+                  loadingText={uploadRefundFileText(
+                    refundFile,
+                    transactionHash
+                  )}
                   loadingStyle={classes.fileUpload}
                   loading={
                     Object.keys(refundFile).length === 0 ||
@@ -105,7 +113,7 @@ const Refund = ({
               num={2}
               render={props => (
                 <Controls
-                  loading={isFetching}
+                  loading={isFetching || !destinationAddress}
                   text={'Generate refund transaction'}
                   onPress={() =>
                     startRefund(
@@ -150,7 +158,6 @@ Refund.propTypes = {
   setDestinationAddress: PropTypes.func.isRequired,
   startRefund: PropTypes.func.isRequired,
   completeRefund: PropTypes.func.isRequired,
-  refundTransaction: PropTypes.string,
   refundTransactionHash: PropTypes.string,
 };
 

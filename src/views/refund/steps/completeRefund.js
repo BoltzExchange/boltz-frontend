@@ -17,40 +17,37 @@ const CompleteRefundStyles = theme => ({
   },
   title: {
     margin: '15px',
-    fontSize: '30px',
+    fontSize: '42px',
+    fontWeight: 300,
   },
   transaction: {
     wordBreak: 'break-all',
     paddingLeft: '1vw',
     paddingRight: '1vw',
+    fontSize: '24px',
+    fontWeight: 300,
   },
 });
 
-const StyledCompleteRefund = ({
-  classes,
-  refundTransaction,
-  refundTransactionHash,
-}) => (
+const StyledCompleteRefund = ({ classes, refundTransactionHash }) => (
   <View className={classes.wrapper}>
-    <FaCheckCircle size={240} className={classes.icon} />
-    <span className={classes.title}>
-      Refund transaction successfully broadcasted!
-    </span>
-    <p>
-      Your refund transaction hash: <br />
-      <code className={classes.transaction}>{refundTransactionHash}</code>
-    </p>
-
-    <p>
-      Raw transaction: <br />
-      <code className={classes.transaction}>{refundTransaction}</code>
+    <FaCheckCircle size={200} className={classes.icon} />
+    <span className={classes.title}> Success! </span>
+    <p className={classes.transaction}>
+      <a
+        href={`https://blockstream.info/tx/${refundTransactionHash}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Click here
+      </a>{' '}
+      to see the refund transaction
     </p>
   </View>
 );
 
 StyledCompleteRefund.propTypes = {
   classes: PropTypes.object.isRequired,
-  refundTransaction: PropTypes.string.isRequired,
   refundTransactionHash: PropTypes.string.isRequired,
 };
 
