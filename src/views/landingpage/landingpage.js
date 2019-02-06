@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { requestProvider } from 'webln';
 import BackGround from '../../components/background';
 import View from '../../components/view';
 import { LinkButton } from '../../components/button';
@@ -65,6 +66,14 @@ class LandingPage extends React.Component {
     this.props.getPairs(() => {
       this.forceUpdate();
     });
+
+    try {
+      requestProvider().then(provider => {
+        this.webln = provider;
+      });
+    } catch (error) {
+      console.log(`Could not enable webln: ${error}`);
+    }
   }
 
   toggleModal = () => {
@@ -127,6 +136,7 @@ class LandingPage extends React.Component {
                   initReverseSwap({
                     ...state,
                     keys,
+                    webln: this.webln,
                   });
 
                   goReverseSwap();
@@ -134,6 +144,7 @@ class LandingPage extends React.Component {
                   initSwap({
                     ...state,
                     keys,
+                    webln: this.webln,
                   });
 
                   goSwap();

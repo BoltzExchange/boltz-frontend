@@ -9,6 +9,7 @@ import { toSatoshi, getHexBuffer, getNetwork } from '../../scripts/utils';
 export const initReverseSwap = state => ({
   type: actionTypes.INIT_REVERSE_SWAP,
   payload: {
+    webln: state.webln,
     base: state.base,
     quote: state.quote,
     baseAmount: state.baseAmount,

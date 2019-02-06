@@ -23,6 +23,7 @@ const ReverseSwap = ({
   startReverseSwap,
   completeSwap,
   goHome,
+  webln,
   nextStage,
   swapInfo,
   swapResponse,
@@ -60,6 +61,7 @@ const ReverseSwap = ({
                 <PayInvoice
                   asset={swapInfo.base}
                   invoice={swapResponse.invoice}
+                  webln={webln}
                 />
               )}
             />
@@ -111,6 +113,7 @@ ReverseSwap.propTypes = {
   history: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
+  webln: PropTypes.object,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,
   completeSwap: PropTypes.func,

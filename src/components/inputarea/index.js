@@ -22,10 +22,12 @@ const InputArea = ({
   height,
   width,
   onChange,
+  value,
   placeholder,
 }) => (
   <textarea
     autoFocus={autoFocus}
+    value={value}
     placeholder={placeholder}
     className={classes.wrapper}
     rows={height}
@@ -41,6 +43,7 @@ InputArea.propTypes = {
   onChange: PropTypes.func.isRequired,
   error: PropTypes.bool.isRequired,
   autoFocus: PropTypes.bool,
+  value: PropTypes.string,
   placeholder: PropTypes.string,
 };
 

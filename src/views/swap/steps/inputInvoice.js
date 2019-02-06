@@ -34,8 +34,22 @@ class StyledInputInvoice extends React.Component {
     error: false,
   };
 
+  componentDidMount() {
+    const { swapInfo, webln } = this.props;
+
+    if (webln) {
+      webln.makeInvoice(swapInfo.quoteAmount).then(response => {
+        const invoice = response.paymentRequest;
+
+        this.setState({ value: invoice });
+        this.onChange(invoice);
+      });
+    }
+  }
+
   onChange = input => {
     const valid = input.slice(0, 2);
+
     if (valid === 'ln') {
       this.setState({ error: false }, () => this.props.onChange(input, false));
     } else {
@@ -62,6 +76,7 @@ class StyledInputInvoice extends React.Component {
           height={150}
           onChange={this.onChange}
           error={error}
+          value={this.state.value}
           placeholder={
             'Paste your invoice here: lntb20n1pwqhmchpp5v9tsdn62ptl47z8wvzj7xakw09wmj5yax05pv5z2alhpqgdmedlsd' +
             'qqcqzys2wuh6vnuu8f6c94mx7wlduh8kge8ftuarg23nnkpuhgdjpw96hdj2qem2mcztny8vxng6gdc5xsfh2' +
@@ -76,6 +91,7 @@ class StyledInputInvoice extends React.Component {
 StyledInputInvoice.propTypes = {
   classes: PropTypes.object.isRequired,
   swapInfo: PropTypes.object.isRequired,
+  webln: PropTypes.object,
   onChange: PropTypes.func.isRequired,
 };
 

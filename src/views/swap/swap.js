@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../components/view';
+import { FEE } from '../../constants/fees';
 import Prompt from '../../components/prompt';
 import Loading from '../../components/loader';
 import Controls from '../../components/controls';
@@ -9,7 +10,6 @@ import Confetti from '../../components/confetti';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import { InputInvoice, SendTransaction, DownloadRefund } from './steps';
-import { FEE } from '../../constants/fees';
 
 const styles = () => ({
   wrapper: {
@@ -21,6 +21,7 @@ const styles = () => ({
 
 const Swap = ({
   classes,
+  webln,
   setSwapInvoice,
   completeSwap,
   goHome,
@@ -48,7 +49,11 @@ const Swap = ({
             <StepsWizard.Step
               num={1}
               render={() => (
-                <InputInvoice swapInfo={swapInfo} onChange={setSwapInvoice} />
+                <InputInvoice
+                  swapInfo={swapInfo}
+                  webln={webln}
+                  onChange={setSwapInvoice}
+                />
               )}
             />
             <StepsWizard.Step
@@ -133,6 +138,7 @@ Swap.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   goHome: PropTypes.func.isRequired,
+  webln: PropTypes.object,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,
   completeSwap: PropTypes.func,

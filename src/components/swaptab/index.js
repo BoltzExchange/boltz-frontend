@@ -148,20 +148,34 @@ class SwapTab extends React.Component {
       const rate = this.getRate();
 
       // Swapping from chain to chain or from Lightning to Lightning is not supported right now
-      if (this.baseAsset.isLightning !== this.quoteAsset.isLightning) {
-        this.setState(
-          {
-            rate,
-            error: false,
-          },
-          () => this.updateQuoteAmount(this.state.baseAmount)
-        );
-      } else {
+      if (
+        this.state.base === this.state.quote ||
+        (this.baseAsset.isLightning && this.quoteAsset.isLightning)
+      ) {
         this.setState({
           rate: undefined,
           error: true,
+          errorMessage: 'Choose a different asset',
         });
+        return;
       }
+
+      if (!this.baseAsset.isLightning && !this.quoteAsset.isLightning) {
+        this.setState({
+          rate: undefined,
+          error: true,
+          errorMessage: 'Coming soon',
+        });
+        return;
+      }
+
+      this.setState(
+        {
+          rate,
+          error: false,
+        },
+        () => this.updateQuoteAmount(this.state.baseAmount)
+      );
     }
   };
 
@@ -169,24 +183,7 @@ class SwapTab extends React.Component {
     return baseAmount <= MAX && baseAmount >= MIN;
   };
 
-  checkValidPair = (quote, base) => {
-    if (quote === base) {
-      this.setState({
-        error: true,
-        errorMessage: 'Choose a different asset',
-      });
-      return;
-    }
-
-    const pair = `${quote}/${base}`;
-    if (pair === 'BTC/LTC' || pair === 'LTC/BTC') {
-      this.setState({
-        error: true,
-        errorMessage: 'Coming soon',
-      });
-      return;
-    }
-
+  updatePair = (quote, base) => {
     this.setState({ base, quote, error: false, errorMessage: '' });
   };
 
@@ -274,7 +271,7 @@ class SwapTab extends React.Component {
             <DropDown
               defaultValue={base}
               fields={currencies}
-              onChange={e => this.checkValidPair(quote, e)}
+              onChange={e => this.updatePair(quote, e)}
             />
           </View>
           <View className={classes.select}>
@@ -290,7 +287,7 @@ class SwapTab extends React.Component {
             <DropDown
               defaultValue={quote}
               fields={currencies}
-              onChange={e => this.checkValidPair(e, base)}
+              onChange={e => this.updatePair(e, base)}
             />
           </View>
         </View>
