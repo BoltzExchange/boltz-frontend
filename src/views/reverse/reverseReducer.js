@@ -1,6 +1,7 @@
 import * as actionTypes from '../../constants/actions';
 
 const initalState = {
+  webln: null,
   isFetching: false,
   swapInfo: {
     base: null,
@@ -33,6 +34,7 @@ const reducer = (state = initalState, action) => {
     case actionTypes.INIT_REVERSE_SWAP:
       return {
         ...state,
+        webln: action.payload.webln,
         swapInfo: {
           ...state.swapInfo,
           base: action.payload.base,

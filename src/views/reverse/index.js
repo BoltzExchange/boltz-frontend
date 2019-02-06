@@ -8,6 +8,7 @@ import { nav } from '../../action/index';
 import ReverseSwap from './reverse';
 
 const mapStateToProps = state => ({
+  webln: state.reverseSwapReducer.webln,
   inSwapMode: state.reverseSwapReducer.inSwapMode,
   isFetching: state.reverseSwapReducer.isFetching,
   swapInfo: state.reverseSwapReducer.swapInfo,

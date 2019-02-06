@@ -4,6 +4,7 @@ import { nav } from '../../action/index';
 import Swap from './swap';
 
 const mapStateToProps = state => ({
+  webln: state.swapReducer.webln,
   inSwapMode: state.swapReducer.inSwapMode,
   swapInfo: state.swapReducer.swapInfo,
   swapResponse: state.swapReducer.swapResponse.response,

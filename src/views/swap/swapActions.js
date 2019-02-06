@@ -12,6 +12,7 @@ export const completeSwap = () => {
 export const initSwap = state => ({
   type: actionTypes.INIT_SWAP,
   payload: {
+    webln: state.webln,
     base: state.base,
     quote: state.quote,
     baseAmount: state.baseAmount,
