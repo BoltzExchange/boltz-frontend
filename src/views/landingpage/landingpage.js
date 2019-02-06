@@ -8,6 +8,7 @@ import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { generateKeys } from '../../action';
+import ModalComponent from '../../components/modal';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
@@ -53,11 +54,22 @@ const styles = theme => ({
 });
 
 class LandingPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+  }
+
   componentDidMount() {
     this.props.getPairs(() => {
       this.forceUpdate();
     });
   }
+
+  toggleModal = () => {
+    this.setState(prev => ({ isOpen: !prev.isOpen }));
+  };
 
   render() {
     const {
@@ -88,7 +100,11 @@ class LandingPage extends React.Component {
               <br />
               An Account.
             </p>
-            <LinkButton text="WHY?" onPress={() => window.alert('WIP')} />
+            <LinkButton text="WHY?" onPress={() => this.toggleModal()} />
+            <ModalComponent
+              isOpen={this.state.isOpen}
+              onClose={this.toggleModal}
+            />
           </View>
           {Object.keys(rates).length === 0 || currencies.length === 0 ? (
             <View className={classes.loading}>
