@@ -4,15 +4,16 @@ import PropTypes from 'prop-types';
 
 const styles = theme => ({
   wrapper: {
+    border: 'none',
     resize: 'none',
+    fontSize: '18px',
+    borderRadius: '3px',
+    padding: '6px 12px',
+    wordBreak: 'break-all',
     width: p => `${p.width}px`,
     height: p => `${p.height}px`,
-    padding: '6px 12px',
     outline: p => (p.error ? '1px solid red' : 'none'),
     backgroundColor: theme.colors.lightGrey,
-    fontSize: '18px',
-    border: 'none',
-    borderRadius: '3px',
   },
 });
 

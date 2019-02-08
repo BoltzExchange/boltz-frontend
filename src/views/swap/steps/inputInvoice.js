@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import { FaBolt } from 'react-icons/fa';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
-import { getCurrencyName } from '../../../scripts/utils';
+import { getCurrencyName, getSampleInvoice } from '../../../scripts/utils';
 
 const InputInvoiceStyles = () => ({
   wrapper: {
@@ -51,15 +51,19 @@ class StyledInputInvoice extends React.Component {
     const valid = input.slice(0, 2);
 
     if (valid === 'ln') {
-      this.setState({ error: false }, () => this.props.onChange(input, false));
+      this.setState({ value: input, error: false }, () =>
+        this.props.onChange(input, false)
+      );
     } else {
-      this.setState({ error: true }, () => this.props.onChange(input, true));
+      this.setState({ value: input, error: true }, () =>
+        this.props.onChange(input, true)
+      );
     }
   };
 
   render() {
-    const { classes, swapInfo } = this.props;
     const { error } = this.state;
+    const { classes, swapInfo } = this.props;
 
     return (
       <View className={classes.wrapper}>
@@ -71,17 +75,13 @@ class StyledInputInvoice extends React.Component {
           </b>
         </p>
         <InputArea
-          autoFocus={true}
           width={600}
           height={150}
-          onChange={this.onChange}
           error={error}
+          autoFocus={true}
           value={this.state.value}
-          placeholder={
-            'Paste your invoice here: lntb20n1pwqhmchpp5v9tsdn62ptl47z8wvzj7xakw09wmj5yax05pv5z2alhpqgdmedlsd' +
-            'qqcqzys2wuh6vnuu8f6c94mx7wlduh8kge8ftuarg23nnkpuhgdjpw96hdj2qem2mcztny8vxng6gdc5xsfh2' +
-            'z6rf2rt42hc3k5udm2jcynjyspr262hk'
-          }
+          onChange={this.onChange}
+          placeholder={`EG: ${getSampleInvoice(swapInfo.quote)}`}
         />
       </View>
     );

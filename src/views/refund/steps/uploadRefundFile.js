@@ -1,11 +1,12 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
+import { FaCheckCircle } from 'react-icons/fa';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
 import DropZone from '../../../components/dropzone';
 import FileUpload from '../../../components/fileupload';
-import { FaCheckCircle } from 'react-icons/fa';
+import { lockupTransactionHash } from '../../../constants';
 
 const UploadRefundFileStyles = theme => ({
   wrapper: {
@@ -50,14 +51,12 @@ const StyledUploadRefundFile = ({
         <FileUpload text={'Select file'} onFileRead={setRefundFile} />
       </DropZone>
     )}
-    <p className={classes.info}>Paste Lockup Transaction Hash</p>
+    <p className={classes.info}>Paste the lockup transaction hash</p>
     <InputArea
       height={50}
       width={500}
       onChange={setTransactionHash}
-      placeholder={
-        '0e3e2357e806b6cdb1f70b54c3a3a17b6714ee1f0e68bebb44a74b1efd512098'
-      }
+      placeholder={`EG: ${lockupTransactionHash}`}
     />
   </View>
 );

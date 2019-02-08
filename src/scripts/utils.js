@@ -3,6 +3,10 @@ import {
   litecoinNetwork,
   bitcoinExplorer,
   litecoinExplorer,
+  bitcoinAddress,
+  litecoinAddress,
+  bitcoinInvoice,
+  litecoinInvoice,
 } from '../constants';
 
 // Number satohis and litoshis in a whole coin
@@ -71,7 +75,7 @@ export const toSatoshi = coins => {
 };
 
 /**
- * Get the full name of a currency
+ * Get the full name of a symbol
  */
 export const getCurrencyName = symbol => {
   return symbol === 'BTC' ? 'Bitcoin' : 'Litecoin';
@@ -96,8 +100,22 @@ export const getNetwork = symbol => {
 };
 
 /**
- * Get the block explorer URL for a currency
+ * Get the block explorer URL for a symbol
  */
 export const getExplorer = symbol => {
   return symbol === 'BTC' ? bitcoinExplorer : litecoinExplorer;
+};
+
+/**
+ * Get a sample address for a symbol
+ */
+export const getSampleAddress = symbol => {
+  return symbol === 'BTC' ? bitcoinAddress : litecoinAddress;
+};
+
+/**
+ * Get a sample invoice for a symbol
+ */
+export const getSampleInvoice = symbol => {
+  return symbol === 'BTC' ? bitcoinInvoice : litecoinInvoice;
 };

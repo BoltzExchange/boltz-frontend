@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
-import { getCurrencyName } from '../../../scripts/utils';
+import { getCurrencyName, getSampleAddress } from '../../../scripts/utils';
 
 const inputAddressStyles = () => ({
   wrapper: {
@@ -32,8 +32,8 @@ class StyledInputAddress extends React.Component {
   };
 
   render() {
-    const { classes, swapInfo } = this.props;
     const { error } = this.state;
+    const { classes, swapInfo } = this.props;
 
     return (
       <View className={classes.wrapper}>
@@ -43,9 +43,9 @@ class StyledInputAddress extends React.Component {
         <InputArea
           width={600}
           height={150}
-          onChange={this.onChange}
           error={error}
-          placeholder={'EG: bc1qvclmsfvjsjpz3mavtpnjk5xrpc7gupe03nz8pa'}
+          onChange={this.onChange}
+          placeholder={`EG: ${getSampleAddress(swapInfo.quote)}`}
         />
       </View>
     );
