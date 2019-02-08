@@ -1,4 +1,9 @@
-import { bitcoinNetwork, litecoinNetwork } from '../constants';
+import {
+  bitcoinNetwork,
+  litecoinNetwork,
+  bitcoinExplorer,
+  litecoinExplorer,
+} from '../constants';
 
 // Number satohis and litoshis in a whole coin
 const decimals = 100000000;
@@ -88,4 +93,11 @@ export const copyToClipBoard = () => {
  */
 export const getNetwork = symbol => {
   return symbol === 'BTC' ? bitcoinNetwork : litecoinNetwork;
+};
+
+/**
+ * Get the block explorer URL for a currency
+ */
+export const getExplorer = symbol => {
+  return symbol === 'BTC' ? bitcoinExplorer : litecoinExplorer;
 };

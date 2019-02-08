@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
-import {
-  getCurrencyName,
-  toWholeCoins,
-  copyToClipBoard,
-} from '../../../scripts/utils';
+import { toWholeCoins, copyToClipBoard } from '../../../scripts/utils';
 
 const SendTransactionStyles = () => ({
   wrapper: {
@@ -62,9 +58,7 @@ const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
           {' '}
           {toWholeCoins(swapResponse.expectedAmount)} {swapInfo.base}{' '}
         </b>{' '}
-        <br />
-        on <b>{getCurrencyName(swapInfo.base)}</b> <br />
-        blockchain address:
+        to this address:
       </p>
       <p className={classes.address} id="copy">
         {swapResponse.address}
@@ -72,15 +66,17 @@ const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
       <span className={classes.action} onClick={() => copyToClipBoard()}>
         Copy
       </span>
-      <p>
-        If the address does not work with your wallet: <br />
-        <a
-          target={'_blank'}
-          href="https://litecoin-project.github.io/p2sh-convert/"
-        >
-          use this tool
-        </a>
-      </p>
+      {swapInfo.base === 'LTC' ? (
+        <p>
+          If the address does not work with your wallet: <br />
+          <a
+            target={'_blank'}
+            href="https://litecoin-project.github.io/p2sh-convert/"
+          >
+            use this tool
+          </a>
+        </p>
+      ) : null}
     </View>
   </View>
 );
