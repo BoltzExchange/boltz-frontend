@@ -90,6 +90,7 @@ const ReverseSwap = ({
                   loading={isFetching}
                   text={'Done'}
                   loadingText={swapStatus}
+                  loadingRender={() => <Loading />}
                   onPress={() => {
                     completeSwap();
                     nextStage();
