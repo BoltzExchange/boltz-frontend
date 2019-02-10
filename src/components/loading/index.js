@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
 
 const Loading = ({ width, height, color, style, ...other }) => {
-  let newStyle = { marginRight: '51px' };
+  let newStyle = { marginRight: '5px' };
   if (style !== undefined) {
     newStyle = { ...newStyle, ...style };
   }
