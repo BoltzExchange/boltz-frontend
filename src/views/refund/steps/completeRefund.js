@@ -2,6 +2,7 @@ import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 import View from '../../../components/view';
+import { getExplorer } from '../../../scripts/utils';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const CompleteRefundStyles = theme => ({
@@ -29,13 +30,13 @@ const CompleteRefundStyles = theme => ({
   },
 });
 
-const StyledCompleteRefund = ({ classes, refundTransactionHash }) => (
+const StyledCompleteRefund = ({ classes, currency, refundTransactionHash }) => (
   <View className={classes.wrapper}>
     <FaCheckCircle size={200} className={classes.icon} />
     <span className={classes.title}> Success! </span>
     <p className={classes.transaction}>
       <a
-        href={`https://blockstream.info/tx/${refundTransactionHash}`}
+        href={`${getExplorer(currency)}/${refundTransactionHash}`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -48,6 +49,7 @@ const StyledCompleteRefund = ({ classes, refundTransactionHash }) => (
 
 StyledCompleteRefund.propTypes = {
   classes: PropTypes.object.isRequired,
+  currency: PropTypes.string.isRequired,
   refundTransactionHash: PropTypes.string.isRequired,
 };
 

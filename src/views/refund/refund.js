@@ -28,7 +28,7 @@ const uploadRefundFileText = (refundFile, txHash) => {
   if (Object.keys(refundFile).length === 0) {
     return 'Upload refund file';
   } else if (txHash === '') {
-    return 'Input transaction hash';
+    return 'Paste transaction hash';
   }
 };
 
@@ -85,7 +85,10 @@ const Refund = ({
             <StepsWizard.Step
               num={3}
               render={() => (
-                <CompleteRefund refundTransactionHash={refundTransactionHash} />
+                <CompleteRefund
+                  currency={refundFile.currency}
+                  refundTransactionHash={refundTransactionHash}
+                />
               )}
             />
           </StepsWizard.Steps>
