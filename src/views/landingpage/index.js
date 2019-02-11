@@ -8,6 +8,7 @@ import * as actions from './landingpageActions';
 const mapStateToProps = state => ({
   rates: state.landingpageReducer.rates,
   currencies: state.landingpageReducer.currencies,
+  limits: state.landingpageReducer.limits,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -18,6 +19,7 @@ const mapDispatchToProps = dispatch => ({
   initSwap: state => dispatch(initSwap(state)),
   initReverseSwap: state => dispatch(initReverseSwap(state)),
   getPairs: cb => dispatch(actions.getPairs(cb)),
+  getLimits: (rates, cb) => dispatch(actions.getLimits(rates, cb)),
 });
 
 export default connect(

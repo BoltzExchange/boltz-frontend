@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Set } from 'core-js';
 import { boltzApi } from '../../constants';
-import { splitPairId } from '../../scripts/utils';
+import { splitPairId, roundWholeCoins } from '../../scripts/utils';
 import * as actionTypes from '../../constants/actions';
 
 const pairsRequest = () => ({
@@ -13,7 +13,16 @@ const pairsResponse = data => ({
   payload: data,
 });
 
-const getRates = pairs => {
+const limitsRequest = () => ({
+  type: actionTypes.LIMITS_REQUEST,
+});
+
+const limitsResponse = data => ({
+  type: actionTypes.LIMITS_RESPONSE,
+  payload: data,
+});
+
+const parseRates = pairs => {
   const rates = {};
 
   for (const pair in pairs) {
@@ -42,7 +51,7 @@ const getRates = pairs => {
   return rates;
 };
 
-const getCurrencies = pairs => {
+const parseCurrencies = pairs => {
   const currencies = [];
   const contains = new Set();
 
@@ -74,8 +83,8 @@ export const getPairs = cb => {
   return dispatch => {
     dispatch(pairsRequest());
     axios.get(url).then(response => {
-      const rates = getRates(response.data);
-      const currencies = getCurrencies(response.data);
+      const rates = parseRates(response.data);
+      const currencies = parseCurrencies(response.data);
 
       dispatch(
         pairsResponse({
@@ -83,6 +92,46 @@ export const getPairs = cb => {
           currencies,
         })
       );
+
+      cb();
+    });
+  };
+};
+
+const parseLimits = (rates, data) => {
+  const limits = {};
+  const keys = Object.keys(data);
+
+  keys.forEach(key => {
+    const value = data[key];
+    const { base, quote } = splitPairId(key);
+
+    limits[key] = value;
+
+    // Add limits for sell orders
+    if (base !== quote) {
+      const reverseSymbol = `${quote}/${base}`;
+      const reverseRate = rates[reverseSymbol].rate;
+
+      limits[reverseSymbol] = {
+        minimal: roundWholeCoins(value.minimal / reverseRate),
+        maximal: roundWholeCoins(value.maximal / reverseRate),
+      };
+    }
+  });
+
+  return limits;
+};
+
+export const getLimits = (rates, cb) => {
+  const url = `${boltzApi}/getlimits`;
+
+  return dispatch => {
+    dispatch(limitsRequest());
+    axios.get(url).then(response => {
+      const limits = parseLimits(rates, response.data);
+
+      dispatch(limitsResponse(limits));
 
       cb();
     });

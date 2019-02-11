@@ -64,7 +64,7 @@ class LandingPage extends React.Component {
 
   componentDidMount() {
     this.props.getPairs(() => {
-      this.forceUpdate();
+      this.props.getLimits(this.props.rates, () => {});
     });
 
     try {
@@ -91,6 +91,7 @@ class LandingPage extends React.Component {
       initReverseSwap,
       rates,
       currencies,
+      limits,
     } = this.props;
 
     return (
@@ -115,7 +116,9 @@ class LandingPage extends React.Component {
               onClose={this.toggleModal}
             />
           </View>
-          {Object.keys(rates).length === 0 || currencies.length === 0 ? (
+          {Object.keys(rates).length === 0 ||
+          currencies.length === 0 ||
+          Object.keys(limits).length === 0 ? (
             <View className={classes.loading}>
               <img
                 src={boltz_logo}
@@ -152,6 +155,7 @@ class LandingPage extends React.Component {
               }}
               rates={rates}
               currencies={currencies}
+              limits={limits}
             />
           )}
         </View>
@@ -169,8 +173,10 @@ LandingPage.propTypes = {
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
   getPairs: PropTypes.func.isRequired,
+  getLimits: PropTypes.func.isRequired,
   rates: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
+  limits: PropTypes.object.isRequired,
 };
 
 export default injectSheet(styles)(LandingPage);

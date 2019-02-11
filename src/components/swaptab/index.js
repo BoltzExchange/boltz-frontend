@@ -8,6 +8,7 @@ import DropDown from '../dropdown';
 import Text, { InfoText } from '../text';
 import { MIN, MAX } from '../../constants/fees';
 import Controls from '../controls';
+import { decimals } from '../../scripts/utils';
 
 const styles = theme => ({
   wrapper: {
@@ -90,7 +91,9 @@ class SwapTab extends React.Component {
       inputError: false,
       base: 'LTC',
       quote: 'BTC ⚡',
-      baseAmount: MIN,
+      minAmount: 0,
+      maxAmount: 0,
+      baseAmount: 0.001,
       quoteAmount: 0,
       errorMessage: '',
     };
@@ -121,19 +124,22 @@ class SwapTab extends React.Component {
     return symbol;
   };
 
-  getRate = () => {
-    return this.props.rates[
-      `${this.parseBoltSuffix(this.state.base, true)}/${this.parseBoltSuffix(
-        this.state.quote,
-        false
-      )}`
-    ];
+  getSymbol = () => {
+    return `${this.parseBoltSuffix(
+      this.state.base,
+      true
+    )}/${this.parseBoltSuffix(this.state.quote, false)}`;
   };
 
   componentDidMount = () => {
+    const symbol = this.getSymbol();
+    const limits = this.props.limits[symbol];
+
     this.setState(
       {
-        rate: this.getRate(),
+        minAmount: limits.minimal,
+        maxAmount: limits.maximal,
+        rate: this.props.rates[symbol],
       },
       () => this.updateQuoteAmount(this.state.baseAmount)
     );
@@ -145,7 +151,7 @@ class SwapTab extends React.Component {
       prevState.base !== this.state.base ||
       prevState.quote !== this.state.quote
     ) {
-      const rate = this.getRate();
+      const symbol = this.getSymbol();
 
       // Swapping from chain to chain or from Lightning to Lightning is not supported right now
       if (
@@ -169,9 +175,16 @@ class SwapTab extends React.Component {
         return;
       }
 
+      const rate = this.props.rates[symbol];
+      const limits = this.props.limits[symbol];
+
+      console.log(this.props);
+
       this.setState(
         {
           rate,
+          minAmount: limits.minimal,
+          maxAmount: limits.maximal,
           error: false,
         },
         () => this.updateQuoteAmount(this.state.baseAmount)
@@ -243,6 +256,8 @@ class SwapTab extends React.Component {
       error,
       base,
       quote,
+      minAmount,
+      maxAmount,
       baseAmount,
       quoteAmount,
       errorMessage,
@@ -252,8 +267,8 @@ class SwapTab extends React.Component {
     return (
       <View className={classes.wrapper}>
         <View className={classes.stats}>
-          <InfoText title="Min amount:" text={`${MIN}`} />
-          <InfoText title="Max amount:" text={`${MAX}`} />
+          <InfoText title="Min amount:" text={`${minAmount}`} />
+          <InfoText title="Max amount:" text={`${maxAmount}`} />
           <InfoText title="Fee:" text={'0'} />
           <InfoText title="Rate:" text={`${this.parseRate(rates)}`} />
         </View>
@@ -261,9 +276,9 @@ class SwapTab extends React.Component {
           <View className={classes.select}>
             <Text text="You send:" className={classes.text} />
             <Input
-              min={MIN}
-              max={MAX}
-              step={MIN}
+              min={minAmount}
+              max={maxAmount}
+              step={0.001}
               error={inputError}
               value={baseAmount}
               onChange={e => this.updateQuoteAmount(e)}
@@ -277,9 +292,9 @@ class SwapTab extends React.Component {
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
             <Input
-              min={0.00000001}
-              max={MAX}
-              step={0.00000001}
+              min={1 / decimals}
+              max={Number.MAX_SAFE_INTEGER}
+              step={1 / decimals}
               error={inputError}
               value={quoteAmount}
               onChange={e => this.updateBaseAmount(e)}
@@ -310,6 +325,7 @@ SwapTab.propTypes = {
   onPress: PropTypes.func,
   rates: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
+  limits: PropTypes.object.isRequired,
 };
 
 export default injectSheet(styles)(SwapTab);
