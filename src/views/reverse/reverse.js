@@ -5,6 +5,7 @@ import View from '../../components/view';
 import Prompt from '../../components/prompt';
 import Controls from '../../components/controls';
 import Confetti from '../../components/confetti';
+import Loading from '../../components/loading';
 import { InputAddress, PayInvoice } from './steps';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
@@ -75,6 +76,7 @@ const ReverseSwap = ({
                   loading={isFetching}
                   text={'Next'}
                   loadingText={swapStatus}
+                  loadingRender={() => <Loading />}
                   onPress={() => {
                     startReverseSwap(swapInfo, props.nextStage);
                   }}
@@ -88,6 +90,7 @@ const ReverseSwap = ({
                   loading={isFetching}
                   text={'Done'}
                   loadingText={swapStatus}
+                  loadingRender={() => <Loading />}
                   onPress={() => {
                     completeSwap();
                     nextStage();

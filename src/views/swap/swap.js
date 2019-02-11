@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import View from '../../components/view';
 import { FEE } from '../../constants/fees';
 import Prompt from '../../components/prompt';
-import Loading from '../../components/loader';
+import Loading from '../../components/loading';
 import Controls from '../../components/controls';
 import Confetti from '../../components/confetti';
 import BackGround from '../../components/background';

@@ -35,6 +35,9 @@ const styles = theme => ({
   spinner: {
     marginRight: '20px',
   },
+  icon: {
+    marginRight: '10px',
+  },
 });
 
 // TODO: refactor to use render props due to complexity
@@ -67,19 +70,24 @@ const Controls = ({
           </h1>
         )}
       </View>
-      {error ? (
-        errorRender ? (
-          errorRender(classes.errorCommand, errorAction)
+      <View className={classes.icon}>
+        {error ? (
+          errorRender ? (
+            errorRender(classes.errorCommand, errorAction)
+          ) : (
+            <span
+              className={classes.errorCommand}
+              onClick={() => errorAction()}
+            >
+              Retry
+            </span>
+          )
+        ) : loading && loadingRender ? (
+          loadingRender()
         ) : (
-          <span className={classes.errorCommand} onClick={() => errorAction()}>
-            Retry
-          </span>
-        )
-      ) : loading && loadingRender ? (
-        loadingRender()
-      ) : (
-        <MdArrowForward className={classes.nextIcon} />
-      )}
+          <MdArrowForward className={classes.nextIcon} />
+        )}
+      </View>
     </View>
   );
 };
