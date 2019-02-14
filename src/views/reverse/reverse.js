@@ -78,7 +78,9 @@ const ReverseSwap = ({
                   loadingText={swapStatus}
                   loadingRender={() => <Loading />}
                   onPress={() => {
-                    startReverseSwap(swapInfo, props.nextStage);
+                    if (swapInfo.address && swapInfo.address !== '') {
+                      startReverseSwap(swapInfo, props.nextStage);
+                    }
                   }}
                 />
               )}
