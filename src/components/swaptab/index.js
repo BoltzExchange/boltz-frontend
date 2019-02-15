@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { BigNumber } from 'bignumber.js';
+import { MdCompareArrows } from 'react-icons/md';
 import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
-import Text, { InfoText } from '../text';
-import { MIN, MAX } from '../../constants/fees';
 import Controls from '../controls';
+import Text, { InfoText } from '../text';
 import { decimals } from '../../scripts/utils';
+import { MIN, MAX } from '../../constants/fees';
 
 const styles = theme => ({
   wrapper: {
@@ -76,6 +77,19 @@ const styles = theme => ({
   },
   text: {
     fontSize: '20px',
+  },
+  arrows: {
+    height: '30px',
+    width: '30px',
+    marginLeft: '80%',
+    cursor: 'pointer',
+    transform: 'rotate(90deg)',
+    transition: 'none 200ms ease-out',
+    transitionProperty: 'color',
+    color: theme.colors.tundoraGrey,
+    '&:hover': {
+      color: theme.colors.hoverGrey,
+    },
   },
 });
 
@@ -289,6 +303,17 @@ class SwapTab extends React.Component {
               onChange={e => this.updatePair(quote, e)}
             />
           </View>
+          <MdCompareArrows
+            className={classes.arrows}
+            onClick={() => {
+              console.log(base);
+              console.log(quote);
+              this.setState({
+                base: quote,
+                quote: base,
+              });
+            }}
+          />
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
             <Input
