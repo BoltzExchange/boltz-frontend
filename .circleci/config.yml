@@ -12,17 +12,17 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install-npm-wee
-          command: npm install
+          command: 'npm install'
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
       - run:
           name: lint
-          command: npm run lint
+          command: 'npm run lint'
       - run:
           name: build
-          command: npm run build
+          command: 'npm run build'
       - store_artifacts: 
           path: test-results.xml
           prefix: tests
