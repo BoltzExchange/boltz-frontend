@@ -3,30 +3,33 @@ jobs:
   build:
     docker:
       - image: circleci/node:lts
-  steps:
-    - checkout
-    - run:
-        name: update-npm
-        command: 'sudo npm install -g npm@latest'
+    steps:
+      - checkout
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@5'
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: install-npm-wee
-          command: 'npm install'
+          command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
       - run:
           name: lint
-          command: 'npm run lint'
+          command: npm run lint
       - run:
           name: build
-          command: 'npm run build'
-      - store_artifacts: 
+          command: npm run build
+      - run:
+          name: code-coverage
+          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      - store_artifacts:
           path: test-results.xml
           prefix: tests
-      - store_artifacts: 
+      - store_artifacts:
           path: coverage
           prefix: coverage
       - store_test_results:
