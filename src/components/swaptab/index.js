@@ -9,7 +9,6 @@ import DropDown from '../dropdown';
 import Controls from '../controls';
 import Text, { InfoText } from '../text';
 import { decimals } from '../../scripts/utils';
-import { MIN, MAX } from '../../constants/fees';
 
 const styles = theme => ({
   wrapper: {
@@ -145,6 +144,16 @@ class SwapTab extends React.Component {
     )}/${this.parseBoltSuffix(this.state.quote, false)}`;
   };
 
+  componentWillMount() {
+    if (localStorage.length !== 0) {
+      this.setState({
+        base: localStorage.getItem('base'),
+        quote: localStorage.getItem('quote'),
+        baseAmount: localStorage.getItem('baseAmount'),
+      });
+    }
+  }
+
   componentDidMount = () => {
     const symbol = this.getSymbol();
     const limits = this.props.limits[symbol];
@@ -160,6 +169,8 @@ class SwapTab extends React.Component {
   };
 
   componentDidUpdate = (_, prevState) => {
+    const { base, quote, baseAmount } = this.state;
+
     // Update the rate if the request finished or the currencies changed
     if (
       prevState.base !== this.state.base ||
@@ -169,7 +180,7 @@ class SwapTab extends React.Component {
 
       // Swapping from chain to chain or from Lightning to Lightning is not supported right now
       if (
-        this.state.base === this.state.quote ||
+        base === quote ||
         (this.baseAsset.isLightning && this.quoteAsset.isLightning)
       ) {
         this.setState({
@@ -192,8 +203,6 @@ class SwapTab extends React.Component {
       const rate = this.props.rates[symbol];
       const limits = this.props.limits[symbol];
 
-      console.log(this.props);
-
       this.setState(
         {
           rate,
@@ -204,10 +213,16 @@ class SwapTab extends React.Component {
         () => this.updateQuoteAmount(this.state.baseAmount)
       );
     }
+
+    localStorage.setItem('base', base);
+    localStorage.setItem('quote', quote);
+    localStorage.setItem('baseAmount', baseAmount);
   };
 
   checkBaseAmount = baseAmount => {
-    return baseAmount <= MAX && baseAmount >= MIN;
+    const { minAmount, maxAmount } = this.state;
+
+    return baseAmount <= maxAmount && baseAmount >= minAmount;
   };
 
   updatePair = (quote, base) => {
