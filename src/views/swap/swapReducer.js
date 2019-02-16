@@ -73,7 +73,10 @@ const reducer = (state = initalState, action) => {
       };
 
     case actionTypes.COMPLETE_SWAP:
-      return initalState;
+      return {
+        ...state,
+        ...initalState,
+      };
 
     default:
       return state;
