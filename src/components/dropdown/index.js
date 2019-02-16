@@ -22,6 +22,16 @@ class DropDown extends React.Component {
     value: undefined,
   };
 
+  componentWillReceiveProps(nextProps) {
+    const { defaultValue } = nextProps;
+
+    if (defaultValue !== this.state.value) {
+      this.setState({
+        value: defaultValue,
+      });
+    }
+  }
+
   render() {
     let { value } = this.state;
     const { classes, onChange, defaultValue, fields } = this.props;

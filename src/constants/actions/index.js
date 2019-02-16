@@ -9,6 +9,8 @@ export const NAVIGATE = 'NAVIGATE';
 export const SET_PAIRS = 'SET_PAIRS';
 export const PAIRS_REQUEST = 'PAIRS_REQUEST';
 export const PAIRS_RESPONSE = 'PAIRS_RESPONSE';
+export const LIMITS_REQUEST = 'LIMITS_REQUEST';
+export const LIMITS_RESPONSE = 'LIMITS_RESPONSE';
 
 /**
  * Swap actions

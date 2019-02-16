@@ -114,8 +114,10 @@ export const startRefund = (
         );
       })
       .catch(error => {
-        window.alert('Failed to refund swap');
-        dispatch(refundResponse(false, error.data));
+        const message = error.response.data.error;
+
+        window.alert(`Failed to refund swap: ${message}`);
+        dispatch(refundResponse(false, message));
       });
   };
 };
@@ -131,8 +133,10 @@ const broadcastRefund = (currency, refundTransaction, cb) => {
       })
       .then(() => cb())
       .catch(error => {
-        window.alert(`Failed to broadcast refund transaction`);
-        dispatch(refundResponse(false, error.data));
+        const message = error.response.data.error;
+
+        window.alert(`Failed to broadcast refund transaction: ${message}`);
+        dispatch(refundResponse(false, message));
       });
   };
 };

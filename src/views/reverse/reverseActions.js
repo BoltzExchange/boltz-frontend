@@ -68,9 +68,10 @@ export const startReverseSwap = (swapInfo, nextStage) => {
         startListening(dispatch, swapInfo, response.data, nextStage);
       })
       .catch(error => {
-        window.alert('Failed to execute swap');
-        console.log(error);
-        dispatch(reverseSwapResponse(false, error.data));
+        const message = error.response.data.error;
+
+        window.alert(`Failed to execute reverse swap: ${message}`);
+        dispatch(reverseSwapResponse(false, message));
       });
   };
 };

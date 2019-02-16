@@ -10,7 +10,7 @@ import {
 } from '../constants';
 
 // Number satohis and litoshis in a whole coin
-const decimals = 100000000;
+export const decimals = 100000000;
 
 /**
  * Get a hex encoded string from a Buffer
@@ -61,10 +61,17 @@ export const splitPairId = pairId => {
 };
 
 /**
+ * Round a amount to 8 decimals and trims unnecessary zeros
+ */
+export const roundWholeCoins = coins => {
+  return Number(coins.toFixed(8));
+};
+
+/**
  * Convert satoshis and litoshis to whole coins
  */
 export const toWholeCoins = satoshis => {
-  return (satoshis / decimals).toFixed(8);
+  return roundWholeCoins(satoshis / decimals);
 };
 
 /**

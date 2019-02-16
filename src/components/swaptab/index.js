@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { BigNumber } from 'bignumber.js';
+import { MdCompareArrows } from 'react-icons/md';
 import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
-import Text, { InfoText } from '../text';
-import { MIN, MAX } from '../../constants/fees';
 import Controls from '../controls';
+import Text, { InfoText } from '../text';
+import { decimals } from '../../scripts/utils';
 
 const styles = theme => ({
   wrapper: {
@@ -76,6 +77,19 @@ const styles = theme => ({
   text: {
     fontSize: '20px',
   },
+  arrows: {
+    height: '30px',
+    width: '30px',
+    marginLeft: '80%',
+    cursor: 'pointer',
+    transform: 'rotate(90deg)',
+    transition: 'none 200ms ease-out',
+    transitionProperty: 'color',
+    color: theme.colors.tundoraGrey,
+    '&:hover': {
+      color: theme.colors.hoverGrey,
+    },
+  },
 });
 
 class SwapTab extends React.Component {
@@ -90,7 +104,9 @@ class SwapTab extends React.Component {
       inputError: false,
       base: 'LTC',
       quote: 'BTC ⚡',
-      baseAmount: MIN,
+      minAmount: 0,
+      maxAmount: 0,
+      baseAmount: 0.001,
       quoteAmount: 0,
       errorMessage: '',
     };
@@ -121,35 +137,50 @@ class SwapTab extends React.Component {
     return symbol;
   };
 
-  getRate = () => {
-    return this.props.rates[
-      `${this.parseBoltSuffix(this.state.base, true)}/${this.parseBoltSuffix(
-        this.state.quote,
-        false
-      )}`
-    ];
+  getSymbol = () => {
+    return `${this.parseBoltSuffix(
+      this.state.base,
+      true
+    )}/${this.parseBoltSuffix(this.state.quote, false)}`;
   };
 
+  componentWillMount() {
+    if (localStorage.length !== 0) {
+      this.setState({
+        base: localStorage.getItem('base'),
+        quote: localStorage.getItem('quote'),
+        baseAmount: localStorage.getItem('baseAmount'),
+      });
+    }
+  }
+
   componentDidMount = () => {
+    const symbol = this.getSymbol();
+    const limits = this.props.limits[symbol];
+
     this.setState(
       {
-        rate: this.getRate(),
+        minAmount: limits.minimal,
+        maxAmount: limits.maximal,
+        rate: this.props.rates[symbol],
       },
       () => this.updateQuoteAmount(this.state.baseAmount)
     );
   };
 
   componentDidUpdate = (_, prevState) => {
+    const { base, quote, baseAmount } = this.state;
+
     // Update the rate if the request finished or the currencies changed
     if (
       prevState.base !== this.state.base ||
       prevState.quote !== this.state.quote
     ) {
-      const rate = this.getRate();
+      const symbol = this.getSymbol();
 
       // Swapping from chain to chain or from Lightning to Lightning is not supported right now
       if (
-        this.state.base === this.state.quote ||
+        base === quote ||
         (this.baseAsset.isLightning && this.quoteAsset.isLightning)
       ) {
         this.setState({
@@ -169,18 +200,29 @@ class SwapTab extends React.Component {
         return;
       }
 
+      const rate = this.props.rates[symbol];
+      const limits = this.props.limits[symbol];
+
       this.setState(
         {
           rate,
+          minAmount: limits.minimal,
+          maxAmount: limits.maximal,
           error: false,
         },
         () => this.updateQuoteAmount(this.state.baseAmount)
       );
     }
+
+    localStorage.setItem('base', base);
+    localStorage.setItem('quote', quote);
+    localStorage.setItem('baseAmount', baseAmount);
   };
 
   checkBaseAmount = baseAmount => {
-    return baseAmount <= MAX && baseAmount >= MIN;
+    const { minAmount, maxAmount } = this.state;
+
+    return baseAmount <= maxAmount && baseAmount >= minAmount;
   };
 
   updatePair = (quote, base) => {
@@ -243,6 +285,8 @@ class SwapTab extends React.Component {
       error,
       base,
       quote,
+      minAmount,
+      maxAmount,
       baseAmount,
       quoteAmount,
       errorMessage,
@@ -252,8 +296,8 @@ class SwapTab extends React.Component {
     return (
       <View className={classes.wrapper}>
         <View className={classes.stats}>
-          <InfoText title="Min amount:" text={`${MIN}`} />
-          <InfoText title="Max amount:" text={`${MAX}`} />
+          <InfoText title="Min amount:" text={`${minAmount}`} />
+          <InfoText title="Max amount:" text={`${maxAmount}`} />
           <InfoText title="Fee:" text={'0'} />
           <InfoText title="Rate:" text={`${this.parseRate(rates)}`} />
         </View>
@@ -261,9 +305,9 @@ class SwapTab extends React.Component {
           <View className={classes.select}>
             <Text text="You send:" className={classes.text} />
             <Input
-              min={MIN}
-              max={MAX}
-              step={MIN}
+              min={minAmount}
+              max={maxAmount}
+              step={0.001}
               error={inputError}
               value={baseAmount}
               onChange={e => this.updateQuoteAmount(e)}
@@ -274,12 +318,23 @@ class SwapTab extends React.Component {
               onChange={e => this.updatePair(quote, e)}
             />
           </View>
+          <MdCompareArrows
+            className={classes.arrows}
+            onClick={() => {
+              console.log(base);
+              console.log(quote);
+              this.setState({
+                base: quote,
+                quote: base,
+              });
+            }}
+          />
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
             <Input
-              min={0.00000001}
-              max={MAX}
-              step={0.00000001}
+              min={1 / decimals}
+              max={Number.MAX_SAFE_INTEGER}
+              step={1 / decimals}
               error={inputError}
               value={quoteAmount}
               onChange={e => this.updateBaseAmount(e)}
@@ -310,6 +365,7 @@ SwapTab.propTypes = {
   onPress: PropTypes.func,
   rates: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
+  limits: PropTypes.object.isRequired,
 };
 
 export default injectSheet(styles)(SwapTab);

@@ -66,8 +66,10 @@ export const startSwap = (swapInfo, cb) => {
         cb();
       })
       .catch(error => {
-        window.alert('Failed to execute swap');
-        dispatch(swapResponse(false, error.data));
+        const message = error.response.data.error;
+
+        window.alert(`Failed to execute swap: ${message}`);
+        dispatch(swapResponse(false, message));
       });
   };
 };
