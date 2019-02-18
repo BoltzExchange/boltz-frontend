@@ -5,40 +5,27 @@ import injectSheet from 'react-jss';
 
 const styles = theme => ({
   wrapper: {
-    width: '100vw',
-    minHeight: '100vh',
-    flexDirection: 'column',
     backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
-  },
-  boltzWrapper: {
-    marginTop: '25px',
-    marginBottom: '25px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    position: 'relative',
-    alignItems: 'center',
+    flexDirection: 'column',
   },
   boltz: {
-    bottom: 0,
-    fontSize: '15px',
-    fontStyle: 'normal',
-    alignSelf: 'center',
-    lineHeight: 'normal',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    letterSpacing: 'normal',
-    verticalAlign: 'bottom',
     color: theme.colors.white,
-    zIndex: 2,
+    fontSize: '15px',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    alignSelf: 'center',
+    paddingBottom: '10px',
+    zIndex: 99999,
   },
 });
 
 const BackGround = ({ classes, children }) => (
-  <View className={classes.wrapper}>
+  <View className={classes.wrapper} style={{ height: '100vh', width: '100vw' }}>
     {children}
-    <div className={classes.boltzWrapper}>
-      <span className={classes.boltz}>@ 2019 Boltz</span>
-    </div>
+    <span className={classes.boltz}>@ 2019 Boltz</span>
   </View>
 );
 

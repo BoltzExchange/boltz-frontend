@@ -9,27 +9,17 @@ import { bitcoinLnd, litecoinLnd } from '../../constants';
 
 const twitterLink = 'https://twitter.com/boltzhq';
 
-const styles = theme => ({
+const styles = () => ({
   wrapper: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    overflowY: 'scroll',
   },
   tab: {
+    height: '100vh',
     width: '800px',
-    marginTop: '20px',
-    paddingTop: '20px',
-    paddingBottom: '20px',
-    paddingStart: '50px',
-    paddingEnd: '50px',
-    display: 'flex',
-    alignItems: 'center',
-    alignContent: 'center',
     flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.white,
-    '@media (min-width: 1500px)': {
-      width: '1000px',
-    },
   },
   questionTitle: {
     marginBottom: '0px',
@@ -70,8 +60,8 @@ class Faq extends React.Component {
               <a href={twitterLink}>on request</a> we will also open one to you:
             </p>
 
-            <NodeInfo name={'Bitcoin LND node'} uri={bitcoinLnd} />
-            <NodeInfo name={'Litecoin LND node'} uri={litecoinLnd} />
+            <NodeInfo size={150} name={'Bitcoin LND node'} uri={bitcoinLnd} />
+            <NodeInfo size={150} name={'Litecoin LND node'} uri={litecoinLnd} />
 
             <h2 className={classes.questionTitle}>
               Why should one use a non custodial exchange?
@@ -85,6 +75,8 @@ class Faq extends React.Component {
               you can read more about this in{' '}
               <a
                 href={'https://medium.com/boltzhq/submarine-swaps-c509ce0fb1db'}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 our blog post about how Boltz works
               </a>
@@ -94,9 +86,15 @@ class Faq extends React.Component {
               If you are <i>really</i> technical you can proof read our source
               code and verify that the claims above are valid because everything
               is open source and can be found on{' '}
-              <a href={'https://github.com/boltzexchange'}>our GitHub</a>. Also
-              we will soon add a version of our frontend that you can host
-              yourself easily.
+              <a
+                href={'https://github.com/boltzexchange'}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                our GitHub
+              </a>
+              . Also we will soon add a version of our frontend that you 
+                can host yourself easily.
             </p>
 
             <h2 className={classes.questionTitle}>
