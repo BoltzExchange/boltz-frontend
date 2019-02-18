@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { requestProvider } from 'webln';
-import BackGround from '../../components/background';
 import View from '../../components/view';
-import { LinkButton } from '../../components/button';
+import { generateKeys } from '../../action';
 import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
-import { bitcoinNetwork, litecoinNetwork } from '../../constants';
-import { generateKeys } from '../../action';
 import ModalComponent from '../../components/modal';
+import BackGround from '../../components/background';
+import { LinkButton } from '../../components/button';
+import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
@@ -95,6 +95,7 @@ class LandingPage extends React.Component {
       goReverseSwap,
       goSwap,
       goRefund,
+      goFaq,
       initSwap,
       initReverseSwap,
       rates,
@@ -104,7 +105,7 @@ class LandingPage extends React.Component {
 
     return (
       <BackGround>
-        <TaskBar goRefund={goRefund} goHome={goHome} />
+        <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
         <View className={classes.wrapper}>
           <View className={classes.infoWrapper}>
             <p className={classes.title}>
@@ -177,6 +178,7 @@ LandingPage.propTypes = {
   goSwap: PropTypes.func.isRequired,
   goReverseSwap: PropTypes.func.isRequired,
   goRefund: PropTypes.func.isRequired,
+  goFaq: PropTypes.func.isRequired,
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
   getPairs: PropTypes.func.isRequired,
