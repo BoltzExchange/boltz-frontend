@@ -93,8 +93,8 @@ class Faq extends React.Component {
               >
                 our GitHub
               </a>
-              . Also we will soon add a version of our frontend that you 
-                can host yourself easily.
+              . Also we will soon add a version of our frontend that you can
+              host yourself easily.
             </p>
 
             <h2 className={classes.questionTitle}>
