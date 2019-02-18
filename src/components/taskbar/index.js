@@ -20,6 +20,7 @@ const styles = theme => ({
     width: 'auto',
     height: 'auto',
     margin: '20px',
+    cursor: 'pointer',
     alignItems: 'baseline',
     justifyContent: 'space-between',
   },
@@ -40,9 +41,9 @@ const styles = theme => ({
   },
 });
 
-const TaskBar = ({ classes, goHome, goRefund }) => (
+const TaskBar = ({ classes, goHome, goRefund, goFaq }) => (
   <View className={classes.wrapper}>
-    <View className={classes.logo}>
+    <View className={classes.logo} onClick={() => goHome()}>
       <img
         src={boltz_logo}
         height={38}
@@ -56,7 +57,7 @@ const TaskBar = ({ classes, goHome, goRefund }) => (
     <View className={classes.buttons}>
       <LinkButton text="Swap" onPress={() => goHome()} />
       <LinkButton text="Refund" onPress={() => goRefund()} />
-      <LinkButton text="FAQ" onPress={() => window.alert('WIP')} />
+      <LinkButton text="FAQ" onPress={() => goFaq()} />
       <LinkButton
         external
         text="Github"
@@ -70,6 +71,7 @@ TaskBar.propTypes = {
   classes: PropTypes.object,
   goHome: PropTypes.func.isRequired,
   goRefund: PropTypes.func.isRequired,
+  goFaq: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(TaskBar);

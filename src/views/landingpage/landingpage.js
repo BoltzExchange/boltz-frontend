@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { requestProvider } from 'webln';
-import BackGround from '../../components/background';
 import View from '../../components/view';
-import { LinkButton } from '../../components/button';
+import { generateKeys } from '../../action';
 import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
-import { bitcoinNetwork, litecoinNetwork } from '../../constants';
-import { generateKeys } from '../../action';
 import ModalComponent from '../../components/modal';
+import BackGround from '../../components/background';
+import { LinkButton } from '../../components/button';
+import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
@@ -38,10 +38,13 @@ const styles = theme => ({
     },
   },
   loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '400px',
     width: '600px',
+    height: '400px',
+    display: 'flex',
+    alignItems: 'center',
+    alignContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
     backgroundColor: theme.colors.white,
     '@media (min-width: 1500px)': {
       width: '800px',
@@ -51,6 +54,11 @@ const styles = theme => ({
   loadingLogo: {
     width: '200px',
     height: '200px',
+    display: 'block',
+    marginBottom: '10px',
+  },
+  loadingText: {
+    fontSize: '20px',
   },
 });
 
@@ -87,6 +95,7 @@ class LandingPage extends React.Component {
       goReverseSwap,
       goSwap,
       goRefund,
+      goFaq,
       initSwap,
       initReverseSwap,
       rates,
@@ -96,7 +105,7 @@ class LandingPage extends React.Component {
 
     return (
       <BackGround>
-        <TaskBar goRefund={goRefund} goHome={goHome} />
+        <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
         <View className={classes.wrapper}>
           <View className={classes.infoWrapper}>
             <p className={classes.title}>
@@ -121,12 +130,11 @@ class LandingPage extends React.Component {
           Object.keys(limits).length === 0 ? (
             <View className={classes.loading}>
               <img
-                src={boltz_logo}
-                height={100}
-                width={100}
-                className={classes.loadingLogo}
                 alt="logo"
+                src={boltz_logo}
+                className={classes.loadingLogo}
               />
+              <p className={classes.loadingText}>Loading...</p>
             </View>
           ) : (
             <SwapTab
@@ -170,6 +178,7 @@ LandingPage.propTypes = {
   goSwap: PropTypes.func.isRequired,
   goReverseSwap: PropTypes.func.isRequired,
   goRefund: PropTypes.func.isRequired,
+  goFaq: PropTypes.func.isRequired,
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
   getPairs: PropTypes.func.isRequired,

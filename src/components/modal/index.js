@@ -26,9 +26,9 @@ const ModalComponent = props => {
           We built Boltz with a dream of a fairer financial world, with the
           primary goal to empower users with financial sovereignty. Therefore,{' '}
           <b>
-            Boltz does not and will never collect any personal data from users
+            Boltz does not and will never collect any data that could identify
+            our users.
           </b>
-          .
         </p>
         <p>
           Also, Boltz leverages atomic swaps in a way, so that trades either

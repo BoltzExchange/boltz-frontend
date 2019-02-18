@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
+import { nav } from '../../action';
 import LandingPage from './landingpage';
 import { initSwap } from '../swap/swapActions';
-import { initReverseSwap } from '../reverse/reverseActions';
-import { nav } from '../../action';
 import * as actions from './landingpageActions';
+import { initReverseSwap } from '../reverse/reverseActions';
 
 const mapStateToProps = state => ({
   rates: state.landingpageReducer.rates,
@@ -12,10 +12,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  goHome: () => dispatch(nav.goHome()),
   goSwap: () => dispatch(nav.goSwap()),
   goReverseSwap: () => dispatch(nav.goReverseSwap()),
   goRefund: () => dispatch(nav.goRefund()),
-  goHome: () => dispatch(nav.goHome()),
+  goFaq: () => dispatch(nav.goFaq()),
   initSwap: state => dispatch(initSwap(state)),
   initReverseSwap: state => dispatch(initReverseSwap(state)),
   getPairs: cb => dispatch(actions.getPairs(cb)),
