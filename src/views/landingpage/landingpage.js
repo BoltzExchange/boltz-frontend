@@ -38,10 +38,13 @@ const styles = theme => ({
     },
   },
   loading: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '400px',
     width: '600px',
+    height: '400px',
+    display: 'flex',
+    alignItems: 'center',
+    alignContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
     backgroundColor: theme.colors.white,
     '@media (min-width: 1500px)': {
       width: '800px',
@@ -51,6 +54,11 @@ const styles = theme => ({
   loadingLogo: {
     width: '200px',
     height: '200px',
+    display: 'block',
+    marginBottom: '10px',
+  },
+  loadingText: {
+    fontSize: '20px',
   },
 });
 
@@ -121,12 +129,11 @@ class LandingPage extends React.Component {
           Object.keys(limits).length === 0 ? (
             <View className={classes.loading}>
               <img
-                src={boltz_logo}
-                height={100}
-                width={100}
-                className={classes.loadingLogo}
                 alt="logo"
+                src={boltz_logo}
+                className={classes.loadingLogo}
               />
+              <p className={classes.loadingText}>Loading...</p>
             </View>
           ) : (
             <SwapTab
