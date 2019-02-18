@@ -56,7 +56,7 @@ class Faq extends React.Component {
               neither use any trackers nor log any data that could identify our
               users.{' '}
               <b>Please note that Boltz is currently in its alpha stage</b> so
-              so {`don't`} be too reckless when using it. If you experience any
+              {`don't`} be too reckless when using it. If you experience any
               issues or have some feedback feel free to{' '}
               <a href={twitterLink}>contact us</a>.
             </p>

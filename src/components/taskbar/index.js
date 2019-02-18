@@ -20,6 +20,7 @@ const styles = theme => ({
     width: 'auto',
     height: 'auto',
     margin: '20px',
+    cursor: 'pointer',
     alignItems: 'baseline',
     justifyContent: 'space-between',
   },
@@ -42,7 +43,7 @@ const styles = theme => ({
 
 const TaskBar = ({ classes, goHome, goRefund, goFaq }) => (
   <View className={classes.wrapper}>
-    <View className={classes.logo}>
+    <View className={classes.logo} onClick={() => goHome()}>
       <img
         src={boltz_logo}
         height={38}
