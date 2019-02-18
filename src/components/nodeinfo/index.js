@@ -16,9 +16,8 @@ const styles = () => ({
     marginBottom: '0px',
   },
   uri: {
-    width: '90%',
     flexWrap: 'wrap',
-    paddingTop: '80px',
+    fontSize: '15px',
     wordBreak: 'break-all',
   },
   qr: {
@@ -34,10 +33,8 @@ class NodeInfo extends React.Component {
       <View className={classes.node}>
         <h3 className={classes.name}>{name}:</h3>
 
-        <View>
-          <code className={classes.uri}>{uri}</code>
-          <QrCode className={classes.qr} size={200} link={uri} />
-        </View>
+        <QrCode className={classes.qr} size={200} link={uri} />
+        <code className={classes.uri}>{uri}</code>
       </View>
     );
   }
