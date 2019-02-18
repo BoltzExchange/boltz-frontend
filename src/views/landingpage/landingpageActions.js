@@ -82,19 +82,24 @@ export const getPairs = cb => {
 
   return dispatch => {
     dispatch(pairsRequest());
-    axios.get(url).then(response => {
-      const rates = parseRates(response.data);
-      const currencies = parseCurrencies(response.data);
+    axios
+      .get(url)
+      .then(response => {
+        const rates = parseRates(response.data);
+        const currencies = parseCurrencies(response.data);
 
-      dispatch(
-        pairsResponse({
-          rates,
-          currencies,
-        })
-      );
+        dispatch(
+          pairsResponse({
+            rates,
+            currencies,
+          })
+        );
 
-      cb();
-    });
+        cb();
+      })
+      .catch(error => {
+        window.alert(`Could not get rates: ${error}`);
+      });
   };
 };
 
@@ -128,12 +133,16 @@ export const getLimits = (rates, cb) => {
 
   return dispatch => {
     dispatch(limitsRequest());
-    axios.get(url).then(response => {
-      const limits = parseLimits(rates, response.data);
+    axios
+      .get(url)
+      .then(response => {
+        const limits = parseLimits(rates, response.data);
+        dispatch(limitsResponse(limits));
 
-      dispatch(limitsResponse(limits));
-
-      cb();
-    });
+        cb();
+      })
+      .catch(error => {
+        window.alert(`Could not get limits: ${error}`);
+      });
   };
 };
