@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../components/view';
-import { FEE } from '../../constants/fees';
 import Prompt from '../../components/prompt';
 import Loading from '../../components/loading';
 import Controls from '../../components/controls';
@@ -85,7 +84,7 @@ const Swap = ({
               render={props => (
                 <Controls
                   loading={swapStatus.error}
-                  text={`Fee: ${FEE} ${swapInfo.base}`}
+                  text={`Fee: 0 ${swapInfo.base}`}
                   loadingText={'Invalid invoice'}
                   onPress={() => {
                     startSwap(swapInfo, props.nextStage);

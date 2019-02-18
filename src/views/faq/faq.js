@@ -5,6 +5,7 @@ import View from '../../components/view';
 import TaskBar from '../../components/taskbar';
 import NodeInfo from '../../components/nodeinfo';
 import BackGround from '../../components/background';
+import { bitcoinLnd, litecoinLnd } from '../../constants';
 
 const twitterLink = 'https://twitter.com/boltzhq';
 
@@ -69,19 +70,8 @@ class Faq extends React.Component {
               <a href={twitterLink}>on request</a> we will also open one to you:
             </p>
 
-            <NodeInfo
-              name={'Bitcoin LND node'}
-              uri={
-                '026165850492521f4ac8abd9bd8088123446d126f648ca35e60f88177dc149ceb2@104.196.200.39:9735'
-              }
-            />
-
-            <NodeInfo
-              name={'Litecoin LND node'}
-              uri={
-                '02a4cb9d9c40ab508be3641a3b42be249e7cacfc7fea600485f9e37e46382aaa49@104.196.200.39:10735'
-              }
-            />
+            <NodeInfo name={'Bitcoin LND node'} uri={bitcoinLnd} />
+            <NodeInfo name={'Litecoin LND node'} uri={litecoinLnd} />
 
             <h2 className={classes.questionTitle}>
               Why should one use a non custodial exchange?
