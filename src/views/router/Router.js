@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Faq from '../faq';
+import Swap from '../swap';
+import Refund from '../refund';
+import ReverseSwap from '../reverse';
+import LandingPage from '../landingpage';
 import * as routes from '../../constants/routes';
 import Container from '../../components/container';
-import Swap from '../swap';
-import ReverseSwap from '../reverse';
-import Refund from '../refund';
-import LandingPage from '../landingpage';
 
 const Router = ({ route }) => {
   return (
     <Container>
-      {route === routes.home && <LandingPage />}
+      {route === routes.faq && <Faq />}
       {route === routes.swap && <Swap />}
-      {route === routes.reverseSwap && <ReverseSwap />}
       {route === routes.refund && <Refund />}
+      {route === routes.home && <LandingPage />}
+      {route === routes.reverseSwap && <ReverseSwap />}
     </Container>
   );
 };

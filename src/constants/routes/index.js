@@ -20,3 +20,8 @@ export const reverseSwap = 'ReverseSwap';
  * Refund routes
  */
 export const refund = 'Refund';
+
+/**
+ * FAQ routes
+ */
+export const faq = 'Faq';

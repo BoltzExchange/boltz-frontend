@@ -12,6 +12,7 @@ class Navigation {
   }
 
   goHome = () => navAction(routes.home);
+
   goSwap = () => navAction(routes.swap);
   goReverseSwap = () => navAction(routes.reverseSwap);
   goSwapConfirm = () => navAction(routes.swapConfirm);
@@ -19,6 +20,8 @@ class Navigation {
   goSwapDone = () => navAction(routes.swapDone);
 
   goRefund = () => navAction(routes.refund);
+
+  goFaq = () => navAction(routes.faq);
 }
 
 export default Navigation;
