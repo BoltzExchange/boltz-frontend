@@ -93,7 +93,6 @@ const ReverseSwap = ({
                   loadingText={swapStatus}
                   loadingRender={() => <Loading />}
                   onPress={() => {
-                    completeSwap();
                     props.nextStage();
                   }}
                 />
@@ -102,7 +101,13 @@ const ReverseSwap = ({
             <StepsWizard.Control
               num={3}
               render={() => (
-                <Controls text={'Swap Again!'} onPress={() => goHome()} />
+                <Controls
+                  text={'Swap Again!'}
+                  onPress={() => {
+                    completeSwap();
+                    goHome();
+                  }}
+                />
               )}
             />
           </StepsWizard.Controls>
