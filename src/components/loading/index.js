@@ -10,14 +10,15 @@ const styles = () => ({
 });
 const Loading = ({ width, height, color, classes, ...other }) => {
   return (
-    <Loader
-      className={classes.loading}
-      type="TailSpin"
-      color={color ? color : '#fff'}
-      height={height ? height : 50}
-      width={width ? width : 50}
-      {...other}
-    />
+    <div className={classes.loading}>
+      <Loader
+        type="TailSpin"
+        color={color ? color : '#fff'}
+        height={height ? height : 40}
+        width={width ? width : 40}
+        {...other}
+      />
+    </div>
   );
 };
 
