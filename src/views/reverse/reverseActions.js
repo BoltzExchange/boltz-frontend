@@ -127,8 +127,10 @@ const broadcastClaim = (currency, claimTransaction, cb) => {
       })
       .then(() => cb())
       .catch(error => {
-        window.alert(`Failed to broadcast claim transaction`);
-        dispatch(reverseSwapResponse(false, error.data));
+        const message = error.response.data.error;
+
+        window.alert(`Failed to broadcast claim transaction: ${message}`);
+        dispatch(reverseSwapResponse(false, message));
       });
   };
 };
