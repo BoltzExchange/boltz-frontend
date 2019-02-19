@@ -114,7 +114,6 @@ const Swap = ({
                   errorAction={() => startSwap(swapInfo, props.nextStage)}
                   loadingRender={() => <Loading />}
                   onPress={() => {
-                    completeSwap();
                     props.nextStage();
                   }}
                 />
@@ -123,7 +122,13 @@ const Swap = ({
             <StepsWizard.Control
               num={4}
               render={() => (
-                <Controls text={'Swap Again!'} onPress={() => goHome()} />
+                <Controls
+                  text={'Swap Again!'}
+                  onPress={() => {
+                    completeSwap();
+                    goHome();
+                  }}
+                />
               )}
             />
           </StepsWizard.Controls>
