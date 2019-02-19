@@ -5,31 +5,22 @@ import injectSheet from 'react-jss';
 
 const styles = theme => ({
   wrapper: {
+    height: '100vh',
     width: '100vw',
-    minHeight: '100vh',
-    flexDirection: 'column',
     backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
-  },
-  boltzWrapper: {
-    marginTop: '25px',
-    marginBottom: '25px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    position: 'relative',
-    alignItems: 'center',
+    flexDirection: 'column',
   },
   boltz: {
-    bottom: 0,
-    fontSize: '15px',
-    fontStyle: 'normal',
-    alignSelf: 'center',
-    lineHeight: 'normal',
-    fontWeight: 'normal',
-    fontStretch: 'normal',
-    letterSpacing: 'normal',
-    verticalAlign: 'bottom',
     color: theme.colors.white,
-    zIndex: 2,
+    fontSize: '15px',
+    fontWeight: 'normal',
+    fontStyle: 'normal',
+    fontStretch: 'normal',
+    lineHeight: 'normal',
+    letterSpacing: 'normal',
+    alignSelf: 'center',
+    paddingBottom: '10px',
+    zIndex: 99999,
   },
 });
 

@@ -25,7 +25,6 @@ const ReverseSwap = ({
   completeSwap,
   goHome,
   webln,
-  nextStage,
   swapInfo,
   swapResponse,
   isFetching,
@@ -87,15 +86,14 @@ const ReverseSwap = ({
             />
             <StepsWizard.Control
               num={2}
-              render={() => (
+              render={props => (
                 <Controls
                   loading={isFetching}
                   text={'Done'}
                   loadingText={swapStatus}
                   loadingRender={() => <Loading />}
                   onPress={() => {
-                    completeSwap();
-                    nextStage();
+                    props.nextStage();
                   }}
                 />
               )}
@@ -103,7 +101,13 @@ const ReverseSwap = ({
             <StepsWizard.Control
               num={3}
               render={() => (
-                <Controls text={'Swap Again!'} onPress={() => goHome()} />
+                <Controls
+                  text={'Swap Again!'}
+                  onPress={() => {
+                    completeSwap();
+                    goHome();
+                  }}
+                />
               )}
             />
           </StepsWizard.Controls>
