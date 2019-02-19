@@ -5,6 +5,8 @@ import injectSheet from 'react-jss';
 
 const styles = theme => ({
   wrapper: {
+    height: '100vh',
+    width: '100vw',
     backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
     flexDirection: 'column',
   },
@@ -23,7 +25,7 @@ const styles = theme => ({
 });
 
 const BackGround = ({ classes, children }) => (
-  <View className={classes.wrapper} style={{ height: '100vh', width: '100vw' }}>
+  <View className={classes.wrapper}>
     {children}
     <span className={classes.boltz}>@ 2019 Boltz</span>
   </View>
