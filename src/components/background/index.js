@@ -37,7 +37,7 @@ const BackGround = ({ classes, children }) => (
   <View className={classes.wrapper}>
     {children}
     <div className={classes.boltzWrapper}>
-      <span className={classes.boltz}>@ 2019 Boltz</span>
+      <span className={classes.boltz}>#reckless</span>
     </div>
   </View>
 );
