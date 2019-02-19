@@ -235,8 +235,8 @@ class SwapTab extends React.Component {
     const inputError = !this.checkBaseAmount(newBaseAmount);
 
     this.setState({
-      quoteAmount: Number.parseFloat(quoteAmount),
-      baseAmount: newBaseAmount,
+      quoteAmount: Number(quoteAmount),
+      baseAmount: Number(newBaseAmount),
       inputError,
     });
   };
@@ -247,8 +247,8 @@ class SwapTab extends React.Component {
     const inputError = !this.checkBaseAmount(baseAmount);
 
     this.setState({
-      quoteAmount: newQuoteAmount,
-      baseAmount: Number.parseFloat(baseAmount),
+      quoteAmount: Number(newQuoteAmount),
+      baseAmount: Number(baseAmount),
       inputError,
     });
   };
