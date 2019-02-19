@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import injectSheet from 'react-jss';
 import Loader from 'react-loader-spinner';
 
-const Loading = ({ width, height, color, style, ...other }) => {
-  let newStyle = { marginRight: '5px' };
-  if (style !== undefined) {
-    newStyle = { ...newStyle, ...style };
-  }
+const styles = () => ({
+  loading: {
+    marginRight: '10px',
+  },
+});
+const Loading = ({ width, height, color, classes, ...other }) => {
   return (
     <Loader
-      style={newStyle}
+      className={classes.loading}
       type="TailSpin"
       color={color ? color : '#fff'}
       height={height ? height : 50}
@@ -20,6 +22,7 @@ const Loading = ({ width, height, color, style, ...other }) => {
 };
 
 Loading.propTypes = {
+  classes: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
   color: PropTypes.string,
@@ -27,4 +30,4 @@ Loading.propTypes = {
   other: PropTypes.object,
 };
 
-export default Loading;
+export default injectSheet(styles)(Loading);
