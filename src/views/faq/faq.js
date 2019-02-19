@@ -102,10 +102,10 @@ class Faq extends React.Component {
             </h2>
             <p>
               All regular and Lightning wallets are supported by Boltz. Although
-              we recommend users to run a full node and manage their own keys,
+              we encourage you to run a full node and manage your own keys,
               there are custodial wallets solutions, like{' '}
-              <a href={'https://bluewallet.io/'}>BlueWallet</a>, that can make
-              testing Boltz very easy.
+              <a href={'https://bluewallet.io/'}>BlueWallet</a>, that work out
+              of the box can make testing Boltz very easy.
             </p>
           </View>
         </View>
