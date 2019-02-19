@@ -4,7 +4,11 @@ import injectSheet from 'react-jss';
 import { FaBolt } from 'react-icons/fa';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
-import { getCurrencyName, getSampleInvoice } from '../../../scripts/utils';
+import {
+  getCurrencyName,
+  getSampleInvoice,
+  toSatoshi,
+} from '../../../scripts/utils';
 
 const InputInvoiceStyles = () => ({
   wrapper: {
@@ -38,7 +42,7 @@ class StyledInputInvoice extends React.Component {
     const { swapInfo, webln } = this.props;
 
     if (webln) {
-      webln.makeInvoice(swapInfo.quoteAmount).then(response => {
+      webln.makeInvoice(toSatoshi(swapInfo.quoteAmount)).then(response => {
         const invoice = response.paymentRequest;
 
         this.setState({ value: invoice });
