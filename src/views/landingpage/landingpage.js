@@ -103,6 +103,11 @@ class LandingPage extends React.Component {
       limits,
     } = this.props;
 
+    const loading =
+      Object.keys(rates).length === 0 ||
+      currencies.length === 0 ||
+      Object.keys(limits).length === 0;
+
     return (
       <BackGround>
         <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
@@ -125,9 +130,7 @@ class LandingPage extends React.Component {
               onClose={this.toggleModal}
             />
           </View>
-          {Object.keys(rates).length === 0 ||
-          currencies.length === 0 ||
-          Object.keys(limits).length === 0 ? (
+          {loading ? (
             <View className={classes.loading}>
               <img
                 alt="logo"

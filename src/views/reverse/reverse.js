@@ -101,6 +101,7 @@ const ReverseSwap = ({
                 <Controls
                   loading={isFetching}
                   loadingText={'Locking your funds...'}
+                  loadingRender={() => <Loading />}
                   error={swapFailResponse === true}
                   errorAction={() =>
                     startReverseSwap(swapInfo, props.nextStage)
@@ -122,7 +123,13 @@ const ReverseSwap = ({
             <StepsWizard.Control
               num={4}
               render={() => (
-                <Controls text={'Swap Again!'} onPress={() => goHome()} />
+                <Controls
+                  text={'Swap Again!'}
+                  onPress={() => {
+                    completeSwap();
+                    goHome();
+                  }}
+                />
               )}
             />
           </StepsWizard.Controls>

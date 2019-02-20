@@ -11,6 +11,7 @@ const styles = () => ({
     alignContent: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
+    margin: '120px',
   },
   name: {
     marginBottom: '0px',
@@ -25,25 +26,19 @@ const styles = () => ({
   },
 });
 
-class NodeInfo extends React.Component {
-  render() {
-    const { classes, name, uri } = this.props;
-
-    return (
-      <View className={classes.node}>
-        <h3 className={classes.name}>{name}:</h3>
-
-        <QrCode className={classes.qr} size={200} link={uri} />
-        <code className={classes.uri}>{uri}</code>
-      </View>
-    );
-  }
-}
+const NodeInfo = ({ classes, size, name, uri }) => (
+  <View className={classes.node}>
+    <h3 className={classes.name}>{name}:</h3>
+    <QrCode className={classes.qr} size={size} link={uri} />
+    <code className={classes.uri}>{uri}</code>
+  </View>
+);
 
 NodeInfo.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   uri: PropTypes.string.isRequired,
+  size: PropTypes.number.isRequired,
 };
 
 export default injectSheet(styles)(NodeInfo);

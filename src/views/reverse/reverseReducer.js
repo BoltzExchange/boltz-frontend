@@ -64,7 +64,7 @@ const reducer = (state = initalState, action) => {
       };
 
     case actionTypes.COMPLETE_REVERSE_SWAP:
-      return initalState;
+      return { ...initalState };
 
     default:
       return state;

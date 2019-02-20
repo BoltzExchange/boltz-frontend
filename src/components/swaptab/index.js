@@ -144,15 +144,15 @@ class SwapTab extends React.Component {
     )}/${this.parseBoltSuffix(this.state.quote, false)}`;
   };
 
-  componentWillMount() {
-    if (localStorage.length !== 0) {
+  componentWillMount = () => {
+    if (localStorage.getItem('quote')) {
       this.setState({
         base: localStorage.getItem('base'),
         quote: localStorage.getItem('quote'),
         baseAmount: localStorage.getItem('baseAmount'),
       });
     }
-  }
+  };
 
   componentDidMount = () => {
     const symbol = this.getSymbol();
