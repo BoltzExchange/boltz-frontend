@@ -23,8 +23,8 @@ class StyledInputAddress extends React.Component {
   };
 
   onChange = input => {
+    this.props.onChange(input);
     if (input !== '') {
-      this.props.onChange(input);
       this.setState({ error: false });
     } else {
       this.setState({ error: true });
@@ -38,10 +38,12 @@ class StyledInputAddress extends React.Component {
     return (
       <View className={classes.wrapper}>
         <p className={classes.title}>
-          Paste a <b>{getCurrencyName(swapInfo.quote)}</b> address
+          Paste a <b>{getCurrencyName(swapInfo.quote)}</b> address to which you
+          want to receive
         </p>
         <InputArea
           width={600}
+          autoFocus={true}
           height={150}
           error={error}
           onChange={this.onChange}

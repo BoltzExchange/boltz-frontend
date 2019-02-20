@@ -6,9 +6,10 @@ import Prompt from '../../components/prompt';
 import Controls from '../../components/controls';
 import Confetti from '../../components/confetti';
 import Loading from '../../components/loading';
-import { InputAddress, PayInvoice } from './steps';
+import { InputAddress, PayInvoice, LockingFunds } from './steps';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
+import { getCurrencyName } from '../../scripts/utils';
 
 const styles = () => ({
   wrapper: {
@@ -25,6 +26,7 @@ const ReverseSwap = ({
   completeSwap,
   goHome,
   webln,
+  swapFailResponse,
   swapInfo,
   swapResponse,
   isFetching,
@@ -35,7 +37,7 @@ const ReverseSwap = ({
       <Prompt />
       <View className={classes.wrapper}>
         <StepsWizard
-          range={3}
+          range={4}
           stage={1}
           id={swapResponse ? swapResponse.id : null}
           onExit={() => {
@@ -58,6 +60,12 @@ const ReverseSwap = ({
             <StepsWizard.Step
               num={2}
               render={() => (
+                <LockingFunds swapInfo={swapInfo} swapResponse={swapResponse} />
+              )}
+            />
+            <StepsWizard.Step
+              num={3}
+              render={() => (
                 <PayInvoice
                   asset={swapInfo.base}
                   invoice={swapResponse.invoice}
@@ -65,20 +73,23 @@ const ReverseSwap = ({
                 />
               )}
             />
-            <StepsWizard.Step num={3} render={() => <Confetti />} />
+            <StepsWizard.Step num={4} render={() => <Confetti />} />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
               num={1}
               render={props => (
                 <Controls
-                  loading={isFetching}
+                  loading={!swapInfo.address}
                   text={'Next'}
-                  loadingText={swapStatus}
-                  loadingRender={() => <Loading />}
+                  loadingText={`Input a ${getCurrencyName(
+                    swapInfo.quote
+                  )} address`}
+                  loadingRender={() => undefined}
                   onPress={() => {
                     if (swapInfo.address && swapInfo.address !== '') {
                       startReverseSwap(swapInfo, props.nextStage);
+                      props.nextStage();
                     }
                   }}
                 />
@@ -89,17 +100,28 @@ const ReverseSwap = ({
               render={props => (
                 <Controls
                   loading={isFetching}
-                  text={'Done'}
-                  loadingText={swapStatus}
+                  loadingText={'Locking your funds...'}
                   loadingRender={() => <Loading />}
-                  onPress={() => {
-                    props.nextStage();
-                  }}
+                  error={swapFailResponse === true}
+                  errorAction={() =>
+                    startReverseSwap(swapInfo, props.nextStage)
+                  }
+                  errorText={`Reverse swap failed`}
                 />
               )}
             />
             <StepsWizard.Control
               num={3}
+              render={() => (
+                <Controls
+                  loading={isFetching}
+                  loadingText={swapStatus}
+                  loadingRender={() => <Loading />}
+                />
+              )}
+            />
+            <StepsWizard.Control
+              num={4}
               render={() => (
                 <Controls
                   text={'Swap Again!'}
@@ -125,6 +147,7 @@ ReverseSwap.propTypes = {
   webln: PropTypes.object,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,
+  swapFailResponse: PropTypes.bool.isRequired,
   completeSwap: PropTypes.func,
   setReverseSwapAddress: PropTypes.func,
   onExit: PropTypes.func,
