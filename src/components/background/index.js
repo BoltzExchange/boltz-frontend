@@ -19,7 +19,6 @@ const styles = theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     alignSelf: 'center',
-    paddingBottom: '10px',
     zIndex: 99999,
   },
 });
