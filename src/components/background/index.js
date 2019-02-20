@@ -5,21 +5,21 @@ import injectSheet from 'react-jss';
 
 const styles = theme => ({
   wrapper: {
-    height: '100vh',
-    width: '100vw',
+    flex: 1,
     backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
     flexDirection: 'column',
+    overflowY: 'scroll',
   },
   boltz: {
     color: theme.colors.white,
     fontSize: '15px',
+    margin: '5px',
     fontWeight: 'normal',
     fontStyle: 'normal',
     fontStretch: 'normal',
     lineHeight: 'normal',
     letterSpacing: 'normal',
     alignSelf: 'center',
-    paddingBottom: '10px',
     zIndex: 99999,
   },
 });
@@ -27,12 +27,9 @@ const styles = theme => ({
 const BackGround = ({ classes, children }) => (
   <View className={classes.wrapper}>
     {children}
-    <div className={classes.boltzWrapper}>
-      <span className={classes.boltz}>#reckless</span>
-    </div>
+    {/* <span className={classes.boltz}>#reckless</span> */}
   </View>
 );
-
 BackGround.propTypes = {
   classes: PropTypes.object,
   children: PropTypes.node,

@@ -5,32 +5,22 @@ import View from '../view';
 import QrCode from '../qrcode';
 
 const styles = () => ({
-  node: {
-    display: 'flex',
-    alignItems: 'center',
-    alignContent: 'center',
+  wrapper: {
+    height: 'auto',
+    width: '400px',
+  },
+  NodeInfo: {
     flexDirection: 'column',
-    justifyContent: 'center',
-    margin: '120px',
-  },
-  name: {
-    marginBottom: '0px',
-  },
-  uri: {
-    flexWrap: 'wrap',
-    fontSize: '15px',
-    wordBreak: 'break-all',
-  },
-  qr: {
-    flexWrap: 'wrap',
   },
 });
 
 const NodeInfo = ({ classes, size, name, uri }) => (
-  <View className={classes.node}>
-    <h3 className={classes.name}>{name}:</h3>
+  <View className={classes.wrapper}>
+    <View className={classes.NodeInfo}>
+      <h3 className={classes.name}>{name}:</h3>
+      <code className={classes.uri}>{uri}</code>
+    </View>
     <QrCode className={classes.qr} size={size} link={uri} />
-    <code className={classes.uri}>{uri}</code>
   </View>
 );
 
