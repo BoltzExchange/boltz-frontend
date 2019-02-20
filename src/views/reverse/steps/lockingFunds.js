@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { getCurrencyName } from '../../../scripts/utils';
 import View from '../../../components/view';
+import { getCurrencyName, getExplorer } from '../../../scripts/utils';
 
 const styles = () => ({
   wrapper: {
@@ -18,9 +18,11 @@ const styles = () => ({
 });
 
 const LockingFunds = ({ classes, swapInfo, swapResponse }) => {
+  const symbol = swapInfo.quote;
   const link = swapResponse
-    ? `https://blockstream.info/tx/${swapResponse.lockupTransaction}`
-    : '#0';
+    ? `${getExplorer(symbol)}/${swapResponse.lockupTransaction}`
+    : '';
+
   return (
     <View className={classes.wrapper}>
       <p className={classes.text}>
@@ -28,7 +30,7 @@ const LockingFunds = ({ classes, swapInfo, swapResponse }) => {
         are ought <br />
         to receive, this is important to keep the <br />
         swap atomic and trustless. It might take <br />
-        up to 10 minutes. Please be patient and <br />
+        up to 10 minutes. Please be patient. <br />
         <a href={link}>Click here</a> to see the lockup transaction.
       </p>
     </View>

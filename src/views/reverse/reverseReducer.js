@@ -12,7 +12,9 @@ const initalState = {
     pair: null,
     address: null,
   },
-  swapResponse: {},
+  swapResponse: {
+    success: true,
+  },
   swapStatus: 'Waiting for confirmation...',
 };
 

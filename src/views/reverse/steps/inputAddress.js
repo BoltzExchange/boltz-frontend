@@ -38,9 +38,8 @@ class StyledInputAddress extends React.Component {
     return (
       <View className={classes.wrapper}>
         <p className={classes.title}>
-          Paste an Onchain <b>{getCurrencyName(swapInfo.quote)}</b> address to{' '}
-          <br />
-          receive the funds
+          Paste a <b>{getCurrencyName(swapInfo.quote)}</b> address to which you
+          want to receive
         </p>
         <InputArea
           width={600}

@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
   isFetching: state.reverseSwapReducer.isFetching,
   swapInfo: state.reverseSwapReducer.swapInfo,
   swapResponse: state.reverseSwapReducer.swapResponse.response,
-  swapFailResponse: state.reverseSwapReducer.swapResponse.success,
+  swapFailResponse: !state.reverseSwapReducer.swapResponse.success,
   swapStatus: state.reverseSwapReducer.swapStatus,
 });
 

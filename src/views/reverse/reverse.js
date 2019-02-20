@@ -37,7 +37,7 @@ const ReverseSwap = ({
       <Prompt />
       <View className={classes.wrapper}>
         <StepsWizard
-          range={3}
+          range={4}
           stage={1}
           id={swapResponse ? swapResponse.id : null}
           onExit={() => {
@@ -80,17 +80,16 @@ const ReverseSwap = ({
               num={1}
               render={props => (
                 <Controls
-                  loading={isFetching ? isFetching : !swapInfo.address}
+                  loading={!swapInfo.address}
                   text={'Next'}
-                  loadingText={
-                    isFetching
-                      ? swapStatus
-                      : `Input a ${getCurrencyName(swapInfo.quote)} address`
-                  }
-                  loadingRender={() => (isFetching ? <Loading /> : undefined)}
+                  loadingText={`Input a ${getCurrencyName(
+                    swapInfo.quote
+                  )} address`}
+                  loadingRender={() => undefined}
                   onPress={() => {
                     if (swapInfo.address && swapInfo.address !== '') {
                       startReverseSwap(swapInfo, props.nextStage);
+                      props.nextStage();
                     }
                   }}
                 />
@@ -102,33 +101,26 @@ const ReverseSwap = ({
                 <Controls
                   loading={isFetching}
                   loadingText={'Locking your funds...'}
-                  error={!swapFailResponse}
-                  errorAction={() => startReverseSwap(swapInfo)}
+                  error={swapFailResponse === true}
+                  errorAction={() =>
+                    startReverseSwap(swapInfo, props.nextStage)
+                  }
                   errorText={`Reverse swap failed`}
-                  text={'Next'}
-                  onPress={() => {
-                    props.nextStage();
-                  }}
                 />
               )}
             />
             <StepsWizard.Control
               num={3}
-              render={props => (
+              render={() => (
                 <Controls
                   loading={isFetching}
-                  text={'Done'}
                   loadingText={swapStatus}
                   loadingRender={() => <Loading />}
-                  onPress={() => {
-                    completeSwap();
-                    props.nextStage();
-                  }}
                 />
               )}
             />
             <StepsWizard.Control
-              num={3}
+              num={4}
               render={() => (
                 <Controls text={'Swap Again!'} onPress={() => goHome()} />
               )}
