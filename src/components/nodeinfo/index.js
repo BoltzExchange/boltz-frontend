@@ -18,11 +18,11 @@ const styles = theme => ({
   uri: {
     overflowWrap: 'anywhere',
     wordBreak: 'break-all',
-    fontSize: '25px',
+    fontSize: '18px',
     color: theme.colors.tundoraGrey,
   },
   name: {
-    fontSize: '30px',
+    fontSize: '25px',
     fontWeight: 'bold',
     marginBottom: '10px',
     color: theme.colors.black,

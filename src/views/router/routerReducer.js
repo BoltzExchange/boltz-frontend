@@ -1,6 +1,6 @@
 import { NAVIGATE } from '../../constants/actions';
 
-const initalState = 'Faq';
+const initalState = 'Home';
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {

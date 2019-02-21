@@ -14,7 +14,7 @@ const styles = theme => ({
   },
   title: {
     color: theme.colors.black,
-    fontSize: '30px',
+    fontSize: '25px',
     fontWeight: 'bold',
     fontStyle: 'normal',
     fontStretch: 'condensed',
@@ -22,7 +22,7 @@ const styles = theme => ({
     letterSpacing: 'normal',
   },
   content: {
-    fontSize: '30px',
+    fontSize: '20px',
     fontWeight: 'normal',
     fontStyle: 'normal',
     fontStretch: 'condensed',
