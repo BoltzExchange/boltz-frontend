@@ -41,12 +41,6 @@ const reducer = (state = initalState, action) => {
         destinationAddress: action.payload,
       };
 
-    case actionTypes.SET_REFUND_TRANSACTION:
-      return {
-        ...state,
-        refundTransaction: action.payload,
-      };
-
     case actionTypes.SET_REFUND_TRANSACTION_HASH:
       return {
         ...state,

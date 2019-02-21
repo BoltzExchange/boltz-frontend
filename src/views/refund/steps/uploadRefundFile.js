@@ -46,12 +46,12 @@ const StyledUploadRefundFile = ({
       <FaCheckCircle size={240} className={classes.icon} />
     ) : (
       <DropZone className={classes.dropZone} onFileRead={setRefundFile}>
-        <p className={classes.info}>Drag the Refund JSON File Here</p>
+        <p className={classes.info}>Drag the refund JSON file here</p>
         <span className={classes.info}>or</span>
         <FileUpload text={'Select file'} onFileRead={setRefundFile} />
       </DropZone>
     )}
-    <p className={classes.info}>Paste the lockup transaction hash</p>
+    <p className={classes.info}>Paste the hash of the lockup transaction</p>
     <InputArea
       height={50}
       width={500}

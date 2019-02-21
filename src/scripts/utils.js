@@ -1,4 +1,6 @@
+import axios from 'axios';
 import {
+  boltzApi,
   bitcoinNetwork,
   litecoinNetwork,
   bitcoinExplorer,
@@ -125,4 +127,18 @@ export const getSampleAddress = symbol => {
  */
 export const getSampleInvoice = symbol => {
   return symbol === 'BTC' ? bitcoinInvoice : litecoinInvoice;
+};
+
+export const getFeeEstimation = callback => {
+  const url = `${boltzApi}/getfeeestimation`;
+  return () => {
+    axios
+      .get(url)
+      .then(response => callback(response.data))
+      .catch(error => {
+        window.alert(
+          `Failed to get fee estimations: ${error.response.data.error}`
+        );
+      });
+  };
 };

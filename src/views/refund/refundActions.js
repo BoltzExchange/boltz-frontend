@@ -3,7 +3,11 @@ import { ECPair, address, Transaction } from 'bitcoinjs-lib';
 import { constructRefundTransaction, detectSwap } from 'boltz-core';
 import { boltzApi } from '../../constants';
 import * as actionTypes from '../../constants/actions';
-import { getHexBuffer, getNetwork } from '../../scripts/utils';
+import {
+  getHexBuffer,
+  getNetwork,
+  getFeeEstimation,
+} from '../../scripts/utils';
 
 const verifyRefundFile = (fileJSON, keys) => {
   const verify = keys.every(key => fileJSON.hasOwnProperty(key));
@@ -40,11 +44,6 @@ export const setDestinationAddress = address => ({
   payload: address,
 });
 
-const setRefundTransaction = transaction => ({
-  type: actionTypes.SET_REFUND_TRANSACTION,
-  payload: transaction,
-});
-
 const setRefundTransactionHash = hash => ({
   type: actionTypes.SET_REFUND_TRANSACTION_HASH,
   payload: hash,
@@ -61,6 +60,32 @@ export const refundResponse = (success, response) => ({
     response,
   },
 });
+
+const refundTransaction = (
+  refundFile,
+  response,
+  destinationAddress,
+  currency,
+  feeEstimation
+) => {
+  const redeemScript = getHexBuffer(refundFile.redeemScript);
+  const lockupTransaction = Transaction.fromHex(response.data.transactionHex);
+
+  // TODO: make sure the provided lockup transaction hash was correct and show more specific error if not
+  return constructRefundTransaction(
+    [
+      {
+        redeemScript,
+        txHash: lockupTransaction.getHash(),
+        keys: ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
+        ...detectSwap(redeemScript, lockupTransaction),
+      },
+    ],
+    address.toOutputScript(destinationAddress, getNetwork(currency)),
+    refundFile.timeoutBlockHeight,
+    feeEstimation[currency]
+  );
+};
 
 export const startRefund = (
   refundFile,
@@ -79,37 +104,24 @@ export const startRefund = (
         transactionHash,
       })
       .then(response => {
-        const redeemScript = getHexBuffer(refundFile.redeemScript);
-        const lockupTransaction = Transaction.fromHex(
-          response.data.transactionHex
-        );
-
-        // TODO: make sure the provided lockup transaction hash was correct and show more specific error if not
-        const refundTransaction = constructRefundTransaction(
-          [
-            {
-              redeemScript,
-              txHash: lockupTransaction.getHash(),
-              keys: ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
-              ...detectSwap(redeemScript, lockupTransaction),
-            },
-          ],
-          address.toOutputScript(destinationAddress, getNetwork(currency)),
-          refundFile.timeoutBlockHeight,
-          1
-        );
-
-        const refundTransactionHex = refundTransaction.toHex();
-        const refundTransactionHash = refundTransaction.getId();
-
-        dispatch(setRefundTransaction(refundTransactionHex));
-        dispatch(setRefundTransactionHash(refundTransactionHash));
-
         dispatch(
-          broadcastRefund(currency, refundTransactionHex, () => {
-            dispatch(refundResponse(true, response.data));
+          getFeeEstimation(feeEstimation => {
+            const transaction = refundTransaction(
+              refundFile,
+              response,
+              destinationAddress,
+              currency,
+              feeEstimation
+            );
 
-            cb();
+            dispatch(setRefundTransactionHash(transaction.getId()));
+            dispatch(
+              broadcastRefund(currency, transaction.toHex(), () => {
+                dispatch(refundResponse(true, response.data));
+
+                cb();
+              })
+            );
           })
         );
       })

@@ -4,7 +4,12 @@ import { Transaction, ECPair, address } from 'bitcoinjs-lib';
 import { detectSwap, constructClaimTransaction } from 'boltz-core';
 import { boltzApi } from '../../constants';
 import * as actionTypes from '../../constants/actions';
-import { toSatoshi, getHexBuffer, getNetwork } from '../../scripts/utils';
+import {
+  toSatoshi,
+  getHexBuffer,
+  getNetwork,
+  getFeeEstimation,
+} from '../../scripts/utils';
 
 export const initReverseSwap = state => ({
   type: actionTypes.INIT_REVERSE_SWAP,
@@ -76,7 +81,7 @@ export const startReverseSwap = (swapInfo, nextStage) => {
   };
 };
 
-const claimTransaction = (swapInfo, response, preimage) => {
+const claimTransaction = (swapInfo, response, preimage, feeEstimation) => {
   const redeemScript = getHexBuffer(response.redeemScript);
   const lockupTransaction = Transaction.fromHex(response.lockupTransaction);
 
@@ -91,7 +96,7 @@ const claimTransaction = (swapInfo, response, preimage) => {
       },
     ],
     address.toOutputScript(swapInfo.address, getNetwork(swapInfo.quote)),
-    2,
+    feeEstimation[swapInfo.quote],
     false
   );
 };
@@ -106,11 +111,20 @@ const startListening = (dispatch, swapInfo, response, nextStage) => {
       dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
       nextStage();
     } else {
-      const claimTx = claimTransaction(swapInfo, response, data.preimage);
       dispatch(
-        broadcastClaim(swapInfo.quote, claimTx.toHex(), () => {
-          dispatch(reverseSwapResponse(true, response));
-          nextStage();
+        getFeeEstimation(feeEstimation => {
+          const claimTx = claimTransaction(
+            swapInfo,
+            response,
+            data.preimage,
+            feeEstimation
+          );
+          dispatch(
+            broadcastClaim(swapInfo.quote, claimTx.toHex(), () => {
+              dispatch(reverseSwapResponse(true, response));
+              nextStage();
+            })
+          );
         })
       );
     }
