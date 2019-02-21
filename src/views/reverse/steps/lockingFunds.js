@@ -20,7 +20,7 @@ const styles = () => ({
 const LockingFunds = ({ classes, swapInfo, swapResponse }) => {
   const symbol = swapInfo.quote;
   const link = swapResponse
-    ? `${getExplorer(symbol)}/${swapResponse.lockupTransaction}`
+    ? `${getExplorer(symbol)}/${swapResponse.lockupTransactionHash}`
     : '';
 
   return (
