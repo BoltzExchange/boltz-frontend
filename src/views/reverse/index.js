@@ -20,9 +20,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   goHome: () => dispatch(nav.goHome()),
   completeSwap: () => dispatch(completeReverseSwap()),
+  goTimelockExpired: () => dispatch(nav.goReverseSwapTimelockExpired()),
   setReverseSwapAddress: address => dispatch(setReverseSwapAddress(address)),
-  startReverseSwap: (info, nextStage) =>
-    dispatch(startReverseSwap(info, nextStage)),
+  startReverseSwap: (info, nextStage, timelockExpired) =>
+    dispatch(startReverseSwap(info, nextStage, timelockExpired)),
 });
 
 export default connect(

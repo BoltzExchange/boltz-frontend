@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import View from '../../components/view';
+import Prompt from '../../components/prompt';
 import Controls from '../../components/controls';
 import Background from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
-import Prompt from '../../components/prompt';
-import View from '../../components/view';
 import {
   InputDestinationAddress,
   UploadRefundFile,

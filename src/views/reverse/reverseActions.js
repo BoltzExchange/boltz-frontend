@@ -50,7 +50,7 @@ export const reverseSwapResponse = (success, response) => ({
   },
 });
 
-export const startReverseSwap = (swapInfo, nextStage) => {
+export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
   const url = `${boltzApi}/createreverseswap`;
   const { pair, keys, baseAmount } = swapInfo;
 
@@ -70,7 +70,13 @@ export const startReverseSwap = (swapInfo, nextStage) => {
 
         // To set "isFetching" to true
         dispatch(reverseSwapRequest());
-        startListening(dispatch, swapInfo, response.data, nextStage);
+        startListening(
+          dispatch,
+          swapInfo,
+          response.data,
+          nextStage,
+          timelockExpired
+        );
       })
       .catch(error => {
         const message = error.response.data.error;
@@ -101,16 +107,27 @@ const claimTransaction = (swapInfo, response, preimage, feeEstimation) => {
   );
 };
 
-const startListening = (dispatch, swapInfo, response, nextStage) => {
+const startListening = (
+  dispatch,
+  swapInfo,
+  response,
+  nextStage,
+  timelockExpired
+) => {
   const source = new EventSource(`${boltzApi}/swapstatus?id=${response.id}`);
 
   source.onmessage = event => {
     const data = JSON.parse(event.data);
+    const message = data.message;
 
-    if (data.message.startsWith('Transaction confirmed')) {
+    if (message.startsWith('Transaction confirmed')) {
       dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
       nextStage();
+    } else if (data.message.startsWith('Refunded lockup transaction')) {
+      source.close();
+      dispatch(timelockExpired());
     } else {
+      source.close();
       dispatch(
         getFeeEstimation(feeEstimation => {
           const claimTx = claimTransaction(

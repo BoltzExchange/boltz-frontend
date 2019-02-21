@@ -15,6 +15,7 @@ export const swapDone = 'SwapDone';
  * Reverse Swap routes
  */
 export const reverseSwap = 'ReverseSwap';
+export const reverseSwapTimelockExpired = 'ReverseSwapTimelockExpired';
 
 /**
  * Refund routes
