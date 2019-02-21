@@ -34,15 +34,15 @@ const styles = theme => ({
 
 const Question = ({ classes, title, content }) => (
   <View className={classes.wrapper}>
-    <h1 className={classes.title}>{title}</h1>
-    <p className={classes.content}>{content}</p>
+    {title(classes.title)}
+    {content(classes.content)}
   </View>
 );
 
 Question.propTypes = {
   classes: PropTypes.object,
   title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  content: PropTypes.func.isRequired,
   width: PropTypes.any,
 };
 

@@ -8,7 +8,7 @@ const styles = theme => ({
     flex: 1,
     backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
     flexDirection: 'column',
-    overflowY: 'scroll',
+    overflowY: 'auto',
   },
   boltz: {
     color: theme.colors.white,
@@ -27,7 +27,7 @@ const styles = theme => ({
 const BackGround = ({ classes, children }) => (
   <View className={classes.wrapper}>
     {children}
-    {/* <span className={classes.boltz}>#reckless</span> */}
+    <span className={classes.boltz}>#reckless</span>
   </View>
 );
 BackGround.propTypes = {

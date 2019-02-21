@@ -4,25 +4,42 @@ import injectSheet from 'react-jss';
 import View from '../view';
 import QrCode from '../qrcode';
 
-const styles = () => ({
+const styles = theme => ({
   wrapper: {
-    height: 'auto',
-    width: '400px',
+    height: '300x',
+    width: '700px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
   },
   NodeInfo: {
     flexDirection: 'column',
   },
+  uri: {
+    overflowWrap: 'anywhere',
+    wordBreak: 'break-all',
+    fontSize: '25px',
+    color: theme.colors.tundoraGrey,
+  },
+  name: {
+    fontSize: '30px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+    color: theme.colors.black,
+  },
 });
 
-const NodeInfo = ({ classes, size, name, uri }) => (
-  <View className={classes.wrapper}>
-    <View className={classes.NodeInfo}>
-      <h3 className={classes.name}>{name}:</h3>
-      <code className={classes.uri}>{uri}</code>
+const NodeInfo = ({ classes, size, name, uri }) => {
+  return (
+    <View className={classes.wrapper}>
+      <View className={classes.NodeInfo}>
+        <span className={classes.name}>{name}:</span>
+        <code className={classes.uri}>{uri}</code>
+      </View>
+      <QrCode className={classes.qr} size={size} link={uri} />
     </View>
-    <QrCode className={classes.qr} size={size} link={uri} />
-  </View>
-);
+  );
+};
 
 NodeInfo.propTypes = {
   classes: PropTypes.object.isRequired,
