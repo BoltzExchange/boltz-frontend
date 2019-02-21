@@ -164,7 +164,10 @@ class SwapTab extends React.Component {
         maxAmount: limits.maximal,
         rate: this.props.rates[symbol],
       },
-      () => this.updateQuoteAmount(this.state.baseAmount)
+      () => {
+        this.updateQuoteAmount(this.state.baseAmount);
+        this.componentDidUpdate({}, {});
+      }
     );
   };
 
@@ -321,8 +324,6 @@ class SwapTab extends React.Component {
           <MdCompareArrows
             className={classes.arrows}
             onClick={() => {
-              console.log(base);
-              console.log(quote);
               this.setState({
                 base: quote,
                 quote: base,
