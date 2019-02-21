@@ -13,6 +13,7 @@ const styles = theme => ({
   boltz: {
     color: theme.colors.white,
     fontSize: '15px',
+    margin: '5px',
     fontWeight: 'normal',
     fontStyle: 'normal',
     fontStretch: 'normal',
@@ -26,9 +27,7 @@ const styles = theme => ({
 const BackGround = ({ classes, children }) => (
   <View className={classes.wrapper}>
     {children}
-    <div className={classes.boltzWrapper}>
-      <span className={classes.boltz}>#reckless</span>
-    </div>
+    <span className={classes.boltz}>#reckless</span>
   </View>
 );
 
