@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import Faq from './faq';
 import { nav } from '../../action';
+import ReverseSwapTimelockExpired from './reverseSwapTimelockExpired';
 
 const mapDispatchToProps = dispatch => ({
   goHome: () => dispatch(nav.goHome()),
@@ -11,4 +11,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   () => {},
   mapDispatchToProps
-)(Faq);
+)(ReverseSwapTimelockExpired);

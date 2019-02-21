@@ -7,6 +7,7 @@ import ReverseSwap from '../reverse';
 import LandingPage from '../landingpage';
 import * as routes from '../../constants/routes';
 import Container from '../../components/container';
+import ReverseSwapTimelockExpired from '../reversetimelock';
 
 const Router = ({ route }) => {
   return (
@@ -16,6 +17,9 @@ const Router = ({ route }) => {
       {route === routes.refund && <Refund />}
       {route === routes.home && <LandingPage />}
       {route === routes.reverseSwap && <ReverseSwap />}
+      {route === routes.reverseSwapTimelockExpired && (
+        <ReverseSwapTimelockExpired />
+      )}
     </Container>
   );
 };
