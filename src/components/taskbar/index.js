@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
 import { LinkButton } from '../button';
+import { network } from '../../constants';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
@@ -38,6 +39,7 @@ const styles = theme => ({
     color: theme.colors.white,
     fontSize: '15px',
     fontWeight: '100',
+    textTransform: 'uppercase',
   },
 });
 
@@ -52,7 +54,7 @@ const TaskBar = ({ classes, goHome, goRefund, goFaq }) => (
         alt="logo"
       />
       <span className={classes.logoText}>Boltz</span>
-      <span className={classes.subLogoText}>TESTNET ALPHA</span>
+      <span className={classes.subLogoText}>{network} alpha</span>
     </View>
     <View className={classes.buttons}>
       <LinkButton text="Swap" onPress={() => goHome()} />
