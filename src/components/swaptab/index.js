@@ -108,6 +108,7 @@ class SwapTab extends React.Component {
       maxAmount: 0,
       baseAmount: 0.001,
       quoteAmount: 0,
+      feeAmount: 0,
       errorMessage: '',
     };
   }
@@ -222,6 +223,13 @@ class SwapTab extends React.Component {
     localStorage.setItem('baseAmount', baseAmount);
   };
 
+  calculateFee = (baseAmount, isReverse) => {
+    const percentage = baseAmount * 0.01;
+    const fee = isReverse ? 0.00001 + percentage : 0.0000001 + percentage;
+
+    return Number(fee.toFixed(8));
+  };
+
   checkBaseAmount = baseAmount => {
     const { minAmount, maxAmount } = this.state;
 
@@ -234,24 +242,36 @@ class SwapTab extends React.Component {
 
   updateBaseAmount = quoteAmount => {
     const rate = new BigNumber(this.state.rate.rate);
-    const newBaseAmount = new BigNumber(quoteAmount).dividedBy(rate).toFixed(8);
-    const inputError = !this.checkBaseAmount(newBaseAmount);
+
+    const newBase = new BigNumber(quoteAmount).dividedBy(rate).toFixed(8);
+    const fee = this.calculateFee(newBase, this.baseAsset.isLightning);
+    const newBaseWithFee = Number((newBase + fee).toFixed(8));
+
+    const inputError = !this.checkBaseAmount(newBaseWithFee);
 
     this.setState({
       quoteAmount: Number(quoteAmount),
-      baseAmount: Number(newBaseAmount),
+      baseAmount: newBaseWithFee,
+      feeAmount: fee,
       inputError,
     });
   };
 
   updateQuoteAmount = baseAmount => {
     const rate = new BigNumber(this.state.rate.rate);
-    const newQuoteAmount = new BigNumber(baseAmount).times(rate).toFixed(8);
+    const fee = this.calculateFee(baseAmount, this.baseAsset.isLightning);
+
+    const newQuote = new BigNumber(baseAmount)
+      .times(rate)
+      .minus(fee * rate)
+      .toFixed(8);
+
     const inputError = !this.checkBaseAmount(baseAmount);
 
     this.setState({
-      quoteAmount: Number(newQuoteAmount),
+      quoteAmount: Math.max(Number(newQuote), 0),
       baseAmount: Number(baseAmount),
+      feeAmount: fee,
       inputError,
     });
   };
@@ -285,24 +305,25 @@ class SwapTab extends React.Component {
   render() {
     const { classes, rates, currencies } = this.props;
     const {
-      error,
       base,
       quote,
+      error,
       minAmount,
       maxAmount,
+      feeAmount,
       baseAmount,
+      inputError,
       quoteAmount,
       errorMessage,
-      inputError,
     } = this.state;
 
     return (
       <View className={classes.wrapper}>
         <View className={classes.stats}>
-          <InfoText title="Min amount:" text={`${minAmount}`} />
-          <InfoText title="Max amount:" text={`${maxAmount}`} />
-          <InfoText title="Fee:" text={'0'} />
-          <InfoText title="Rate:" text={`${this.parseRate(rates)}`} />
+          <InfoText title="Min amount" text={`${minAmount}`} />
+          <InfoText title="Max amount" text={`${maxAmount}`} />
+          <InfoText title="Fee" text={`${feeAmount}`} />
+          <InfoText title="Rate" text={`${this.parseRate(rates)}`} />
         </View>
         <View className={classes.options}>
           <View className={classes.select}>

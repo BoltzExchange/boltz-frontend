@@ -84,7 +84,7 @@ const Swap = ({
               render={props => (
                 <Controls
                   loading={swapStatus.error}
-                  text={`Fee: 0 ${swapInfo.base}`}
+                  text={`Next`}
                   loadingText={'Invalid invoice'}
                   onPress={() => {
                     startSwap(swapInfo, props.nextStage);
