@@ -11,6 +11,7 @@ const colors = {
   hoverGrey: '#9D9D9D',
   white: '#fff',
   red: '#FF0000',
+  black: '#000',
 };
 
 export default colors;

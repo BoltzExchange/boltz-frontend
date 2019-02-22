@@ -30,9 +30,8 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.5)',
-  },
-  questionTitle: {
-    marginBottom: '0px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
   },
 });
 
@@ -60,10 +59,10 @@ class Faq extends React.Component {
                   that focuses on the adoption of second layer scaling
                   technologies like the Lightning network and the privacy of its
                   users. We neither use any trackers nor log any data that could
-                  identify our users. <br />
+                  identify our users. <br /> <br />
                   Please note that Boltz is currently in its alpha stage so dont
                   be too reckless when using it. If you experience any issues or
-                  have some feedback feel free to contact us. <br />
+                  have some feedback feel free to{' '}
                   <a
                     href={twitterLink}
                     target="_blank"

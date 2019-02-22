@@ -10,6 +10,8 @@ const styles = theme => ({
     flexDirection: 'column',
     backgroundColor: theme.colors.white,
     margin: '20px',
+    marginTop: '10px',
+    marginBottom: '10px',
     padding: '10px',
   },
   title: {
