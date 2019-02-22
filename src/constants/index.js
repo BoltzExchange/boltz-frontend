@@ -1,5 +1,9 @@
 import { Networks } from 'boltz-core';
 
+const capitalizeFirstLetter = input => {
+  return input.charAt(0).toUpperCase() + input.slice(1);
+};
+
 // API endpoint
 export const boltzApi = process.env.REACT_APP_BOLTZ_API;
 
@@ -8,8 +12,12 @@ export const bitcoinLnd = process.env.REACT_APP_BITCOIN_LND;
 export const litecoinLnd = process.env.REACT_APP_LITECOIN_LND;
 
 // Network configurations
-export const bitcoinNetwork = Networks[process.env.REACT_APP_BITCOIN_NETWORK];
-export const litecoinNetwork = Networks[process.env.REACT_APP_LITECOIN_NETWORK];
+export const network = process.env.REACT_APP_NETWORK;
+
+export const bitcoinNetwork =
+  Networks[`bitcoin${capitalizeFirstLetter(network)}`];
+export const litecoinNetwork =
+  Networks[`litecoin${capitalizeFirstLetter(network)}`];
 
 export const bitcoinExplorer = process.env.REACT_APP_BITCOIN_EXPLORER;
 export const litecoinExplorer = process.env.REACT_APP_LITECOIN_EXPLORER;
