@@ -7,9 +7,9 @@ class QrCode extends React.Component {
 
   componentDidMount() {
     const { size, link } = this.props;
-
+    const element = document.getElementById(this.id);
     this.qr = new Qrious({
-      element: document.getElementById(this.id),
+      element,
     });
 
     this.qr.set({

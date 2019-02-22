@@ -1,4 +1,5 @@
 import React from 'react';
+import View from '../view';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 
@@ -10,9 +11,9 @@ const styles = () => ({
 });
 
 const Container = ({ classes, children, style }) => (
-  <div className={classes.wrapper} style={style ? style : undefined}>
+  <View className={classes.wrapper} style={style ? style : undefined}>
     {children}
-  </div>
+  </View>
 );
 
 Container.propTypes = {

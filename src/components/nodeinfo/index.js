@@ -4,35 +4,42 @@ import injectSheet from 'react-jss';
 import View from '../view';
 import QrCode from '../qrcode';
 
-const styles = () => ({
-  node: {
-    display: 'flex',
-    alignItems: 'center',
-    alignContent: 'center',
-    flexDirection: 'column',
+const styles = theme => ({
+  wrapper: {
+    height: '300x',
+    width: '700px',
     justifyContent: 'center',
-    margin: '120px',
+    alignItems: 'center',
+    padding: '20px',
   },
-  name: {
-    marginBottom: '0px',
+  NodeInfo: {
+    flexDirection: 'column',
   },
   uri: {
-    flexWrap: 'wrap',
-    fontSize: '15px',
+    overflowWrap: 'anywhere',
     wordBreak: 'break-all',
+    fontSize: '18px',
+    color: theme.colors.tundoraGrey,
   },
-  qr: {
-    flexWrap: 'wrap',
+  name: {
+    fontSize: '25px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+    color: theme.colors.black,
   },
 });
 
-const NodeInfo = ({ classes, size, name, uri }) => (
-  <View className={classes.node}>
-    <h3 className={classes.name}>{name}:</h3>
-    <QrCode className={classes.qr} size={size} link={uri} />
-    <code className={classes.uri}>{uri}</code>
-  </View>
-);
+const NodeInfo = ({ classes, size, name, uri }) => {
+  return (
+    <View className={classes.wrapper}>
+      <View className={classes.NodeInfo}>
+        <span className={classes.name}>{name}:</span>
+        <code className={classes.uri}>{uri}</code>
+      </View>
+      <QrCode className={classes.qr} size={size} link={uri} />
+    </View>
+  );
+};
 
 NodeInfo.propTypes = {
   classes: PropTypes.object.isRequired,

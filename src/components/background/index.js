@@ -5,10 +5,10 @@ import injectSheet from 'react-jss';
 
 const styles = theme => ({
   wrapper: {
-    height: '100vh',
-    width: '100vw',
+    flex: 1,
     backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
     flexDirection: 'column',
+    overflowY: 'auto',
   },
   boltz: {
     color: theme.colors.white,
@@ -30,7 +30,6 @@ const BackGround = ({ classes, children }) => (
     <span className={classes.boltz}>#reckless</span>
   </View>
 );
-
 BackGround.propTypes = {
   classes: PropTypes.object,
   children: PropTypes.node,
