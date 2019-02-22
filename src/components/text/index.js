@@ -38,7 +38,7 @@ const infoTextStyles = () => ({
 
 const StyledInfoText = ({ title, text, classes }) => (
   <View className={classes.wrapper}>
-    <Text text={title} className={classes.title} />
+    <Text text={`${title}:`} className={classes.title} />
     <Text text={text} className={classes.text} />
   </View>
 );
