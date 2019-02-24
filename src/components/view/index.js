@@ -10,7 +10,7 @@ const View = ({
   ...otherProps
 }) => {
   let newStyle = {
-    display: otherProps.noFlex ? 'inline' : 'flex',
+    display: otherProps.noFlex ? 'block' : 'flex',
   };
   if (style !== undefined) {
     newStyle = { ...newStyle, ...style };

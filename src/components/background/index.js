@@ -5,12 +5,13 @@ import injectSheet from 'react-jss';
 
 const styles = theme => ({
   wrapper: {
-    flex: 1,
+    flex: '1 0 100%',
     backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
     flexDirection: 'column',
     overflowY: 'auto',
   },
   boltz: {
+    flex: '0 0 content',
     color: theme.colors.white,
     fontSize: '15px',
     margin: '5px',
@@ -20,7 +21,7 @@ const styles = theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     alignSelf: 'center',
-    zIndex: 99999,
+    zIndex: 1000,
   },
 });
 
