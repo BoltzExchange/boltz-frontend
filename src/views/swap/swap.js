@@ -76,7 +76,17 @@ const Swap = ({
                 />
               )}
             />
-            <StepsWizard.Step num={4} render={() => <Confetti />} />
+            <StepsWizard.Step
+              num={4}
+              render={() => (
+                <Confetti
+                  sentCoin={swapInfo.base}
+                  receivedCoin={swapInfo.quote}
+                  sentAmount={`${swapInfo.baseAmount}`}
+                  receivedAmount={`${swapInfo.quoteAmount}`}
+                />
+              )}
+            />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
