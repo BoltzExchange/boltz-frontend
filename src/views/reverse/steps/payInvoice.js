@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import Link from '../../../components/link';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
 import { copyToClipBoard, getExplorer } from '../../../scripts/utils';
@@ -63,9 +64,7 @@ class StyledPayInvoice extends React.Component {
     return (
       <View className={classes.wrapper}>
         <View className={classes.qrcode}>
-          <a href={link} target="_blank" rel="noopener noreferrer">
-            Click here to see the lockup transaction.
-          </a>
+          <Link to={link} text={'Click here to see the lockup transaction.'} />
           <QrCode size={300} link={swapResponse.invoice} />
         </View>
         <View className={classes.info}>
