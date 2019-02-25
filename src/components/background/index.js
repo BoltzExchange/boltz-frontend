@@ -5,7 +5,8 @@ import injectSheet from 'react-jss';
 
 const styles = theme => ({
   wrapper: {
-    flex: '1 0 100%',
+    flex: '1 0',
+    minHeight: '100vh',
     backgroundImage: 'linear-gradient(to bottom, #114357, #f29492)',
     flexDirection: 'column',
     overflowY: 'auto',

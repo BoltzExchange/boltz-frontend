@@ -12,7 +12,7 @@ import { InputInvoice, SendTransaction, DownloadRefund } from './steps';
 
 const styles = () => ({
   wrapper: {
-    height: '100%',
+    flex: '1 0 100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
