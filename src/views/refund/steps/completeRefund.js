@@ -1,6 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
+import Link from '../../../components/link';
 import View from '../../../components/view';
 import { getExplorer } from '../../../scripts/utils';
 import { FaCheckCircle } from 'react-icons/fa';
@@ -35,13 +36,10 @@ const StyledCompleteRefund = ({ classes, currency, refundTransactionHash }) => (
     <FaCheckCircle size={200} className={classes.icon} />
     <span className={classes.title}> Success! </span>
     <p className={classes.transaction}>
-      <a
-        href={`${getExplorer(currency)}/${refundTransactionHash}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Click here
-      </a>{' '}
+      <Link
+        to={`${getExplorer(currency)}/${refundTransactionHash}`}
+        text={'Click here'}
+      />{' '}
       to see the refund transaction
     </p>
   </View>
