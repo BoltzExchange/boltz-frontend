@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
-import { copyToClipBoard } from '../../../scripts/utils';
+import { copyToClipBoard, getExplorer } from '../../../scripts/utils';
 
 const payInvoiceStyles = () => ({
   wrapper: {
@@ -46,26 +46,34 @@ const payInvoiceStyles = () => ({
 
 class StyledPayInvoice extends React.Component {
   componentDidMount() {
-    const { invoice, webln } = this.props;
+    const { swapResponse, webln } = this.props;
 
     console.log(webln);
     if (webln) {
-      webln.sendPayment(invoice);
+      webln.sendPayment(swapResponse.invoice);
     }
   }
 
   render() {
-    const { classes, asset, invoice } = this.props;
+    const { classes, swapInfo, swapResponse } = this.props;
+    const link = swapResponse
+      ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionHash}`
+      : '';
 
     return (
       <View className={classes.wrapper}>
         <View className={classes.qrcode}>
-          <QrCode size={300} link={invoice} />
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            Click here to see the lockup transaction.
+          </a>
+          <QrCode size={300} link={swapResponse.invoice} />
         </View>
         <View className={classes.info}>
-          <p className={classes.title}>Pay this {asset} Lightning invoice</p>
+          <p className={classes.title}>
+            Pay this {swapInfo.base} Lightning invoice
+          </p>
           <p className={classes.invoice} id="copy">
-            {invoice}
+            {swapResponse.invoice}
           </p>
           <span className={classes.action} onClick={() => copyToClipBoard()}>
             Copy
@@ -78,8 +86,8 @@ class StyledPayInvoice extends React.Component {
 
 StyledPayInvoice.propTypes = {
   classes: PropTypes.object.isRequired,
-  asset: PropTypes.string.isRequired,
-  invoice: PropTypes.string.isRequired,
+  swapInfo: PropTypes.object,
+  swapResponse: PropTypes.string,
   webln: PropTypes.object,
 };
 

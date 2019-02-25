@@ -84,8 +84,8 @@ class ReverseSwap extends React.Component {
                 num={3}
                 render={() => (
                   <PayInvoice
-                    asset={swapInfo.base}
-                    invoice={swapResponse.invoice}
+                    swapInfo={swapInfo}
+                    swapResponse={swapResponse}
                     webln={webln}
                   />
                 )}
