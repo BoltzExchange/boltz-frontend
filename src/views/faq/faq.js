@@ -11,7 +11,7 @@ import { bitcoinLnd, litecoinLnd } from '../../constants';
 
 const styles = theme => ({
   wrapper: {
-    height: 'auto',
+    flex: '1 0 100%',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -27,7 +27,6 @@ const styles = theme => ({
     backgroundColor: theme.colors.white,
     minWidth: '820px',
     maxWidth: '920px',
-    height: 'auto',
     flexDirection: 'column',
     alignItems: 'center',
     boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.5)',
@@ -47,11 +46,11 @@ class Faq extends React.Component {
     return (
       <BackGround>
         <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
-        <View className={classes.titleWrapper}>
-          <h1 className={classes.title}>FAQ&apos;s</h1>
-        </View>
         <View className={classes.wrapper}>
-          <div className={classes.questionTab}>
+          <View className={classes.titleWrapper}>
+            <h1 className={classes.title}>FAQ&apos;s</h1>
+          </View>
+          <View noFlex className={classes.questionTab}>
             <Question
               title={style => <h1 className={style}>What is Boltz?</h1>}
               content={style => (
@@ -142,7 +141,7 @@ class Faq extends React.Component {
                 </p>
               )}
             />
-          </div>
+          </View>
         </View>
       </BackGround>
     );

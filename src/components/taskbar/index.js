@@ -9,8 +9,7 @@ const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 const styles = theme => ({
   wrapper: {
-    height: 'auto',
-    width: '100%',
+    flex: '1 1 content',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
