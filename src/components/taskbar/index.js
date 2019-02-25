@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
-import { LinkButton } from '../button';
+import Button from '../button';
 import { network } from '../../constants';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
@@ -57,14 +57,10 @@ const TaskBar = ({ classes, goHome, goRefund, goFaq }) => (
       <span className={classes.subLogoText}>{network} alpha</span>
     </View>
     <View className={classes.buttons}>
-      <LinkButton text="Swap" onPress={() => goHome()} />
-      <LinkButton text="Refund" onPress={() => goRefund()} />
-      <LinkButton text="FAQ" onPress={() => goFaq()} />
-      <LinkButton
-        external
-        text="Github"
-        to="https://github.com/BoltzExchange"
-      />
+      <Button text="Swap" onPress={() => goHome()} />
+      <Button text="Refund" onPress={() => goRefund()} />
+      <Button text="FAQ" onPress={() => goFaq()} />
+      <Button external text="Github" to="https://github.com/BoltzExchange" />
     </View>
   </View>
 );
