@@ -13,10 +13,10 @@ const confettiStyles = () => ({
   },
   text: {
     fontSize: '40px',
-    fontWeight: 300,
   },
   notifie: {
     fontSize: '25px',
+    fontWeight: 300,
   },
 });
 

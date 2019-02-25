@@ -97,7 +97,7 @@ class ReverseSwap extends React.Component {
                     notifie={style => (
                       <span className={style}>
                         You sent {swapInfo.baseAmount} {swapInfo.base} and
-                        received {swapInfo.quote} {swapInfo.quoteAmount}
+                        received {swapInfo.quoteAmount} {swapInfo.quote}
                       </span>
                     )}
                   />
