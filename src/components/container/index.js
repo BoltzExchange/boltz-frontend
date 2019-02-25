@@ -1,12 +1,12 @@
 import React from 'react';
-import View from '../view';
 import injectSheet from 'react-jss';
+import View from '../view';
 import PropTypes from 'prop-types';
 
 const styles = () => ({
   wrapper: {
-    height: '100vh',
-    width: '100vw',
+    flexDirection: 'column',
+    flex: '0 0 content',
   },
 });
 

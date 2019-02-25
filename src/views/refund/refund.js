@@ -14,7 +14,7 @@ import {
 
 const styles = theme => ({
   wrapper: {
-    height: '100%',
+    flex: '1 0 100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
