@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../components/view';
+import Link from '../../components/link';
 import TaskBar from '../../components/taskbar';
 import Question from '../../components/question';
 import NodeInfo from '../../components/nodeinfo';
@@ -63,14 +64,7 @@ class Faq extends React.Component {
                   Please note that Boltz is currently in its alpha stage so dont
                   be too reckless when using it. If you experience any issues or
                   have some feedback feel free to{' '}
-                  <a
-                    href={twitterLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    contact us
-                  </a>
-                  .
+                  <Link to={twitterLink} text={'contact us'} />.
                 </p>
               )}
               width={'auto'}
@@ -84,8 +78,8 @@ class Faq extends React.Component {
               content={style => (
                 <p className={style}>
                   We appreciate any channels you open with our Lightning nodes
-                  and <a href={twitterLink}>on request</a> we will also open one
-                  to you:
+                  and <Link to={twitterLink} text={'on request'} /> we will also
+                  open one to you:
                   <NodeInfo name={'BTC LND NODE'} size={150} uri={bitcoinLnd} />
                   <NodeInfo
                     name={'LTC LND NODE'}
@@ -113,27 +107,21 @@ class Faq extends React.Component {
                   of the asset you were promised or you will be able to do a
                   refund. This concept is called <i>atomicity</i> and you can
                   read more about this in{' '}
-                  <a
-                    href={
+                  <Link
+                    to={
                       'https://medium.com/boltzhq/submarine-swaps-c509ce0fb1db'
                     }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    our blog post about how Boltz works
-                  </a>
+                    text={'our blog post about how Boltz works'}
+                  />
                   <br />
                   <br />
                   If you are <i>really</i> technical you can proof read our
                   source code and verify that the claims above are valid because
                   everything is open source and can be found on{' '}
-                  <a
-                    href={'https://github.com/boltzexchange'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    our GitHub
-                  </a>
+                  <Link
+                    to={'https://github.com/boltzexchange'}
+                    text={'our GitHub'}
+                  />
                   . Also we will soon add a version of our frontend that you can
                   host yourself easily.
                 </p>
@@ -149,14 +137,8 @@ class Faq extends React.Component {
                   All regular and Lightning wallets are supported by Boltz.
                   Although we encourage you to run a full node and manage your
                   own keys, there are custodial wallets solutions, like{' '}
-                  <a
-                    href={'https://bluewallet.io/'}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    BlueWallet
-                  </a>
-                  , that work out of the box can make testing Boltz very easy.
+                  <Link to={'https://bluewallet.io/'} text={'BlueWallet'} />,
+                  that work out of the box can make testing Boltz very easy.
                 </p>
               )}
             />
