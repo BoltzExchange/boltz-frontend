@@ -46,9 +46,9 @@ class Faq extends React.Component {
       <BackGround>
         <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
         <View className={classes.wrapper}>
-        <View className={classes.titleWrapper}>
-          <h1 className={classes.title}>FAQ&apos;s</h1>
-        </View>
+          <View className={classes.titleWrapper}>
+            <h1 className={classes.title}>FAQ&apos;s</h1>
+          </View>
           <View noFlex className={classes.questionTab}>
             <Question
               title={style => <h1 className={style}>What is Boltz?</h1>}
