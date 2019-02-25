@@ -94,10 +94,12 @@ class ReverseSwap extends React.Component {
                 num={4}
                 render={() => (
                   <Confetti
-                    sentCoin={swapInfo.base}
-                    receivedCoin={swapInfo.quote}
-                    sentAmount={`${swapInfo.baseAmount}`}
-                    receivedAmount={`${swapInfo.quoteAmount}`}
+                    notifie={style => (
+                      <span className={style}>
+                        You sent {swapInfo.baseAmount} {swapInfo.base} and
+                        received {swapInfo.quote} {swapInfo.quoteAmount}
+                      </span>
+                    )}
                   />
                 )}
               />

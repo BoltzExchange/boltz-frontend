@@ -15,18 +15,12 @@ const confettiStyles = () => ({
     fontSize: '40px',
     fontWeight: 300,
   },
-  swapDetail: {
+  notifie: {
     fontSize: '25px',
   },
 });
 
-const Confetti = ({
-  classes,
-  sentCoin,
-  receivedCoin,
-  sentAmount,
-  receivedAmount,
-}) => (
+const Confetti = ({ classes, notifie }) => (
   <View className={classes.wrapper}>
     <ReactConfetti
       height={window.innerHeight}
@@ -35,19 +29,13 @@ const Confetti = ({
       recycle={false}
     />
     <span className={classes.text}>Viola! Swap successful!</span>
-    <span className={classes.swapDetail}>
-      You sent {sentAmount} {sentCoin} and received {receivedCoin}{' '}
-      {receivedAmount}
-    </span>
+    {notifie(classes.notifie)}
   </View>
 );
 
 Confetti.propTypes = {
   classes: PropTypes.object.isRequired,
-  sentCoin: PropTypes.string.isRequired,
-  receivedCoin: PropTypes.string.isRequired,
-  sentAmount: PropTypes.string.isRequired,
-  receivedAmount: PropTypes.string.isRequired,
+  notifie: PropTypes.func,
 };
 
 export default injectSheet(confettiStyles)(Confetti);
