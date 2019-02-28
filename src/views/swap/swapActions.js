@@ -75,7 +75,7 @@ export const startSwap = (swapInfo, cb) => {
 };
 
 export const startListening = (dispatch, swapId, callback) => {
-  const source = new EventSource(`${boltzApi}/swapstatus?id=${swapId}`);
+  const source = new EventSource(`${boltzApi}/streamswapstatus?id=${swapId}`);
 
   let message = {
     pending: true,
