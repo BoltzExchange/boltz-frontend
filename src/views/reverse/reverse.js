@@ -31,9 +31,9 @@ class ReverseSwap extends React.Component {
       isFetching,
       swapResponse,
       completeSwap,
-      goTimelockExpired,
       startReverseSwap,
       swapFailResponse,
+      goTimelockExpired,
       setReverseSwapAddress,
     } = this.props;
 
@@ -99,7 +99,7 @@ class ReverseSwap extends React.Component {
                   <Controls
                     loading={!swapInfo.address}
                     text={'Next'}
-                    loadingText={`Input a ${getCurrencyName(
+                    loadingText={`Input a valid ${getCurrencyName(
                       swapInfo.quote
                     )} address`}
                     loadingRender={() => undefined}
