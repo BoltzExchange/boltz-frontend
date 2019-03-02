@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { address } from 'bitcoinjs-lib';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
-import { getCurrencyName, getSampleAddress } from '../../../scripts/utils';
+import {
+  getCurrencyName,
+  getSampleAddress,
+  getNetwork,
+} from '../../../scripts/utils';
 
 const inputAddressStyles = () => ({
   wrapper: {
@@ -22,12 +27,27 @@ class StyledInputAddress extends React.Component {
     error: false,
   };
 
+  showError = () => {
+    this.props.onChange(undefined);
+    this.setState({ error: true });
+  };
+
   onChange = input => {
-    this.props.onChange(input);
+    const { onChange, swapInfo } = this.props;
+
     if (input !== '') {
-      this.setState({ error: false });
+      try {
+        const swapAddress = input.trim();
+
+        address.toOutputScript(swapAddress, getNetwork(swapInfo.quote));
+
+        onChange(swapAddress);
+        this.setState({ error: false });
+      } catch (error) {
+        this.showError();
+      }
     } else {
-      this.setState({ error: true });
+      this.showError();
     }
   };
 
