@@ -6,7 +6,7 @@ import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
 import { copyToClipBoard, getExplorer } from '../../../scripts/utils';
 
-const payInvoiceStyles = () => ({
+const styles = () => ({
   wrapper: {
     flex: 1,
     justifyContent: 'center',
@@ -45,7 +45,7 @@ const payInvoiceStyles = () => ({
   },
 });
 
-class StyledPayInvoice extends React.Component {
+class PayInvoice extends React.Component {
   componentDidMount() {
     const { swapResponse, webln } = this.props;
 
@@ -64,8 +64,8 @@ class StyledPayInvoice extends React.Component {
     return (
       <View className={classes.wrapper}>
         <View className={classes.qrcode}>
-          <Link to={link} text={'Click here to see the lockup transaction.'} />
           <QrCode size={300} link={swapResponse.invoice} />
+          <Link to={link} text={'Click here to see the lockup transaction.'} />
         </View>
         <View className={classes.info}>
           <p className={classes.title}>
@@ -83,13 +83,11 @@ class StyledPayInvoice extends React.Component {
   }
 }
 
-StyledPayInvoice.propTypes = {
+PayInvoice.propTypes = {
   classes: PropTypes.object.isRequired,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.string,
   webln: PropTypes.object,
 };
 
-const PayInvoice = injectSheet(payInvoiceStyles)(StyledPayInvoice);
-
-export default PayInvoice;
+export default injectSheet(styles)(PayInvoice);
