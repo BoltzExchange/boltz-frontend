@@ -21,6 +21,20 @@ const styles = () => ({
 });
 
 class ReverseSwap extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.notificationDom = React.createRef();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.isReconnecting && !prevProps.isReconnecting) {
+      window.alert(
+        'We lost the connection to Boltz and are trying to reconnect. Do not close this window!'
+      );
+    }
+  }
+
   render() {
     const {
       webln,
@@ -169,6 +183,7 @@ ReverseSwap.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  isReconnecting: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
   goTimelockExpired: PropTypes.func.isRequired,
   webln: PropTypes.object,
