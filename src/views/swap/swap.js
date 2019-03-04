@@ -76,7 +76,19 @@ const Swap = ({
                 />
               )}
             />
-            <StepsWizard.Step num={4} render={() => <Confetti />} />
+            <StepsWizard.Step
+              num={4}
+              render={() => (
+                <Confetti
+                  notifie={style => (
+                    <span className={style}>
+                      You sent {swapInfo.baseAmount} {swapInfo.base} and
+                      received {swapInfo.quoteAmount} {swapInfo.quote}
+                    </span>
+                  )}
+                />
+              )}
+            />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control

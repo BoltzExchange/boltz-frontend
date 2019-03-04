@@ -12,11 +12,15 @@ const confettiStyles = () => ({
     justifyContent: 'center',
   },
   text: {
-    fontSize: '30px',
+    fontSize: '40px',
+  },
+  notifie: {
+    fontSize: '25px',
+    fontWeight: 300,
   },
 });
 
-const StyledConfetti = ({ classes }) => (
+const Confetti = ({ classes, notifie }) => (
   <View className={classes.wrapper}>
     <ReactConfetti
       height={window.innerHeight}
@@ -25,13 +29,13 @@ const StyledConfetti = ({ classes }) => (
       recycle={false}
     />
     <span className={classes.text}>Viola! Swap successful!</span>
+    {notifie(classes.notifie)}
   </View>
 );
 
-StyledConfetti.propTypes = {
+Confetti.propTypes = {
   classes: PropTypes.object.isRequired,
+  notifie: PropTypes.func,
 };
 
-const Confetti = injectSheet(confettiStyles)(StyledConfetti);
-
-export default Confetti;
+export default injectSheet(confettiStyles)(Confetti);
