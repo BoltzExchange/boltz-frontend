@@ -2,16 +2,16 @@ import axios from 'axios';
 import EventSource from 'eventsource';
 import { Transaction, ECPair, address } from 'bitcoinjs-lib';
 import { detectSwap, constructClaimTransaction } from 'boltz-core';
-import { boltzApi } from '../../constants';
 import * as actionTypes from '../../constants/actions';
+import { boltzApi, SwapUpdateEvent } from '../../constants';
 import {
   toSatoshi,
-  getHexBuffer,
   getNetwork,
+  getHexBuffer,
   getFeeEstimation,
 } from '../../scripts/utils';
 
-let latestSwapStatus = '';
+let latestSwapEvent = '';
 
 export const initReverseSwap = state => ({
   type: actionTypes.INIT_REVERSE_SWAP,
@@ -94,7 +94,7 @@ export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
   };
 };
 
-const claimTransaction = (swapInfo, response, preimage, feeEstimation) => {
+const getClaimTransaction = (swapInfo, response, preimage, feeEstimation) => {
   const redeemScript = getHexBuffer(response.redeemScript);
   const lockupTransaction = Transaction.fromHex(response.lockupTransaction);
 
@@ -114,7 +114,7 @@ const claimTransaction = (swapInfo, response, preimage, feeEstimation) => {
   );
 };
 
-const handleSwapStatus = (
+const handleReverseSwapStatus = (
   data,
   source,
   dispatch,
@@ -123,38 +123,56 @@ const handleSwapStatus = (
   swapInfo,
   response
 ) => {
-  const message = data.message;
+  const event = data.event;
 
-  if (message === latestSwapStatus) {
+  // If this function is called with the data from the GET endpoint "/swapstatus"
+  // it could be that the received event has already been handled
+  if (event === latestSwapEvent) {
     return;
   } else {
-    latestSwapStatus = message;
+    latestSwapEvent = event;
   }
 
-  if (message.startsWith('Transaction confirmed')) {
-    dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
-    nextStage();
-  } else if (data.message.startsWith('Refunded lockup transaction')) {
-    source.close();
-    dispatch(timelockExpired());
-  } else if (!message.startsWith('Could not find swap with id')) {
-    source.close();
-    dispatch(
-      getFeeEstimation(feeEstimation => {
-        const claimTx = claimTransaction(
-          swapInfo,
-          response,
-          data.preimage,
-          feeEstimation
-        );
-        dispatch(
-          broadcastClaim(swapInfo.quote, claimTx.toHex(), () => {
-            dispatch(reverseSwapResponse(true, response));
-            nextStage();
-          })
-        );
-      })
-    );
+  switch (event) {
+    case SwapUpdateEvent.TransactionConfirmed:
+      dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
+      nextStage();
+      break;
+
+    case SwapUpdateEvent.TransactionRefunded:
+      source.close();
+      dispatch(timelockExpired());
+      break;
+
+    case SwapUpdateEvent.InvoiceSettled:
+      source.close();
+
+      dispatch(
+        getFeeEstimation(feeEstimation => {
+          const claimTransaction = getClaimTransaction(
+            swapInfo,
+            response,
+            data.preimage,
+            feeEstimation
+          );
+
+          dispatch(
+            broadcastClaimTransaction(
+              swapInfo.quote,
+              claimTransaction.toHex(),
+              () => {
+                dispatch(reverseSwapResponse(true, response));
+                nextStage();
+              }
+            )
+          );
+        })
+      );
+      break;
+
+    default:
+      console.log(`Unknown swap status: ${data}`);
+      break;
   }
 };
 
@@ -196,7 +214,7 @@ const startListening = (
             timelockExpired
           );
 
-          handleSwapStatus(
+          handleReverseSwapStatus(
             statusReponse.data,
             source,
             dispatch,
@@ -210,7 +228,7 @@ const startListening = (
   };
 
   source.onmessage = event => {
-    handleSwapStatus(
+    handleReverseSwapStatus(
       JSON.parse(event.data),
       source,
       dispatch,
@@ -222,7 +240,7 @@ const startListening = (
   };
 };
 
-const broadcastClaim = (currency, claimTransaction, cb) => {
+const broadcastClaimTransaction = (currency, claimTransaction, cb) => {
   const url = `${boltzApi}/broadcasttransaction`;
   return dispatch => {
     axios

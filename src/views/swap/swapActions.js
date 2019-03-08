@@ -1,6 +1,6 @@
 import axios from 'axios';
 import EventSource from 'eventsource';
-import { boltzApi } from '../../constants';
+import { boltzApi, SwapUpdateEvent } from '../../constants';
 import * as actionTypes from '../../constants/actions';
 
 export const completeSwap = () => {
@@ -74,35 +74,54 @@ export const startSwap = (swapInfo, cb) => {
   };
 };
 
+const handleSwapStatus = (data, source, dispatch, callback) => {
+  const event = data.event;
+
+  switch (event) {
+    case SwapUpdateEvent.TransactionConfirmed:
+      dispatch(
+        setSwapStatus({
+          pending: true,
+          message: 'Waiting for invoice to be paid...',
+        })
+      );
+      break;
+
+    case SwapUpdateEvent.InvoiceFailedToPay:
+      source.close();
+      dispatch(
+        setSwapStatus({
+          error: true,
+          pending: false,
+          message: 'Could not pay invoice. Please refund your coins.',
+        })
+      );
+      break;
+
+    case SwapUpdateEvent.InvoicePaid:
+      source.close();
+      callback();
+      break;
+
+    default:
+      console.log(`Unknown swap status: ${data}`);
+      break;
+  }
+};
+
 export const startListening = (dispatch, swapId, callback) => {
   const source = new EventSource(`${boltzApi}/streamswapstatus?id=${swapId}`);
 
-  let message = {
-    pending: true,
-    message: 'Waiting for one confirmation...',
-  };
-
-  dispatch(setSwapStatus(message));
+  dispatch(
+    setSwapStatus({
+      pending: true,
+      message: 'Waiting for one confirmation...',
+    })
+  );
 
   source.onmessage = event => {
     const data = JSON.parse(event.data);
 
-    if (data.message.startsWith('Invoice paid:')) {
-      source.close();
-      callback();
-    } else if (data.message.startsWith('Transaction confirmed:')) {
-      message = {
-        pending: true,
-        message: 'Waiting for invoice to be paid...',
-      };
-    } else {
-      message = {
-        error: true,
-        pending: true,
-        message: 'Boltz could not find the transaction',
-      };
-    }
-
-    dispatch(setSwapStatus(message));
+    handleSwapStatus(data, source, dispatch, callback);
   };
 };

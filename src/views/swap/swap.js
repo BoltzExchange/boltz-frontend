@@ -123,7 +123,7 @@ const Swap = ({
                   loading={swapStatus.pending}
                   error={swapStatus.error}
                   errorText={swapStatus.message}
-                  errorAction={() => startSwap(swapInfo, props.nextStage)}
+                  errorRender={() => {}}
                   loadingRender={() => <Loading />}
                   onPress={() => {
                     props.nextStage();
