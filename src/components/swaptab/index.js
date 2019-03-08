@@ -347,7 +347,9 @@ class SwapTab extends React.Component {
             onClick={() => {
               this.setState({
                 base: quote,
+                baseAmount: quoteAmount,
                 quote: base,
+                quoteAmount: baseAmount,
               });
             }}
           />
