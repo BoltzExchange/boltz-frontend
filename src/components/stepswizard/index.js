@@ -128,7 +128,7 @@ class StepsWizard extends Component {
 }
 
 StepsWizard.propTypes = {
-  children: PropTypes.children,
+  children: PropTypes.node,
   classes: PropTypes.object,
   id: PropTypes.string,
   onExit: PropTypes.func,
