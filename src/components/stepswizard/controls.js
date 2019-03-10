@@ -33,7 +33,7 @@ Controls.propTypes = {
   disable: PropTypes.bool,
   canExit: PropTypes.bool,
   onExit: PropTypes.func,
-  children: PropTypes.children,
+  children: PropTypes.node,
   style: PropTypes.object,
   stage: PropTypes.number,
   range: PropTypes.number,

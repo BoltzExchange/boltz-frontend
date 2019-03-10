@@ -84,7 +84,7 @@ const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
 StyledSendTransaction.propTypes = {
   classes: PropTypes.object.isRequired,
   swapInfo: PropTypes.object.isRequired,
-  swapResponse: PropTypes.object.swapResponse,
+  swapResponse: PropTypes.object.isRequired,
 };
 
 const SendTransaction = injectSheet(SendTransactionStyles)(

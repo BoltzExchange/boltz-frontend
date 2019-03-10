@@ -20,7 +20,7 @@ const Steps = ({ style, stage, children }) => {
 };
 
 Steps.propTypes = {
-  children: PropTypes.children,
+  children: PropTypes.node,
   style: PropTypes.object,
   stage: PropTypes.number,
 };
