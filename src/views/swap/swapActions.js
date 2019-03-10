@@ -104,7 +104,7 @@ const handleSwapStatus = (data, source, dispatch, callback) => {
       break;
 
     default:
-      console.log(`Unknown swap status: ${data}`);
+      console.log(`Unknown swap status: ${JSON.stringify(data)}`);
       break;
   }
 };
@@ -119,9 +119,29 @@ export const startListening = (dispatch, swapId, callback) => {
     })
   );
 
-  source.onmessage = event => {
-    const data = JSON.parse(event.data);
+  source.onerror = () => {
+    source.close();
 
-    handleSwapStatus(data, source, dispatch, callback);
+    console.log(`Lost connection to Boltz`);
+    const url = `${boltzApi}/swapstatus`;
+
+    const interval = setInterval(() => {
+      axios
+        .post(url, {
+          id: swapId,
+        })
+        .then(statusReponse => {
+          clearInterval(interval);
+
+          console.log(`Reconnected to Boltz`);
+
+          startListening(dispatch, swapId, callback);
+          handleSwapStatus(statusReponse.data, source, dispatch, callback);
+        });
+    }, 1000);
+  };
+
+  source.onmessage = event => {
+    handleSwapStatus(JSON.parse(event.data), source, dispatch, callback);
   };
 };
