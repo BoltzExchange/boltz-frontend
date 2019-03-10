@@ -1,8 +1,8 @@
 import React from 'react';
-import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
-import View from '../view';
+import injectSheet from 'react-jss';
 import { MdArrowForward } from 'react-icons/md';
+import View from '../view';
 
 const styles = theme => ({
   wrapper: {
@@ -85,14 +85,14 @@ Controls.propTypes = {
   classes: PropTypes.object.isRequired,
   text: PropTypes.string,
   error: PropTypes.bool,
-  errorText: PropTypes.string,
   errorAction: PropTypes.func,
+  errorText: PropTypes.string,
   onPress: PropTypes.func,
   loading: PropTypes.bool,
   loadingText: PropTypes.string,
   loadingStyle: PropTypes.string,
   loadingRender: PropTypes.func,
-  errorRender: PropTypes.func,
+  errorRender: PropTypes.node,
 };
 
 export default injectSheet(styles)(Controls);
