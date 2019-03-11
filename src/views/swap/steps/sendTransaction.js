@@ -28,12 +28,18 @@ const SendTransactionStyles = () => ({
   },
   text: {
     fontSize: '30px',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   address: {
     width: '300px',
     fontSize: '25px',
     color: 'grey',
     wordBreak: 'break-word',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   action: {
     color: 'blue',
@@ -43,13 +49,20 @@ const SendTransactionStyles = () => ({
     '&:hover': {
       cursor: 'pointer',
     },
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
 });
 
 const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
-      <QrCode size={300} link={swapResponse.bip21} />
+      {window.innerWidth <= 375 ? (
+        <QrCode size={200} link={swapResponse.bip21} />
+      ) : (
+        <QrCode size={300} link={swapResponse.bip21} />
+      )}
     </View>
     <View className={classes.info}>
       <p className={classes.text}>

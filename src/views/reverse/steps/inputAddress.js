@@ -19,6 +19,9 @@ const inputAddressStyles = () => ({
   },
   title: {
     fontSize: '30px',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
 });
 

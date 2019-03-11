@@ -15,6 +15,9 @@ const styles = () => ({
   text: {
     fontSize: '32px',
     padding: '20px',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
 });
 

@@ -19,6 +19,9 @@ const InputInvoiceStyles = () => ({
   },
   title: {
     fontSize: '30px',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   invoice: {
     padding: '50px',
@@ -73,7 +76,7 @@ class StyledInputInvoice extends React.Component {
       <View className={classes.wrapper}>
         <p className={classes.title}>
           Paste a <b>{getCurrencyName(swapInfo.quote)}</b> Lightning {}
-          <FaBolt size={30} color="#FFFF00" /> invoice for <br />
+          <FaBolt size={25} color="#FFFF00" /> invoice for <br />
           <b>
             {swapInfo.quoteAmount} {swapInfo.quote}
           </b>

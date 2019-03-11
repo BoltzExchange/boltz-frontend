@@ -29,10 +29,24 @@ const styles = () => ({
     wordBreak: 'break-word',
     paddingLeft: '15px',
     paddingRight: '15px',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
+    '@media (max-width: 320px)': {
+      fontSize: '10px',
+    },
+  },
+  link: {
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   title: {
     fontSize: '30px',
     textAlign: 'center',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   action: {
     color: 'blue',
@@ -41,6 +55,9 @@ const styles = () => ({
     marginLeft: '50%',
     '&:hover': {
       cursor: 'pointer',
+    },
+    '@media (max-width: 425px)': {
+      fontSize: '18px',
     },
   },
 });
@@ -64,8 +81,16 @@ class PayInvoice extends React.Component {
     return (
       <View className={classes.wrapper}>
         <View className={classes.qrcode}>
-          <QrCode size={300} link={swapResponse.invoice} />
-          <Link to={link} text={'Click here to see the lockup transaction.'} />
+          {window.innerWidth <= 375 ? (
+            <QrCode size={200} link={swapResponse.invoice} />
+          ) : (
+            <QrCode size={300} link={swapResponse.invoice} />
+          )}
+          <Link
+            className={classes.link}
+            to={link}
+            text={'Click here to see the lockup transaction.'}
+          />
         </View>
         <View className={classes.info}>
           <p className={classes.title}>
