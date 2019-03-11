@@ -32,6 +32,10 @@ const styles = theme => ({
     boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.5)',
     paddingTop: '10px',
     paddingBottom: '10px',
+    '@media (max-width: 425px)': {
+      justifyContent: 'center',
+      width: '100%',
+    },
   },
 });
 
@@ -50,7 +54,7 @@ class Faq extends React.Component {
           <View className={classes.titleWrapper}>
             <h1 className={classes.title}>FAQ&apos;s</h1>
           </View>
-          <View noFlex className={classes.questionTab}>
+          <View className={classes.questionTab}>
             <Question
               title={style => <h1 className={style}>What is Boltz?</h1>}
               content={style => (
