@@ -5,9 +5,10 @@ import { FaBolt } from 'react-icons/fa';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
 import {
+  toSatoshi,
   getCurrencyName,
   getSampleInvoice,
-  toSatoshi,
+  getSmallestDenomination,
 } from '../../../scripts/utils';
 
 const InputInvoiceStyles = () => ({
@@ -75,7 +76,8 @@ class StyledInputInvoice extends React.Component {
           Paste a <b>{getCurrencyName(swapInfo.quote)}</b> Lightning {}
           <FaBolt size={30} color="#FFFF00" /> invoice for <br />
           <b>
-            {swapInfo.quoteAmount} {swapInfo.quote}
+            {toSatoshi(swapInfo.quoteAmount)}{' '}
+            {getSmallestDenomination(swapInfo.quote)}
           </b>
         </p>
         <InputArea
