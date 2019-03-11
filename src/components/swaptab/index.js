@@ -340,7 +340,7 @@ class SwapTab extends React.Component {
               onChange={e => this.updateQuoteAmount(e)}
             />
             <DropDown
-            className={classes.inputMobile}
+              className={classes.inputMobile}
               defaultValue={base}
               fields={currencies}
               onChange={e => this.updatePair(quote, e)}

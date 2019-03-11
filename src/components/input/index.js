@@ -23,7 +23,9 @@ class Input extends React.Component {
 
   render() {
     const { classes, className, disable, min, max, value, step } = this.props;
-    const classname = className ? `${classes.wrapper} ${className}` : classes.wrapper; 
+    const classname = className
+      ? `${classes.wrapper} ${className}`
+      : classes.wrapper;
     return (
       <input
         disabled={disable}

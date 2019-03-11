@@ -63,7 +63,9 @@ const StyledUploadRefundFile = ({
         <FileUpload text={'Select file'} onFileRead={setRefundFile} />
       </DropZone>
     )}
-    <p className={`${classes.info} ${classes.mobileInfo}`}>Paste the hash of the lockup transaction</p>
+    <p className={`${classes.info} ${classes.mobileInfo}`}>
+      Paste the hash of the lockup transaction
+    </p>
     <InputArea
       height={50}
       width={500}

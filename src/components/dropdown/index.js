@@ -39,7 +39,9 @@ class DropDown extends React.Component {
     if (value === undefined) {
       value = defaultValue;
     }
-    const classname = className ? `${classes.wrapper} ${className}` : classes.wrapper;
+    const classname = className
+      ? `${classes.wrapper} ${className}`
+      : classes.wrapper;
     return (
       <select
         value={value}
