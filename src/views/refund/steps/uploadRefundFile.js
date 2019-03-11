@@ -10,7 +10,7 @@ import { lockupTransactionHash } from '../../../constants';
 
 const UploadRefundFileStyles = theme => ({
   wrapper: {
-    flex: 1,
+    flex: '1 0 100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -28,10 +28,22 @@ const UploadRefundFileStyles = theme => ({
     border: `3px dotted ${theme.colors.lightGrey}`,
     alignItems: 'center',
     justifyContent: 'space-around',
+    '@media (max-width: 425px)': {
+      width: '100%',
+      border: 'none',
+    },
   },
   info: {
     fontSize: '30px',
     color: theme.colors.tundoraGrey,
+    '@media (max-width: 425px)': {
+      fontSize: '18px',
+    },
+  },
+  mobileInfo: {
+    '@media (max-width: 320px)': {
+      fontSize: '16px',
+    },
   },
 });
 
@@ -51,7 +63,7 @@ const StyledUploadRefundFile = ({
         <FileUpload text={'Select file'} onFileRead={setRefundFile} />
       </DropZone>
     )}
-    <p className={classes.info}>Paste the hash of the lockup transaction</p>
+    <p className={`${classes.info} ${classes.mobileInfo}`}>Paste the hash of the lockup transaction</p>
     <InputArea
       height={50}
       width={500}

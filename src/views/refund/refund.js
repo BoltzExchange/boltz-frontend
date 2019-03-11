@@ -118,6 +118,7 @@ const Refund = ({
                 <Controls
                   loading={isFetching || !destinationAddress}
                   text={'Generate refund transaction'}
+                  mobile
                   onPress={() =>
                     startRefund(
                       refundFile,

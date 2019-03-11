@@ -14,6 +14,9 @@ const styles = theme => ({
     height: p => `${p.height}px`,
     outline: p => (p.error ? '1px solid red' : 'none'),
     backgroundColor: theme.colors.lightGrey,
+    '@media (max-width: 425px)': {
+      width: () => `${300}px`,
+    },
   },
 });
 
