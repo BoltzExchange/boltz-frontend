@@ -20,14 +20,16 @@ const ButtonStyles = theme => ({
   },
 });
 
-const Button = ({ classes, text, to, style, external, onPress }) =>
-  external ? (
-    <Link text={text} style={style} to={to} className={classes.wrapper} />
+const Button = ({ classes, className, text, to, external, onPress }) => {
+  const style = className ? `${classes.wrapper} ${className}` : classes.wrapper;
+  return external ? (
+    <Link text={text} to={to} className={style} />
   ) : (
-    <span style={style} className={classes.wrapper} onClick={() => onPress()}>
+    <span className={style} onClick={() => onPress()}>
       {text}
     </span>
   );
+};
 
 Button.propTypes = {
   classes: PropTypes.object,
@@ -35,7 +37,7 @@ Button.propTypes = {
   text: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
   onPress: PropTypes.func,
-  style: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default injectSheet(ButtonStyles)(Button);

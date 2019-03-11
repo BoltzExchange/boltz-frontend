@@ -22,16 +22,15 @@ class Input extends React.Component {
   };
 
   render() {
-    const { classes, style, disable, min, max, value, step } = this.props;
-
+    const { classes, className, disable, min, max, value, step } = this.props;
+    const classname = className ? `${classes.wrapper} ${className}` : classes.wrapper; 
     return (
       <input
         disabled={disable}
         step={step}
         min={min}
         max={max}
-        style={style ? style : undefined}
-        className={classes.wrapper}
+        className={classname}
         onChange={e => this.onChange(e)}
         value={value}
         type={'number'}
@@ -48,7 +47,7 @@ Input.defaultProps = {
 Input.propTypes = {
   classes: PropTypes.object.isRequired,
   onChange: PropTypes.func,
-  style: PropTypes.object,
+  className: PropTypes.string,
   disable: PropTypes.bool,
   error: PropTypes.bool,
   min: PropTypes.number,

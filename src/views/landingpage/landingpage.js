@@ -58,6 +58,9 @@ const styles = theme => ({
     flex: '1 0 100%',
     alignItems: 'center',
     justifyContent: 'space-around',
+    '@media (max-width: 800px)': {
+      flexDirection: 'column',
+    },
   },
   infoWrapper: {
     flexDirection: 'column',
