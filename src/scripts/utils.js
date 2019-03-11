@@ -90,6 +90,13 @@ export const getCurrencyName = symbol => {
   return symbol === 'BTC' ? 'Bitcoin' : 'Litecoin';
 };
 
+/**
+ * Get the name of the smallest denomination of a currency
+ */
+export const getSmallestDenomination = symbol => {
+  return symbol === 'BTC' ? 'satoshis' : 'litoshis';
+};
+
 // TODO: refactor how we copy
 /**
  * Copy the content of the element "copy" into the clipboard
