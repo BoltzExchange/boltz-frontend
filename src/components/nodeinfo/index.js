@@ -7,7 +7,6 @@ import QrCode from '../qrcode';
 const styles = theme => ({
   wrapper: {
     height: '300x',
-    width: '700px',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '20px',
