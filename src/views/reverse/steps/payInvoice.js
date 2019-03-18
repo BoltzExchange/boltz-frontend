@@ -4,6 +4,7 @@ import injectSheet from 'react-jss';
 import Link from '../../../components/link';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
+import DetectResize from '../../../components/detectresize';
 import { copyToClipBoard, getExplorer } from '../../../scripts/utils';
 
 const styles = () => ({
@@ -81,11 +82,15 @@ class PayInvoice extends React.Component {
     return (
       <View className={classes.wrapper}>
         <View className={classes.qrcode}>
-          {window.innerWidth <= 375 ? (
-            <QrCode size={200} link={swapResponse.invoice} />
-          ) : (
-            <QrCode size={300} link={swapResponse.invoice} />
-          )}
+          <DetectResize>
+            {width =>
+              width <= 375 ? (
+                <QrCode size={200} link={swapResponse.invoice} />
+              ) : (
+                <QrCode size={300} link={swapResponse.invoice} />
+              )
+            }
+          </DetectResize>
           <Link
             className={classes.link}
             to={link}

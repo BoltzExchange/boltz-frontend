@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
+import DetectResize from '../../../components/detectresize';
 import { toWholeCoins, copyToClipBoard } from '../../../scripts/utils';
 
 const SendTransactionStyles = () => ({
   wrapper: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -24,17 +26,16 @@ const SendTransactionStyles = () => ({
   info: {
     flexDirection: 'column',
     flex: 1,
-    justifyContent: 'space-around',
   },
   text: {
-    fontSize: '30px',
+    fontSize: '20px',
     '@media (max-width: 425px)': {
       fontSize: '16px',
     },
   },
   address: {
     width: '300px',
-    fontSize: '25px',
+    fontSize: '18px',
     color: 'grey',
     wordBreak: 'break-word',
     '@media (max-width: 425px)': {
@@ -44,8 +45,8 @@ const SendTransactionStyles = () => ({
   action: {
     color: 'blue',
     fontWeight: '600',
-    fontSize: '30px',
-    marginLeft: '50%',
+    fontSize: '20px',
+    marginLeft: '60%',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -58,11 +59,15 @@ const SendTransactionStyles = () => ({
 const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
-      {window.innerWidth <= 375 ? (
-        <QrCode size={200} link={swapResponse.bip21} />
-      ) : (
-        <QrCode size={300} link={swapResponse.bip21} />
-      )}
+      <DetectResize>
+        {width =>
+          width <= 425 ? (
+            <QrCode size={200} link={swapResponse.bip21} />
+          ) : (
+            <QrCode size={250} link={swapResponse.bip21} />
+          )
+        }
+      </DetectResize>
     </View>
     <View className={classes.info}>
       <p className={classes.text}>
