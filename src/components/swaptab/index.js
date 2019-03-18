@@ -245,13 +245,14 @@ class SwapTab extends React.Component {
 
     const newBase = new BigNumber(quoteAmount).dividedBy(rate).toFixed(8);
     const fee = this.calculateFee(newBase, this.baseAsset.isLightning);
-    const newBaseWithFee = Number((newBase + fee).toFixed(8));
+
+    const newBaseWithFee = (Number(newBase) + fee).toFixed(8);
 
     const inputError = !this.checkBaseAmount(newBaseWithFee);
 
     this.setState({
       quoteAmount: Number(quoteAmount),
-      baseAmount: newBaseWithFee,
+      baseAmount: Number(newBaseWithFee),
       feeAmount: fee,
       inputError,
     });
