@@ -27,28 +27,22 @@ class StyledInputAddress extends React.Component {
     error: false,
   };
 
-  showError = () => {
-    this.props.onChange(undefined);
-    this.setState({ error: true });
-  };
-
   onChange = input => {
     const { onChange, swapInfo } = this.props;
+    const swapAddress = input.trim();
+
+    let error = true;
 
     if (input !== '') {
       try {
-        const swapAddress = input.trim();
-
         address.toOutputScript(swapAddress, getNetwork(swapInfo.quote));
-
-        onChange(swapAddress);
-        this.setState({ error: false });
-      } catch (error) {
-        this.showError();
-      }
-    } else {
-      this.showError();
+        error = false;
+        // eslint-disable-next-line no-empty
+      } catch (error) {}
     }
+
+    this.setState({ error });
+    onChange(swapAddress, error);
   };
 
   render() {
