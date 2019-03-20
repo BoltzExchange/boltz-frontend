@@ -99,7 +99,7 @@ class PayInvoice extends React.Component {
         </View>
         <View className={classes.info}>
           <p className={classes.title}>
-            Pay this {swapInfo.base} Lightning invoice
+            Pay this {swapInfo.base} Lightning invoice:
           </p>
           <p className={classes.invoice} id="copy">
             {swapResponse.invoice}

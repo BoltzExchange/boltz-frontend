@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
-import DetectResize from '../../../components/detectresize';
 import { toWholeCoins, copyToClipBoard } from '../../../scripts/utils';
 
 const SendTransactionStyles = () => ({
@@ -18,6 +17,7 @@ const SendTransactionStyles = () => ({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    margin: '20px',
   },
   image: {
     width: '300px',
@@ -46,7 +46,7 @@ const SendTransactionStyles = () => ({
     color: 'blue',
     fontWeight: '600',
     fontSize: '20px',
-    marginLeft: '60%',
+    marginLeft: '70%',
     '&:hover': {
       cursor: 'pointer',
     },
@@ -59,22 +59,14 @@ const SendTransactionStyles = () => ({
 const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
-      <DetectResize>
-        {width =>
-          width <= 425 ? (
-            <QrCode size={200} link={swapResponse.bip21} />
-          ) : (
-            <QrCode size={250} link={swapResponse.bip21} />
-          )
-        }
-      </DetectResize>
+      <QrCode size={250} link={swapResponse.bip21} />
     </View>
     <View className={classes.info}>
       <p className={classes.text}>
         Send{' '}
         <b>
           {' '}
-          {toWholeCoins(swapResponse.expectedAmount)} {swapInfo.base}{' '}
+          {toWholeCoins(swapResponse.expectedAmount)} {'BTC'}{' '}
         </b>{' '}
         to this address:
       </p>

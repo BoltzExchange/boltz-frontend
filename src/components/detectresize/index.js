@@ -23,7 +23,7 @@ class DetectResize extends React.Component {
   };
 
   render() {
-    return <div>{this.props.children(this.state.width)}</div>;
+    return this.props.children(this.state.width);
   }
 }
 
