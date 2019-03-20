@@ -66,7 +66,7 @@ const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
         Send{' '}
         <b>
           {' '}
-          {toWholeCoins(swapResponse.expectedAmount)} {swapResponse.bip21}{' '}
+          {toWholeCoins(swapResponse.expectedAmount)} {swapInfo.base}{' '}
         </b>{' '}
         to this address:
       </p>
