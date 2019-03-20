@@ -54,6 +54,9 @@ const SendTransactionStyles = () => ({
       fontSize: '16px',
     },
   },
+  tool: {
+    fontSize: '12px',
+  },
 });
 
 const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
@@ -77,8 +80,8 @@ const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
         Copy
       </span>
       {swapInfo.base === 'LTC' ? (
-        <p>
-          If the address does not work with your wallet: <br />
+        <p className={classes.tool}>
+          If the address does not work with your wallet:{' '}
           <a
             target={'_blank'}
             href="https://litecoin-project.github.io/p2sh-convert/"
