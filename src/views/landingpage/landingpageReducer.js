@@ -4,6 +4,7 @@ const initialState = {
   rates: {},
   currencies: [],
   limits: {},
+  errorMessage: undefined,
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,6 +13,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         rates: action.payload.rates,
+        errorMessage: undefined,
         currencies: action.payload.currencies,
       };
 
@@ -19,8 +21,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         limits: action.payload,
+        errorMessage: undefined,
       };
-
+    case actionTypes.RESOURCE_ERROR:
+      return {
+        ...state,
+        errorMessage: action.payload,
+      };
     default:
       return state;
   }

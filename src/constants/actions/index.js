@@ -11,6 +11,7 @@ export const PAIRS_REQUEST = 'PAIRS_REQUEST';
 export const PAIRS_RESPONSE = 'PAIRS_RESPONSE';
 export const LIMITS_REQUEST = 'LIMITS_REQUEST';
 export const LIMITS_RESPONSE = 'LIMITS_RESPONSE';
+export const RESOURCE_ERROR = 'RESOURCE_ERROR';
 
 /**
  * Swap actions

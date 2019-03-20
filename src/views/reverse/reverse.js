@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { lostConnection, reconnected } from '../../constants/messages';
 import View from '../../components/view';
 import Prompt from '../../components/prompt';
 import Controls from '../../components/controls';
@@ -10,7 +11,9 @@ import BackGround from '../../components/background';
 import { getCurrencyName } from '../../scripts/utils';
 import StepsWizard from '../../components/stepswizard';
 import DataStorage from '../reversetimelock/dataStorage';
+import { notificationData } from '../../scripts/utils';
 import { InputAddress, PayInvoice, LockingFunds } from './steps';
+import ReactNotification from 'react-notifications-component';
 
 const styles = () => ({
   wrapper: {
@@ -23,17 +26,35 @@ const styles = () => ({
 class ReverseSwap extends React.Component {
   constructor(props) {
     super(props);
-
     this.notificationDom = React.createRef();
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.isReconnecting && !prevProps.isReconnecting) {
-      window.alert(
-        'We lost the connection to Boltz and are trying to reconnect. Do not close this window!'
+    const { isReconnecting, swapFailResponse, swapResponse } = this.props;
+
+    if (isReconnecting && !prevProps.isReconnecting) {
+      this.addNotification(lostConnection, 0);
+    }
+    if (!isReconnecting && prevProps.isReconnecting) {
+      this.addNotification(reconnected);
+    }
+
+    if (!swapFailResponse && !isReconnecting) {
+      this.addNotification(
+        {
+          title: 'Failed to execute reverse swap',
+          message: swapResponse,
+        },
+        0
       );
     }
   }
+
+  addNotification = (message, type) => {
+    this.notificationDom.current.addNotification(
+      notificationData(message, type)
+    );
+  };
 
   render() {
     const {
@@ -62,6 +83,7 @@ class ReverseSwap extends React.Component {
 
     return (
       <BackGround>
+        <ReactNotification ref={this.notificationDom} />
         <Prompt />
         <View className={classes.wrapper}>
           <StepsWizard
@@ -149,7 +171,7 @@ class ReverseSwap extends React.Component {
                     loading={isFetching}
                     loadingText={'Locking your funds...'}
                     loadingRender={() => <Loading />}
-                    error={swapFailResponse === true}
+                    error={!swapFailResponse === true}
                     errorAction={() =>
                       startReverseSwap(
                         swapInfo,

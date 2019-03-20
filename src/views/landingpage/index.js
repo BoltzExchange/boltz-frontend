@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   rates: state.landingpageReducer.rates,
   currencies: state.landingpageReducer.currencies,
   limits: state.landingpageReducer.limits,
+  errorMessage: state.landingpageReducer.errorMessage,
 });
 
 const mapDispatchToProps = dispatch => ({

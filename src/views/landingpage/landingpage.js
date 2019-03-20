@@ -11,8 +11,161 @@ import BackGround from '../../components/background';
 import Button from '../../components/button';
 import Link from '../../components/link';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
+import { notificationData } from '../../scripts/utils';
+import ReactNotification from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
+
+class LandingPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+    this.notificationDom = React.createRef();
+  }
+
+  componentDidMount = () => {
+    this.props.getPairs(() => {
+      this.props.getLimits(this.props.rates, () => {});
+    });
+
+    try {
+      requestProvider().then(provider => {
+        this.webln = provider;
+      });
+    } catch (error) {
+      this.addNotification(
+        {
+          message: error.toString(),
+          title: 'Could not enable webln',
+        },
+        1
+      );
+    }
+  };
+
+  componentDidUpdate = () => {
+    if (this.props.errorMessage) {
+      this.addNotification(this.props.errorMessage, 0);
+    }
+  };
+
+  addNotification = (info, type) => {
+    this.notificationDom.current.addNotification(notificationData(info, type));
+  };
+
+  toggleModal = () => {
+    this.setState(prev => ({ isOpen: !prev.isOpen }));
+  };
+
+  render() {
+    const {
+      classes,
+      goHome,
+      goReverseSwap,
+      goSwap,
+      goRefund,
+      goFaq,
+      initSwap,
+      initReverseSwap,
+      rates,
+      currencies,
+      limits,
+    } = this.props;
+
+    const loading =
+      Object.keys(rates).length === 0 ||
+      currencies.length === 0 ||
+      Object.keys(limits).length === 0;
+
+    return (
+      <BackGround>
+        <ReactNotification ref={this.notificationDom} />
+        <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
+        <View className={classes.wrapper}>
+          <View className={classes.infoWrapper}>
+            <p className={classes.title}>
+              Instant, Low Fee & <br /> Non-Custodial.
+            </p>
+            <p className={classes.description}>
+              Trading <br />
+              <b>{`Shouldn't`}</b>
+              <br />
+              Require
+              <br />
+              An Account.
+            </p>
+            <Button text="WHY?" onPress={() => this.toggleModal()} />
+            <ModalComponent
+              isOpen={this.state.isOpen}
+              onClose={this.toggleModal}
+            >
+              <ModalContent />
+            </ModalComponent>
+          </View>
+          {loading ? (
+            <View className={classes.loading}>
+              <img
+                alt="logo"
+                src={boltz_logo}
+                className={classes.loadingLogo}
+              />
+              <p className={classes.loadingText}>Loading...</p>
+            </View>
+          ) : (
+            <SwapTab
+              onPress={state => {
+                const keys = generateKeys(
+                  state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
+                );
+
+                if (state.isReverseSwap) {
+                  initReverseSwap({
+                    ...state,
+                    keys,
+                    webln: this.webln,
+                  });
+
+                  goReverseSwap();
+                } else {
+                  initSwap({
+                    ...state,
+                    keys,
+                    webln: this.webln,
+                  });
+
+                  goSwap();
+                }
+              }}
+              rates={rates}
+              currencies={currencies}
+              limits={limits}
+            />
+          )}
+        </View>
+      </BackGround>
+    );
+  }
+}
+
+LandingPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+  goHome: PropTypes.func.isRequired,
+  goSwap: PropTypes.func.isRequired,
+  goReverseSwap: PropTypes.func.isRequired,
+  goRefund: PropTypes.func.isRequired,
+  goFaq: PropTypes.func.isRequired,
+  initSwap: PropTypes.func.isRequired,
+  initReverseSwap: PropTypes.func.isRequired,
+  getPairs: PropTypes.func.isRequired,
+  getLimits: PropTypes.func.isRequired,
+  rates: PropTypes.object.isRequired,
+  currencies: PropTypes.array.isRequired,
+  limits: PropTypes.object.isRequired,
+  errorMessage: PropTypes.object.isRequired,
+};
 
 const ModalContent = () => (
   <View style={{ fontSize: '20px' }} noFlex>
@@ -101,136 +254,5 @@ const styles = theme => ({
     fontSize: '20px',
   },
 });
-
-class LandingPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: false,
-    };
-  }
-
-  componentDidMount() {
-    this.props.getPairs(() => {
-      this.props.getLimits(this.props.rates, () => {});
-    });
-
-    try {
-      requestProvider().then(provider => {
-        this.webln = provider;
-      });
-    } catch (error) {
-      console.log(`Could not enable webln: ${error}`);
-    }
-  }
-
-  toggleModal = () => {
-    this.setState(prev => ({ isOpen: !prev.isOpen }));
-  };
-
-  render() {
-    const {
-      classes,
-      goHome,
-      goReverseSwap,
-      goSwap,
-      goRefund,
-      goFaq,
-      initSwap,
-      initReverseSwap,
-      rates,
-      currencies,
-      limits,
-    } = this.props;
-
-    const loading =
-      Object.keys(rates).length === 0 ||
-      currencies.length === 0 ||
-      Object.keys(limits).length === 0;
-
-    return (
-      <BackGround>
-        <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
-        <View className={classes.wrapper}>
-          <View className={classes.infoWrapper}>
-            <p className={classes.title}>
-              Instant, Low Fee & <br /> Non-Custodial.
-            </p>
-            <p className={classes.description}>
-              Trading <br />
-              <b>{`Shouldn't`}</b>
-              <br />
-              Require
-              <br />
-              An Account.
-            </p>
-            <Button text="WHY?" onPress={() => this.toggleModal()} />
-            <ModalComponent
-              isOpen={this.state.isOpen}
-              onClose={this.toggleModal}
-            >
-              <ModalContent />
-            </ModalComponent>
-          </View>
-          {loading ? (
-            <View className={classes.loading}>
-              <img
-                alt="logo"
-                src={boltz_logo}
-                className={classes.loadingLogo}
-              />
-              <p className={classes.loadingText}>Loading...</p>
-            </View>
-          ) : (
-            <SwapTab
-              onPress={state => {
-                const keys = generateKeys(
-                  state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
-                );
-
-                if (state.isReverseSwap) {
-                  initReverseSwap({
-                    ...state,
-                    keys,
-                    webln: this.webln,
-                  });
-
-                  goReverseSwap();
-                } else {
-                  initSwap({
-                    ...state,
-                    keys,
-                    webln: this.webln,
-                  });
-
-                  goSwap();
-                }
-              }}
-              rates={rates}
-              currencies={currencies}
-              limits={limits}
-            />
-          )}
-        </View>
-      </BackGround>
-    );
-  }
-}
-
-LandingPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-  goHome: PropTypes.func.isRequired,
-  goSwap: PropTypes.func.isRequired,
-  goReverseSwap: PropTypes.func.isRequired,
-  goRefund: PropTypes.func.isRequired,
-  goFaq: PropTypes.func.isRequired,
-  initSwap: PropTypes.func.isRequired,
-  initReverseSwap: PropTypes.func.isRequired,
-  getPairs: PropTypes.func.isRequired,
-  getLimits: PropTypes.func.isRequired,
-  rates: PropTypes.object.isRequired,
-  currencies: PropTypes.array.isRequired,
-  limits: PropTypes.object.isRequired,
-};
 
 export default injectSheet(styles)(LandingPage);

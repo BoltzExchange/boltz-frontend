@@ -149,3 +149,33 @@ export const getFeeEstimation = callback => {
       });
   };
 };
+
+/**
+ * @param {{message: string, title: string }} info title and message
+ * @param {number} type type of alert
+ */
+export const notificationData = (info, alertType) => {
+  let type;
+  switch (alertType) {
+    case 0:
+      type = 'danger';
+      break;
+    case 1:
+      type = 'warning';
+      break;
+    default:
+      type = 'success';
+      break;
+  }
+  return {
+    message: info.message,
+    title: info.title,
+    type,
+    insert: 'top-left',
+    container: 'top-left',
+    animationIn: ['animated', 'fadeIn'],
+    animationOut: ['animated', 'fadeOut'],
+    dismiss: { duration: 3500 },
+    dismissable: { click: true },
+  };
+};
