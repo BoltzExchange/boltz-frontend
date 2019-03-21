@@ -17,6 +17,8 @@ const initalState = {
     success: true,
   },
   swapStatus: 'Waiting for confirmation...',
+
+  invalidAddress: false,
 };
 
 const reducer = (state = initalState, action) => {
@@ -54,8 +56,9 @@ const reducer = (state = initalState, action) => {
         ...state,
         swapInfo: {
           ...state.swapInfo,
-          address: action.payload,
+          address: action.payload.address,
         },
+        invalidAddress: action.payload.error,
       };
 
     case actionTypes.SET_REVERSE_SWAP_STATUS:
