@@ -12,9 +12,16 @@ const styles = theme => ({
     flex: '1 1 content',
     justifyContent: 'space-between',
     alignItems: 'center',
+    '@media (max-width: 425px)': {
+      flexDirection: 'column',
+    },
   },
   buttons: {
     marginRight: '10%',
+    '@media (max-width: 425px)': {
+      marginRight: '0%',
+      justifyContent: 'space-around',
+    },
   },
   logo: {
     width: 'auto',
@@ -23,6 +30,11 @@ const styles = theme => ({
     cursor: 'pointer',
     alignItems: 'baseline',
     justifyContent: 'space-between',
+  },
+  responsiveBtn: {
+    '@media (max-width: 320px)': {
+      fontSize: '24px',
+    },
   },
   img: {
     alignSelf: 'center',
@@ -56,10 +68,27 @@ const TaskBar = ({ classes, goHome, goRefund, goFaq }) => (
       <span className={classes.subLogoText}>{network} alpha</span>
     </View>
     <View className={classes.buttons}>
-      <Button text="Swap" onPress={() => goHome()} />
-      <Button text="Refund" onPress={() => goRefund()} />
-      <Button text="FAQ" onPress={() => goFaq()} />
-      <Button external text="Github" to="https://github.com/BoltzExchange" />
+      <Button
+        className={classes.responsiveBtn}
+        text="Swap"
+        onPress={() => goHome()}
+      />
+      <Button
+        className={classes.responsiveBtn}
+        text="Refund"
+        onPress={() => goRefund()}
+      />
+      <Button
+        className={classes.responsiveBtn}
+        text="FAQ"
+        onPress={() => goFaq()}
+      />
+      <Button
+        className={classes.responsiveBtn}
+        external
+        text="Github"
+        to="https://github.com/BoltzExchange"
+      />
     </View>
   </View>
 );

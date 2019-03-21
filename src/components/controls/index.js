@@ -20,7 +20,13 @@ const styles = theme => ({
     backgroundColor: theme.colors.red,
   },
   controls: { flex: 2, justifyContent: 'center', alignItems: 'center' },
-  text: { color: '#fff', fontWeight: '300' },
+  text: {
+    color: '#fff',
+    fontWeight: '300',
+    '@media (max-width: 425px)': {
+      fontSize: p => (p.mobile ? '20px' : undefined),
+    },
+  },
   errorCommand: {
     fontSize: '25px',
     paddingRight: '10px',
@@ -93,6 +99,7 @@ Controls.propTypes = {
   loadingStyle: PropTypes.string,
   loadingRender: PropTypes.func,
   errorRender: PropTypes.node,
+  mobile: PropTypes.bool,
 };
 
 export default injectSheet(styles)(Controls);

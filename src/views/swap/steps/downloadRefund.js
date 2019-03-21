@@ -17,10 +17,16 @@ const DownloadRefundStyles = () => ({
   info: {
     fontSize: '30px',
     alignSelf: 'flex-start',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   address: {
     fontSize: '30px',
     alignSelf: 'flex-start',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   link: {
     fontSize: '24px',

@@ -152,6 +152,7 @@ class ReverseSwap extends React.Component {
                 num={2}
                 render={props => (
                   <Controls
+                    mobile
                     loading={isFetching}
                     loadingText={'Locking your funds...'}
                     loadingRender={() => <Loading />}
@@ -171,6 +172,7 @@ class ReverseSwap extends React.Component {
                 num={3}
                 render={() => (
                   <Controls
+                    mobile
                     loading={isFetching}
                     loadingText={swapStatus}
                     loadingRender={() => <Loading />}

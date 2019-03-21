@@ -29,6 +29,7 @@
     "bitcoinjs-lib": "^4.0.3",
     "boltz-core": "^0.0.6",
     "eventsource": "^1.0.7",
+    "lodash.throttle": "^4.1.1",
     "prop-types": "^15.7.2",
     "qrious": "^4.0.2",
     "react": "^16.8.4",
