@@ -67,7 +67,6 @@ class PayInvoice extends React.Component {
   componentDidMount() {
     const { swapResponse, webln } = this.props;
 
-    console.log(webln);
     if (webln) {
       webln.sendPayment(swapResponse.invoice);
     }
