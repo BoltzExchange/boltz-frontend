@@ -4,6 +4,19 @@ const capitalizeFirstLetter = input => {
   return input.charAt(0).toUpperCase() + input.slice(1);
 };
 
+export const SwapUpdateEvent = {
+  InvoicePaid: 'invoice.paid',
+  InvoiceSettled: 'invoice.settled',
+  InvoiceFailedToPay: 'invoice.failedToPay',
+
+  TransactionRefunded: 'transaction.refunded',
+  TransactionConfirmed: 'transaction.confirmed',
+};
+
+/**
+ * Values from the environment
+ */
+
 // API endpoint
 export const boltzApi = process.env.REACT_APP_BOLTZ_API;
 

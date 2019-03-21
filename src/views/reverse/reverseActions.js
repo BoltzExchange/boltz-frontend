@@ -2,14 +2,16 @@ import axios from 'axios';
 import EventSource from 'eventsource';
 import { Transaction, ECPair, address } from 'bitcoinjs-lib';
 import { detectSwap, constructClaimTransaction } from 'boltz-core';
-import { boltzApi } from '../../constants';
 import * as actionTypes from '../../constants/actions';
+import { boltzApi, SwapUpdateEvent } from '../../constants';
 import {
   toSatoshi,
-  getHexBuffer,
   getNetwork,
+  getHexBuffer,
   getFeeEstimation,
 } from '../../scripts/utils';
+
+let latestSwapEvent = '';
 
 export const initReverseSwap = state => ({
   type: actionTypes.INIT_REVERSE_SWAP,
@@ -28,9 +30,12 @@ export const completeReverseSwap = () => ({
   type: actionTypes.COMPLETE_REVERSE_SWAP,
 });
 
-export const setReverseSwapAddress = address => ({
+export const setReverseSwapAddress = (address, error) => ({
   type: actionTypes.SET_REVERSE_SWAP_ADDRESS,
-  payload: address,
+  payload: {
+    address,
+    error,
+  },
 });
 
 export const setReverseSwapStatus = status => ({
@@ -48,6 +53,11 @@ export const reverseSwapResponse = (success, response) => ({
     success,
     response,
   },
+});
+
+const setIsReconnecting = isReconnecting => ({
+  type: actionTypes.SET_IS_RECONNECTING,
+  payload: isReconnecting,
 });
 
 export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
@@ -87,7 +97,7 @@ export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
   };
 };
 
-const claimTransaction = (swapInfo, response, preimage, feeEstimation) => {
+const getClaimTransaction = (swapInfo, response, preimage, feeEstimation) => {
   const redeemScript = getHexBuffer(response.redeemScript);
   const lockupTransaction = Transaction.fromHex(response.lockupTransaction);
 
@@ -107,6 +117,68 @@ const claimTransaction = (swapInfo, response, preimage, feeEstimation) => {
   );
 };
 
+const handleReverseSwapStatus = (
+  data,
+  source,
+  dispatch,
+  nextStage,
+  timelockExpired,
+  swapInfo,
+  response
+) => {
+  const event = data.event;
+
+  // If this function is called with the data from the GET endpoint "/swapstatus"
+  // it could be that the received event has already been handled
+  if (event === latestSwapEvent) {
+    return;
+  } else {
+    latestSwapEvent = event;
+  }
+
+  switch (event) {
+    case SwapUpdateEvent.TransactionConfirmed:
+      dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
+      nextStage();
+      break;
+
+    case SwapUpdateEvent.TransactionRefunded:
+      source.close();
+      dispatch(timelockExpired());
+      break;
+
+    case SwapUpdateEvent.InvoiceSettled:
+      source.close();
+
+      dispatch(
+        getFeeEstimation(feeEstimation => {
+          const claimTransaction = getClaimTransaction(
+            swapInfo,
+            response,
+            data.preimage,
+            feeEstimation
+          );
+
+          dispatch(
+            broadcastClaimTransaction(
+              swapInfo.quote,
+              claimTransaction.toHex(),
+              () => {
+                dispatch(reverseSwapResponse(true, response));
+                nextStage();
+              }
+            )
+          );
+        })
+      );
+      break;
+
+    default:
+      console.log(`Unknown swap status: ${data}`);
+      break;
+  }
+};
+
 const startListening = (
   dispatch,
   swapInfo,
@@ -114,41 +186,64 @@ const startListening = (
   nextStage,
   timelockExpired
 ) => {
-  const source = new EventSource(`${boltzApi}/swapstatus?id=${response.id}`);
+  const source = new EventSource(
+    `${boltzApi}/streamswapstatus?id=${response.id}`
+  );
 
-  source.onmessage = event => {
-    const data = JSON.parse(event.data);
-    const message = data.message;
+  source.onerror = () => {
+    source.close();
 
-    if (message.startsWith('Transaction confirmed')) {
-      dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
-      nextStage();
-    } else if (data.message.startsWith('Refunded lockup transaction')) {
-      source.close();
-      dispatch(timelockExpired());
-    } else {
-      source.close();
-      dispatch(
-        getFeeEstimation(feeEstimation => {
-          const claimTx = claimTransaction(
+    dispatch(setIsReconnecting(true));
+
+    console.log(`Lost connection to Boltz`);
+    const url = `${boltzApi}/swapstatus`;
+
+    const interval = setInterval(() => {
+      axios
+        .post(url, {
+          id: response.id,
+        })
+        .then(statusReponse => {
+          dispatch(setIsReconnecting(false));
+          clearInterval(interval);
+
+          console.log(`Reconnected to Boltz`);
+
+          startListening(
+            dispatch,
             swapInfo,
             response,
-            data.preimage,
-            feeEstimation
+            nextStage,
+            timelockExpired
           );
-          dispatch(
-            broadcastClaim(swapInfo.quote, claimTx.toHex(), () => {
-              dispatch(reverseSwapResponse(true, response));
-              nextStage();
-            })
+
+          handleReverseSwapStatus(
+            statusReponse.data,
+            source,
+            dispatch,
+            nextStage,
+            timelockExpired,
+            swapInfo,
+            response
           );
-        })
-      );
-    }
+        });
+    }, 1000);
+  };
+
+  source.onmessage = event => {
+    handleReverseSwapStatus(
+      JSON.parse(event.data),
+      source,
+      dispatch,
+      nextStage,
+      timelockExpired,
+      swapInfo,
+      response
+    );
   };
 };
 
-const broadcastClaim = (currency, claimTransaction, cb) => {
+const broadcastClaimTransaction = (currency, claimTransaction, cb) => {
   const url = `${boltzApi}/broadcasttransaction`;
   return dispatch => {
     axios

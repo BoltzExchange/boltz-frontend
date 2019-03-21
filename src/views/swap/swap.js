@@ -76,7 +76,19 @@ const Swap = ({
                 />
               )}
             />
-            <StepsWizard.Step num={4} render={() => <Confetti />} />
+            <StepsWizard.Step
+              num={4}
+              render={() => (
+                <Confetti
+                  notifie={style => (
+                    <span className={style}>
+                      You sent {swapInfo.baseAmount} {swapInfo.base} and
+                      received {swapInfo.quoteAmount} {swapInfo.quote}
+                    </span>
+                  )}
+                />
+              )}
+            />
           </StepsWizard.Steps>
           <StepsWizard.Controls>
             <StepsWizard.Control
@@ -96,6 +108,7 @@ const Swap = ({
               num={2}
               render={props => (
                 <Controls
+                  mobile
                   text={'I have downloaded the refund file'}
                   onPress={() => {
                     props.nextStage();
@@ -107,11 +120,12 @@ const Swap = ({
               num={3}
               render={props => (
                 <Controls
+                  mobile
                   text={swapStatus.message}
                   loading={swapStatus.pending}
                   error={swapStatus.error}
                   errorText={swapStatus.message}
-                  errorAction={() => startSwap(swapInfo, props.nextStage)}
+                  errorRender={() => {}}
                   loadingRender={() => <Loading />}
                   onPress={() => {
                     props.nextStage();

@@ -1,6 +1,7 @@
+import * as routes from '../../constants/routes';
 import { NAVIGATE } from '../../constants/actions';
 
-const initalState = 'Home';
+const initalState = routes.home;
 
 const reducer = (state = initalState, action) => {
   switch (action.type) {

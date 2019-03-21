@@ -21,6 +21,16 @@ const styles = theme => ({
       width: '800px',
       height: '600px',
     },
+    '@media (max-width: 500px)': {
+      width: '100%',
+      height: '400px',
+    },
+  },
+  inputMobile: {
+    '@media (max-width: 500px)': {
+      width: '100px',
+      fontSize: '16px',
+    },
   },
   stats: {
     backgroundColor: theme.colors.white,
@@ -30,8 +40,7 @@ const styles = theme => ({
     alignItems: 'center',
   },
   options: {
-    height: '70%',
-    width: '100%',
+    flex: '1 0 70%',
     flexDirection: 'column',
   },
   select: {
@@ -41,8 +50,7 @@ const styles = theme => ({
   },
   next: {
     backgroundColor: theme.colors.matisseBlue,
-    height: '15%',
-    width: '100%',
+    flex: '1 0 15%',
     justifyContent: 'center',
     alignItems: 'center',
     '&:hover': {
@@ -51,13 +59,7 @@ const styles = theme => ({
   },
   nextError: {
     backgroundColor: theme.colors.tundoraGrey,
-    height: '15%',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  controls: {
-    flex: 2,
+    flex: '1 0 15%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -245,13 +247,14 @@ class SwapTab extends React.Component {
 
     const newBase = new BigNumber(quoteAmount).dividedBy(rate).toFixed(8);
     const fee = this.calculateFee(newBase, this.baseAsset.isLightning);
-    const newBaseWithFee = Number((newBase + fee).toFixed(8));
+
+    const newBaseWithFee = (Number(newBase) + fee).toFixed(8);
 
     const inputError = !this.checkBaseAmount(newBaseWithFee);
 
     this.setState({
       quoteAmount: Number(quoteAmount),
-      baseAmount: newBaseWithFee,
+      baseAmount: Number(newBaseWithFee),
       feeAmount: fee,
       inputError,
     });
@@ -329,6 +332,7 @@ class SwapTab extends React.Component {
           <View className={classes.select}>
             <Text text="You send:" className={classes.text} />
             <Input
+              className={classes.inputMobile}
               min={minAmount}
               max={maxAmount}
               step={0.001}
@@ -337,6 +341,7 @@ class SwapTab extends React.Component {
               onChange={e => this.updateQuoteAmount(e)}
             />
             <DropDown
+              className={classes.inputMobile}
               defaultValue={base}
               fields={currencies}
               onChange={e => this.updatePair(quote, e)}
@@ -347,13 +352,16 @@ class SwapTab extends React.Component {
             onClick={() => {
               this.setState({
                 base: quote,
+                baseAmount: quoteAmount,
                 quote: base,
+                quoteAmount: baseAmount,
               });
             }}
           />
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
             <Input
+              className={classes.inputMobile}
               min={1 / decimals}
               max={Number.MAX_SAFE_INTEGER}
               step={1 / decimals}
@@ -362,6 +370,7 @@ class SwapTab extends React.Component {
               onChange={e => this.updateBaseAmount(e)}
             />
             <DropDown
+              className={classes.inputMobile}
               defaultValue={quote}
               fields={currencies}
               onChange={e => this.updatePair(e, base)}

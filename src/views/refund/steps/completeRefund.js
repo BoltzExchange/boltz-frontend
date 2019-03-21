@@ -28,6 +28,9 @@ const CompleteRefundStyles = theme => ({
     paddingRight: '1vw',
     fontSize: '24px',
     fontWeight: 300,
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
 });
 

@@ -6,13 +6,15 @@ import injectSheet from 'react-jss';
 const styles = theme => ({
   wrapper: {
     height: 'auto',
-    width: p => p.width,
     flexDirection: 'column',
     backgroundColor: theme.colors.white,
     margin: '20px',
     marginTop: '10px',
     marginBottom: '10px',
     padding: '10px',
+    '@media (max-width: 425px)': {
+      width: '300px',
+    },
   },
   title: {
     color: theme.colors.black,
@@ -22,6 +24,12 @@ const styles = theme => ({
     fontStretch: 'condensed',
     lineHeight: 'normal',
     letterSpacing: 'normal',
+    '@media (max-width: 768px)': {
+      fontSize: '20px',
+    },
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   content: {
     fontSize: '20px',
@@ -31,6 +39,12 @@ const styles = theme => ({
     lineHeight: 'normal',
     letterSpacing: 'normal',
     color: theme.colors.tundoraGrey,
+    '@media (max-width: 768px)': {
+      fontSize: '18px',
+    },
+    '@media (max-width: 425px)': {
+      fontSize: '14px',
+    },
   },
 });
 

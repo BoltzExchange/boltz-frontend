@@ -14,6 +14,9 @@ const styles = theme => ({
     boxShadow: '0px 0px 30px -6px rgba(0,0,0,0.52)',
     backgroundColor: p => (p.dark ? theme.colors.aeroBlue : theme.colors.white),
     flexDirection: 'column',
+    '@media (max-width: 425px)': {
+      width: '100%',
+    },
   },
   progress: {
     width: '100%',
@@ -128,7 +131,7 @@ class StepsWizard extends Component {
 }
 
 StepsWizard.propTypes = {
-  children: PropTypes.children,
+  children: PropTypes.node,
   classes: PropTypes.object,
   id: PropTypes.string,
   onExit: PropTypes.func,

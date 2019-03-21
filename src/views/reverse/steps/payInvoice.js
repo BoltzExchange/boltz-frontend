@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import Link from '../../../components/link';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
-import { copyToClipBoard } from '../../../scripts/utils';
+import DetectResize from '../../../components/detectresize';
+import { copyToClipBoard, getExplorer } from '../../../scripts/utils';
 
-const payInvoiceStyles = () => ({
+const styles = () => ({
   wrapper: {
     flex: 1,
     justifyContent: 'center',
@@ -28,10 +30,24 @@ const payInvoiceStyles = () => ({
     wordBreak: 'break-word',
     paddingLeft: '15px',
     paddingRight: '15px',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
+    '@media (max-width: 320px)': {
+      fontSize: '10px',
+    },
+  },
+  link: {
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   title: {
     fontSize: '30px',
     textAlign: 'center',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   action: {
     color: 'blue',
@@ -41,31 +57,51 @@ const payInvoiceStyles = () => ({
     '&:hover': {
       cursor: 'pointer',
     },
+    '@media (max-width: 425px)': {
+      fontSize: '18px',
+    },
   },
 });
 
-class StyledPayInvoice extends React.Component {
+class PayInvoice extends React.Component {
   componentDidMount() {
-    const { invoice, webln } = this.props;
+    const { swapResponse, webln } = this.props;
 
-    console.log(webln);
     if (webln) {
-      webln.sendPayment(invoice);
+      webln.sendPayment(swapResponse.invoice);
     }
   }
 
   render() {
-    const { classes, asset, invoice } = this.props;
+    const { classes, swapInfo, swapResponse } = this.props;
+    const link = swapResponse
+      ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionHash}`
+      : '';
 
     return (
       <View className={classes.wrapper}>
         <View className={classes.qrcode}>
-          <QrCode size={300} link={invoice} />
+          <DetectResize>
+            {width =>
+              width <= 375 ? (
+                <QrCode size={200} link={swapResponse.invoice} />
+              ) : (
+                <QrCode size={300} link={swapResponse.invoice} />
+              )
+            }
+          </DetectResize>
+          <Link
+            className={classes.link}
+            to={link}
+            text={'Click here to see the lockup transaction.'}
+          />
         </View>
         <View className={classes.info}>
-          <p className={classes.title}>Pay this {asset} Lightning invoice</p>
+          <p className={classes.title}>
+            Pay this {swapInfo.base} Lightning invoice:
+          </p>
           <p className={classes.invoice} id="copy">
-            {invoice}
+            {swapResponse.invoice}
           </p>
           <span className={classes.action} onClick={() => copyToClipBoard()}>
             Copy
@@ -76,13 +112,11 @@ class StyledPayInvoice extends React.Component {
   }
 }
 
-StyledPayInvoice.propTypes = {
+PayInvoice.propTypes = {
   classes: PropTypes.object.isRequired,
-  asset: PropTypes.string.isRequired,
-  invoice: PropTypes.string.isRequired,
+  swapInfo: PropTypes.object,
+  swapResponse: PropTypes.string,
   webln: PropTypes.object,
 };
 
-const PayInvoice = injectSheet(payInvoiceStyles)(StyledPayInvoice);
-
-export default PayInvoice;
+export default injectSheet(styles)(PayInvoice);

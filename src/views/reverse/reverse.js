@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../components/view';
 import Prompt from '../../components/prompt';
+import Loading from '../../components/loading';
 import Controls from '../../components/controls';
 import Confetti from '../../components/confetti';
-import Loading from '../../components/loading';
 import BackGround from '../../components/background';
 import { getCurrencyName } from '../../scripts/utils';
 import StepsWizard from '../../components/stepswizard';
@@ -21,6 +21,20 @@ const styles = () => ({
 });
 
 class ReverseSwap extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.notificationDom = React.createRef();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.isReconnecting && !prevProps.isReconnecting) {
+      window.alert(
+        'We lost the connection to Boltz and are trying to reconnect. Do not close this window!'
+      );
+    }
+  }
+
   render() {
     const {
       webln,
@@ -31,9 +45,10 @@ class ReverseSwap extends React.Component {
       isFetching,
       swapResponse,
       completeSwap,
-      goTimelockExpired,
+      invalidAddress,
       startReverseSwap,
       swapFailResponse,
+      goTimelockExpired,
       setReverseSwapAddress,
     } = this.props;
 
@@ -84,25 +99,42 @@ class ReverseSwap extends React.Component {
                 num={3}
                 render={() => (
                   <PayInvoice
-                    asset={swapInfo.base}
-                    invoice={swapResponse.invoice}
+                    swapInfo={swapInfo}
+                    swapResponse={swapResponse}
                     webln={webln}
                   />
                 )}
               />
-              <StepsWizard.Step num={4} render={() => <Confetti />} />
+              <StepsWizard.Step
+                num={4}
+                render={() => (
+                  <Confetti
+                    notifie={style => (
+                      <span className={style}>
+                        You sent {swapInfo.baseAmount} {swapInfo.base} and
+                        received {swapInfo.quoteAmount} {swapInfo.quote}
+                      </span>
+                    )}
+                  />
+                )}
+              />
             </StepsWizard.Steps>
             <StepsWizard.Controls>
               <StepsWizard.Control
                 num={1}
                 render={props => (
                   <Controls
-                    loading={!swapInfo.address}
-                    text={'Next'}
-                    loadingText={`Input a ${getCurrencyName(
+                    error={invalidAddress}
+                    errorText={`Invalid ${getCurrencyName(
                       swapInfo.quote
                     )} address`}
-                    loadingRender={() => undefined}
+                    errorRender={() => {}}
+                    loading={!swapInfo.address && !invalidAddress}
+                    loadingText={`Input a valid ${getCurrencyName(
+                      swapInfo.quote
+                    )} address`}
+                    loadingRender={() => {}}
+                    text={'Next'}
                     onPress={() => {
                       if (swapInfo.address && swapInfo.address !== '') {
                         startReverseSwap(
@@ -120,6 +152,7 @@ class ReverseSwap extends React.Component {
                 num={2}
                 render={props => (
                   <Controls
+                    mobile
                     loading={isFetching}
                     loadingText={'Locking your funds...'}
                     loadingRender={() => <Loading />}
@@ -139,6 +172,7 @@ class ReverseSwap extends React.Component {
                 num={3}
                 render={() => (
                   <Controls
+                    mobile
                     loading={isFetching}
                     loadingText={swapStatus}
                     loadingRender={() => <Loading />}
@@ -167,8 +201,8 @@ class ReverseSwap extends React.Component {
 
 ReverseSwap.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  isReconnecting: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
   goTimelockExpired: PropTypes.func.isRequired,
   webln: PropTypes.object,
@@ -181,6 +215,7 @@ ReverseSwap.propTypes = {
   nextStage: PropTypes.func,
   startReverseSwap: PropTypes.func.isRequired,
   swapStatus: PropTypes.string.isRequired,
+  invalidAddress: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(styles)(ReverseSwap);

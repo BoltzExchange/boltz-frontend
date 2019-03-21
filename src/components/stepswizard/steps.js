@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import View from '../view';
 
-const Step = ({ render, stage, num }) => {
-  if (stage === num) {
-    return render();
-  } else return null;
-};
+const Step = ({ render, stage, num }) => (stage === num ? render() : null);
 
 Step.propTypes = {
   num: PropTypes.number,
@@ -24,7 +20,7 @@ const Steps = ({ style, stage, children }) => {
 };
 
 Steps.propTypes = {
-  children: PropTypes.children,
+  children: PropTypes.node,
   style: PropTypes.object,
   stage: PropTypes.number,
 };

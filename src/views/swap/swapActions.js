@@ -1,6 +1,6 @@
 import axios from 'axios';
 import EventSource from 'eventsource';
-import { boltzApi } from '../../constants';
+import { boltzApi, SwapUpdateEvent } from '../../constants';
 import * as actionTypes from '../../constants/actions';
 
 export const completeSwap = () => {
@@ -74,35 +74,74 @@ export const startSwap = (swapInfo, cb) => {
   };
 };
 
-export const startListening = (dispatch, swapId, callback) => {
-  const source = new EventSource(`${boltzApi}/swapstatus?id=${swapId}`);
+const handleSwapStatus = (data, source, dispatch, callback) => {
+  const event = data.event;
 
-  let message = {
-    pending: true,
-    message: 'Waiting for one confirmation...',
-  };
+  switch (event) {
+    case SwapUpdateEvent.TransactionConfirmed:
+      dispatch(
+        setSwapStatus({
+          pending: true,
+          message: 'Waiting for invoice to be paid...',
+        })
+      );
+      break;
 
-  dispatch(setSwapStatus(message));
+    case SwapUpdateEvent.InvoiceFailedToPay:
+      source.close();
+      dispatch(
+        setSwapStatus({
+          error: true,
+          pending: false,
+          message: 'Could not pay invoice. Please refund your coins.',
+        })
+      );
+      break;
 
-  source.onmessage = event => {
-    const data = JSON.parse(event.data);
-
-    if (data.message.startsWith('Invoice paid:')) {
+    case SwapUpdateEvent.InvoicePaid:
       source.close();
       callback();
-    } else if (data.message.startsWith('Transaction confirmed:')) {
-      message = {
-        pending: true,
-        message: 'Waiting for invoice to be paid...',
-      };
-    } else {
-      message = {
-        error: true,
-        pending: true,
-        message: 'Boltz could not find the transaction',
-      };
-    }
+      break;
 
-    dispatch(setSwapStatus(message));
+    default:
+      console.log(`Unknown swap status: ${JSON.stringify(data)}`);
+      break;
+  }
+};
+
+export const startListening = (dispatch, swapId, callback) => {
+  const source = new EventSource(`${boltzApi}/streamswapstatus?id=${swapId}`);
+
+  dispatch(
+    setSwapStatus({
+      pending: true,
+      message: 'Waiting for one confirmation...',
+    })
+  );
+
+  source.onerror = () => {
+    source.close();
+
+    console.log(`Lost connection to Boltz`);
+    const url = `${boltzApi}/swapstatus`;
+
+    const interval = setInterval(() => {
+      axios
+        .post(url, {
+          id: swapId,
+        })
+        .then(statusReponse => {
+          clearInterval(interval);
+
+          console.log(`Reconnected to Boltz`);
+
+          startListening(dispatch, swapId, callback);
+          handleSwapStatus(statusReponse.data, source, dispatch, callback);
+        });
+    }, 1000);
+  };
+
+  source.onmessage = event => {
+    handleSwapStatus(JSON.parse(event.data), source, dispatch, callback);
   };
 };

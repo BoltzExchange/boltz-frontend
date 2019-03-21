@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import Link from '../../../components/link';
 import View from '../../../components/view';
 import { getCurrencyName, getExplorer } from '../../../scripts/utils';
 
@@ -14,15 +15,16 @@ const styles = () => ({
   text: {
     fontSize: '32px',
     padding: '20px',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
 });
 
 const LockingFunds = ({ classes, swapInfo, swapResponse }) => {
-  const symbol = swapInfo.quote;
   const link = swapResponse
-    ? `${getExplorer(symbol)}/${swapResponse.lockupTransactionHash}`
+    ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionHash}`
     : '';
-
   return (
     <View className={classes.wrapper}>
       <p className={classes.text}>
@@ -31,15 +33,15 @@ const LockingFunds = ({ classes, swapInfo, swapResponse }) => {
         to receive, this is important to keep the <br />
         swap atomic and trustless. It might take <br />
         up to 10 minutes. Please be patient. <br />
-        <a href={link}>Click here</a> to see the lockup transaction.
+        <Link to={link} text={'Click here'} /> to see the lockup transaction.
       </p>
     </View>
   );
 };
 
 LockingFunds.propTypes = {
-  swapResponse: PropTypes.string,
   swapInfo: PropTypes.object.isRequired,
+  swapResponse: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
