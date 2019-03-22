@@ -22,6 +22,11 @@ const limitsResponse = data => ({
   payload: data,
 });
 
+const loadingResourceError = message => ({
+  type: actionTypes.RESOURCE_ERROR,
+  payload: message,
+});
+
 const parseRates = pairs => {
   const rates = {};
 
@@ -98,7 +103,13 @@ export const getPairs = cb => {
         cb();
       })
       .catch(error => {
-        window.alert(`Could not get rates: ${error}`);
+        const errorMessage = error.toString();
+        dispatch(
+          loadingResourceError({
+            message: errorMessage,
+            title: 'Could not get rates',
+          })
+        );
       });
   };
 };
@@ -142,7 +153,11 @@ export const getLimits = (rates, cb) => {
         cb();
       })
       .catch(error => {
-        window.alert(`Could not get limits: ${error}`);
+        const errorMessage = error.toString();
+        loadingResourceError({
+          message: errorMessage,
+          title: 'Could not get limits',
+        });
       });
   };
 };

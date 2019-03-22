@@ -90,8 +90,6 @@ export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
       })
       .catch(error => {
         const message = error.response.data.error;
-
-        window.alert(`Failed to execute reverse swap: ${message}`);
         dispatch(reverseSwapResponse(false, message));
       });
   };

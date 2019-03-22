@@ -11,99 +11,10 @@ import BackGround from '../../components/background';
 import Button from '../../components/button';
 import Link from '../../components/link';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
+import { notificationData } from '../../scripts/utils';
+import ReactNotification from 'react-notifications-component';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
-
-const ModalContent = () => (
-  <View style={{ fontSize: '20px' }} noFlex>
-    <p>
-      On 4th of September 2018, in a{' '}
-      <Link
-        to={
-          'https://info.shapeshift.io/blog/2018/09/04/introducing-shapeshift-membership/'
-        }
-        text={'blogpost'}
-      />
-      , Shapeshift, one of the largest cryptocurrency entities, scummed to user
-      data collection.
-    </p>
-    <p>
-      By creating an account on a custodial exchange like Shapeshift, you are
-      giving the government and anyone who can access that KYC data, the power
-      to not only know that you have crypto assets but also to confiscate them
-      during a trade.
-    </p>
-    <p>
-      We built Boltz with a dream of a fairer financial world, with the primary
-      goal to empower users with financial sovereignty. Therefore,{' '}
-      <b>
-        Boltz does not and will never collect any data that could identify our
-        users.
-      </b>
-    </p>
-    <p>
-      Also, Boltz leverages atomic swaps in a way, so that trades either
-      complete in full or get refunded. Users can rest assured to be in
-      possession of their funds at all times, without worrying about who is
-      behind Boltz and if this entity is trustworthy.
-    </p>
-    <p>
-      Trading <b>{`shouldn't`}</b> require an account.
-    </p>
-  </View>
-);
-
-const styles = theme => ({
-  wrapper: {
-    flex: '1 0 100%',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    '@media (max-width: 800px)': {
-      flexDirection: 'column',
-    },
-  },
-  infoWrapper: {
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: theme.fontSize.sizeXXL,
-    color: theme.colors.white,
-    '@media (min-width: 1500px)': {
-      fontSize: theme.fontSize.sizeXXXL,
-    },
-  },
-  description: {
-    fontSize: theme.fontSize.sizeXXL,
-    '@media (min-width: 1500px)': {
-      fontSize: theme.fontSize.sizeXXXL,
-    },
-  },
-  loading: {
-    width: '600px',
-    height: '400px',
-    display: 'flex',
-    alignItems: 'center',
-    alignContent: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor: theme.colors.white,
-    '@media (min-width: 1500px)': {
-      width: '800px',
-      height: '600px',
-    },
-  },
-  loadingLogo: {
-    width: '200px',
-    height: '200px',
-    display: 'block',
-    marginBottom: '10px',
-  },
-  loadingText: {
-    fontSize: '20px',
-  },
-});
 
 class LandingPage extends React.Component {
   constructor(props) {
@@ -111,9 +22,10 @@ class LandingPage extends React.Component {
     this.state = {
       isOpen: false,
     };
+    this.notificationDom = React.createRef();
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.props.getPairs(() => {
       this.props.getLimits(this.props.rates, () => {});
     });
@@ -123,9 +35,25 @@ class LandingPage extends React.Component {
         this.webln = provider;
       });
     } catch (error) {
-      console.log(`Could not enable webln: ${error}`);
+      this.addNotification(
+        {
+          message: error.toString(),
+          title: 'Could not enable webln',
+        },
+        1
+      );
     }
-  }
+  };
+
+  componentDidUpdate = () => {
+    if (this.props.errorMessage) {
+      this.addNotification(this.props.errorMessage, 0);
+    }
+  };
+
+  addNotification = (info, type) => {
+    this.notificationDom.current.addNotification(notificationData(info, type));
+  };
 
   toggleModal = () => {
     this.setState(prev => ({ isOpen: !prev.isOpen }));
@@ -153,6 +81,7 @@ class LandingPage extends React.Component {
 
     return (
       <BackGround>
+        <ReactNotification ref={this.notificationDom} />
         <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
         <View className={classes.wrapper}>
           <View className={classes.infoWrapper}>
@@ -234,6 +163,95 @@ LandingPage.propTypes = {
   rates: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
   limits: PropTypes.object.isRequired,
+  errorMessage: PropTypes.object.isRequired,
 };
+
+const ModalContent = () => (
+  <View style={{ fontSize: '20px' }} noFlex>
+    <p>
+      On 4th of September 2018, in a{' '}
+      <Link
+        to={
+          'https://info.shapeshift.io/blog/2018/09/04/introducing-shapeshift-membership/'
+        }
+        text={'blogpost'}
+      />
+      , Shapeshift, one of the largest cryptocurrency entities, scummed to user
+      data collection.
+    </p>
+    <p>
+      By creating an account on a custodial exchange like Shapeshift, you are
+      giving the government and anyone who can access that KYC data, the power
+      to not only know that you have crypto assets but also to confiscate them
+      during a trade.
+    </p>
+    <p>
+      We built Boltz with a dream of a fairer financial world, with the primary
+      goal to empower users with financial sovereignty. Therefore,{' '}
+      <b>
+        Boltz does not and will never collect any data that could identify our
+        users.
+      </b>
+    </p>
+    <p>
+      Also, Boltz leverages atomic swaps in a way, so that trades either
+      complete in full or get refunded. Users can rest assured to be in
+      possession of their funds at all times, without worrying about who is
+      behind Boltz and if this entity is trustworthy.
+    </p>
+    <p>
+      Trading <b>{`shouldn't`}</b> require an account.
+    </p>
+  </View>
+);
+
+const styles = theme => ({
+  wrapper: {
+    flex: '1 0 100%',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  infoWrapper: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: theme.fontSize.sizeXXL,
+    color: theme.colors.white,
+    '@media (min-width: 1500px)': {
+      fontSize: theme.fontSize.sizeXXXL,
+    },
+  },
+  description: {
+    fontSize: theme.fontSize.sizeXXL,
+    '@media (min-width: 1500px)': {
+      fontSize: theme.fontSize.sizeXXXL,
+    },
+  },
+  loading: {
+    width: '600px',
+    height: '400px',
+    display: 'flex',
+    alignItems: 'center',
+    alignContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.white,
+    '@media (min-width: 1500px)': {
+      width: '800px',
+      height: '600px',
+    },
+  },
+  loadingLogo: {
+    width: '200px',
+    height: '200px',
+    display: 'block',
+    marginBottom: '10px',
+  },
+  loadingText: {
+    fontSize: '20px',
+  },
+});
 
 export default injectSheet(styles)(LandingPage);

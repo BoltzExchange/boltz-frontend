@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
   isReconnecting: state.reverseSwapReducer.isReconnecting,
   swapInfo: state.reverseSwapReducer.swapInfo,
   swapResponse: state.reverseSwapReducer.swapResponse.response,
-  swapFailResponse: !state.reverseSwapReducer.swapResponse.success,
+  swapFailResponse: state.reverseSwapReducer.swapResponse.success,
   swapStatus: state.reverseSwapReducer.swapStatus,
   invalidAddress: state.reverseSwapReducer.invalidAddress,
 });
