@@ -34,16 +34,18 @@ class DropDown extends React.Component {
 
   render() {
     let { value } = this.state;
-    const { classes, onChange, defaultValue, fields } = this.props;
+    const { classes, className, onChange, defaultValue, fields } = this.props;
 
     if (value === undefined) {
       value = defaultValue;
     }
-
+    const classname = className
+      ? `${classes.wrapper} ${className}`
+      : classes.wrapper;
     return (
       <select
         value={value}
-        className={classes.wrapper}
+        className={classname}
         onChange={e => {
           const value = e.target.value;
 
@@ -65,6 +67,7 @@ DropDown.propTypes = {
   classes: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   defaultValue: PropTypes.string.isRequired,
+  className: PropTypes.string,
   fields: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 };
 

@@ -13,7 +13,6 @@ import Link from '../../components/link';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { notificationData } from '../../scripts/utils';
 import ReactNotification from 'react-notifications-component';
-import 'react-notifications-component/dist/theme.css';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 

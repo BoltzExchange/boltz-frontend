@@ -108,6 +108,7 @@ const Swap = ({
               num={2}
               render={props => (
                 <Controls
+                  mobile
                   text={'I have downloaded the refund file'}
                   onPress={() => {
                     props.nextStage();
@@ -119,6 +120,7 @@ const Swap = ({
               num={3}
               render={props => (
                 <Controls
+                  mobile
                   text={swapStatus.message}
                   loading={swapStatus.pending}
                   error={swapStatus.error}

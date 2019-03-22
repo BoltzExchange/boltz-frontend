@@ -4,6 +4,7 @@ import { ThemeProvider, preset, jss } from 'react-jss';
 import store from '../state';
 import theme from '../constants/theme';
 import Router from '../views/router';
+import 'react-notifications-component/dist/theme.css';
 
 jss.setup(preset);
 class App extends Component {

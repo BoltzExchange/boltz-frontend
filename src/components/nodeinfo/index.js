@@ -6,11 +6,15 @@ import QrCode from '../qrcode';
 
 const styles = theme => ({
   wrapper: {
-    height: '300x',
-    width: '700px',
+    flex: '1 0 content',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '20px',
+    '@media (max-width: 425px)': {
+      justifyContent: 'center',
+      width: '100%',
+    },
   },
   NodeInfo: {
     flexDirection: 'column',

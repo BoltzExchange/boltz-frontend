@@ -8,6 +8,7 @@ import { toWholeCoins, copyToClipBoard } from '../../../scripts/utils';
 const SendTransactionStyles = () => ({
   wrapper: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -16,6 +17,7 @@ const SendTransactionStyles = () => ({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    margin: '20px',
   },
   image: {
     width: '300px',
@@ -24,32 +26,43 @@ const SendTransactionStyles = () => ({
   info: {
     flexDirection: 'column',
     flex: 1,
-    justifyContent: 'space-around',
   },
   text: {
-    fontSize: '30px',
+    fontSize: '20px',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   address: {
     width: '300px',
-    fontSize: '25px',
+    fontSize: '18px',
     color: 'grey',
     wordBreak: 'break-word',
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
   },
   action: {
     color: 'blue',
     fontWeight: '600',
-    fontSize: '30px',
-    marginLeft: '50%',
+    fontSize: '20px',
+    marginLeft: '70%',
     '&:hover': {
       cursor: 'pointer',
     },
+    '@media (max-width: 425px)': {
+      fontSize: '16px',
+    },
+  },
+  tool: {
+    fontSize: '12px',
   },
 });
 
 const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
   <View className={classes.wrapper}>
     <View className={classes.qrcode}>
-      <QrCode size={300} link={swapResponse.bip21} />
+      <QrCode size={250} link={swapResponse.bip21} />
     </View>
     <View className={classes.info}>
       <p className={classes.text}>
@@ -67,8 +80,8 @@ const StyledSendTransaction = ({ classes, swapInfo, swapResponse }) => (
         Copy
       </span>
       {swapInfo.base === 'LTC' ? (
-        <p>
-          If the address does not work with your wallet: <br />
+        <p className={classes.tool}>
+          If the address does not work with your wallet:{' '}
           <a
             target={'_blank'}
             href="https://litecoin-project.github.io/p2sh-convert/"

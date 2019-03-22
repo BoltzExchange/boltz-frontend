@@ -30,9 +30,12 @@ export const completeReverseSwap = () => ({
   type: actionTypes.COMPLETE_REVERSE_SWAP,
 });
 
-export const setReverseSwapAddress = address => ({
+export const setReverseSwapAddress = (address, error) => ({
   type: actionTypes.SET_REVERSE_SWAP_ADDRESS,
-  payload: address,
+  payload: {
+    address,
+    error,
+  },
 });
 
 export const setReverseSwapStatus = status => ({

@@ -4,9 +4,9 @@ import injectSheet from 'react-jss';
 import { lostConnection, reconnected } from '../../constants/messages';
 import View from '../../components/view';
 import Prompt from '../../components/prompt';
+import Loading from '../../components/loading';
 import Controls from '../../components/controls';
 import Confetti from '../../components/confetti';
-import Loading from '../../components/loading';
 import BackGround from '../../components/background';
 import { getCurrencyName } from '../../scripts/utils';
 import StepsWizard from '../../components/stepswizard';
@@ -66,6 +66,7 @@ class ReverseSwap extends React.Component {
       isFetching,
       swapResponse,
       completeSwap,
+      invalidAddress,
       startReverseSwap,
       swapFailResponse,
       goTimelockExpired,
@@ -145,12 +146,17 @@ class ReverseSwap extends React.Component {
                 num={1}
                 render={props => (
                   <Controls
-                    loading={!swapInfo.address}
-                    text={'Next'}
+                    error={invalidAddress}
+                    errorText={`Invalid ${getCurrencyName(
+                      swapInfo.quote
+                    )} address`}
+                    errorRender={() => {}}
+                    loading={!swapInfo.address && !invalidAddress}
                     loadingText={`Input a valid ${getCurrencyName(
                       swapInfo.quote
                     )} address`}
-                    loadingRender={() => undefined}
+                    loadingRender={() => {}}
+                    text={'Next'}
                     onPress={() => {
                       if (swapInfo.address && swapInfo.address !== '') {
                         startReverseSwap(
@@ -168,6 +174,7 @@ class ReverseSwap extends React.Component {
                 num={2}
                 render={props => (
                   <Controls
+                    mobile
                     loading={isFetching}
                     loadingText={'Locking your funds...'}
                     loadingRender={() => <Loading />}
@@ -187,6 +194,7 @@ class ReverseSwap extends React.Component {
                 num={3}
                 render={() => (
                   <Controls
+                    mobile
                     loading={isFetching}
                     loadingText={swapStatus}
                     loadingRender={() => <Loading />}
@@ -215,7 +223,6 @@ class ReverseSwap extends React.Component {
 
 ReverseSwap.propTypes = {
   classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isReconnecting: PropTypes.bool.isRequired,
   goHome: PropTypes.func.isRequired,
@@ -230,6 +237,7 @@ ReverseSwap.propTypes = {
   nextStage: PropTypes.func,
   startReverseSwap: PropTypes.func.isRequired,
   swapStatus: PropTypes.string.isRequired,
+  invalidAddress: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(styles)(ReverseSwap);
