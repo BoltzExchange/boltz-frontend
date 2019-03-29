@@ -1,9 +1,11 @@
 import * as actionTypes from '../../constants/actions';
 
 const initialState = {
+  fees: {},
   rates: {},
-  currencies: [],
   limits: {},
+  currencies: [],
+
   errorMessage: undefined,
 };
 
@@ -12,22 +14,20 @@ const reducer = (state = initialState, action) => {
     case actionTypes.PAIRS_RESPONSE:
       return {
         ...state,
+        fees: action.payload.fees,
         rates: action.payload.rates,
-        errorMessage: undefined,
+        limits: action.payload.limits,
         currencies: action.payload.currencies,
+
+        errorMessage: undefined,
       };
 
-    case actionTypes.LIMITS_RESPONSE:
-      return {
-        ...state,
-        limits: action.payload,
-        errorMessage: undefined,
-      };
     case actionTypes.RESOURCE_ERROR:
       return {
         ...state,
         errorMessage: action.payload,
       };
+
     default:
       return state;
   }

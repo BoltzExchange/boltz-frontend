@@ -33,9 +33,9 @@ const Button = ({ classes, className, text, to, external, onPress }) => {
 
 Button.propTypes = {
   classes: PropTypes.object,
-  external: PropTypes.bool.isRequired,
+  external: PropTypes.bool,
   text: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
+  to: PropTypes.string,
   onPress: PropTypes.func,
   className: PropTypes.string,
 };

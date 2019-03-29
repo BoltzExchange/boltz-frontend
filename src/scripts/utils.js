@@ -11,7 +11,6 @@ import {
   litecoinInvoice,
 } from '../constants';
 
-// Number satohis and litoshis in a whole coin
 export const decimals = 100000000;
 
 /**
