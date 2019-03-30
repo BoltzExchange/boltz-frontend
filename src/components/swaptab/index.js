@@ -230,13 +230,14 @@ class SwapTab extends React.Component {
     const { minerFees } = this.props.fees;
 
     if (this.baseAsset.isLightning) {
-      return minerFees[this.quoteAsset.symbol].reverse;
+      const { lockup, claim } = minerFees[this.quoteAsset.symbol].reverse;
+
+      return lockup + claim;
     } else {
       return minerFees[this.baseAsset.symbol].normal;
     }
   };
 
-  // TODO: calculate additional onchain fees for reverse swaps
   calculateFee = baseAmount => {
     const { feePercentage } = this.state;
 
