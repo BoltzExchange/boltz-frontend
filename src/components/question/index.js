@@ -56,10 +56,9 @@ const Question = ({ classes, title, content }) => (
 );
 
 Question.propTypes = {
-  classes: PropTypes.object,
+  classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.func.isRequired,
-  width: PropTypes.any,
 };
 
 export default injectSheet(styles)(Question);
