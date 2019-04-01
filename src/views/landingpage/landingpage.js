@@ -86,7 +86,7 @@ class LandingPage extends React.Component {
         <View className={classes.wrapper}>
           <View className={classes.infoWrapper}>
             <p className={classes.title}>
-              Instant, Low Fee & <br /> Non-Custodial.
+              Instant, Account-Free & <br /> Non-Custodial.
             </p>
             <p className={classes.description}>
               Trading <br />
