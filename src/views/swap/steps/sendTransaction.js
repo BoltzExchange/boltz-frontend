@@ -46,12 +46,13 @@ const SendTransactionStyles = () => ({
     color: 'blue',
     fontWeight: '600',
     fontSize: '20px',
-    marginLeft: '70%',
+    margin: '0px 0px 15% 70%',
     '&:hover': {
       cursor: 'pointer',
     },
     '@media (max-width: 425px)': {
       fontSize: '16px',
+      margin: '0px 0px 5% 70%',
     },
   },
   tool: {
