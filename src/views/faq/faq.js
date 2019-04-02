@@ -12,16 +12,16 @@ import { bitcoinLnd, litecoinLnd } from '../../constants';
 const styles = theme => ({
   wrapper: {
     flex: '1 0 100%',
-    flexDirection: 'column',
     alignItems: 'center',
+    flexDirection: 'column',
   },
   titleWrapper: {
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   title: {
-    color: theme.colors.white,
     fontSize: '42px',
+    color: theme.colors.white,
   },
   questionTab: {
     backgroundColor: theme.colors.white,
@@ -70,7 +70,59 @@ class Faq extends React.Component {
                   <Link to={twitterLink} text={'contact us'} />.
                 </p>
               )}
-              width={'auto'}
+            />
+            <Question
+              title={style => (
+                <h1 className={style}>
+                  Why should one use a non custodial exchange?
+                </h1>
+              )}
+              content={style => (
+                <p className={style}>
+                  Non custodial exchanges give you full control over your funds.
+                  All trades on Boltz are executed in a way that we cannot steal
+                  any money from you. Period.
+                  <br />
+                  <br />
+                  Either the trade happens entirely and you get the exact amount
+                  of the asset you were promised or you will be able to do a
+                  refund. This concept is called <i>atomicity</i> and it is
+                  achieved by Boltz with so-called <i>Submarine Swaps</i>. You
+                  can read more about them in{' '}
+                  <Link
+                    to={
+                      'https://medium.com/boltzhq/submarine-swaps-c509ce0fb1db'
+                    }
+                    text={'this blog post'}
+                  />
+                  {'.'}
+                  <br />
+                  <br />
+                  If you are <i>really</i> technical you can proof read our
+                  source code and verify that the claims above are valid because
+                  everything is open source and can be found on{' '}
+                  <Link
+                    to={'https://github.com/boltzexchange'}
+                    text={'our GitHub'}
+                  />
+                  . Also we will soon add a version of our frontend that you can
+                  host yourself and connect to your own node easily.
+                </p>
+              )}
+            />
+            <Question
+              title={style => (
+                <h1 className={style}>What wallets are supported by Boltz?</h1>
+              )}
+              content={style => (
+                <p className={style}>
+                  All regular and Lightning wallets are supported by Boltz.
+                  Although we encourage you to run a full node and manage your
+                  own keys, there are custodial wallets solutions, like{' '}
+                  <Link to={'https://bluewallet.io/'} text={'BlueWallet'} />,
+                  that work out of the box and can make testing Boltz very easy.
+                </p>
+              )}
             />
             <Question
               title={style => (
@@ -91,57 +143,18 @@ class Faq extends React.Component {
                   />
                 </p>
               )}
-              width={'auto'}
             />
             <Question
               title={style => (
-                <h1 className={style}>
-                  Why should one use a non custodial exchange?
-                </h1>
+                <h1 className={style}>How are our fees calculated?</h1>
               )}
               content={style => (
                 <p className={style}>
-                  Non custodial exchanges give you full control over your funds.
-                  All trades on Boltz are executed in a way that we cannot steal
-                  any money from you. Period.
-                  <br />
-                  <br />
-                  Either the trade happens entirely and you get the exact amount
-                  of the asset you were promised or you will be able to do a
-                  refund. This concept is called <i>atomicity</i> and you can
-                  read more about this in{' '}
-                  <Link
-                    to={
-                      'https://medium.com/boltzhq/submarine-swaps-c509ce0fb1db'
-                    }
-                    text={'our blog post about how Boltz works'}
-                  />
-                  <br />
-                  <br />
-                  If you are <i>really</i> technical you can proof read our
-                  source code and verify that the claims above are valid because
-                  everything is open source and can be found on{' '}
-                  <Link
-                    to={'https://github.com/boltzexchange'}
-                    text={'our GitHub'}
-                  />
-                  . Also we will soon add a version of our frontend that you can
-                  host yourself easily.
-                </p>
-              )}
-              width={'auto'}
-            />
-            <Question
-              title={style => (
-                <h1 className={style}>What wallets are supported by Boltz?</h1>
-              )}
-              content={style => (
-                <p className={style}>
-                  All regular and Lightning wallets are supported by Boltz.
-                  Although we encourage you to run a full node and manage your
-                  own keys, there are custodial wallets solutions, like{' '}
-                  <Link to={'https://bluewallet.io/'} text={'BlueWallet'} />,
-                  that work out of the box can make testing Boltz very easy.
+                  Our fees consist of the <i>miner fee</i> that is needed for
+                  the onchain parts of the Submarine Swaps and an additional fee
+                  which is a percentage of the traded amount and goes to our
+                  pocket for providing a <i>(hopefully)</i> useful service to
+                  our users.
                 </p>
               )}
             />

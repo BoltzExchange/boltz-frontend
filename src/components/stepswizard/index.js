@@ -138,7 +138,7 @@ StepsWizard.propTypes = {
   onClick: PropTypes.func,
   await: PropTypes.bool,
   alertOnExit: PropTypes.bool,
-  onExitmessage: PropTypes.oneOfType(PropTypes.string, PropTypes.func),
+  onExitmessage: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   stage: PropTypes.number,
   range: PropTypes.number,
   dark: PropTypes.bool,

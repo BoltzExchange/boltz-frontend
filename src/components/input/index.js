@@ -26,6 +26,7 @@ class Input extends React.Component {
     const classname = className
       ? `${classes.wrapper} ${className}`
       : classes.wrapper;
+
     return (
       <input
         disabled={disable}
@@ -54,7 +55,7 @@ Input.propTypes = {
   error: PropTypes.bool,
   min: PropTypes.number,
   max: PropTypes.number,
-  value: PropTypes.number,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   step: PropTypes.number,
 };
 

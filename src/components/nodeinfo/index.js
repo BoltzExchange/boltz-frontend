@@ -11,6 +11,7 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     padding: '20px',
+    paddingLeft: '0',
     '@media (max-width: 425px)': {
       justifyContent: 'center',
       width: '100%',
