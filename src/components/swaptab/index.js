@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { BigNumber } from 'bignumber.js';
 import { MdCompareArrows } from 'react-icons/md';
 import View from '../view';
 import Input from '../input';
@@ -208,12 +207,14 @@ class SwapTab extends React.Component {
 
       const rate = this.props.rates[symbol];
       const limits = this.props.limits[symbol];
+      const feePercentage = this.props.fees.percentages[symbol];
 
       this.setState(
         {
           rate,
-          minAmount: limits.minimal,
-          maxAmount: limits.maximal,
+          feePercentage,
+          minAmount: limits.minimal / decimals,
+          maxAmount: limits.maximal / decimals,
           error: false,
         },
         () => this.updateQuoteAmount(this.state.baseAmount)
@@ -225,11 +226,25 @@ class SwapTab extends React.Component {
     localStorage.setItem('baseAmount', baseAmount);
   };
 
-  calculateFee = (baseAmount, isReverse) => {
-    const percentage = baseAmount * 0.01;
-    const fee = isReverse ? 0.00001 + percentage : 0.0000001 + percentage;
+  calculateMinerFee = () => {
+    const { minerFees } = this.props.fees;
 
-    return Number(fee.toFixed(8));
+    if (this.baseAsset.isLightning) {
+      const { lockup, claim } = minerFees[this.quoteAsset.symbol].reverse;
+
+      return lockup + claim;
+    } else {
+      return minerFees[this.baseAsset.symbol].normal;
+    }
+  };
+
+  calculateFee = baseAmount => {
+    const { feePercentage } = this.state;
+
+    const percentageFee = baseAmount * feePercentage;
+    const minerFee = this.calculateMinerFee() / decimals;
+
+    return percentageFee + minerFee;
   };
 
   checkBaseAmount = baseAmount => {
@@ -243,38 +258,35 @@ class SwapTab extends React.Component {
   };
 
   updateBaseAmount = quoteAmount => {
-    const rate = new BigNumber(this.state.rate.rate);
+    const { rate } = this.state.rate;
 
-    const newBase = new BigNumber(quoteAmount).dividedBy(rate).toFixed(8);
-    const fee = this.calculateFee(newBase, this.baseAsset.isLightning);
+    const newBase = quoteAmount / rate;
+    const fee = this.calculateFee(newBase);
 
-    const newBaseWithFee = (Number(newBase) + fee).toFixed(8);
+    const newBaseWithFee = Number((newBase + fee).toFixed(8));
 
     const inputError = !this.checkBaseAmount(newBaseWithFee);
 
     this.setState({
-      quoteAmount: Number(quoteAmount),
-      baseAmount: Number(newBaseWithFee),
-      feeAmount: fee,
+      quoteAmount: quoteAmount,
+      baseAmount: newBaseWithFee,
+      feeAmount: fee.toFixed(8),
       inputError,
     });
   };
 
   updateQuoteAmount = baseAmount => {
-    const rate = new BigNumber(this.state.rate.rate);
-    const fee = this.calculateFee(baseAmount, this.baseAsset.isLightning);
+    const { rate } = this.state.rate;
+    const fee = this.calculateFee(baseAmount);
 
-    const newQuote = new BigNumber(baseAmount)
-      .times(rate)
-      .minus(fee * rate)
-      .toFixed(8);
+    const quote = Number((baseAmount * rate - fee * rate).toFixed(8));
 
     const inputError = !this.checkBaseAmount(baseAmount);
 
     this.setState({
-      quoteAmount: Math.max(Number(newQuote), 0),
-      baseAmount: Number(baseAmount),
-      feeAmount: fee,
+      quoteAmount: Math.max(quote, 0),
+      baseAmount: baseAmount,
+      feeAmount: fee.toFixed(8),
       inputError,
     });
   };
@@ -288,7 +300,10 @@ class SwapTab extends React.Component {
         base: this.baseAsset.symbol,
         quote: this.quoteAsset.symbol,
         isReverseSwap: this.baseAsset.isLightning,
-        pair: rate.pair,
+        pair: {
+          id: rate.pair,
+          orderSide: rate.orderSide,
+        },
       };
 
       this.props.onPress(state);
@@ -383,7 +398,6 @@ class SwapTab extends React.Component {
             error={error || inputError}
             onPress={error ? () => {} : () => this.shouldSubmit()}
             errorText={inputError ? 'Invalid amount' : errorMessage}
-            errorRender={() => {}}
           />
         </View>
       </View>
@@ -394,9 +408,10 @@ class SwapTab extends React.Component {
 SwapTab.propTypes = {
   classes: PropTypes.object,
   onPress: PropTypes.func,
+  fees: PropTypes.object.isRequired,
   rates: PropTypes.object.isRequired,
-  currencies: PropTypes.array.isRequired,
   limits: PropTypes.object.isRequired,
+  currencies: PropTypes.array.isRequired,
 };
 
 export default injectSheet(styles)(SwapTab);

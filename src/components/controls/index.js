@@ -73,11 +73,11 @@ const Controls = ({
       {error ? (
         errorRender ? (
           errorRender(classes.errorCommand, errorAction)
-        ) : (
+        ) : errorAction ? (
           <span className={classes.errorCommand} onClick={() => errorAction()}>
             Retry
           </span>
-        )
+        ) : null
       ) : loading && loadingRender ? (
         loadingRender()
       ) : (

@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import { requestProvider } from 'webln';
+import ReactNotification from 'react-notifications-component';
+import Link from '../../components/link';
 import View from '../../components/view';
 import { generateKeys } from '../../action';
+import Button from '../../components/button';
 import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
 import ModalComponent from '../../components/modal';
 import BackGround from '../../components/background';
-import Button from '../../components/button';
-import Link from '../../components/link';
-import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { notificationData } from '../../scripts/utils';
-import ReactNotification from 'react-notifications-component';
+import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
@@ -26,9 +26,7 @@ class LandingPage extends React.Component {
   }
 
   componentDidMount = () => {
-    this.props.getPairs(() => {
-      this.props.getLimits(this.props.rates, () => {});
-    });
+    this.props.getPairs();
 
     try {
       requestProvider().then(provider => {
@@ -69,15 +67,14 @@ class LandingPage extends React.Component {
       goFaq,
       initSwap,
       initReverseSwap,
+
+      fees,
       rates,
-      currencies,
       limits,
+      currencies,
     } = this.props;
 
-    const loading =
-      Object.keys(rates).length === 0 ||
-      currencies.length === 0 ||
-      Object.keys(limits).length === 0;
+    const loading = currencies.length === 0;
 
     return (
       <BackGround>
@@ -86,7 +83,7 @@ class LandingPage extends React.Component {
         <View className={classes.wrapper}>
           <View className={classes.infoWrapper}>
             <p className={classes.title}>
-              Instant, Low Fee & <br /> Non-Custodial.
+              Instant, Account-Free & <br /> Non-Custodial.
             </p>
             <p className={classes.description}>
               Trading <br />
@@ -138,9 +135,10 @@ class LandingPage extends React.Component {
                   goSwap();
                 }
               }}
+              fees={fees}
               rates={rates}
-              currencies={currencies}
               limits={limits}
+              currencies={currencies}
             />
           )}
         </View>
@@ -159,11 +157,13 @@ LandingPage.propTypes = {
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
   getPairs: PropTypes.func.isRequired,
-  getLimits: PropTypes.func.isRequired,
+
+  fees: PropTypes.object.isRequired,
   rates: PropTypes.object.isRequired,
-  currencies: PropTypes.array.isRequired,
   limits: PropTypes.object.isRequired,
-  errorMessage: PropTypes.object.isRequired,
+  currencies: PropTypes.array.isRequired,
+
+  errorMessage: PropTypes.object,
 };
 
 const ModalContent = () => (
