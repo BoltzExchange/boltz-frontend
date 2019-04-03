@@ -279,7 +279,7 @@ class SwapTab extends React.Component {
     const { rate } = this.state.rate;
     const fee = this.calculateFee(baseAmount);
 
-    const quote = Number((baseAmount * rate - fee * rate).toFixed(8));
+    const quote = Number((baseAmount * rate - fee).toFixed(8));
 
     const inputError = !this.checkBaseAmount(baseAmount);
 
