@@ -136,6 +136,9 @@ export const getSampleInvoice = symbol => {
   return symbol === 'BTC' ? bitcoinInvoice : litecoinInvoice;
 };
 
+/**
+ * Get the fee estimation from the Boltz API
+ */
 export const getFeeEstimation = callback => {
   const url = `${boltzApi}/getfeeestimation`;
   return () => {
@@ -151,8 +154,18 @@ export const getFeeEstimation = callback => {
 };
 
 /**
+ * Detect whether the browser is a mobile one
+ */
+export const isMobileBrowser = () => {
+  return (
+    typeof window.orientation !== 'undefined' ||
+    navigator.userAgent.indexOf('IEMobile') !== -1
+  );
+};
+
+/**
  * @param {{message: string, title: string }} info title and message
- * @param {number} type type of alert
+ * @param {number} alertType type of alert
  */
 export const notificationData = (info, alertType) => {
   let type;
@@ -167,6 +180,7 @@ export const notificationData = (info, alertType) => {
       type = 'success';
       break;
   }
+
   return {
     message: info.message,
     title: info.title,
