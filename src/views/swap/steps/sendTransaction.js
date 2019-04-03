@@ -17,7 +17,6 @@ const SendTransactionStyles = () => ({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: '20px',
   },
   image: {
     width: '300px',
@@ -34,7 +33,6 @@ const SendTransactionStyles = () => ({
     },
   },
   address: {
-    width: '300px',
     fontSize: '18px',
     color: 'grey',
     wordBreak: 'break-word',
@@ -46,13 +44,13 @@ const SendTransactionStyles = () => ({
     color: 'blue',
     fontWeight: '600',
     fontSize: '20px',
-    margin: '0px 0px 15% 70%',
+    marginLeft: '80%',
     '&:hover': {
       cursor: 'pointer',
     },
     '@media (max-width: 425px)': {
       fontSize: '16px',
-      margin: '0px 0px 5% 70%',
+      marginLeft: '80%',
     },
   },
   tool: {
