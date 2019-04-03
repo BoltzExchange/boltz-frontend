@@ -11,14 +11,15 @@ import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
 import ModalComponent from '../../components/modal';
 import BackGround from '../../components/background';
-import { notificationData } from '../../scripts/utils';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
+import { notificationData, isMobileBrowser } from '../../scripts/utils';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 class LandingPage extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isOpen: false,
     };
@@ -26,6 +27,13 @@ class LandingPage extends React.Component {
   }
 
   componentDidMount = () => {
+    if (isMobileBrowser()) {
+      window.alert(
+        // eslint-disable-next-line max-len
+        'We strongly advise against using Boltz on mobile devices as of right now. Please use a desktop or laptop'
+      );
+    }
+
     this.props.getPairs();
 
     try {
