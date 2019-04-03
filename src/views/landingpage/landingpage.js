@@ -33,13 +33,7 @@ class LandingPage extends React.Component {
         this.webln = provider;
       });
     } catch (error) {
-      this.addNotification(
-        {
-          message: error.toString(),
-          title: 'Could not enable webln',
-        },
-        1
-      );
+      console.log(`Could not enable WebLN: ${error}`);
     }
   };
 
