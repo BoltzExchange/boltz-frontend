@@ -47,6 +47,7 @@ const styles = theme => ({
   },
   id: {
     color: 'gray',
+    margin: '10px',
     fontSize: '20px',
     justifyContent: 'center',
   },
