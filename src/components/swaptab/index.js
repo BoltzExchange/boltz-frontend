@@ -107,7 +107,7 @@ class SwapTab extends React.Component {
       quote: 'BTC ⚡',
       minAmount: 0,
       maxAmount: 0,
-      baseAmount: 0.001,
+      baseAmount: 0.05,
       quoteAmount: 0,
       feeAmount: 0,
       errorMessage: '',
