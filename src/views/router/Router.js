@@ -1,31 +1,36 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import PropTypes from 'prop-types';
-import Faq from '../faq';
-import Swap from '../swap';
-import Refund from '../refund';
-import ReverseSwap from '../reverse';
-import LandingPage from '../landingpage';
-import * as routes from '../../constants/routes';
+import { Router, Route, Switch } from 'react-router-dom';
+// import * as routes from '../../constants/routes';
 import Container from '../../components/container';
-import ReverseSwapTimelockExpired from '../reversetimelock';
+// import ReverseSwapTimelockExpired from '../reversetimelock';
+import history from '../../constants/history';
 
-const Router = ({ route }) => {
+const LandingPage = lazy(() => import('../landingpage'));
+const Faq = lazy(() => import('../faq'));
+const Swap = lazy(() => import('../swap'));
+const Refund = lazy(() => import('../refund'));
+const ReverseSwap = lazy(() => import('../reverse'));
+
+const AppRouter = () => {
   return (
-    <Container>
-      {route === routes.faq && <Faq />}
-      {route === routes.swap && <Swap />}
-      {route === routes.refund && <Refund />}
-      {route === routes.home && <LandingPage />}
-      {route === routes.reverseSwap && <ReverseSwap />}
-      {route === routes.reverseSwapTimelockExpired && (
-        <ReverseSwapTimelockExpired />
-      )}
-    </Container>
+    <Router history={history}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Container>
+            <Route exact path={'/'} component={LandingPage} />
+            <Route exact path={'/faq'} component={Faq} />
+            <Route exact path={'/swap'} component={Swap} />
+            <Route component={LandingPage} />
+          </Container>
+        </Switch>
+      </Suspense>
+    </Router>
   );
 };
 
-Router.propTypes = {
+AppRouter.propTypes = {
   route: PropTypes.string.isRequired,
 };
 
-export default Router;
+export default AppRouter;
