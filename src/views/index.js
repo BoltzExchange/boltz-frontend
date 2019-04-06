@@ -7,6 +7,7 @@ import 'react-notifications-component/dist/theme.css';
 import { Router, Route, Switch } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import Container from '../components/container';
+import BackGround from '../components/background'; 
 import history from '../constants/history';
 
 const LandingPage = lazy(() => import('./landingpage'));
@@ -21,7 +22,7 @@ const App = () => {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router history={history}>
-          <Suspense fallback={<Container>Loading...</Container>}>
+          <Suspense fallback={<BackGround showFooter={false} />}>
             <Switch>
               <Container>
                 <Route exact path={routes.home} component={LandingPage} />
