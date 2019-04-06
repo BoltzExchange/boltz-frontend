@@ -3,7 +3,7 @@ import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
 import Link from '../../../components/link';
 import View from '../../../components/view';
-import { getExplorer } from '../../../scripts/utils';
+import { getExplorer } from '../../../utils';
 import { FaCheckCircle } from 'react-icons/fa';
 
 const CompleteRefundStyles = theme => ({

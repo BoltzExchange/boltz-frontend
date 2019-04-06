@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
-import { toWholeCoins, copyToClipBoard } from '../../../scripts/utils';
+import { toWholeCoins, copyToClipBoard } from '../../../utils';
 
 const SendTransactionStyles = () => ({
   wrapper: {

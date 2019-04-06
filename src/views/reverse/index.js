@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import ReverseSwap from './reverse';
-import { nav } from '../../action/index';
 import {
   completeReverseSwap,
   setReverseSwapAddress,
@@ -20,9 +19,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  goHome: () => dispatch(nav.goHome()),
   completeSwap: () => dispatch(completeReverseSwap()),
-  goTimelockExpired: () => dispatch(nav.goReverseSwapTimelockExpired()),
   setReverseSwapAddress: (address, error) =>
     dispatch(setReverseSwapAddress(address, error)),
   startReverseSwap: (info, nextStage, timelockExpired) =>

@@ -1,5 +1,6 @@
-import Navigation from './navigation';
 import { generateKeys } from './keys';
+import history from '../constants/history';
+import Navigation from './navigation';
 
-export const nav = new Navigation();
+export const navigation = new Navigation(history);
 export { generateKeys };

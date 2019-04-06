@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import DataStorage from './dataStorage';
+import { navigation } from '../../action';
 import View from '../../components/view';
 import TaskBar from '../../components/taskbar';
 import Controls from '../../components/controls';
@@ -51,12 +52,12 @@ const styles = theme => ({
 
 class ReverseSwapTimelockExpired extends React.Component {
   render() {
-    const { classes, goHome, goRefund, goFaq } = this.props;
+    const { classes } = this.props;
     const { id, asset, amount } = DataStorage.swapInfo;
 
     return (
       <BackGround>
-        <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
+        <TaskBar />
         <View className={classes.wrapper}>
           <View className={classes.tab}>
             <View className={classes.padding}>
@@ -75,7 +76,10 @@ class ReverseSwapTimelockExpired extends React.Component {
               </View>
             </View>
             <View className={classes.retry}>
-              <Controls text={'Try another Swap'} onPress={() => goHome()} />
+              <Controls
+                text={'Try another Swap'}
+                onPress={() => navigation.navHome()}
+              />
             </View>
           </View>
         </View>
@@ -86,9 +90,6 @@ class ReverseSwapTimelockExpired extends React.Component {
 
 ReverseSwapTimelockExpired.propTypes = {
   classes: PropTypes.object.isRequired,
-  goHome: PropTypes.func.isRequired,
-  goRefund: PropTypes.func.isRequired,
-  goFaq: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(ReverseSwapTimelockExpired);

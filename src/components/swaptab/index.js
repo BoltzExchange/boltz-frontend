@@ -7,7 +7,7 @@ import Input from '../input';
 import DropDown from '../dropdown';
 import Controls from '../controls';
 import Text, { InfoText } from '../text';
-import { decimals } from '../../scripts/utils';
+import { decimals } from '../../utils';
 
 const styles = theme => ({
   wrapper: {

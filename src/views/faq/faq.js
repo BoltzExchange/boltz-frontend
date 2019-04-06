@@ -43,13 +43,13 @@ const twitterLink = 'https://twitter.com/boltzhq';
 
 class Faq extends React.Component {
   render() {
-    const { classes, goHome, goRefund, goFaq } = this.props;
+    const { classes } = this.props;
 
     document.body.style.overflowX = 'hidden';
 
     return (
       <BackGround>
-        <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
+        <TaskBar />
         <View className={classes.wrapper}>
           <View className={classes.titleWrapper}>
             <h1 className={classes.title}>FAQ&apos;s</h1>
@@ -167,9 +167,6 @@ class Faq extends React.Component {
 
 Faq.propTypes = {
   classes: PropTypes.object.isRequired,
-  goHome: PropTypes.func.isRequired,
-  goRefund: PropTypes.func.isRequired,
-  goFaq: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(Faq);

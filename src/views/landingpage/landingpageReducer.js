@@ -5,7 +5,6 @@ const initialState = {
   rates: {},
   limits: {},
   currencies: [],
-
   errorMessage: undefined,
 };
 

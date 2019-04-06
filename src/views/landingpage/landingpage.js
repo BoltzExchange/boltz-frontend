@@ -12,8 +12,8 @@ import SwapTab from '../../components/swaptab';
 import ModalComponent from '../../components/modal';
 import BackGround from '../../components/background';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
-import { notificationData, isMobileBrowser } from '../../scripts/utils';
-
+import { notificationData, isMobileBrowser } from '../../utils';
+import { navigation } from '../../action';
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 class LandingPage extends React.Component {
@@ -62,11 +62,6 @@ class LandingPage extends React.Component {
   render() {
     const {
       classes,
-      goHome,
-      goReverseSwap,
-      goSwap,
-      goRefund,
-      goFaq,
       initSwap,
       initReverseSwap,
 
@@ -81,7 +76,7 @@ class LandingPage extends React.Component {
     return (
       <BackGround>
         <ReactNotification ref={this.notificationDom} />
-        <TaskBar goHome={goHome} goRefund={goRefund} goFaq={goFaq} />
+        <TaskBar />
         <View className={classes.wrapper}>
           <View className={classes.infoWrapper}>
             <p className={classes.title}>
@@ -126,7 +121,7 @@ class LandingPage extends React.Component {
                     webln: this.webln,
                   });
 
-                  goReverseSwap();
+                  navigation.navReverseSwap();
                 } else {
                   initSwap({
                     ...state,
@@ -134,7 +129,7 @@ class LandingPage extends React.Component {
                     webln: this.webln,
                   });
 
-                  goSwap();
+                  navigation.navSwap();
                 }
               }}
               fees={fees}
@@ -151,11 +146,6 @@ class LandingPage extends React.Component {
 
 LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  goHome: PropTypes.func.isRequired,
-  goSwap: PropTypes.func.isRequired,
-  goReverseSwap: PropTypes.func.isRequired,
-  goRefund: PropTypes.func.isRequired,
-  goFaq: PropTypes.func.isRequired,
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
   getPairs: PropTypes.func.isRequired,

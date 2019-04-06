@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import View from '../view';
 import Button from '../button';
 import { network } from '../../constants';
-
+import { navigation } from '../../action/index';
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 const styles = theme => ({
@@ -54,9 +54,9 @@ const styles = theme => ({
   },
 });
 
-const TaskBar = ({ classes, goHome, goRefund, goFaq }) => (
+const TaskBar = ({ classes }) => (
   <View className={classes.wrapper}>
-    <View className={classes.logo} onClick={() => goHome()}>
+    <View className={classes.logo} onClick={() => navigation.navHome()}>
       <img
         src={boltz_logo}
         height={38}
@@ -71,17 +71,17 @@ const TaskBar = ({ classes, goHome, goRefund, goFaq }) => (
       <Button
         className={classes.responsiveBtn}
         text="Swap"
-        onPress={() => goHome()}
+        onPress={() => navigation.navHome()}
       />
       <Button
         className={classes.responsiveBtn}
         text="Refund"
-        onPress={() => goRefund()}
+        onPress={() => navigation.navRefund()}
       />
       <Button
         className={classes.responsiveBtn}
         text="FAQ"
-        onPress={() => goFaq()}
+        onPress={() => navigation.navFaq()}
       />
       <Button
         className={classes.responsiveBtn}
@@ -95,9 +95,6 @@ const TaskBar = ({ classes, goHome, goRefund, goFaq }) => (
 
 TaskBar.propTypes = {
   classes: PropTypes.object,
-  goHome: PropTypes.func.isRequired,
-  goRefund: PropTypes.func.isRequired,
-  goFaq: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(TaskBar);

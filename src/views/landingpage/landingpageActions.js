@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { boltzApi } from '../../constants';
-import { splitPairId } from '../../scripts/utils';
+import { splitPairId } from '../../utils';
 import * as actionTypes from '../../constants/actions';
 
 const pairsRequest = () => ({

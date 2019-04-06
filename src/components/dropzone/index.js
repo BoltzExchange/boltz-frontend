@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import View from '../view';
-import { readFile } from '../../scripts/utils';
+import { readFile } from '../../utils';
 
 class DropZone extends React.Component {
   constructor(props) {
