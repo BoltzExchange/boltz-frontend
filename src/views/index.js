@@ -7,7 +7,7 @@ import 'react-notifications-component/dist/theme.css';
 import { Router, Route, Switch } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import Container from '../components/container';
-import BackGround from '../components/background'; 
+import BackGround from '../components/background';
 import history from '../constants/history';
 
 const LandingPage = lazy(() => import('./landingpage'));
