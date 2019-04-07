@@ -221,6 +221,15 @@ class SwapTab extends React.Component {
       );
     }
 
+    // TODO: Remove this once we resolve the issues
+    if (this.quoteAsset.symbol === 'BTC' && !this.quoteAsset.isLightning) {
+      if (this.state.errorMessage !== 'We are having some issues')
+        this.setState({
+          error: true,
+          errorMessage: 'We are having some issues',
+        });
+    }
+
     localStorage.setItem('base', base);
     localStorage.setItem('quote', quote);
     localStorage.setItem('baseAmount', baseAmount);
