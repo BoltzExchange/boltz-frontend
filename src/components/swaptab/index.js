@@ -101,6 +101,7 @@ class SwapTab extends React.Component {
     super(props);
 
     this.state = {
+      disabled: false,
       error: false,
       inputError: false,
       base: 'LTC',
@@ -175,6 +176,11 @@ class SwapTab extends React.Component {
 
   componentDidUpdate = (_, prevState) => {
     const { base, quote, baseAmount } = this.state;
+
+    // If rate if undefined disable input
+    if (this.state.rate !== prevState.rate) {
+      this.noRateAvailable();
+    }
 
     // Update the rate if the request finished or the currencies changed
     if (
@@ -255,6 +261,12 @@ class SwapTab extends React.Component {
 
   updatePair = (quote, base) => {
     this.setState({ base, quote, error: false, errorMessage: '' });
+  };
+
+  noRateAvailable = () => {
+    this.state.rate
+      ? this.setState({ disabled: false })
+      : this.setState({ disabled: true });
   };
 
   updateBaseAmount = quoteAmount => {
@@ -347,6 +359,7 @@ class SwapTab extends React.Component {
           <View className={classes.select}>
             <Text text="You send:" className={classes.text} />
             <Input
+              disable={this.state.disabled}
               className={classes.inputMobile}
               min={minAmount}
               max={maxAmount}
@@ -376,6 +389,7 @@ class SwapTab extends React.Component {
           <View className={classes.select}>
             <Text text="You receive:" className={classes.text} />
             <Input
+              disable={this.state.disabled}
               className={classes.inputMobile}
               min={1 / decimals}
               max={Number.MAX_SAFE_INTEGER}
