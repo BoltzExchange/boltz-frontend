@@ -33,6 +33,7 @@ const Confetti = ({ classes, notifie }) => (
       width={window.innerWidth}
       numberOfPieces={500}
       recycle={false}
+      style={{ pointerEvents: 'none' }}
     />
     <span className={classes.text}>Viola! Swap successful!</span>
     {notifie(classes.notifie)}
