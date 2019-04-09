@@ -107,7 +107,7 @@ class SwapTab extends React.Component {
       quote: 'BTC ⚡',
       minAmount: 0,
       maxAmount: 0,
-      baseAmount: 0.001,
+      baseAmount: 0.05,
       quoteAmount: 0,
       feeAmount: 0,
       errorMessage: '',
@@ -285,8 +285,12 @@ class SwapTab extends React.Component {
   };
 
   updateQuoteAmount = baseAmount => {
-    const { rate } = this.state.rate;
-    const fee = this.calculateFee(baseAmount);
+    const { rate, orderSide } = this.state.rate;
+    let fee = this.calculateFee(baseAmount);
+
+    if (orderSide === 'sell') {
+      fee = fee * rate;
+    }
 
     const quote = Number((baseAmount * rate - fee).toFixed(8));
 
