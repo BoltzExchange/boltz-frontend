@@ -6,7 +6,6 @@ import theme from '../constants/theme';
 import 'react-notifications-component/dist/theme.css';
 import { Router, Route, Switch } from 'react-router-dom';
 import * as routes from '../constants/routes';
-import Container from '../components/container';
 import BackGround from '../components/background';
 import history from '../constants/history';
 
@@ -21,23 +20,18 @@ const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Router history={history}>
-          <Suspense fallback={<BackGround showFooter={false} />}>
+        <Suspense fallback={<BackGround showFooter={false} />}>
+          <Router history={history}>
             <Switch>
-              <Container>
-                <Route exact path={routes.home} component={LandingPage} />
-                <Route exact path={routes.faq} component={Faq} />
-                <Route exact path={routes.swap} component={Swap} />
-                <Route exact path={routes.refund} component={Refund} />
-                <Route
-                  exact
-                  path={routes.reverseSwap}
-                  component={ReverseSwap}
-                />
-              </Container>
+              <Route exact path={routes.home} component={LandingPage} />
+              <Route exact path={routes.faq} component={Faq} />
+              <Route exact path={routes.swap} component={Swap} />
+              <Route exact path={routes.refund} component={Refund} />
+              <Route exact path={routes.reverseSwap} component={ReverseSwap} />
+              <Route path={'*'} component={LandingPage} />
             </Switch>
-          </Suspense>
-        </Router>
+          </Router>
+        </Suspense>
       </ThemeProvider>
     </Provider>
   );
