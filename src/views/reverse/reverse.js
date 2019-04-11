@@ -8,12 +8,13 @@ import Loading from '../../components/loading';
 import Controls from '../../components/controls';
 import Confetti from '../../components/confetti';
 import BackGround from '../../components/background';
-import { getCurrencyName } from '../../scripts/utils';
+import { getCurrencyName } from '../../utils';
 import StepsWizard from '../../components/stepswizard';
 import DataStorage from '../reversetimelock/dataStorage';
-import { notificationData } from '../../scripts/utils';
+import { notificationData } from '../../utils';
 import { InputAddress, PayInvoice, LockingFunds } from './steps';
 import ReactNotification from 'react-notifications-component';
+import { navigation } from '../../action';
 
 const styles = () => ({
   wrapper: {
@@ -29,8 +30,13 @@ class ReverseSwap extends React.Component {
     this.notificationDom = React.createRef();
   }
 
+  componentDidMount = () => {
+    this.redirectIfLoggedOut();
+  };
+
   componentDidUpdate(prevProps) {
     const { isReconnecting, swapFailResponse, swapResponse } = this.props;
+    this.redirectIfLoggedOut();
 
     if (isReconnecting && !prevProps.isReconnecting) {
       this.addNotification(lostConnection, 0);
@@ -50,16 +56,25 @@ class ReverseSwap extends React.Component {
     }
   }
 
+  componentWillUnmount = () => {
+    this.props.completeSwap();
+  };
+
   addNotification = (message, type) => {
     this.notificationDom.current.addNotification(
       notificationData(message, type)
     );
   };
 
+  redirectIfLoggedOut = () => {
+    if (!this.props.inSwapMode) {
+      navigation.navHome();
+    }
+  };
+
   render() {
     const {
       webln,
-      goHome,
       classes,
       swapInfo,
       swapStatus,
@@ -94,7 +109,7 @@ class ReverseSwap extends React.Component {
             onExit={() => {
               if (window.confirm('Are you sure you want to exit')) {
                 completeSwap();
-                goHome();
+                navigation.navHome();
               }
             }}
           >
@@ -208,7 +223,7 @@ class ReverseSwap extends React.Component {
                     text={'Swap Again!'}
                     onPress={() => {
                       completeSwap();
-                      goHome();
+                      navigation.navHome();
                     }}
                   />
                 )}
@@ -225,7 +240,7 @@ ReverseSwap.propTypes = {
   classes: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
   isReconnecting: PropTypes.bool.isRequired,
-  goHome: PropTypes.func.isRequired,
+  inSwapMode: PropTypes.bool.isRequired,
   goTimelockExpired: PropTypes.func.isRequired,
   webln: PropTypes.object,
   swapInfo: PropTypes.object,

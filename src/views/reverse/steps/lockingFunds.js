@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import Link from '../../../components/link';
 import View from '../../../components/view';
-import { getCurrencyName, getExplorer } from '../../../scripts/utils';
+import { getCurrencyName, getExplorer } from '../../../utils';
 
 const styles = () => ({
   wrapper: {

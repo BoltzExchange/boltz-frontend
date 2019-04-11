@@ -26,15 +26,21 @@ const styles = theme => ({
   },
 });
 
-const BackGround = ({ classes, children }) => (
+const BackGround = ({ classes, showFooter, children }) => (
   <View className={classes.wrapper}>
     {children}
-    <span className={classes.boltz}>#reckless</span>
+    {showFooter ? <span className={classes.boltz}>#reckless</span> : undefined}
   </View>
 );
+
+BackGround.defaultProps = {
+  showFooter: true,
+};
+
 BackGround.propTypes = {
   classes: PropTypes.object,
   children: PropTypes.node,
+  showFooter: PropTypes.bool,
 };
 
 export default injectSheet(styles)(BackGround);

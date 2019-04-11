@@ -1,6 +1,7 @@
 import * as actionTypes from '../../constants/actions';
 
 const initalState = {
+  inSwapMode: false,
   webln: null,
   isFetching: false,
   swapInfo: {
@@ -38,6 +39,7 @@ const reducer = (state = initalState, action) => {
     case actionTypes.INIT_SWAP:
       return {
         ...state,
+        inSwapMode: true,
         webln: action.payload.webln,
         swapInfo: {
           ...state.swapInfo,

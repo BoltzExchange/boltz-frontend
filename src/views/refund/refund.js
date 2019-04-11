@@ -6,6 +6,7 @@ import Prompt from '../../components/prompt';
 import Controls from '../../components/controls';
 import Background from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
+import { navigation } from '../../action';
 import {
   InputDestinationAddress,
   UploadRefundFile,
@@ -34,7 +35,6 @@ const uploadRefundFileText = (refundFile, txHash) => {
 
 const Refund = ({
   classes,
-  goHome,
   refundFile,
   setRefundFile,
   transactionHash,
@@ -57,7 +57,7 @@ const Refund = ({
           onExit={() => {
             if (window.confirm('Are you sure you want to exit')) {
               completeRefund();
-              goHome();
+              navigation.navHome();
             }
           }}
           message={'Are you sure?'}
@@ -137,7 +137,7 @@ const Refund = ({
                   text={'Try another Swap!'}
                   onPress={() => {
                     completeRefund();
-                    goHome();
+                    navigation.navHome();
                   }}
                 />
               )}
@@ -151,7 +151,6 @@ const Refund = ({
 
 Refund.propTypes = {
   classes: PropTypes.object,
-  goHome: PropTypes.func.isRequired,
   nextStage: PropTypes.func,
   isFetching: PropTypes.bool,
   refundFile: PropTypes.object,

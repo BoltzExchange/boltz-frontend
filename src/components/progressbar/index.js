@@ -1,6 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
+import View from '../view';
 
 const styles = theme => ({
   wrapper: {
@@ -18,9 +19,9 @@ const styles = theme => ({
 });
 
 const ProgressBar = ({ classes, progress }) => (
-  <div className={classes.wrapper}>
-    <div className={classes.bar} style={{ width: `${progress}%` }} />
-  </div>
+  <View className={classes.wrapper}>
+    <View className={classes.bar} style={{ width: `${progress}%` }} />
+  </View>
 );
 
 ProgressBar.propTypes = {

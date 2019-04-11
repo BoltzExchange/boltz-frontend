@@ -1,9 +1,4 @@
 /**
- * Global actions
- */
-export const NAVIGATE = 'NAVIGATE';
-
-/**
  * Landing page actions
  */
 export const SET_PAIRS = 'SET_PAIRS';

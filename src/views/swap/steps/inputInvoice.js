@@ -9,7 +9,7 @@ import {
   getCurrencyName,
   getSampleInvoice,
   getSmallestDenomination,
-} from '../../../scripts/utils';
+} from '../../../utils';
 
 const InputInvoiceStyles = () => ({
   wrapper: {

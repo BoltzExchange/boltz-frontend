@@ -5,7 +5,7 @@ import Link from '../../../components/link';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
 import DetectResize from '../../../components/detectresize';
-import { copyToClipBoard, getExplorer } from '../../../scripts/utils';
+import { copyToClipBoard, getExplorer } from '../../../utils';
 
 const styles = () => ({
   wrapper: {

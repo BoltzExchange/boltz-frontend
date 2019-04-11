@@ -4,11 +4,7 @@ import injectSheet from 'react-jss';
 import { address } from 'bitcoinjs-lib';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
-import {
-  getCurrencyName,
-  getSampleAddress,
-  getNetwork,
-} from '../../../scripts/utils';
+import { getCurrencyName, getSampleAddress, getNetwork } from '../../../utils';
 
 const inputAddressStyles = () => ({
   wrapper: {

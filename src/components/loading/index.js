@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import Loader from 'react-loader-spinner';
+import View from '../view';
 
 const styles = () => ({
   loading: {
@@ -10,7 +11,7 @@ const styles = () => ({
 });
 const Loading = ({ width, height, color, classes, ...other }) => {
   return (
-    <div className={classes.loading}>
+    <View noFlex className={classes.loading}>
       <Loader
         type="TailSpin"
         color={color ? color : '#fff'}
@@ -18,7 +19,7 @@ const Loading = ({ width, height, color, classes, ...other }) => {
         width={width ? width : 40}
         {...other}
       />
-    </div>
+    </View>
   );
 };
 

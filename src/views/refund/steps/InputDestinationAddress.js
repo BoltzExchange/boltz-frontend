@@ -1,7 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
-import { getCurrencyName } from '../../../scripts/utils';
+import { getCurrencyName } from '../../../utils';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
 

@@ -9,7 +9,7 @@ import {
   getNetwork,
   getHexBuffer,
   getFeeEstimation,
-} from '../../scripts/utils';
+} from '../../utils';
 
 let latestSwapEvent = '';
 

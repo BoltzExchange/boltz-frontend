@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import Refund from './refund';
 import * as actions from './refundActions';
-import { nav } from '../../action';
 
 const mapStateToProps = state => ({
   refundFile: state.refundReducer.refundFile,
@@ -12,7 +11,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  goHome: () => dispatch(nav.goHome()),
   setRefundFile: file => dispatch(actions.setRefundFile(file)),
   setTransactionHash: hash => dispatch(actions.setTransactionHash(hash)),
   setDestinationAddress: address =>

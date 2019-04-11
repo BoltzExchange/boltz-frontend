@@ -1,29 +1,33 @@
 import * as routes from '../../constants/routes';
-import { NAVIGATE } from '../../constants/actions';
-
-const navAction = nav => ({
-  type: NAVIGATE,
-  payload: nav,
-});
 
 class Navigation {
-  constructor() {
-    navAction.bind(this);
+  constructor(history) {
+    this._history = history;
   }
 
-  goHome = () => navAction(routes.home);
+  _push = route => {
+    this._history.push(route);
+  };
 
-  goSwap = () => navAction(routes.swap);
-  goReverseSwap = () => navAction(routes.reverseSwap);
-  goReverseSwapTimelockExpired = () =>
-    navAction(routes.reverseSwapTimelockExpired);
-  goSwapConfirm = () => navAction(routes.swapConfirm);
-  goSwapDownloadRefund = () => navAction(routes.swapDownloadRefund);
-  goSwapDone = () => navAction(routes.swapDone);
+  navHome = () => {
+    this._push(routes.home);
+  };
 
-  goRefund = () => navAction(routes.refund);
+  navFaq = () => {
+    this._push(routes.faq);
+  };
 
-  goFaq = () => navAction(routes.faq);
+  navRefund = () => {
+    this._push(routes.refund);
+  };
+
+  navSwap = () => {
+    this._push(routes.swap);
+  };
+
+  navReverseSwap = () => {
+    this._push(routes.reverseSwap);
+  };
 }
 
 export default Navigation;
