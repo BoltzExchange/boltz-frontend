@@ -30,13 +30,12 @@ const MobileSwapTab = ({
   updateQuoteAmount,
   updateBaseAmount,
   updatePair,
-  limits,
   shouldSubmit,
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.intro}>
       <p className={classes.introText}>
-        Boltz is a Instant, Account-Free 
+        Boltz is a Instant, Account-Free
         <br />
         and Non-Custodial trading platform.
         <br />
@@ -50,7 +49,7 @@ const MobileSwapTab = ({
       <InfoText title="Rate" text={`${parseRate(rates)}`} />
     </View>
     <View className={classes.inputs}>
-    <View className={classes.select}>
+      <View className={classes.select}>
         <Text text="You send" className={classes.selectTitle} />
         <View className={classes.selectInput}>
           <Input
@@ -70,12 +69,12 @@ const MobileSwapTab = ({
             onChange={e => updatePair(quote, e)}
           />
         </View>
-    </View>
-    <MdCompareArrows
+      </View>
+      <MdCompareArrows
         className={classes.arrows}
         onClick={() => switchPair()}
       />
-    <View className={classes.select}>
+      <View className={classes.select}>
         <Text text="You receive" className={classes.selectTitle} />
         <View className={classes.selectInput}>
           <Input
@@ -95,7 +94,7 @@ const MobileSwapTab = ({
             onChange={e => updatePair(e, base)}
           />
         </View>
-    </View>
+      </View>
     </View>
     <View className={classes.next}>
       <Controls

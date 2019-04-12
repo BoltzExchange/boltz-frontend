@@ -8,6 +8,9 @@ import { generateKeys, navigation } from '../../actions';
 import { MobileSwapTab } from '../../components/swaptab';
 import BackGround from '../../components/background';
 
+// TODO: toggleModal,
+// TODO: isOpen,
+
 const LandingPage = ({
   initSwap,
   initReverseSwap,
@@ -16,8 +19,6 @@ const LandingPage = ({
   limits,
   currencies,
   notificationDom,
-  toggleModal,
-  isOpen,
   webln,
 }) => (
   <BackGround>
