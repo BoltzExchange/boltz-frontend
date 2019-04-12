@@ -1,8 +1,19 @@
+import React, { lazy } from 'react';
 import { connect } from 'react-redux';
-import LandingPage from './landingpage';
+import PlatformSelector from '../../hoc/platformSelector';
 import { initSwap } from '../swap/swapActions';
-import * as actions from './landingpageActions';
+import * as actions from '../../actions/landingPageActions';
 import { initReverseSwap } from '../reverse/reverseActions';
+
+const LandingPageDesktop = lazy(() => import('./landingPageDesktop'));
+const LandingPageMobile = lazy(() => import('./landingPageMobile'));
+
+const LandingPage = props => (
+  <PlatformSelector
+    mobile={<LandingPageMobile {...props} />}
+    desktop={<LandingPageDesktop {...props} />}
+  />
+);
 
 const mapStateToProps = state => ({
   fees: state.landingpageReducer.fees,

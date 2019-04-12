@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { boltzApi } from '../../constants';
-import { splitPairId } from '../../utils';
-import * as actionTypes from '../../constants/actions';
+import { boltzApi } from '../constants';
+import { splitPairId } from '../utils';
+import * as actionTypes from '../constants/actions';
 
 const pairsRequest = () => ({
   type: actionTypes.PAIRS_REQUEST,

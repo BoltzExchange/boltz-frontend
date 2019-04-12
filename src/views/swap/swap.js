@@ -9,7 +9,7 @@ import Confetti from '../../components/confetti';
 import BackGround from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
 import { InputInvoice, SendTransaction, DownloadRefund } from './steps';
-import { navigation } from '../../action';
+import { navigation } from '../../actions';
 
 const styles = () => ({
   wrapper: {

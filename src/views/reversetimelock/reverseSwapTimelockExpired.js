@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 import DataStorage from './dataStorage';
 import { navigation } from '../../action';
 import View from '../../components/view';
-import TaskBar from '../../components/taskbar';
+import NavigationBar from '../../components/navigationbar';
 import Controls from '../../components/controls';
 import BackGround from '../../components/background';
 
@@ -57,7 +57,7 @@ class ReverseSwapTimelockExpired extends React.Component {
 
     return (
       <BackGround>
-        <TaskBar />
+        <NavigationBar />
         <View className={classes.wrapper}>
           <View className={classes.tab}>
             <View className={classes.padding}>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../components/view';
 import Link from '../../components/link';
-import TaskBar from '../../components/taskbar';
+import NavigationBar from '../../components/navigationbar';
 import Question from '../../components/question';
 import NodeInfo from '../../components/nodeinfo';
 import BackGround from '../../components/background';
@@ -49,7 +49,7 @@ class Faq extends React.Component {
 
     return (
       <BackGround>
-        <TaskBar />
+        <NavigationBar />
         <View className={classes.wrapper}>
           <View className={classes.titleWrapper}>
             <h1 className={classes.title}>FAQ&apos;s</h1>

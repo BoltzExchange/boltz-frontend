@@ -14,7 +14,7 @@ import DataStorage from '../reversetimelock/dataStorage';
 import { notificationData } from '../../utils';
 import { InputAddress, PayInvoice, LockingFunds } from './steps';
 import ReactNotification from 'react-notifications-component';
-import { navigation } from '../../action';
+import { navigation } from '../../actions';
 
 const styles = () => ({
   wrapper: {
@@ -241,7 +241,7 @@ ReverseSwap.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isReconnecting: PropTypes.bool.isRequired,
   inSwapMode: PropTypes.bool.isRequired,
-  goTimelockExpired: PropTypes.func.isRequired,
+  goTimelockExpired: PropTypes.func,
   webln: PropTypes.object,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,
