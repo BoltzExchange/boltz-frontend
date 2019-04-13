@@ -6,6 +6,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "serve": "serve -s build",
+    "serve:latest": "npm run build && npm run serve",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
   },
