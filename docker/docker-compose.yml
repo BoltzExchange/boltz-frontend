@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  regtest:
+    image: 'boltz/regtest:latest'
+    expose:
+      - "18443" 
+      - "19443" 
+      - "29000" 
+      - "29001" 
+      - "29002" 
+      - "30000" 
+      - "30001" 
+      - "30002" 
+      - "10009" 
+      - "10010" 
+      - "11009" 
+      - "11010" 
+      - "8081"
+    command: entrypoint.sh
+
+  boltz-backend:
+    image: 'moniasegol/test-boltz-backend:latest'
+    expose:
+      - "9000"
+    links:
+      - regtest
+    depends_on:
+      - regtest
+    command: npm start
+
+  boltz-middleware:
+    image: 'moniasegol/test-boltz-middleware:latest'
+    ports:
+      - "9001:9001"
+    links: 
+      - boltz-backend
+    depends_on:
+      - regtest
+      - boltz-backend
+    command: npm start
