@@ -147,16 +147,6 @@ class SwapTab extends React.Component {
     )}/${this.parseBoltSuffix(this.state.quote, false)}`;
   };
 
-  componentWillMount = () => {
-    if (localStorage.getItem('quote')) {
-      this.setState({
-        base: localStorage.getItem('base'),
-        quote: localStorage.getItem('quote'),
-        baseAmount: localStorage.getItem('baseAmount'),
-      });
-    }
-  };
-
   componentDidMount = () => {
     const symbol = this.getSymbol();
     const limits = this.props.limits[symbol];
@@ -175,7 +165,7 @@ class SwapTab extends React.Component {
   };
 
   componentDidUpdate = (_, prevState) => {
-    const { base, quote, baseAmount } = this.state;
+    const { base, quote } = this.state;
 
     // If rate if undefined disable input
     if (this.state.rate !== prevState.rate) {
@@ -235,10 +225,6 @@ class SwapTab extends React.Component {
           errorMessage: 'Currently not available',
         });
     }
-
-    localStorage.setItem('base', base);
-    localStorage.setItem('quote', quote);
-    localStorage.setItem('baseAmount', baseAmount);
   };
 
   calculateMinerFee = () => {
