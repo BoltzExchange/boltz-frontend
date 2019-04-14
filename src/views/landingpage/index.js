@@ -1,9 +1,9 @@
 import React, { lazy } from 'react';
 import { connect } from 'react-redux';
 import PlatformSelector from '../../hoc/platformSelector';
-import { initSwap } from '../swap/swapActions';
+import { initSwap } from '../../actions/swapActions';
 import * as actions from '../../actions/landingPageActions';
-import { initReverseSwap } from '../reverse/reverseActions';
+import { initReverseSwap } from '../../actions/reverseActions';
 
 const LandingPageDesktop = lazy(() => import('./landingPageDesktop'));
 const LandingPageMobile = lazy(() => import('./landingPageMobile'));

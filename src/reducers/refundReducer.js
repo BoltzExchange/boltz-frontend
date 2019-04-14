@@ -1,4 +1,4 @@
-import * as actionTypes from '../../constants/actions';
+import * as actionTypes from '../constants/actions';
 
 const initalState = {
   isFetching: false,

@@ -2,14 +2,14 @@ import axios from 'axios';
 import EventSource from 'eventsource';
 import { Transaction, ECPair, address } from 'bitcoinjs-lib';
 import { detectSwap, constructClaimTransaction } from 'boltz-core';
-import * as actionTypes from '../../constants/actions';
-import { boltzApi, SwapUpdateEvent } from '../../constants';
+import * as actionTypes from '../constants/actions';
+import { boltzApi, SwapUpdateEvent } from '../constants';
 import {
   toSatoshi,
   getNetwork,
   getHexBuffer,
   getFeeEstimation,
-} from '../../utils';
+} from '../utils';
 
 let latestSwapEvent = '';
 

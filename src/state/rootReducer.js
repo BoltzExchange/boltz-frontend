@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import swapReducer from '../views/swap/swapReducer';
-import reverseSwapReducer from '../views/reverse/reverseReducer';
+import swapReducer from '../reducers/swapReducer';
+import reverseSwapReducer from '../reducers/reverseReducer';
 import landingpageReducer from '../reducers/landingpageReducer';
-import refundReducer from '../views/refund/refundReducer';
+import refundReducer from '../reducers/refundReducer';
 
 const createRootReducer = () =>
   combineReducers({

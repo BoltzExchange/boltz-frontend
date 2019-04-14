@@ -1,7 +1,7 @@
 import axios from 'axios';
 import EventSource from 'eventsource';
-import { boltzApi, SwapUpdateEvent } from '../../constants';
-import * as actionTypes from '../../constants/actions';
+import { boltzApi, SwapUpdateEvent } from '../constants';
+import * as actionTypes from '../constants/actions';
 
 export const completeSwap = () => {
   return {

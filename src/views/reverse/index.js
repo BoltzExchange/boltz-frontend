@@ -4,7 +4,7 @@ import {
   completeReverseSwap,
   setReverseSwapAddress,
   startReverseSwap,
-} from './reverseActions';
+} from '../../actions/reverseActions';
 
 const mapStateToProps = state => ({
   webln: state.reverseSwapReducer.webln,

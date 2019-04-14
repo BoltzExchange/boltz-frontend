@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { startSwap, completeSwap, setSwapInvoice } from './swapActions';
+import {
+  startSwap,
+  completeSwap,
+  setSwapInvoice,
+} from '../../actions/swapActions';
 import Swap from './swap';
 
 const mapStateToProps = state => ({
