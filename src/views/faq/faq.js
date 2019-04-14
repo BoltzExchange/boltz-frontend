@@ -34,7 +34,8 @@ const styles = theme => ({
     paddingBottom: '10px',
     '@media (max-width: 425px)': {
       justifyContent: 'center',
-      width: '100%',
+      minWidth: '100%',
+      maxWidth: '100%',
     },
   },
 });

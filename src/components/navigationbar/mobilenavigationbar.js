@@ -27,7 +27,7 @@ class MobileNavigationBar extends React.Component {
     return (
       <View className={classes.wrapper}>
         <View className={classes.icon}>
-          <View className={classes.logo}>
+          <View className={classes.logo} onClick={() => navigation.navHome()}>
             <img
               src={boltz_logo}
               height={50}

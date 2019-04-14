@@ -132,10 +132,10 @@ const styles = theme => ({
     flexDirection: 'column',
   },
   inputMobile: {
-    '@media (max-width: 375px)': {
-      width: '150px',
+    '@media (max-width: 370px)': {
+      width: '130px',
     },
-    width: '200px',
+    width: '180px',
     borderRadius: '3px',
     fontSize: '16px',
   },
@@ -150,6 +150,7 @@ const styles = theme => ({
     alignItems: 'center',
   },
   selectInput: {
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'space-around',
   },
