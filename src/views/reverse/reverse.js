@@ -10,7 +10,6 @@ import Confetti from '../../components/confetti';
 import BackGround from '../../components/background';
 import { getCurrencyName } from '../../utils';
 import StepsWizard from '../../components/stepswizard';
-import DataStorage from '../reversetimelock/dataStorage';
 import { notificationData } from '../../utils';
 import { InputAddress, PayInvoice, LockingFunds } from './steps';
 import ReactNotification from 'react-notifications-component';
@@ -35,8 +34,28 @@ class ReverseSwap extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { isReconnecting, swapFailResponse, swapResponse } = this.props;
+    const {
+      isReconnecting,
+      swapFailResponse,
+      swapResponse,
+      swapInfo,
+    } = this.props;
+
     this.redirectIfLoggedOut();
+
+    if (
+      prevProps.swapInfo.quote !== swapInfo.quote &&
+      prevProps.swapInfo.quoteAmount !== swapInfo.quoteAmount
+    ) {
+      this.props.dataStorageSetAsset({
+        asset: swapInfo.quote,
+        amount: swapInfo.quoteAmount,
+      });
+    }
+
+    if (prevProps.swapResponse.id !== swapResponse.id) {
+      this.props.dataStorageSetId(swapResponse.id);
+    }
 
     if (isReconnecting && !prevProps.isReconnecting) {
       this.addNotification(lostConnection, 0);
@@ -87,15 +106,6 @@ class ReverseSwap extends React.Component {
       goTimelockExpired,
       setReverseSwapAddress,
     } = this.props;
-
-    DataStorage.swapInfo = {
-      asset: swapInfo.quote,
-      amount: swapInfo.quoteAmount,
-    };
-
-    if (swapResponse) {
-      DataStorage.swapInfo.id = swapResponse.id;
-    }
 
     return (
       <BackGround>
@@ -253,6 +263,8 @@ ReverseSwap.propTypes = {
   startReverseSwap: PropTypes.func.isRequired,
   swapStatus: PropTypes.string.isRequired,
   invalidAddress: PropTypes.bool.isRequired,
+  dataStorageSetAsset: PropTypes.func.isRequired,
+  dataStorageSetId: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(ReverseSwap);
