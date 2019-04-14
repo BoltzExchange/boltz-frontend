@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import withLandingPageState from '../../hoc/withLandingPageState';
+import LandingPageWrapper from './landingpagewrapper';
 import ReactNotification from 'react-notifications-component';
 import View from '../../components/view';
 import { generateKeys, navigation } from '../../actions';
@@ -14,7 +14,7 @@ import BackGround from '../../components/background';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
-const LandingPage = ({
+const LandingPageDeskTopContent = ({
   classes,
   initSwap,
   initReverseSwap,
@@ -140,7 +140,7 @@ const styles = theme => ({
   },
 });
 
-LandingPage.propTypes = {
+LandingPageDeskTopContent.propTypes = {
   classes: PropTypes.object.isRequired,
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
@@ -154,5 +154,10 @@ LandingPage.propTypes = {
   webln: PropTypes.object,
 };
 
-const enhancedLandingPage = withLandingPageState(LandingPage);
-export default injectSheet(styles)(enhancedLandingPage);
+const LandingPageDeskTop = props => (
+  <LandingPageWrapper {...props}>
+    {p => <LandingPageDeskTopContent {...p} />}
+  </LandingPageWrapper>
+);
+
+export default injectSheet(styles)(LandingPageDeskTop);

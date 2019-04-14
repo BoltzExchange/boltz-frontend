@@ -1,7 +1,7 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
-import withSwapTabState from './withSwapTabState';
+import SwapTabWrapper from './swaptabwrapper';
 import { MdCompareArrows } from 'react-icons/md';
 import View from '../view';
 import Input from '../input';
@@ -10,7 +10,7 @@ import Controls from '../controls';
 import Text, { InfoText } from '../text';
 import { decimals } from '../../utils';
 
-const DeskTopSwapTab = ({
+const DeskTopSwapTabContent = ({
   classes,
   feeAmount,
   minAmount,
@@ -178,7 +178,7 @@ const styles = theme => ({
   },
 });
 
-DeskTopSwapTab.propTypes = {
+DeskTopSwapTabContent.propTypes = {
   classes: PropTypes.object,
   onPress: PropTypes.func,
   fees: PropTypes.object.isRequired,
@@ -204,5 +204,10 @@ DeskTopSwapTab.propTypes = {
   shouldSubmit: PropTypes.func,
 };
 
-const enhancedDeskTopSwapTab = withSwapTabState(DeskTopSwapTab);
-export default injectSheet(styles)(enhancedDeskTopSwapTab);
+const DeskTopSwapTab = props => (
+  <SwapTabWrapper {...props}>
+    {p => <DeskTopSwapTabContent {...p} />}
+  </SwapTabWrapper>
+);
+
+export default injectSheet(styles)(DeskTopSwapTab);

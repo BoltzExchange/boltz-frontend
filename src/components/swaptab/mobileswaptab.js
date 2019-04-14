@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import withSwapTabState from './withSwapTabState';
+import SwapTabWrapper from './swaptabwrapper';
 import View from '../view';
 import Text, { InfoText } from '../text';
 import Input from '../input';
@@ -10,7 +10,7 @@ import { decimals } from '../../utils';
 import { MdCompareArrows } from 'react-icons/md';
 import Controls from '../controls';
 
-const MobileSwapTab = ({
+const MobileSwapTabContent = ({
   classes,
   feeAmount,
   minAmount,
@@ -168,7 +168,7 @@ const styles = theme => ({
   },
 });
 
-MobileSwapTab.propTypes = {
+MobileSwapTabContent.propTypes = {
   classes: PropTypes.object,
   onPress: PropTypes.func,
   fees: PropTypes.object.isRequired,
@@ -194,5 +194,10 @@ MobileSwapTab.propTypes = {
   shouldSubmit: PropTypes.func,
 };
 
-const enhancedMobileSwapTab = withSwapTabState(MobileSwapTab);
-export default injectSheet(styles)(enhancedMobileSwapTab);
+const MobileSwapTab = props => (
+  <SwapTabWrapper {...props}>
+    {p => <MobileSwapTabContent {...p} />}
+  </SwapTabWrapper>
+);
+
+export default injectSheet(styles)(MobileSwapTab);

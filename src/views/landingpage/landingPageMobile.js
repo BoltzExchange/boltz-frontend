@@ -2,61 +2,68 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactNotification from 'react-notifications-component';
 import MobileNavigationBar from '../../components/navigationbar/mobilenavigationbar';
-import withLandingPageState from '../../hoc/withLandingPageState';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { generateKeys, navigation } from '../../actions';
 import { MobileSwapTab } from '../../components/swaptab';
 import BackGround from '../../components/background';
+import LandingPageWrapper from './landingpagewrapper';
 
 // TODO: toggleModal,
 // TODO: isOpen,
 
-const LandingPage = ({
+const MobileLandingPageContent = ({
   initSwap,
   initReverseSwap,
+  notificationDom,
   fees,
   rates,
   limits,
   currencies,
-  notificationDom,
   webln,
-}) => (
-  <BackGround>
-    <ReactNotification ref={notificationDom} />
-    <MobileNavigationBar />
-    <MobileSwapTab
-      onPress={state => {
-        const keys = generateKeys(
-          state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
-        );
+}) => {
+  const loading = currencies.length === 0;
+  return (
+    <BackGround>
+      <ReactNotification ref={notificationDom} />
+      <MobileNavigationBar />
+      {loading ? (
+        <span>LOADING</span>
+      ) : (
+        <MobileSwapTab
+          onPress={state => {
+            const keys = generateKeys(
+              state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
+            );
 
-        if (state.isReverseSwap) {
-          initReverseSwap({
-            ...state,
-            keys,
-            webln,
-          });
+            if (state.isReverseSwap) {
+              initReverseSwap({
+                ...state,
+                keys,
+                webln,
+              });
 
-          navigation.navReverseSwap();
-        } else {
-          initSwap({
-            ...state,
-            keys,
-            webln,
-          });
+              navigation.navReverseSwap();
+            } else {
+              initSwap({
+                ...state,
+                keys,
+                webln,
+              });
 
-          navigation.navSwap();
-        }
-      }}
-      fees={fees}
-      rates={rates}
-      limits={limits}
-      currencies={currencies}
-    />
-  </BackGround>
-);
+              navigation.navSwap();
+            }
+          }}
+          fees={fees}
+          rates={rates}
+          limits={limits}
+          currencies={currencies}
+        />
+      )}
+    </BackGround>
+  );
+};
 
-LandingPage.propTypes = {
+MobileLandingPageContent.propTypes = {
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
   notificationDom: PropTypes.object,
@@ -69,4 +76,10 @@ LandingPage.propTypes = {
   webln: PropTypes.object,
 };
 
-export default withLandingPageState(LandingPage);
+const MobileLandingPage = props => (
+  <LandingPageWrapper {...props}>
+    {p => <MobileLandingPageContent {...p} />}
+  </LandingPageWrapper>
+);
+
+export default MobileLandingPage;
