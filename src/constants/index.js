@@ -13,6 +13,10 @@ export const SwapUpdateEvent = {
   TransactionConfirmed: 'transaction.confirmed',
 };
 
+export const ServiceWarnings = {
+  ReverseSwapsDisabled: 'reverse.swaps.disabled',
+};
+
 /**
  * Values from the environment
  */

@@ -5,6 +5,8 @@ import * as actions from './landingpageActions';
 import { initReverseSwap } from '../reverse/reverseActions';
 
 const mapStateToProps = state => ({
+  warnings: state.landingpageReducer.warnings,
+
   fees: state.landingpageReducer.fees,
   rates: state.landingpageReducer.rates,
   limits: state.landingpageReducer.limits,

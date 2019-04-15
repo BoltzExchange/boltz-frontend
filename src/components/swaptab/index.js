@@ -6,8 +6,9 @@ import View from '../view';
 import Input from '../input';
 import DropDown from '../dropdown';
 import Controls from '../controls';
-import Text, { InfoText } from '../text';
 import { decimals } from '../../utils';
+import Text, { InfoText } from '../text';
+import { ServiceWarnings } from '../../constants';
 
 const styles = theme => ({
   wrapper: {
@@ -100,6 +101,10 @@ class SwapTab extends React.Component {
   constructor(props) {
     super(props);
 
+    if (props.warnings.includes(ServiceWarnings.ReverseSwapsDisabled)) {
+      this.reverseSwapsDisabled = true;
+    }
+
     this.state = {
       disabled: false,
       error: false,
@@ -177,7 +182,7 @@ class SwapTab extends React.Component {
   componentDidUpdate = (_, prevState) => {
     const { base, quote, baseAmount } = this.state;
 
-    // If rate if undefined disable input
+    // If rate is undefined disable input
     if (this.state.rate !== prevState.rate) {
       this.noRateAvailable();
     }
@@ -207,6 +212,16 @@ class SwapTab extends React.Component {
           rate: undefined,
           error: true,
           errorMessage: 'Coming soon',
+        });
+        return;
+      }
+
+      // Show an error for reverse swaps if they are disabled
+      if (this.reverseSwapsDisabled && this.baseAsset.isLightning) {
+        this.setState({
+          rate: undefined,
+          error: true,
+          errorMessage: 'Currently not available',
         });
         return;
       }
@@ -435,6 +450,7 @@ class SwapTab extends React.Component {
 SwapTab.propTypes = {
   classes: PropTypes.object,
   onPress: PropTypes.func,
+  warnings: PropTypes.array.isRequired,
   fees: PropTypes.object.isRequired,
   rates: PropTypes.object.isRequired,
   limits: PropTypes.object.isRequired,
