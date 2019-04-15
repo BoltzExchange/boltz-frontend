@@ -71,9 +71,6 @@ class SwapTabWrapper extends React.Component {
   componentDidMount = () => {
     const symbol = this.getSymbol();
     const limits = this.props.limits[symbol];
-    console.log('////////////////////////////');
-    console.log(this.props.limits);
-    console.log('////////////////////////////');
     this.setState(
       {
         minAmount: limits.minimal,
@@ -293,7 +290,7 @@ class SwapTabWrapper extends React.Component {
 }
 
 SwapTabWrapper.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   classes: PropTypes.object,
   onPress: PropTypes.func,
   fees: PropTypes.object.isRequired,

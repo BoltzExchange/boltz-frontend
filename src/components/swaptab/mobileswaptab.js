@@ -33,15 +33,6 @@ const MobileSwapTabContent = ({
   shouldSubmit,
 }) => (
   <View className={classes.wrapper}>
-    <View className={classes.intro}>
-      <p className={classes.introText}>
-        Boltz is a Instant, Account-Free
-        <br />
-        and Non-Custodial trading platform.
-        <br />
-        We belive trading shouldnt require an account!
-      </p>
-    </View>
     <View className={classes.info}>
       <InfoText title="Min amount" text={`${minAmount}`} />
       <InfoText title="Max amount" text={`${maxAmount}`} />
@@ -108,15 +99,6 @@ const MobileSwapTabContent = ({
 );
 
 const styles = theme => ({
-  intro: {
-    flex: '1 1 content',
-    justifyContent: 'center',
-  },
-  introText: {
-    alignSelf: 'center',
-    margin: '10px',
-    color: theme.colors.white,
-  },
   wrapper: {
     flex: '1 0 100%',
     flexDirection: 'column',

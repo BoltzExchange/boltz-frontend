@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import InjectSheet from 'react-jss';
 import ReactNotification from 'react-notifications-component';
 import MobileNavigationBar from '../../components/navigationbar/mobilenavigationbar';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { generateKeys, navigation } from '../../actions';
 import { MobileSwapTab } from '../../components/swaptab';
+import View from '../../components/view';
 import BackGround from '../../components/background';
 import LandingPageWrapper from './landingpagewrapper';
 
@@ -13,6 +15,7 @@ import LandingPageWrapper from './landingpagewrapper';
 
 const MobileLandingPageContent = ({
   initSwap,
+  classes,
   initReverseSwap,
   notificationDom,
   fees,
@@ -26,6 +29,13 @@ const MobileLandingPageContent = ({
     <BackGround>
       <ReactNotification ref={notificationDom} />
       <MobileNavigationBar />
+      <View className={classes.intro}>
+        <p className={classes.introText}>
+          The eassiest way <br />
+          to trade <br />
+          cryptocurrency
+        </p>
+      </View>
       {loading ? (
         <span>LOADING</span>
       ) : (
@@ -63,7 +73,26 @@ const MobileLandingPageContent = ({
   );
 };
 
+const styles = theme => ({
+  intro: {
+    flex: '1 1 content',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  introText: {
+    fontSize: '25px',
+    textAlign: 'center',
+    color: theme.colors.white,
+  },
+  cool: {
+    transform: 'rotateX(180deg)',
+    transition: 'all 500ms ease 0s',
+  },
+});
+
 MobileLandingPageContent.propTypes = {
+  classes: PropTypes.object,
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
   notificationDom: PropTypes.object,
@@ -82,4 +111,4 @@ const MobileLandingPage = props => (
   </LandingPageWrapper>
 );
 
-export default MobileLandingPage;
+export default InjectSheet(styles)(MobileLandingPage);

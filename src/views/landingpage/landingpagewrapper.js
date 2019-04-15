@@ -51,7 +51,7 @@ class LandingPageWrapper extends React.Component {
 }
 
 LandingPageWrapper.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   errorMessage: PropTypes.object,
   getPairs: PropTypes.func.isRequired,
   classes: PropTypes.object,
