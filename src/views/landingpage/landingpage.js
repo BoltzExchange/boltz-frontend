@@ -5,6 +5,7 @@ import { requestProvider } from 'webln';
 import ReactNotification from 'react-notifications-component';
 import Link from '../../components/link';
 import View from '../../components/view';
+import { navigation } from '../../action';
 import { generateKeys } from '../../action';
 import Button from '../../components/button';
 import TaskBar from '../../components/taskbar';
@@ -13,7 +14,7 @@ import ModalComponent from '../../components/modal';
 import BackGround from '../../components/background';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
 import { notificationData, isMobileBrowser } from '../../utils';
-import { navigation } from '../../action';
+
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 class LandingPage extends React.Component {
@@ -64,6 +65,8 @@ class LandingPage extends React.Component {
       classes,
       initSwap,
       initReverseSwap,
+
+      warnings,
 
       fees,
       rates,
@@ -132,6 +135,7 @@ class LandingPage extends React.Component {
                   navigation.navSwap();
                 }
               }}
+              warnings={warnings}
               fees={fees}
               rates={rates}
               limits={limits}
@@ -149,6 +153,8 @@ LandingPage.propTypes = {
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,
   getPairs: PropTypes.func.isRequired,
+
+  warnings: PropTypes.array.isRequired,
 
   fees: PropTypes.object.isRequired,
   rates: PropTypes.object.isRequired,
