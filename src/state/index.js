@@ -4,11 +4,11 @@ import createRootReducer from './rootReducer';
 import logger from 'redux-logger';
 
 // Check if we are in production
-const notProduction = process.env.NODE_ENV !== 'production';
+const production = process.env.NODE_ENV === 'production';
 
 // If we are in production dont use devtools-extension-compose
 const composeEnhancers =
-  notProduction && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  !production && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
         name: 'boltz',
         actionsBlacklist: ['REDUX_STORAGE_SAVE'],
@@ -20,7 +20,7 @@ const composeEnhancers =
 // Select middelware to use
 let middelware = [thunk];
 
-if (notProduction) {
+if (!production) {
   middelware = [...middelware, logger];
 }
 
