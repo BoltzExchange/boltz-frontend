@@ -152,10 +152,19 @@ class SwapTab extends React.Component {
     )}/${this.parseBoltSuffix(this.state.quote, false)}`;
   };
 
+  componentWillMount = () => {
+    if (localStorage.getItem('quote')) {
+      this.setState({
+        base: localStorage.getItem('base'),
+        quote: localStorage.getItem('quote'),
+        baseAmount: localStorage.getItem('baseAmount'),
+      });
+    }
+  };
+
   componentDidMount = () => {
     const symbol = this.getSymbol();
     const limits = this.props.limits[symbol];
-
     this.setState(
       {
         minAmount: limits.minimal,
@@ -170,7 +179,7 @@ class SwapTab extends React.Component {
   };
 
   componentDidUpdate = (_, prevState) => {
-    const { base, quote } = this.state;
+    const { base, quote, baseAmount } = this.state;
 
     // If rate is undefined disable input
     if (this.state.rate !== prevState.rate) {
@@ -239,6 +248,11 @@ class SwapTab extends React.Component {
           error: true,
           errorMessage: 'Currently not available',
         });
+    }
+    if (!this.state.inputError) {
+      localStorage.setItem('base', base);
+      localStorage.setItem('quote', quote);
+      localStorage.setItem('baseAmount', baseAmount);
     }
   };
 
