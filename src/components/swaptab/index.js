@@ -165,7 +165,6 @@ class SwapTab extends React.Component {
   componentDidMount = () => {
     const symbol = this.getSymbol();
     const limits = this.props.limits[symbol];
-
     this.setState(
       {
         minAmount: limits.minimal,
@@ -251,9 +250,11 @@ class SwapTab extends React.Component {
         });
     }
 
-    localStorage.setItem('base', base);
-    localStorage.setItem('quote', quote);
-    localStorage.setItem('baseAmount', baseAmount);
+    if (!this.state.inputError) {
+      localStorage.setItem('base', base);
+      localStorage.setItem('quote', quote);
+      localStorage.setItem('baseAmount', baseAmount);
+    }
   };
 
   calculateMinerFee = () => {
