@@ -249,6 +249,7 @@ class SwapTab extends React.Component {
           errorMessage: 'Currently not available',
         });
     }
+
     if (!this.state.inputError) {
       localStorage.setItem('base', base);
       localStorage.setItem('quote', quote);
