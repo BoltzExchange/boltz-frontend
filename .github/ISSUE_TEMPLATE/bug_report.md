@@ -1,12 +1,3 @@
----
-name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
----
-
 #### Issue description
 
 
@@ -30,5 +21,4 @@ assignees: ''
 
 #### Additional details / screenshot
 
-- ![Screenshot]()
 -
