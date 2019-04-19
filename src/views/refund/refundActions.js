@@ -62,7 +62,7 @@ export const refundResponse = (success, response) => ({
   },
 });
 
-const refundTransaction = (
+const createRefundTransaction = (
   refundFile,
   response,
   destinationAddress,
@@ -73,19 +73,22 @@ const refundTransaction = (
   const lockupTransaction = Transaction.fromHex(response.data.transactionHex);
 
   // TODO: make sure the provided lockup transaction hash was correct and show more specific error if not
-  return constructRefundTransaction(
-    [
-      {
-        redeemScript,
-        txHash: lockupTransaction.getHash(),
-        keys: ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
-        ...detectSwap(redeemScript, lockupTransaction),
-      },
-    ],
-    address.toOutputScript(destinationAddress, getNetwork(currency)),
-    refundFile.timeoutBlockHeight,
-    feeEstimation[currency]
-  );
+  return {
+    refundTransaction: constructRefundTransaction(
+      [
+        {
+          redeemScript,
+          txHash: lockupTransaction.getHash(),
+          keys: ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
+          ...detectSwap(redeemScript, lockupTransaction),
+        },
+      ],
+      address.toOutputScript(destinationAddress, getNetwork(currency)),
+      refundFile.timeoutBlockHeight,
+      feeEstimation[currency]
+    ),
+    lockupTransactionId: lockupTransaction.getId(),
+  };
 };
 
 export const startRefund = (
@@ -107,7 +110,10 @@ export const startRefund = (
       .then(response => {
         dispatch(
           getFeeEstimation(feeEstimation => {
-            const transaction = refundTransaction(
+            const {
+              refundTransaction,
+              lockupTransactionId,
+            } = createRefundTransaction(
               refundFile,
               response,
               destinationAddress,
@@ -115,14 +121,12 @@ export const startRefund = (
               feeEstimation
             );
 
-            const transactionId = transaction.getId();
-
-            dispatch(setRefundTransactionHash(transactionId));
+            dispatch(setRefundTransactionHash(refundTransaction.getId()));
             dispatch(
               broadcastRefund(
                 currency,
-                transaction.toHex(),
-                transactionId,
+                refundTransaction.toHex(),
+                lockupTransactionId,
                 () => {
                   dispatch(refundResponse(true, response.data));
 
@@ -142,14 +146,14 @@ export const startRefund = (
   };
 };
 
-const broadcastRefund = (currency, transaction, transactionId, cb) => {
+const broadcastRefund = (currency, transactionHex, lockupTransactionId, cb) => {
   const url = `${boltzApi}/broadcasttransaction`;
   return dispatch => {
     dispatch(refundRequest());
     axios
       .post(url, {
         currency,
-        transactionHex: transaction,
+        transactionHex,
       })
       .then(() => cb())
       .catch(response => {
@@ -165,7 +169,10 @@ const broadcastRefund = (currency, transaction, transactionId, cb) => {
 
           const openExplorer = window.confirm(message);
           if (openExplorer) {
-            window.open(`${getExplorer(currency)}/${transactionId}`, '_blank');
+            window.open(
+              `${getExplorer(currency)}/${lockupTransactionId}`,
+              '_blank'
+            );
           }
         } else {
           window.alert(message);
