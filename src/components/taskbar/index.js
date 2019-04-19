@@ -66,7 +66,7 @@ const TaskBar = ({ classes }) => (
         alt="logo"
       />
       <span className={classes.logoText}>Boltz</span>
-      <span className={classes.subLogoText}>{network} alpha</span>
+      <span className={classes.subLogoText}>{network} beta</span>
     </View>
     <View className={classes.buttons}>
       <Button
