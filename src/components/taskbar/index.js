@@ -5,6 +5,7 @@ import View from '../view';
 import Button from '../button';
 import { network } from '../../constants';
 import { navigation } from '../../action/index';
+
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 const styles = theme => ({
@@ -65,7 +66,7 @@ const TaskBar = ({ classes }) => (
         alt="logo"
       />
       <span className={classes.logoText}>Boltz</span>
-      <span className={classes.subLogoText}>{network} alpha</span>
+      <span className={classes.subLogoText}>{network} beta</span>
     </View>
     <View className={classes.buttons}>
       <Button
@@ -82,6 +83,12 @@ const TaskBar = ({ classes }) => (
         className={classes.responsiveBtn}
         text="FAQ"
         onPress={() => navigation.navFaq()}
+      />
+      <Button
+        className={classes.responsiveBtn}
+        external
+        text="Twitter"
+        to="https://twitter.com/boltzhq"
       />
       <Button
         className={classes.responsiveBtn}
