@@ -56,9 +56,7 @@ class StyledInputInvoice extends React.Component {
   }
 
   onChange = input => {
-    const valid = input.slice(0, 2);
-
-    if (valid === 'ln') {
+    if (input.slice(0, 2) === 'ln' || input.slice(0, 10) === 'lightning:') {
       this.setState({ value: input, error: false }, () =>
         this.props.onChange(input, false)
       );
