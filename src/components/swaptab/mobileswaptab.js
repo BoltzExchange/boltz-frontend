@@ -101,7 +101,7 @@ const MobileSwapTabContent = ({
 
 const styles = theme => ({
   wrapper: {
-    flex: '1 0 100%',
+    flex: '1 0 content',
     flexDirection: 'column',
     backgroundColor: theme.colors.white,
   },

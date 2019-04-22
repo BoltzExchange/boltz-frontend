@@ -53,10 +53,6 @@ class ReverseSwap extends React.Component {
       });
     }
 
-    if (prevProps.swapResponse.id !== swapResponse.id) {
-      this.props.dataStorageSetId(swapResponse.id);
-    }
-
     if (isReconnecting && !prevProps.isReconnecting) {
       this.addNotification(lostConnection, 0);
     }
@@ -105,6 +101,7 @@ class ReverseSwap extends React.Component {
       swapFailResponse,
       goTimelockExpired,
       setReverseSwapAddress,
+      dataStorageSetId,
     } = this.props;
 
     return (
@@ -199,7 +196,6 @@ class ReverseSwap extends React.Component {
                 num={2}
                 render={props => (
                   <Controls
-                    mobile
                     loading={isFetching}
                     loadingText={'Locking your funds...'}
                     loadingRender={() => <Loading />}
@@ -207,7 +203,10 @@ class ReverseSwap extends React.Component {
                     errorAction={() =>
                       startReverseSwap(
                         swapInfo,
-                        props.nextStage,
+                        () => {
+                          props.nextStage();
+                          dataStorageSetId(swapResponse.id);
+                        },
                         goTimelockExpired
                       )
                     }
@@ -219,7 +218,6 @@ class ReverseSwap extends React.Component {
                 num={3}
                 render={() => (
                   <Controls
-                    mobile
                     loading={isFetching}
                     loadingText={swapStatus}
                     loadingRender={() => <Loading />}
