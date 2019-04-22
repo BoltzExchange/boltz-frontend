@@ -5,6 +5,7 @@ import View from '../view';
 import Button from '../button';
 import { network } from '../../constants';
 import { navigation } from '../../actions';
+
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 const DeskTopNavigationBar = ({ classes }) => (

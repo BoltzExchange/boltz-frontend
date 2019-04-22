@@ -123,15 +123,19 @@ export const getPairs = () => {
     axios
       .get(url)
       .then(response => {
-        const currencies = parseCurrencies(response.data);
+        const { warnings, pairs } = response.data;
 
-        const rates = parseRates(response.data);
-        const limits = parseLimits(response.data, rates);
+        const currencies = parseCurrencies(pairs);
 
-        const fees = parseFees(response.data);
+        const rates = parseRates(pairs);
+        const limits = parseLimits(pairs, rates);
+
+        const fees = parseFees(pairs);
 
         dispatch(
           pairsResponse({
+            warnings,
+
             fees,
             rates,
             limits,
