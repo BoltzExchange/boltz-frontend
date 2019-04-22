@@ -89,6 +89,7 @@ const MobileSwapTabContent = ({
     </View>
     <View className={classes.next}>
       <Controls
+        mobile={true}
         text={'Start swap'}
         error={error || inputError}
         onPress={error ? () => {} : () => shouldSubmit()}

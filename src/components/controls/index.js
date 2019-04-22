@@ -31,6 +31,9 @@ const styles = theme => ({
     fontSize: '25px',
     paddingRight: '10px',
     color: theme.colors.white,
+    '@media (max-width: 425px)': {
+      fontSize: p => (p.mobile ? '20px' : undefined),
+    },
   },
   nextIcon: {
     paddingRight: '10px',

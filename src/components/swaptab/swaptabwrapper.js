@@ -152,9 +152,11 @@ class SwapTabWrapper extends React.Component {
         });
     }
 
-    localStorage.setItem('base', base);
-    localStorage.setItem('quote', quote);
-    localStorage.setItem('baseAmount', baseAmount);
+    if (!this.state.inputError && !this.state.error) {
+      localStorage.setItem('base', base);
+      localStorage.setItem('quote', quote);
+      localStorage.setItem('baseAmount', baseAmount);
+    }
   };
 
   calculateMinerFee = () => {
