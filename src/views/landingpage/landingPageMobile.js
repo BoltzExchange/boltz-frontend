@@ -31,9 +31,9 @@ const MobileLandingPageContent = ({
       <MobileNavigationBar />
       <View className={classes.intro}>
         <p className={classes.introText}>
-          The eassiest way <br />
-          to trade <br />
-          cryptocurrency
+          Instant, Account-Free <br />
+          & <br />
+          Non-Custodial
         </p>
       </View>
       {loading ? (

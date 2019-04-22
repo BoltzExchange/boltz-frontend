@@ -103,6 +103,7 @@ const styles = theme => ({
   wrapper: {
     flex: '1 0 100%',
     flexDirection: 'column',
+    backgroundColor: theme.colors.white,
   },
   info: {
     flex: '1 1 content',
@@ -123,7 +124,6 @@ const styles = theme => ({
     fontSize: '16px',
   },
   selectTitle: {
-    color: theme.colors.white,
     fontSize: '24px',
   },
   select: {
@@ -136,6 +136,9 @@ const styles = theme => ({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  next: {
+    backgroundColor: theme.colors.matisseBlue,
   },
   arrows: {
     height: '30px',
