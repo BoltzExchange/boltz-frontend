@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report an bug or issue in the project.
+about: Report a bug or issue in the project.
 title: ''
 labels: ''
 assignees: ''
