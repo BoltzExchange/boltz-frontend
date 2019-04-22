@@ -119,7 +119,9 @@ class Swap extends Component {
                     text={`Next`}
                     loadingText={'Invalid invoice'}
                     onPress={() => {
-                      startSwap(swapInfo, props.nextStage);
+                      if (swapInfo.invoice) {
+                        startSwap(swapInfo, props.nextStage);
+                      }
                     }}
                   />
                 )}
