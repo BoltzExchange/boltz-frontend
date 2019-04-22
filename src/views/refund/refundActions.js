@@ -3,6 +3,7 @@ import { ECPair, address, Transaction } from 'bitcoinjs-lib';
 import { constructRefundTransaction, detectSwap } from 'boltz-core';
 import { boltzApi } from '../../constants';
 import * as actionTypes from '../../constants/actions';
+import { notificationManager } from '../../action';
 import { getHexBuffer, getNetwork, getFeeEstimation } from '../../utils';
 
 const verifyRefundFile = (fileJSON, keys) => {
@@ -124,7 +125,10 @@ export const startRefund = (
       .catch(error => {
         const message = error.response.data.error;
 
-        window.alert(`Failed to refund swap: ${message}`);
+        notificationManager.spawnNotification(
+          'Failed to refund swap:',
+          message
+        );
         dispatch(refundResponse(false, message));
       });
   };
@@ -143,7 +147,10 @@ const broadcastRefund = (currency, refundTransaction, cb) => {
       .catch(error => {
         const message = error.response.data.error;
 
-        window.alert(`Failed to broadcast refund transaction: ${message}`);
+        notificationManager.spawnNotification(
+          'Failed to broadcast refund transaction:',
+          message
+        );
         dispatch(refundResponse(false, message));
       });
   };

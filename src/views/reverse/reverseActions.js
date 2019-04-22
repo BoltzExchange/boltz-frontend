@@ -10,6 +10,7 @@ import {
   getHexBuffer,
   getFeeEstimation,
 } from '../../utils';
+import { notificationManager } from '../../action';
 
 let latestSwapEvent = '';
 
@@ -172,7 +173,7 @@ const handleReverseSwapStatus = (
       break;
 
     default:
-      console.log(`Unknown swap status: ${data}`);
+      notificationManager.spawnNotification('Unknown swap status:', data);
       break;
   }
 };
@@ -252,8 +253,10 @@ const broadcastClaimTransaction = (currency, claimTransaction, cb) => {
       .then(() => cb())
       .catch(error => {
         const message = error.response.data.error;
-
-        window.alert(`Failed to broadcast claim transaction: ${message}`);
+        notificationManager.spawnNotification(
+          'Failed to broadcast claim transaction:',
+          message
+        );
         dispatch(reverseSwapResponse(false, message));
       });
   };

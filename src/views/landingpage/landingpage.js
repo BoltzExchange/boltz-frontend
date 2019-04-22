@@ -5,8 +5,7 @@ import { requestProvider } from 'webln';
 import ReactNotification from 'react-notifications-component';
 import Link from '../../components/link';
 import View from '../../components/view';
-import { navigation } from '../../action';
-import { generateKeys } from '../../action';
+import { navigation, generateKeys, notificationManager } from '../../action';
 import Button from '../../components/button';
 import TaskBar from '../../components/taskbar';
 import SwapTab from '../../components/swaptab';
@@ -28,6 +27,8 @@ class LandingPage extends React.Component {
   }
 
   componentDidMount = () => {
+    notificationManager.init();
+
     if (isMobileBrowser()) {
       window.alert(
         // eslint-disable-next-line max-len

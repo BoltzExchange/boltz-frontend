@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { notificationManager } from '../action';
 import {
   boltzApi,
   bitcoinNetwork,
@@ -146,8 +147,9 @@ export const getFeeEstimation = callback => {
       .get(url)
       .then(response => callback(response.data))
       .catch(error => {
-        window.alert(
-          `Failed to get fee estimations: ${error.response.data.error}`
+        notificationManager.spawnNotification(
+          'Failed to get fee estimations:',
+          error.response.data.error
         );
       });
   };
