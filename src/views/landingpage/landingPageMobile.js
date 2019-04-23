@@ -10,8 +10,7 @@ import View from '../../components/view';
 import BackGround from '../../components/background';
 import LandingPageWrapper from './landingpagewrapper';
 
-// TODO: toggleModal,
-// TODO: isOpen,
+// TODO: discuss implementing the info modal on mobile
 
 const MobileLandingPageContent = ({
   initSwap,
@@ -84,10 +83,6 @@ const styles = theme => ({
     fontSize: '25px',
     textAlign: 'center',
     color: theme.colors.white,
-  },
-  cool: {
-    transform: 'rotateX(180deg)',
-    transition: 'all 500ms ease 0s',
   },
 });
 

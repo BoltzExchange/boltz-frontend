@@ -23,17 +23,12 @@ const styles = theme => ({
   text: {
     color: '#fff',
     fontWeight: '300',
-    '@media (max-width: 425px)': {
-      fontSize: p => (p.mobile ? '20px' : undefined),
-    },
+    fontSize: p => (p.mobile ? '20px' : '25px'),
   },
   errorCommand: {
-    fontSize: '25px',
     paddingRight: '10px',
     color: theme.colors.white,
-    '@media (max-width: 425px)': {
-      fontSize: p => (p.mobile ? '20px' : undefined),
-    },
+    fontSize: p => (p.mobile ? '20px' : '25px'),
   },
   nextIcon: {
     paddingRight: '10px',

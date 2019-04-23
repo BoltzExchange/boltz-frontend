@@ -40,6 +40,12 @@ const DeskTopNavigationBar = ({ classes }) => (
       <Button
         className={classes.responsiveBtn}
         external
+        text="Twitter"
+        to="https://twitter.com/boltzhq"
+      />
+      <Button
+        className={classes.responsiveBtn}
+        external
         text="Github"
         to="https://github.com/BoltzExchange"
       />

@@ -24,7 +24,7 @@ const styles = () => ({
 const LockingFunds = ({ classes, swapInfo, swapResponse }) => {
   const link = swapResponse
     ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionHash}`
-    : '';
+    : '#0';
   return (
     <View className={classes.wrapper}>
       <p className={classes.text}>

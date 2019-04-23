@@ -1,7 +1,7 @@
 import * as actionTypes from '../constants/actions';
 
 /**
- *
+ * Save the id of reverse swap to save
  * @param {String} id
  */
 export const dataStorageSetId = id => ({
@@ -10,7 +10,7 @@ export const dataStorageSetId = id => ({
 });
 
 /**
- *
+ *  Save asset type and amount of the reverse swap.
  * @param {String} asset
  * @param {Number} amount
  */

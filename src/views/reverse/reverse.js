@@ -183,7 +183,10 @@ class ReverseSwap extends React.Component {
                       if (swapInfo.address && swapInfo.address !== '') {
                         startReverseSwap(
                           swapInfo,
-                          props.nextStage,
+                          () => {
+                            props.nextStage();
+                            dataStorageSetId(swapResponse.id);
+                          },
                           goTimelockExpired
                         );
                         props.nextStage();

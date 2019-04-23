@@ -99,19 +99,6 @@ class SwapTabWrapper extends React.Component {
     ) {
       const symbol = this.getSymbol();
 
-      // Swapping from chain to chain or from Lightning to Lightning is not supported right now
-      if (
-        base === quote ||
-        (this.state.baseAsset.isLightning && this.state.quoteAsset.isLightning)
-      ) {
-        this.setState({
-          rate: undefined,
-          error: true,
-          errorMessage: 'Choose a different asset',
-        });
-        return;
-      }
-
       if (
         !this.state.baseAsset.isLightning &&
         !this.state.quoteAsset.isLightning
