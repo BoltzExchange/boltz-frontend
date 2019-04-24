@@ -278,7 +278,9 @@ class SwapTab extends React.Component {
     const feePercentage = new BigNumber(this.state.feePercentage);
 
     const percentageFee = feePercentage.times(baseAmount);
-    const minerFee = new BigNumber(this.calculateMinerFee()).dividedBy(decimals);
+    const minerFee = new BigNumber(this.calculateMinerFee()).dividedBy(
+      decimals
+    );
 
     return percentageFee.plus(minerFee);
   };
@@ -289,8 +291,10 @@ class SwapTab extends React.Component {
   checkBaseAmount = baseAmount => {
     const { minAmount, maxAmount } = this.state;
 
-    return baseAmount.isLessThanOrEqualTo(maxAmount) 
-      && baseAmount.isGreaterThanOrEqualTo(minAmount);
+    return (
+      baseAmount.isLessThanOrEqualTo(maxAmount) &&
+      baseAmount.isGreaterThanOrEqualTo(minAmount)
+    );
   };
 
   updatePair = (quote, base) => {
