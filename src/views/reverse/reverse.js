@@ -105,7 +105,7 @@ class ReverseSwap extends React.Component {
       startReverseSwap,
       swapFailResponse,
       goTimelockExpired,
-      setReverseSwapAddress
+      setReverseSwapAddress,
     } = this.props;
 
     return (
