@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import BigNumber from 'bignumber.js';
 import { MdCompareArrows } from 'react-icons/md';
 import View from '../view';
 import Input from '../input';
@@ -104,6 +105,8 @@ class SwapTab extends React.Component {
     if (props.warnings.includes(ServiceWarnings.ReverseSwapsDisabled)) {
       this.reverseSwapsDisabled = true;
     }
+    this.qouteStep = new BigNumber('0.001');
+    this.baseStep = new BigNumber('1').dividedBy(decimals);
 
     this.state = {
       disabled: false,
@@ -111,11 +114,11 @@ class SwapTab extends React.Component {
       inputError: false,
       base: 'LTC',
       quote: 'BTC ⚡',
-      minAmount: 0,
-      maxAmount: 0,
-      baseAmount: 0.05,
-      quoteAmount: 0,
-      feeAmount: 0,
+      minAmount: new BigNumber('0'),
+      maxAmount: new BigNumber('0'),
+      baseAmount: new BigNumber('0.05'),
+      quoteAmount: new BigNumber('0'),
+      feeAmount: new BigNumber('0'),
       errorMessage: '',
     };
   }
@@ -157,7 +160,7 @@ class SwapTab extends React.Component {
       this.setState({
         base: localStorage.getItem('base'),
         quote: localStorage.getItem('quote'),
-        baseAmount: localStorage.getItem('baseAmount'),
+        baseAmount: new BigNumber(localStorage.getItem('baseAmount')),
       });
     }
   };
@@ -167,8 +170,8 @@ class SwapTab extends React.Component {
     const limits = this.props.limits[symbol];
     this.setState(
       {
-        minAmount: limits.minimal,
-        maxAmount: limits.maximal,
+        minAmount: new BigNumber(limits.minimal),
+        maxAmount: new BigNumber(limits.maximal),
         rate: this.props.rates[symbol],
       },
       () => {
@@ -228,13 +231,12 @@ class SwapTab extends React.Component {
       const rate = this.props.rates[symbol];
       const limits = this.props.limits[symbol];
       const feePercentage = this.props.fees.percentages[symbol];
-
       this.setState(
         {
           rate,
           feePercentage,
-          minAmount: limits.minimal / decimals,
-          maxAmount: limits.maximal / decimals,
+          minAmount: new BigNumber(limits.minimal).dividedBy(decimals),
+          maxAmount: new BigNumber(limits.maximal).dividedBy(decimals),
           error: false,
         },
         () => this.updateQuoteAmount(this.state.baseAmount)
@@ -269,19 +271,26 @@ class SwapTab extends React.Component {
     }
   };
 
+  /**
+   * @param { BigNumber } baseAmount
+   */
   calculateFee = baseAmount => {
-    const { feePercentage } = this.state;
+    const feePercentage = new BigNumber(this.state.feePercentage);
 
-    const percentageFee = baseAmount * feePercentage;
-    const minerFee = this.calculateMinerFee() / decimals;
+    const percentageFee = feePercentage.times(baseAmount);
+    const minerFee = new BigNumber(this.calculateMinerFee()).dividedBy(decimals);
 
-    return percentageFee + minerFee;
+    return percentageFee.plus(minerFee);
   };
 
+  /**
+   * @param { BigNumber } baseAmount
+   */
   checkBaseAmount = baseAmount => {
     const { minAmount, maxAmount } = this.state;
 
-    return baseAmount <= maxAmount && baseAmount >= minAmount;
+    return baseAmount.isLessThanOrEqualTo(maxAmount) 
+      && baseAmount.isGreaterThanOrEqualTo(minAmount);
   };
 
   updatePair = (quote, base) => {
@@ -295,49 +304,52 @@ class SwapTab extends React.Component {
   };
 
   updateBaseAmount = quoteAmount => {
-    const { rate } = this.state.rate;
+    const amount = new BigNumber(quoteAmount);
+    const rate = new BigNumber(this.state.rate.rate);
 
-    const newBase = quoteAmount / rate;
+    const newBase = amount.dividedBy(rate);
     const fee = this.calculateFee(newBase);
 
-    const newBaseWithFee = Number((newBase + fee).toFixed(8));
+    const newBaseWithFee = fee.plus(newBase);
 
     const inputError = !this.checkBaseAmount(newBaseWithFee);
 
     this.setState({
-      quoteAmount: quoteAmount,
+      quoteAmount: amount,
       baseAmount: newBaseWithFee,
-      feeAmount: fee.toFixed(8),
+      feeAmount: fee,
       inputError,
     });
   };
 
   updateQuoteAmount = baseAmount => {
-    const { rate, orderSide } = this.state.rate;
-    let fee = this.calculateFee(baseAmount);
+    const amount = new BigNumber(baseAmount.toString());
+    const rate = new BigNumber(this.state.rate.rate);
+    const { orderSide } = this.state.rate;
+    let fee = this.calculateFee(amount);
 
     if (orderSide === 'sell') {
-      fee = fee * rate;
+      fee = fee.times(rate);
     }
 
-    const quote = Number((baseAmount * rate - fee).toFixed(8));
+    const quote = amount.times(rate).minus(fee);
 
-    const inputError = !this.checkBaseAmount(baseAmount);
-
+    const inputError = !this.checkBaseAmount(amount);
     this.setState({
-      quoteAmount: Math.max(quote, 0),
-      baseAmount: baseAmount,
-      feeAmount: fee.toFixed(8),
+      quoteAmount: quote,
+      baseAmount: amount,
+      feeAmount: fee,
       inputError,
     });
   };
 
   shouldSubmit = () => {
-    const { error, rate } = this.state;
+    const { error, rate, baseAmount, quoteAmount } = this.state;
 
     if (error === false && this.rate !== 'Not found') {
       const state = {
-        ...this.state,
+        baseAmount: baseAmount.toFixed(8),
+        quoteAmount: quoteAmount.toFixed(8),
         base: this.baseAsset.symbol,
         quote: this.quoteAsset.symbol,
         isReverseSwap: this.baseAsset.isLightning,
@@ -375,13 +387,14 @@ class SwapTab extends React.Component {
       quoteAmount,
       errorMessage,
     } = this.state;
-
+    // const baseValue = baseAmount.toPrecision();
+    // const quoteValue = quoteAmount.toPrecision();
     return (
       <View className={classes.wrapper}>
         <View className={classes.stats}>
-          <InfoText title="Min amount" text={`${minAmount}`} />
-          <InfoText title="Max amount" text={`${maxAmount}`} />
-          <InfoText title="Fee" text={`${feeAmount}`} />
+          <InfoText title="Min amount" text={`${minAmount.toPrecision()}`} />
+          <InfoText title="Max amount" text={`${maxAmount.toPrecision()}`} />
+          <InfoText title="Fee" text={`${feeAmount.toFixed(8)}`} />
           <InfoText title="Rate" text={`${this.parseRate(rates)}`} />
         </View>
         <View className={classes.options}>
@@ -392,9 +405,9 @@ class SwapTab extends React.Component {
               className={classes.inputMobile}
               min={minAmount}
               max={maxAmount}
-              step={0.001}
+              step={this.qouteStep.toPrecision()}
               error={inputError}
-              value={baseAmount}
+              value={baseAmount.toFixed(8)}
               onChange={e => this.updateQuoteAmount(e)}
             />
             <DropDown
@@ -420,11 +433,11 @@ class SwapTab extends React.Component {
             <Input
               disable={this.state.disabled}
               className={classes.inputMobile}
-              min={1 / decimals}
+              min={this.baseStep}
               max={Number.MAX_SAFE_INTEGER}
-              step={1 / decimals}
+              step={this.baseStep}
               error={inputError}
-              value={quoteAmount}
+              value={quoteAmount.toFixed(8)}
               onChange={e => this.updateBaseAmount(e)}
             />
             <DropDown

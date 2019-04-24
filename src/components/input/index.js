@@ -16,7 +16,7 @@ const styles = theme => ({
   },
 });
 
-class Input extends React.Component {
+class Input extends React.PureComponent {
   onChange = e => {
     this.props.onChange(e.target.value);
   };
@@ -49,7 +49,7 @@ Input.defaultProps = {
 
 Input.propTypes = {
   classes: PropTypes.object.isRequired,
-  onChange: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   className: PropTypes.string,
   disable: PropTypes.bool,
   error: PropTypes.bool,

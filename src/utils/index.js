@@ -1,4 +1,5 @@
 import axios from 'axios';
+import BigNumber from 'bignumber.js';
 import {
   boltzApi,
   bitcoinNetwork,
@@ -11,7 +12,7 @@ import {
   litecoinInvoice,
 } from '../constants';
 
-export const decimals = 100000000;
+export const decimals = new BigNumber('100000000');
 
 /**
  * Get a hex encoded string from a Buffer
