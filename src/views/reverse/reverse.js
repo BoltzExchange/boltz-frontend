@@ -39,6 +39,7 @@ class ReverseSwap extends React.Component {
       swapFailResponse,
       swapResponse,
       swapInfo,
+      dataStorageSetId,
     } = this.props;
 
     this.redirectIfLoggedOut();
@@ -51,6 +52,10 @@ class ReverseSwap extends React.Component {
         asset: swapInfo.quote,
         amount: swapInfo.quoteAmount,
       });
+    }
+
+    if (swapResponse.id !== prevProps.swapResponse.id && swapResponse.id) {
+      dataStorageSetId(swapResponse);
     }
 
     if (isReconnecting && !prevProps.isReconnecting) {
@@ -100,8 +105,7 @@ class ReverseSwap extends React.Component {
       startReverseSwap,
       swapFailResponse,
       goTimelockExpired,
-      setReverseSwapAddress,
-      dataStorageSetId,
+      setReverseSwapAddress
     } = this.props;
 
     return (
@@ -183,10 +187,7 @@ class ReverseSwap extends React.Component {
                       if (swapInfo.address && swapInfo.address !== '') {
                         startReverseSwap(
                           swapInfo,
-                          () => {
-                            props.nextStage();
-                            dataStorageSetId(swapResponse.id);
-                          },
+                          props.nextStage,
                           goTimelockExpired
                         );
                         props.nextStage();
@@ -206,10 +207,7 @@ class ReverseSwap extends React.Component {
                     errorAction={() =>
                       startReverseSwap(
                         swapInfo,
-                        () => {
-                          props.nextStage();
-                          dataStorageSetId(swapResponse.id);
-                        },
+                        props.nextStage,
                         goTimelockExpired
                       )
                     }
