@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Refund from './refund';
-import * as actions from './refundActions';
+import * as actions from '../../actions/refundActions';
 
 const mapStateToProps = state => ({
   refundFile: state.refundReducer.refundFile,

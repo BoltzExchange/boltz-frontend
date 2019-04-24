@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { MdArrowBack, MdClose } from 'react-icons/md';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
@@ -16,6 +16,7 @@ const styles = theme => ({
     flexDirection: 'column',
     '@media (max-width: 425px)': {
       width: '100%',
+      height: '100vh',
     },
   },
   progress: {
@@ -53,7 +54,7 @@ const styles = theme => ({
   },
 });
 
-class StepsWizard extends Component {
+class StepsWizard extends PureComponent {
   constructor(props) {
     super(props);
     this.progressInterval = this.initProgress();

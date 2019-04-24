@@ -1,4 +1,4 @@
-import * as routes from '../../constants/routes';
+import * as routes from '../constants/routes';
 
 class Navigation {
   constructor(history) {
