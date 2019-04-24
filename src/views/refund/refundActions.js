@@ -3,7 +3,12 @@ import { ECPair, address, Transaction } from 'bitcoinjs-lib';
 import { constructRefundTransaction, detectSwap } from 'boltz-core';
 import { boltzApi } from '../../constants';
 import * as actionTypes from '../../constants/actions';
-import { getHexBuffer, getNetwork, getFeeEstimation } from '../../utils';
+import {
+  getHexBuffer,
+  getNetwork,
+  getFeeEstimation,
+  getExplorer,
+} from '../../utils';
 
 const verifyRefundFile = (fileJSON, keys) => {
   const verify = keys.every(key => fileJSON.hasOwnProperty(key));
@@ -57,7 +62,7 @@ export const refundResponse = (success, response) => ({
   },
 });
 
-const refundTransaction = (
+const createRefundTransaction = (
   refundFile,
   response,
   destinationAddress,
@@ -68,19 +73,22 @@ const refundTransaction = (
   const lockupTransaction = Transaction.fromHex(response.data.transactionHex);
 
   // TODO: make sure the provided lockup transaction hash was correct and show more specific error if not
-  return constructRefundTransaction(
-    [
-      {
-        redeemScript,
-        txHash: lockupTransaction.getHash(),
-        keys: ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
-        ...detectSwap(redeemScript, lockupTransaction),
-      },
-    ],
-    address.toOutputScript(destinationAddress, getNetwork(currency)),
-    refundFile.timeoutBlockHeight,
-    feeEstimation[currency]
-  );
+  return {
+    refundTransaction: constructRefundTransaction(
+      [
+        {
+          redeemScript,
+          txHash: lockupTransaction.getHash(),
+          keys: ECPair.fromPrivateKey(getHexBuffer(refundFile.privateKey)),
+          ...detectSwap(redeemScript, lockupTransaction),
+        },
+      ],
+      address.toOutputScript(destinationAddress, getNetwork(currency)),
+      refundFile.timeoutBlockHeight,
+      feeEstimation[currency]
+    ),
+    lockupTransactionId: lockupTransaction.getId(),
+  };
 };
 
 export const startRefund = (
@@ -102,7 +110,10 @@ export const startRefund = (
       .then(response => {
         dispatch(
           getFeeEstimation(feeEstimation => {
-            const transaction = refundTransaction(
+            const {
+              refundTransaction,
+              lockupTransactionId,
+            } = createRefundTransaction(
               refundFile,
               response,
               destinationAddress,
@@ -110,13 +121,18 @@ export const startRefund = (
               feeEstimation
             );
 
-            dispatch(setRefundTransactionHash(transaction.getId()));
+            dispatch(setRefundTransactionHash(refundTransaction.getId()));
             dispatch(
-              broadcastRefund(currency, transaction.toHex(), () => {
-                dispatch(refundResponse(true, response.data));
+              broadcastRefund(
+                currency,
+                refundTransaction.toHex(),
+                lockupTransactionId,
+                () => {
+                  dispatch(refundResponse(true, response.data));
 
-                cb();
-              })
+                  cb();
+                }
+              )
             );
           })
         );
@@ -130,20 +146,37 @@ export const startRefund = (
   };
 };
 
-const broadcastRefund = (currency, refundTransaction, cb) => {
+const broadcastRefund = (currency, transactionHex, lockupTransactionId, cb) => {
   const url = `${boltzApi}/broadcasttransaction`;
   return dispatch => {
     dispatch(refundRequest());
     axios
       .post(url, {
         currency,
-        transactionHex: refundTransaction,
+        transactionHex,
       })
       .then(() => cb())
-      .catch(error => {
-        const message = error.response.data.error;
+      .catch(response => {
+        const error = response.response.data.error;
+        let message = `Failed to broadcast refund transaction: ${error}`;
 
-        window.alert(`Failed to broadcast refund transaction: ${message}`);
+        if (
+          error ===
+          'please wait until your lockup transaction has 10 confirmations before you try to refund'
+        ) {
+          message +=
+            '. Click OK to open the lockup transaction in a block explorer';
+
+          const openExplorer = window.confirm(message);
+          if (openExplorer) {
+            window.open(
+              `${getExplorer(currency)}/${lockupTransactionId}`,
+              '_blank'
+            );
+          }
+        } else {
+          window.alert(message);
+        }
         dispatch(refundResponse(false, message));
       });
   };
