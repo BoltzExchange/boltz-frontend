@@ -15,6 +15,7 @@ const initalState = {
     address: null,
   },
   swapResponse: {
+    id: null,
     success: true,
   },
   swapStatus: 'Waiting for confirmation...',

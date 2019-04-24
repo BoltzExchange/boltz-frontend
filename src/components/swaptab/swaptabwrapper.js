@@ -127,18 +127,6 @@ class SwapTabWrapper extends React.Component {
       );
     }
 
-    // TODO: Remove this once we resolve the issues
-    if (
-      this.state.quoteAsset.symbol === 'BTC' &&
-      !this.state.quoteAsset.isLightning
-    ) {
-      if (this.state.errorMessage !== 'Currently not available')
-        this.setState({
-          error: true,
-          errorMessage: 'Currently not available',
-        });
-    }
-
     if (!this.state.inputError && !this.state.error) {
       localStorage.setItem('base', base);
       localStorage.setItem('quote', quote);
