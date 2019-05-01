@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import * as actions from '../../actions/refundActions';
-import * as actionTypes from '../../constants/actions';
+import * as actions from '../../../actions/refundActions';
+import * as actionTypes from '../../../constants/actions';
 
 describe('refund actions', () => {
   it('should start refund action', () => {

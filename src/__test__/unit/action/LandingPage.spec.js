@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import * as actions from '../../actions/landingPageActions';
-import * as actionTypes from '../../constants/actions';
+import * as actions from '../../../actions/landingPageActions';
+import * as actionTypes from '../../../constants/actions';
 
 describe('landing page actions', () => {
   it('should request pairs action', () => {

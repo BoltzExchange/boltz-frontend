@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import { generateKeys } from '../../actions/keys';
-import { bitcoinNetwork } from '../../constants';
+import { generateKeys } from '../../../actions/keys';
+import { bitcoinNetwork } from '../../../constants';
 
 describe('generate keys', () => {
   it('should generate key pair', () => {

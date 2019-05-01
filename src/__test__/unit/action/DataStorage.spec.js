@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import * as actions from '../../actions/datastorageActions';
-import * as actionTypes from '../../constants/actions';
+import * as actions from '../../../actions/datastorageActions';
+import * as actionTypes from '../../../constants/actions';
 
 describe('data storage actions', () => {
   it('should create an action to store a swapid', () => {

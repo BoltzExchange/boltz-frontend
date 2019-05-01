@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import * as actions from '../../actions/swapActions';
-import * as actionTypes from '../../constants/actions';
+import * as actions from '../../../actions/swapActions';
+import * as actionTypes from '../../../constants/actions';
 
 describe('swap actions', () => {
   it('should intiate a swap', () => {

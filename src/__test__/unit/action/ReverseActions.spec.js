@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import * as actions from '../../actions/reverseActions';
-import * as actionTypes from '../../constants/actions';
+import * as actions from '../../../actions/reverseActions';
+import * as actionTypes from '../../../constants/actions';
 
 describe('reverse swap actions', () => {
   it('should initiate reverse swap action', () => {
