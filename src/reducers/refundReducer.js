@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actions';
 
-const initalState = {
+export const initalState = {
   isFetching: false,
   refundFile: {},
   transactionHash: '',
