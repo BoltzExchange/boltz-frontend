@@ -78,7 +78,9 @@ describe('refund actions', () => {
       type: actionTypes.REFUND_RESPONSE,
       payload,
     };
-    expect(actions.refundResponse(payload.success, payload.response)).toEqual(expectedAction);
+    expect(actions.refundResponse(payload.success, payload.response)).toEqual(
+      expectedAction
+    );
   });
 
   it('should complete refund action', () => {

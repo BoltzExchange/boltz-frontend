@@ -45,7 +45,7 @@ describe('reverse swap actions', () => {
   it('should set reverse swap response action', () => {
     const payload = {
       success: false,
-      response: {}, 
+      response: {},
     };
 
     const expectedAction = {
@@ -53,7 +53,9 @@ describe('reverse swap actions', () => {
       payload,
     };
 
-    expect(actions.reverseSwapResponse(payload.success, payload.response)).toEqual(expectedAction);
+    expect(
+      actions.reverseSwapResponse(payload.success, payload.response)
+    ).toEqual(expectedAction);
   });
 
   it('should set reconnecting action', () => {
