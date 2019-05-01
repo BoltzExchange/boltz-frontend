@@ -21,7 +21,9 @@ describe('data storage actions', () => {
       type: actionTypes.SET_ASSET,
       payload,
     };
-    expect(actions.dataStorageSetAsset(payload.asset, payload.amount)).toEqual(expectedAction);
+    expect(actions.dataStorageSetAsset(payload.asset, payload.amount)).toEqual(
+      expectedAction
+    );
   });
 
   it('should clear data storage', () => {

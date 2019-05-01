@@ -3,16 +3,16 @@ import { boltzApi } from '../constants';
 import { splitPairId } from '../utils';
 import * as actionTypes from '../constants/actions';
 
-const pairsRequest = () => ({
+export const pairsRequest = () => ({
   type: actionTypes.PAIRS_REQUEST,
 });
 
-const pairsResponse = data => ({
+export const pairsResponse = data => ({
   type: actionTypes.PAIRS_RESPONSE,
   payload: data,
 });
 
-const loadingResourceError = message => ({
+export const loadingResourceError = message => ({
   type: actionTypes.RESOURCE_ERROR,
   payload: message,
 });

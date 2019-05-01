@@ -36,7 +36,7 @@ describe('Utils', () => {
   });
 
   it('should round amount to 8 decimals', () => {
-    const number = 0.00100000;
+    const number = 0.001;
     expect(utils.roundWholeCoins(number)).toBe(0.001);
   });
 
