@@ -1,8 +1,14 @@
 /* eslint-disable no-undef */
-import refundReducer, { initalState } from '../../../reducers/refundReducer';
+import refundReducer, { initialState } from '../../../reducers/refundReducer';
 import * as actions from '../../../constants/actions';
 
 describe('swap reducer', () => {
+  it('should return the initial state', () => {
+    expect(refundReducer(initialState, {})).toEqual({
+      ...initialState,
+    });
+  });
+
   it(`should handel ${actions.REFUND_REQUEST}`, () => {
     expect(
       refundReducer(
@@ -39,9 +45,35 @@ describe('swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions}`, () => {});
-  it(`should handel ${actions}`, () => {});
-  it(`should handel ${actions}`, () => {});
+  it(`should handel ${actions.SET_REFUND_TXHASH}`, () => {
+    const payload = {
+      type: actions.SET_REFUND_TXHASH,
+      payload: 'hash',
+    };
+    expect(refundReducer({}, payload)).toEqual({
+      transactionHash: 'hash',
+    });
+  });
+
+  it(`should handel ${actions.SET_REFUND_DESTINATION}`, () => {
+    const payload = {
+      type: actions.SET_REFUND_DESTINATION,
+      payload: 'address',
+    };
+    expect(refundReducer({}, payload)).toEqual({
+      destinationAddress: payload.payload,
+    });
+  });
+
+  it(`should handel ${actions.SET_REFUND_TRANSACTION_HASH}`, () => {
+    const payload = {
+      type: actions.SET_REFUND_TRANSACTION_HASH,
+      payload: 'hash',
+    };
+    expect(refundReducer({}, payload)).toEqual({
+      refundTransactionHash: payload.payload,
+    });
+  });
 
   it(`should handel ${actions.COMPLETE_SWAP}`, () => {
     expect(
@@ -51,6 +83,6 @@ describe('swap reducer', () => {
           type: actions.COMPLETE_REFUND,
         }
       )
-    ).toEqual(initalState);
+    ).toEqual(initialState);
   });
 });

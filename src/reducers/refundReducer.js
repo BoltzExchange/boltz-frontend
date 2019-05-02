@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actions';
 
-export const initalState = {
+export const initialState = {
   isFetching: false,
   refundFile: {},
   transactionHash: '',
@@ -9,7 +9,7 @@ export const initalState = {
   refundTransactionHash: null,
 };
 
-const reducer = (state = initalState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.REFUND_REQUEST:
       return {
@@ -48,7 +48,7 @@ const reducer = (state = initalState, action) => {
       };
 
     case actionTypes.COMPLETE_REFUND:
-      return initalState;
+      return initialState;
 
     default:
       return state;

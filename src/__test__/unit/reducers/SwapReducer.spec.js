@@ -1,28 +1,11 @@
 /* eslint-disable no-undef */
-import swapReducer, { initalState } from '../../../reducers/swapReducer';
+import swapReducer, { initialState } from '../../../reducers/swapReducer';
 import * as actions from '../../../constants/actions';
 
 describe('swap reducer', () => {
   it('should return the initial state', () => {
-    expect(swapReducer(initalState, {})).toEqual({
-      inSwapMode: false,
-      webln: null,
-      isFetching: false,
-      swapInfo: {
-        base: null,
-        quote: null,
-        baseAmount: null,
-        quoteAmount: null,
-        keys: null,
-        pair: null,
-        invoice: null,
-      },
-      swapResponse: {},
-      swapStatus: {
-        error: false,
-        pending: false,
-        message: 'Waiting for one confirmation...',
-      },
+    expect(swapReducer(initialState, {})).toEqual({
+      ...initialState,
     });
   });
 
@@ -138,6 +121,6 @@ describe('swap reducer', () => {
           type: actions.COMPLETE_SWAP,
         }
       )
-    ).toEqual(initalState);
+    ).toEqual(initialState);
   });
 });

@@ -3,6 +3,10 @@ import reducer, { initialState } from '../../../reducers/datastorageReducer';
 import * as actions from '../../../constants/actions';
 
 describe('data storage reducer', () => {
+  it('should return the initial state', () => {
+    expect(reducer(initialState, {})).toEqual(initialState);
+  });
+
   it(`should handel ${actions.SET_ID}`, () => {
     expect(
       reducer(
