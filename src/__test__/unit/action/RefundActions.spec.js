@@ -59,15 +59,6 @@ describe('refund actions', () => {
     expect(actions.setRefundTransactionHash(txhash)).toEqual(expectedAction);
   });
 
-  it('should set destination address action', () => {
-    const address = 'address';
-    const expectedAction = {
-      type: actionTypes.SET_REFUND_DESTINATION,
-      payload: address,
-    };
-    expect(actions.setDestinationAddress(address)).toEqual(expectedAction);
-  });
-
   it('should set refund response action', () => {
     const payload = {
       success: false,

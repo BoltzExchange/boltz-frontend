@@ -2,7 +2,7 @@
 import refundReducer, { initialState } from '../../../reducers/refundReducer';
 import * as actions from '../../../constants/actions';
 
-describe('swap reducer', () => {
+describe('refund reducer', () => {
   it('should return the initial state', () => {
     expect(refundReducer(initialState, {})).toEqual({
       ...initialState,
