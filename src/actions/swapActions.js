@@ -2,6 +2,7 @@ import axios from 'axios';
 import EventSource from 'eventsource';
 import { boltzApi, SwapUpdateEvent } from '../constants';
 import * as actionTypes from '../constants/actions';
+import { notificationManager } from './index';
 
 export const completeSwap = () => {
   return {
@@ -72,8 +73,10 @@ export const startSwap = (swapInfo, cb) => {
       })
       .catch(error => {
         const message = error.response.data.error;
-
-        window.alert(`Failed to execute swap: ${message}`);
+        notificationManager.spawnNotification(
+          'Failed to execute swap:',
+          message
+        );
         dispatch(swapResponse(false, message));
       });
   };
