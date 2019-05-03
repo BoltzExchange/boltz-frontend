@@ -22,4 +22,4 @@ jobs:
           command: npm run build
       - run:
           name: test
-          command: npm run test:build
+          command: npm run test

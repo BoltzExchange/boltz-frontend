@@ -82,17 +82,17 @@ describe('Utils', () => {
   });
 
   it('should generate noticifaction template', () => {
-    const temaplte = {
+    const template = {
       title: 'boltz-title',
       message: 'boltz-message',
     };
     const type = 0;
-    const notifi = utils.notificationData(temaplte, type);
+    const notification = utils.notificationData(template, type);
 
-    expect(notifi).toHaveProperty('message', temaplte.message);
-    expect(notifi).toHaveProperty('title', temaplte.title);
-    expect(notifi).toHaveProperty('type');
-    expect(notifi.dismiss.duration).toBeGreaterThan(0);
-    expect(notifi.dismissable.click).toBe(true);
+    expect(notification).toHaveProperty('message', template.message);
+    expect(notification).toHaveProperty('title', template.title);
+    expect(notification).toHaveProperty('type');
+    expect(notification.dismiss.duration).toBeGreaterThan(0);
+    expect(notification.dismissable.click).toBe(true);
   });
 });

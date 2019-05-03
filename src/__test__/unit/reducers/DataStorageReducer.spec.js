@@ -21,7 +21,7 @@ describe('data storage reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_ASSET}`, () => {
+  it(`should handle ${actions.SET_ASSET}`, () => {
     const payload = {
       asset: 'BTC',
       amount: 4,
@@ -39,7 +39,7 @@ describe('data storage reducer', () => {
     });
   });
 
-  it(`should handel ${actions.CLEAR_DATA_STORAGE}`, () => {
+  it(`should handle ${actions.CLEAR_DATA_STORAGE}`, () => {
     expect(
       reducer(
         {},

@@ -24,7 +24,7 @@ describe('landing page reducer', () => {
     });
   });
 
-  it(`should handel ${actions.RESOURCE_ERROR}`, () => {
+  it(`should handle ${actions.RESOURCE_ERROR}`, () => {
     const payload = {
       type: actions.RESOURCE_ERROR,
       payload: 'error message',

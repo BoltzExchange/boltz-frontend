@@ -7,7 +7,7 @@ describe('reverse swap reducer', () => {
     expect(reducer(initialState, {})).toEqual(initialState);
   });
 
-  it(`should handel ${actions.REVERSE_SWAP_REQUEST}`, () => {
+  it(`should handle ${actions.REVERSE_SWAP_REQUEST}`, () => {
     const action = {
       type: actions.REVERSE_SWAP_REQUEST,
     };
@@ -16,7 +16,7 @@ describe('reverse swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.REVERSE_SWAP_RESPONSE}`, () => {
+  it(`should handle ${actions.REVERSE_SWAP_RESPONSE}`, () => {
     const action = {
       type: actions.REVERSE_SWAP_RESPONSE,
       payload: {
@@ -33,7 +33,7 @@ describe('reverse swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.INIT_REVERSE_SWAP}`, () => {
+  it(`should handle ${actions.INIT_REVERSE_SWAP}`, () => {
     const action = {
       type: actions.INIT_REVERSE_SWAP,
       payload: {
@@ -61,7 +61,7 @@ describe('reverse swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_REVERSE_SWAP_ADDRESS}`, () => {
+  it(`should handle ${actions.SET_REVERSE_SWAP_ADDRESS}`, () => {
     const action = {
       type: actions.SET_REVERSE_SWAP_ADDRESS,
       payload: {
@@ -77,7 +77,7 @@ describe('reverse swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_REVERSE_SWAP_STATUS}`, () => {
+  it(`should handle ${actions.SET_REVERSE_SWAP_STATUS}`, () => {
     const action = {
       type: actions.SET_REVERSE_SWAP_STATUS,
       payload: 'swap status',
@@ -87,7 +87,7 @@ describe('reverse swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_IS_RECONNECTING}`, () => {
+  it(`should handle ${actions.SET_IS_RECONNECTING}`, () => {
     const action = {
       type: actions.SET_IS_RECONNECTING,
       payload: false,
@@ -97,7 +97,7 @@ describe('reverse swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.COMPLETE_REVERSE_SWAP}`, () => {
+  it(`should handle ${actions.COMPLETE_REVERSE_SWAP}`, () => {
     const action = {
       type: actions.COMPLETE_REVERSE_SWAP,
     };

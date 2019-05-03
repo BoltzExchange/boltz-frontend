@@ -9,7 +9,7 @@ describe('swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SWAP_REQUEST}`, () => {
+  it(`should handle ${actions.SWAP_REQUEST}`, () => {
     expect(
       swapReducer(
         {},
@@ -22,7 +22,7 @@ describe('swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SWAP_RESPONSE}`, () => {
+  it(`should handle ${actions.SWAP_RESPONSE}`, () => {
     expect(
       swapReducer(
         {},
@@ -37,7 +37,7 @@ describe('swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.INIT_SWAP}`, () => {
+  it(`should handle ${actions.INIT_SWAP}`, () => {
     const payload = {
       webln: undefined,
       base: 'BTC',
@@ -70,7 +70,7 @@ describe('swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_SWAP_INVOICE}`, () => {
+  it(`should handle ${actions.SET_SWAP_INVOICE}`, () => {
     const payload = {
       invoice: 'invoice',
       error: false,
@@ -93,7 +93,7 @@ describe('swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_SWAP_STATUS}`, () => {
+  it(`should handle ${actions.SET_SWAP_STATUS}`, () => {
     const payload = {
       pending: true,
       message: 'message',
@@ -113,7 +113,7 @@ describe('swap reducer', () => {
     });
   });
 
-  it(`should handel ${actions.COMPLETE_SWAP}`, () => {
+  it(`should handle ${actions.COMPLETE_SWAP}`, () => {
     expect(
       swapReducer(
         {},

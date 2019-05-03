@@ -5,7 +5,6 @@
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:build": "npm test --watchAll",
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",

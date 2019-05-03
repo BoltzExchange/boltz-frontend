@@ -9,7 +9,7 @@ describe('refund reducer', () => {
     });
   });
 
-  it(`should handel ${actions.REFUND_REQUEST}`, () => {
+  it(`should handle ${actions.REFUND_REQUEST}`, () => {
     expect(
       refundReducer(
         {},
@@ -22,7 +22,7 @@ describe('refund reducer', () => {
     });
   });
 
-  it(`should reducer ${actions.REFUND_RESPONSE}`, () => {
+  it(`should handle ${actions.REFUND_RESPONSE}`, () => {
     expect(
       refundReducer(
         {},
@@ -35,7 +35,7 @@ describe('refund reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_REFUND_FILE}`, () => {
+  it(`should handle ${actions.SET_REFUND_FILE}`, () => {
     const payload = {
       type: actions.SET_REFUND_FILE,
       payload: {},
@@ -45,7 +45,7 @@ describe('refund reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_REFUND_TXHASH}`, () => {
+  it(`should handle ${actions.SET_REFUND_TXHASH}`, () => {
     const payload = {
       type: actions.SET_REFUND_TXHASH,
       payload: 'hash',
@@ -55,7 +55,7 @@ describe('refund reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_REFUND_DESTINATION}`, () => {
+  it(`should handle ${actions.SET_REFUND_DESTINATION}`, () => {
     const payload = {
       type: actions.SET_REFUND_DESTINATION,
       payload: 'address',
@@ -65,7 +65,7 @@ describe('refund reducer', () => {
     });
   });
 
-  it(`should handel ${actions.SET_REFUND_TRANSACTION_HASH}`, () => {
+  it(`should handle ${actions.SET_REFUND_TRANSACTION_HASH}`, () => {
     const payload = {
       type: actions.SET_REFUND_TRANSACTION_HASH,
       payload: 'hash',
@@ -75,7 +75,7 @@ describe('refund reducer', () => {
     });
   });
 
-  it(`should handel ${actions.COMPLETE_SWAP}`, () => {
+  it(`should handle ${actions.COMPLETE_SWAP}`, () => {
     expect(
       refundReducer(
         {},
