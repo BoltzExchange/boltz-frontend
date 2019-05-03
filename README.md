@@ -1,5 +1,5 @@
 # boltz-frontend
 
-[![Build Status](https://travis-ci.org/BoltzExchange/boltz-frontend.svg?branch=master)](https://travis-ci.org/BoltzExchange/boltz-frontend)
+[![CircleCI](https://circleci.com/gh/BoltzExchange/boltz-frontend/tree/master.svg?style=shield)](https://circleci.com/gh/BoltzExchange/boltz-frontend/tree/master)
 
 Frontend for boltz
