@@ -10,7 +10,7 @@ describe('landing page actions', () => {
     expect(actions.pairsRequest()).toEqual(expectedAction);
   });
 
-  it('should respond with paris action', () => {
+  it('should respond with pairs action', () => {
     const expectedAction = {
       type: actionTypes.PAIRS_RESPONSE,
       payload: {},
