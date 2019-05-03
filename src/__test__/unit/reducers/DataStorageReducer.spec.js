@@ -7,7 +7,7 @@ describe('data storage reducer', () => {
     expect(reducer(initialState, {})).toEqual(initialState);
   });
 
-  it(`should handel ${actions.SET_ID}`, () => {
+  it(`should handle ${actions.SET_ID}`, () => {
     expect(
       reducer(
         {},
