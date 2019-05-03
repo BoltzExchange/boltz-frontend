@@ -8,7 +8,8 @@ describe('landing page reducer', () => {
       ...initialState,
     });
   });
-  it(`should handel ${actions.PAIRS_RESPONSE}`, () => {
+
+  it(`should handle ${actions.PAIRS_RESPONSE}`, () => {
     const payload = {
       type: actions.PAIRS_RESPONSE,
       payload: {
