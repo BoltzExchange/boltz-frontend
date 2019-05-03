@@ -1,4 +1,4 @@
-import icon from '../../asset/icons/boltz_logo.png';
+import icon from '../asset/icons/boltz_logo.png';
 
 class NotificationManager {
   constructor() {
