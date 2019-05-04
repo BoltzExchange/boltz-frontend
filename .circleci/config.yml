@@ -75,3 +75,7 @@ workflows:
       - lint:
           requires:
             - dependencies
+
+      - test:
+          requires:
+            - dependencies
