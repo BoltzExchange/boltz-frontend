@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import * as utils from '../../utils';
 import {
   bitcoinNetwork,

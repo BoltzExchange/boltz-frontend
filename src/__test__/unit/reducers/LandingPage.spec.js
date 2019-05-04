@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 import reducer, { initialState } from '../../../reducers/landingpageReducer';
 import * as actions from '../../../constants/actions';
 

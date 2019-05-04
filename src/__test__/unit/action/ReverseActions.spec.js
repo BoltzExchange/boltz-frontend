@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 import * as actions from '../../../actions/reverseActions';
 import * as actionTypes from '../../../constants/actions';
 

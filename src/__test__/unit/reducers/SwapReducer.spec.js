@@ -1,4 +1,4 @@
-/* eslint-disable no-undef */
+
 import swapReducer, { initialState } from '../../../reducers/swapReducer';
 import * as actions from '../../../constants/actions';
 
