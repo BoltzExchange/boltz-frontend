@@ -6,7 +6,6 @@ import View from '../view';
 import Text, { InfoText } from '../text';
 import Input from '../input';
 import DropDown from '../dropdown';
-import { decimals } from '../../utils';
 import { MdCompareArrows } from 'react-icons/md';
 import Controls from '../controls';
 
