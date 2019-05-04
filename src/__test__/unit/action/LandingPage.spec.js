@@ -1,4 +1,3 @@
-
 import * as actions from '../../../actions/landingPageActions';
 import * as actionTypes from '../../../constants/actions';
 

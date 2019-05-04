@@ -1,4 +1,3 @@
-
 import swapReducer, { initialState } from '../../../reducers/swapReducer';
 import * as actions from '../../../constants/actions';
 

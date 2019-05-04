@@ -1,4 +1,3 @@
-
 import { generateKeys } from '../../../actions/keys';
 import { bitcoinNetwork } from '../../../constants';
 
