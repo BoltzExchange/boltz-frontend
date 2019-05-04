@@ -15,7 +15,7 @@ export const dataStorageSetId = id => ({
  * @param {Number} amount
  */
 export const dataStorageSetAsset = (asset, amount) => ({
-  type: actionTypes.SET_ID,
+  type: actionTypes.SET_ASSET,
   payload: {
     asset,
     amount,

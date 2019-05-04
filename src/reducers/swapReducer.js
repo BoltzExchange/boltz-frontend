@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actions';
 
-const initalState = {
+export const initialState = {
   inSwapMode: false,
   webln: null,
   isFetching: false,
@@ -21,7 +21,7 @@ const initalState = {
   },
 };
 
-const reducer = (state = initalState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SWAP_REQUEST:
       return {
@@ -75,7 +75,7 @@ const reducer = (state = initalState, action) => {
       };
 
     case actionTypes.COMPLETE_SWAP:
-      return { ...initalState };
+      return { ...initialState };
 
     default:
       return state;
