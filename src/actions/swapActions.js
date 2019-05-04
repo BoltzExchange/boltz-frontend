@@ -1,7 +1,7 @@
 import axios from 'axios';
 import EventSource from 'eventsource';
-import { boltzApi, SwapUpdateEvent } from '../../constants';
-import * as actionTypes from '../../constants/actions';
+import { boltzApi, SwapUpdateEvent } from '../constants';
+import * as actionTypes from '../constants/actions';
 
 export const completeSwap = () => {
   return {
@@ -49,7 +49,12 @@ export const swapRequest = () => ({
 
 export const startSwap = (swapInfo, cb) => {
   const url = `${boltzApi}/createswap`;
-  const { pair, invoice, keys } = swapInfo;
+  let { pair, invoice, keys } = swapInfo;
+
+  // Trim the "lightning:" prefix, that some wallets add in front of their invoices, if it exists
+  if (invoice.slice(0, 10) === 'lightning:') {
+    invoice = invoice.slice(10);
+  }
 
   return dispatch => {
     dispatch(swapRequest());

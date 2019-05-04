@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import swapReducer from '../views/swap/swapReducer';
-import reverseSwapReducer from '../views/reverse/reverseReducer';
-import landingpageReducer from '../views/landingpage/landingpageReducer';
-import refundReducer from '../views/refund/refundReducer';
+import swapReducer from '../reducers/swapReducer';
+import reverseSwapReducer from '../reducers/reverseReducer';
+import landingpageReducer from '../reducers/landingpageReducer';
+import refundReducer from '../reducers/refundReducer';
+import datastorageReducer from '../reducers/datastorageReducer';
 
 const createRootReducer = () =>
   combineReducers({
@@ -10,6 +11,7 @@ const createRootReducer = () =>
     swapReducer,
     reverseSwapReducer,
     refundReducer,
+    dataStorage: datastorageReducer,
   });
 
 export default createRootReducer;

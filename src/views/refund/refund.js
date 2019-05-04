@@ -6,7 +6,7 @@ import Prompt from '../../components/prompt';
 import Controls from '../../components/controls';
 import Background from '../../components/background';
 import StepsWizard from '../../components/stepswizard';
-import { navigation } from '../../action';
+import { navigation } from '../../actions';
 import {
   InputDestinationAddress,
   UploadRefundFile,

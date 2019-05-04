@@ -10,11 +10,10 @@ import Confetti from '../../components/confetti';
 import BackGround from '../../components/background';
 import { getCurrencyName } from '../../utils';
 import StepsWizard from '../../components/stepswizard';
-import DataStorage from '../reversetimelock/dataStorage';
 import { notificationData } from '../../utils';
 import { InputAddress, PayInvoice, LockingFunds } from './steps';
 import ReactNotification from 'react-notifications-component';
-import { navigation } from '../../action';
+import { navigation } from '../../actions';
 
 const styles = () => ({
   wrapper: {
@@ -35,8 +34,29 @@ class ReverseSwap extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { isReconnecting, swapFailResponse, swapResponse } = this.props;
+    const {
+      isReconnecting,
+      swapFailResponse,
+      swapResponse,
+      swapInfo,
+      dataStorageSetId,
+    } = this.props;
+
     this.redirectIfLoggedOut();
+
+    if (
+      prevProps.swapInfo.quote !== swapInfo.quote &&
+      prevProps.swapInfo.quoteAmount !== swapInfo.quoteAmount
+    ) {
+      this.props.dataStorageSetAsset({
+        asset: swapInfo.quote,
+        amount: swapInfo.quoteAmount,
+      });
+    }
+
+    if (swapResponse.id !== prevProps.swapResponse.id && swapResponse.id) {
+      dataStorageSetId(swapResponse);
+    }
 
     if (isReconnecting && !prevProps.isReconnecting) {
       this.addNotification(lostConnection, 0);
@@ -87,15 +107,6 @@ class ReverseSwap extends React.Component {
       goTimelockExpired,
       setReverseSwapAddress,
     } = this.props;
-
-    DataStorage.swapInfo = {
-      asset: swapInfo.quote,
-      amount: swapInfo.quoteAmount,
-    };
-
-    if (swapResponse) {
-      DataStorage.swapInfo.id = swapResponse.id;
-    }
 
     return (
       <BackGround>
@@ -189,7 +200,6 @@ class ReverseSwap extends React.Component {
                 num={2}
                 render={props => (
                   <Controls
-                    mobile
                     loading={isFetching}
                     loadingText={'Locking your funds...'}
                     loadingRender={() => <Loading />}
@@ -209,7 +219,6 @@ class ReverseSwap extends React.Component {
                 num={3}
                 render={() => (
                   <Controls
-                    mobile
                     loading={isFetching}
                     loadingText={swapStatus}
                     loadingRender={() => <Loading />}
@@ -241,7 +250,7 @@ ReverseSwap.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isReconnecting: PropTypes.bool.isRequired,
   inSwapMode: PropTypes.bool.isRequired,
-  goTimelockExpired: PropTypes.func.isRequired,
+  goTimelockExpired: PropTypes.func,
   webln: PropTypes.object,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,
@@ -253,6 +262,8 @@ ReverseSwap.propTypes = {
   startReverseSwap: PropTypes.func.isRequired,
   swapStatus: PropTypes.string.isRequired,
   invalidAddress: PropTypes.bool.isRequired,
+  dataStorageSetAsset: PropTypes.func.isRequired,
+  dataStorageSetId: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(ReverseSwap);

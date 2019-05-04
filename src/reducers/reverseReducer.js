@@ -1,4 +1,4 @@
-import * as actionTypes from '../../constants/actions';
+import * as actionTypes from '../constants/actions';
 
 const initalState = {
   inSwapMode: false,
@@ -15,6 +15,9 @@ const initalState = {
     address: null,
   },
   swapResponse: {
+    response: {
+      id: null,
+    },
     success: true,
   },
   swapStatus: 'Waiting for confirmation...',
@@ -34,7 +37,10 @@ const reducer = (state = initalState, action) => {
       return {
         ...state,
         isFetching: false,
-        swapResponse: action.payload,
+        swapResponse: {
+          response: action.payload.response,
+          success: action.payload.success,
+        },
       };
 
     case actionTypes.INIT_REVERSE_SWAP:

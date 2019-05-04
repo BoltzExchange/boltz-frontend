@@ -1,5 +1,5 @@
 import { ECPair } from 'bitcoinjs-lib';
-import { getHexString } from '../../utils';
+import { getHexString } from '../utils';
 
 export const generateKeys = network => {
   const keys = ECPair.makeRandom({ network });

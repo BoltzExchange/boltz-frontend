@@ -1,6 +1,8 @@
-import * as actionTypes from '../../constants/actions';
+import * as actionTypes from '../constants/actions';
 
 const initialState = {
+  warnings: [],
+
   fees: {},
   rates: {},
   limits: {},
@@ -13,6 +15,9 @@ const reducer = (state = initialState, action) => {
     case actionTypes.PAIRS_RESPONSE:
       return {
         ...state,
+
+        warnings: action.payload.warnings,
+
         fees: action.payload.fees,
         rates: action.payload.rates,
         limits: action.payload.limits,
