@@ -1,6 +1,6 @@
 import * as actionTypes from '../constants/actions';
 
-const initialState = {
+export const initialState = {
   warnings: [],
 
   fees: {},

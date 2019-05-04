@@ -55,7 +55,7 @@ export const reverseSwapResponse = (success, response) => ({
   },
 });
 
-const setIsReconnecting = isReconnecting => ({
+export const setIsReconnecting = isReconnecting => ({
   type: actionTypes.SET_IS_RECONNECTING,
   payload: isReconnecting,
 });

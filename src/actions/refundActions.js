@@ -45,7 +45,7 @@ export const setDestinationAddress = address => ({
   payload: address,
 });
 
-const setRefundTransactionHash = hash => ({
+export const setRefundTransactionHash = hash => ({
   type: actionTypes.SET_REFUND_TRANSACTION_HASH,
   payload: hash,
 });
