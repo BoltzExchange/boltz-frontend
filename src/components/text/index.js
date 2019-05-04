@@ -21,25 +21,25 @@ const infoTextStyles = () => ({
     flexDirection: 'column',
   },
   title: {
-    fontSize: '16px',
+    fontSize: '18px',
     fontWeight: 600,
-    '@media (min-width: 1500px)': {
-      fontSize: '18px',
+    '@media (max-width: 1500px)': {
+      fontSize: '16px',
+    },
+    '@media (max-width: 320px)': {
+      fontSize: '12px',
     },
   },
   text: {
     fontSize: '12px',
     fontWeight: 400,
-    '@media (min-width: 1500px)': {
-      fontSize: '16px',
-    },
   },
 });
 
-const StyledInfoText = ({ title, text, classes }) => (
+const StyledInfoText = ({ title, text, classes, style }) => (
   <View className={classes.wrapper}>
-    <Text text={`${title}:`} className={classes.title} />
-    <Text text={text} className={classes.text} />
+    <Text text={`${title}:`} className={classes.title} style={style} />
+    <Text text={text} className={classes.text} style={style} />
   </View>
 );
 
@@ -47,6 +47,7 @@ StyledInfoText.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   text: PropTypes.string,
+  style: PropTypes.object,
 };
 
 const InfoText = injectSheet(infoTextStyles)(StyledInfoText);

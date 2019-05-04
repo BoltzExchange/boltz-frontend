@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { ECPair, address, Transaction } from 'bitcoinjs-lib';
 import { constructRefundTransaction, detectSwap } from 'boltz-core';
-import { boltzApi } from '../../constants';
-import * as actionTypes from '../../constants/actions';
+import { boltzApi } from '../constants';
+import * as actionTypes from '../constants/actions';
 import {
   getHexBuffer,
   getNetwork,
   getFeeEstimation,
   getExplorer,
-} from '../../utils';
+} from '../utils';
 
 const verifyRefundFile = (fileJSON, keys) => {
   const verify = keys.every(key => fileJSON.hasOwnProperty(key));

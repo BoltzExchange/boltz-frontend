@@ -4,7 +4,11 @@ import {
   completeReverseSwap,
   setReverseSwapAddress,
   startReverseSwap,
-} from './reverseActions';
+} from '../../actions/reverseActions';
+import {
+  dataStorageSetAsset,
+  dataStorageSetId,
+} from '../../actions/datastorageActions';
 
 const mapStateToProps = state => ({
   webln: state.reverseSwapReducer.webln,
@@ -24,6 +28,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(setReverseSwapAddress(address, error)),
   startReverseSwap: (info, nextStage, timelockExpired) =>
     dispatch(startReverseSwap(info, nextStage, timelockExpired)),
+  dataStorageSetAsset: (asset, amount) =>
+    dispatch(dataStorageSetAsset(asset, amount)),
+  dataStorageSetId: id => dispatch(dataStorageSetId(id)),
 });
 
 export default connect(
