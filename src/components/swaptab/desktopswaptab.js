@@ -8,7 +8,6 @@ import Input from '../input';
 import DropDown from '../dropdown';
 import Controls from '../controls';
 import Text, { InfoText } from '../text';
-import { decimals } from '../../utils';
 
 const DeskTopSwapTabContent = ({
   classes,
@@ -31,12 +30,14 @@ const DeskTopSwapTabContent = ({
   updateBaseAmount,
   updatePair,
   shouldSubmit,
+  baseStep,
+  qouteStep,
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.stats}>
-      <InfoText title="Min amount" text={`${minAmount}`} />
-      <InfoText title="Max amount" text={`${maxAmount}`} />
-      <InfoText title="Fee" text={`${feeAmount}`} />
+      <InfoText title="Min amount" text={`${minAmount.toPrecision()}`} />
+      <InfoText title="Max amount" text={`${maxAmount.toPrecision()}`} />
+      <InfoText title="Fee" text={`${feeAmount.toFixed(8)}`} />
       <InfoText title="Rate" text={`${parseRate(rates)}`} />
     </View>
     <View className={classes.options}>
@@ -47,9 +48,9 @@ const DeskTopSwapTabContent = ({
           className={classes.inputMobile}
           min={minAmount}
           max={maxAmount}
-          step={0.001}
+          step={qouteStep.toPrecision()}
           error={inputError}
-          value={baseAmount}
+          value={baseAmount.toFixed(8)}
           onChange={e => updateQuoteAmount(e)}
         />
         <DropDown
@@ -68,11 +69,11 @@ const DeskTopSwapTabContent = ({
         <Input
           disable={disabled}
           className={classes.inputMobile}
-          min={1 / decimals}
+          min={baseStep}
           max={Number.MAX_SAFE_INTEGER}
-          step={1 / decimals}
+          step={baseStep}
           error={inputError}
-          value={quoteAmount}
+          value={quoteAmount.toFixed(8)}
           onChange={e => updateBaseAmount(e)}
         />
         <DropDown
@@ -202,6 +203,8 @@ DeskTopSwapTabContent.propTypes = {
   updateBaseAmount: PropTypes.func,
   updatePair: PropTypes.func,
   shouldSubmit: PropTypes.func,
+  baseStep: PropTypes.any,
+  qouteStep: PropTypes.any,
 };
 
 const DeskTopSwapTab = props => (

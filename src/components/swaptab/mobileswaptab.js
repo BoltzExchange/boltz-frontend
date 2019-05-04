@@ -31,12 +31,14 @@ const MobileSwapTabContent = ({
   updateBaseAmount,
   updatePair,
   shouldSubmit,
+  baseStep,
+  qouteStep,
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.info}>
-      <InfoText title="Min amount" text={`${minAmount}`} />
-      <InfoText title="Max amount" text={`${maxAmount}`} />
-      <InfoText title="Fee" text={`${feeAmount}`} />
+      <InfoText title="Min amount" text={`${minAmount.toPrecision()}`} />
+      <InfoText title="Max amount" text={`${maxAmount.toPrecision()}`} />
+      <InfoText title="Fee" text={`${feeAmount.toFixed(8)}`} />
       <InfoText title="Rate" text={`${parseRate(rates)}`} />
     </View>
     <View className={classes.inputs}>
@@ -48,9 +50,9 @@ const MobileSwapTabContent = ({
             className={classes.inputMobile}
             min={minAmount}
             max={maxAmount}
-            step={0.001}
+            step={qouteStep.toPrecision()}
             error={inputError}
-            value={baseAmount}
+            value={baseAmount.toFixed(8)}
             onChange={e => updateQuoteAmount(e)}
           />
           <DropDown
@@ -71,11 +73,11 @@ const MobileSwapTabContent = ({
           <Input
             disable={disabled}
             className={classes.inputMobile}
-            min={1 / decimals}
+            min={baseStep}
             max={Number.MAX_SAFE_INTEGER}
-            step={1 / decimals}
+            step={baseStep}
             error={inputError}
-            value={quoteAmount}
+            value={quoteAmount.toFixed(8)}
             onChange={e => updateBaseAmount(e)}
           />
           <DropDown
@@ -179,6 +181,8 @@ MobileSwapTabContent.propTypes = {
   updateBaseAmount: PropTypes.func,
   updatePair: PropTypes.func,
   shouldSubmit: PropTypes.func,
+  baseStep: PropTypes.any,
+  qouteStep: PropTypes.any,
 };
 
 const MobileSwapTab = props => (
