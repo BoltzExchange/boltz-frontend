@@ -12,7 +12,7 @@ import {
 
 describe('Utils', () => {
   it('should have corect decimals value', () => {
-    expect(utils.decimals).toBe(100000000);
+    expect(utils.decimals.toNumber()).toBe(100000000);
   });
 
   it('should convert string to hex', () => {
