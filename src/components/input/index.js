@@ -53,10 +53,10 @@ Input.propTypes = {
   className: PropTypes.string,
   disable: PropTypes.bool,
   error: PropTypes.bool,
-  min: PropTypes.number,
+  min: PropTypes.string,
   max: PropTypes.number,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  step: PropTypes.number,
+  step: PropTypes.string,
 };
 
 export default injectSheet(styles)(Input);
