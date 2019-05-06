@@ -182,7 +182,11 @@ class SwapTabWrapper extends React.Component {
       decimals
     );
 
-    return percentageFee.plus(minerFee);
+    let fee = percentageFee.plus(minerFee);
+    if (isNaN(fee.toNumber())) {
+      fee = new BigNumber('0');
+    }
+    return fee;
   };
 
   /**
@@ -300,6 +304,7 @@ class SwapTabWrapper extends React.Component {
   };
 
   render() {
+    const { feeAmount } = this.state;
     return this.props.children({
       quote: this.state.quote,
       disabled: this.state.disabled,
@@ -309,7 +314,7 @@ class SwapTabWrapper extends React.Component {
       inputError: this.state.inputError,
       minAmount: this.state.minAmount.toNumber(),
       maxAmount: this.state.maxAmount.toNumber(),
-      feeAmount: this.state.feeAmount.toFixed(8),
+      feeAmount: feeAmount.isZero() ? 0 : feeAmount.toFixed(8),
       quoteAmount: this.state.quoteAmount.toNumber(),
       baseAmount: this.state.baseAmount.toNumber(),
       classes: this.props.classes,
