@@ -14,8 +14,7 @@ const MobileSwapTabContent = ({
   feeAmount,
   minAmount,
   maxAmount,
-  rates,
-  parseRate,
+  rate,
   inputError,
   baseAmount,
   base,
@@ -35,10 +34,10 @@ const MobileSwapTabContent = ({
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.info}>
-      <InfoText title="Min amount" text={`${minAmount.toPrecision()}`} />
-      <InfoText title="Max amount" text={`${maxAmount.toPrecision()}`} />
-      <InfoText title="Fee" text={`${feeAmount.toFixed(8)}`} />
-      <InfoText title="Rate" text={`${parseRate(rates)}`} />
+      <InfoText title="Min amount" text={`${minAmount}`} />
+      <InfoText title="Max amount" text={`${maxAmount}`} />
+      <InfoText title="Fee" text={`${feeAmount}`} />
+      <InfoText title="Rate" text={`${rate}`} />
     </View>
     <View className={classes.inputs}>
       <View className={classes.select}>
@@ -49,10 +48,10 @@ const MobileSwapTabContent = ({
             className={classes.inputMobile}
             min={minAmount}
             max={maxAmount}
-            step={qouteStep.toPrecision()}
+            step={qouteStep}
             error={inputError}
-            value={baseAmount.toFixed(8)}
-            onChange={e => updateQuoteAmount(e)}
+            value={baseAmount}
+            onChange={updateQuoteAmount}
           />
           <DropDown
             className={classes.inputMobile}
@@ -62,10 +61,7 @@ const MobileSwapTabContent = ({
           />
         </View>
       </View>
-      <MdCompareArrows
-        className={classes.arrows}
-        onClick={() => switchPair()}
-      />
+      <MdCompareArrows className={classes.arrows} onClick={switchPair} />
       <View className={classes.select}>
         <Text text="You receive" className={classes.selectTitle} />
         <View className={classes.selectInput}>
@@ -76,8 +72,8 @@ const MobileSwapTabContent = ({
             max={Number.MAX_SAFE_INTEGER}
             step={baseStep}
             error={inputError}
-            value={quoteAmount.toFixed(8)}
-            onChange={e => updateBaseAmount(e)}
+            value={quoteAmount}
+            onChange={updateBaseAmount}
           />
           <DropDown
             className={classes.inputMobile}
@@ -93,7 +89,7 @@ const MobileSwapTabContent = ({
         mobile={true}
         text={'Start swap'}
         error={error || inputError}
-        onPress={error ? () => {} : () => shouldSubmit()}
+        onPress={error ? () => {} : shouldSubmit}
         errorText={inputError ? 'Invalid amount' : errorMessage}
       />
     </View>
@@ -174,7 +170,7 @@ MobileSwapTabContent.propTypes = {
   baseAmount: PropTypes.string,
   base: PropTypes.string,
   disabled: PropTypes.bool,
-  parseRate: PropTypes.func,
+  rate: PropTypes.number,
   switchPair: PropTypes.func,
   updateQuoteAmount: PropTypes.func,
   updateBaseAmount: PropTypes.func,

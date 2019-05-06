@@ -14,7 +14,6 @@ const DeskTopSwapTabContent = ({
   feeAmount,
   minAmount,
   maxAmount,
-  rates,
   inputError,
   baseAmount,
   base,
@@ -24,7 +23,7 @@ const DeskTopSwapTabContent = ({
   error,
   errorMessage,
   disabled,
-  parseRate,
+  rate,
   switchPair,
   updateQuoteAmount,
   updateBaseAmount,
@@ -35,10 +34,10 @@ const DeskTopSwapTabContent = ({
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.stats}>
-      <InfoText title="Min amount" text={`${minAmount.toPrecision()}`} />
-      <InfoText title="Max amount" text={`${maxAmount.toPrecision()}`} />
-      <InfoText title="Fee" text={`${feeAmount.toFixed(8)}`} />
-      <InfoText title="Rate" text={`${parseRate(rates)}`} />
+      <InfoText title="Min amount" text={`${minAmount}`} />
+      <InfoText title="Max amount" text={`${maxAmount}`} />
+      <InfoText title="Fee" text={`${feeAmount}`} />
+      <InfoText title="Rate" text={`${rate}`} />
     </View>
     <View className={classes.options}>
       <View className={classes.select}>
@@ -48,10 +47,10 @@ const DeskTopSwapTabContent = ({
           className={classes.inputMobile}
           min={minAmount}
           max={maxAmount}
-          step={qouteStep.toPrecision()}
+          step={qouteStep}
           error={inputError}
-          value={baseAmount.toFixed(8)}
-          onChange={e => updateQuoteAmount(e)}
+          value={baseAmount}
+          onChange={updateQuoteAmount}
         />
         <DropDown
           className={classes.inputMobile}
@@ -60,10 +59,7 @@ const DeskTopSwapTabContent = ({
           onChange={e => updatePair(quote, e)}
         />
       </View>
-      <MdCompareArrows
-        className={classes.arrows}
-        onClick={() => switchPair()}
-      />
+      <MdCompareArrows className={classes.arrows} onClick={switchPair} />
       <View className={classes.select}>
         <Text text="You receive:" className={classes.text} />
         <Input
@@ -73,8 +69,8 @@ const DeskTopSwapTabContent = ({
           max={Number.MAX_SAFE_INTEGER}
           step={baseStep}
           error={inputError}
-          value={quoteAmount.toFixed(8)}
-          onChange={e => updateBaseAmount(e)}
+          value={quoteAmount}
+          onChange={updateBaseAmount}
         />
         <DropDown
           className={classes.inputMobile}
@@ -183,7 +179,6 @@ DeskTopSwapTabContent.propTypes = {
   classes: PropTypes.object,
   onPress: PropTypes.func,
   fees: PropTypes.object.isRequired,
-  rates: PropTypes.object.isRequired,
   limits: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
   quote: PropTypes.string,
@@ -197,7 +192,7 @@ DeskTopSwapTabContent.propTypes = {
   baseAmount: PropTypes.string,
   base: PropTypes.string,
   disabled: PropTypes.bool,
-  parseRate: PropTypes.func,
+  rate: PropTypes.number,
   switchPair: PropTypes.func,
   updateQuoteAmount: PropTypes.func,
   updateBaseAmount: PropTypes.func,

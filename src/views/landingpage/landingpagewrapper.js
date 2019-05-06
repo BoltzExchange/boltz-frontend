@@ -61,6 +61,7 @@ LandingPageWrapper.propTypes = {
   rates: PropTypes.object.isRequired,
   limits: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
+  warnings: PropTypes.array.isRequired,
 };
 
 export default LandingPageWrapper;

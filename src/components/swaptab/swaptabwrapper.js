@@ -12,8 +12,8 @@ class SwapTabWrapper extends React.Component {
       this.reverseSwapsDisabled = true;
     }
 
-    this.qouteStep = new BigNumber('0.001');
-    this.baseStep = new BigNumber('1').dividedBy(decimals);
+    this.qouteStep = new BigNumber('0.001').toFixed(8);
+    this.baseStep = new BigNumber('1').dividedBy(decimals).toFixed(8);
 
     this.state = {
       baseAsset: {},
@@ -184,6 +184,7 @@ class SwapTabWrapper extends React.Component {
 
     return percentageFee.plus(minerFee);
   };
+
   /**
    * @param { BigNumber } baseAmount
    */
@@ -216,10 +217,9 @@ class SwapTabWrapper extends React.Component {
     const newBaseWithFee = fee.plus(newBase);
 
     const inputError = !this.checkBaseAmount(newBaseWithFee);
-
     this.setState({
       quoteAmount: amount,
-      baseAmount: newBaseWithFee,
+      baseAmount: new BigNumber(newBaseWithFee.toFixed(8)),
       feeAmount: fee,
       inputError,
     });
@@ -235,11 +235,18 @@ class SwapTabWrapper extends React.Component {
       fee = fee.times(rate);
     }
 
-    const quote = amount.times(rate).minus(fee);
+    const quote = amount
+      .times(rate)
+      .minus(fee)
+      .toFixed(8);
 
+    let newQuote = new BigNumber(quote);
+    if (newQuote.isLessThanOrEqualTo(0)) {
+      newQuote = new BigNumber('0');
+    }
     const inputError = !this.checkBaseAmount(amount);
     this.setState({
-      quoteAmount: quote,
+      quoteAmount: newQuote,
       baseAmount: amount,
       feeAmount: fee,
       inputError,
@@ -248,7 +255,6 @@ class SwapTabWrapper extends React.Component {
 
   shouldSubmit = () => {
     const { error, rate, baseAmount, quoteAmount } = this.state;
-
     if (error === false && this.rate !== 'Not found') {
       const state = {
         baseAmount: baseAmount.toFixed(8),
@@ -270,31 +276,48 @@ class SwapTabWrapper extends React.Component {
     const rate = this.state.rate;
 
     if (rate) {
-      return rate.rate.toFixed(5);
+      const exactRate = new BigNumber(rate.rate);
+      return exactRate.toFixed(5);
     } else {
       return 'Not found';
     }
   };
 
   switchPair = () => {
-    this.setState({
-      base: this.state.quote,
-      baseAmount: this.state.quoteAmount,
-      quote: this.state.base,
-      quoteAmount: this.state.baseAmount,
-    });
+    if (this.state.rate) {
+      this.setState(
+        {
+          base: this.state.quote,
+          quote: this.state.base,
+        },
+        () => {
+          const symbol = this.getSymbol();
+          const limits = this.props.limits[symbol].minimal / decimals;
+          this.updateQuoteAmount(limits);
+        }
+      );
+    }
   };
 
   render() {
     return this.props.children({
-      ...this.state,
+      quote: this.state.quote,
+      disabled: this.state.disabled,
+      base: this.state.base,
+      errorMessage: this.state.errorMessage,
+      error: this.state.error,
+      inputError: this.state.inputError,
+      minAmount: this.state.minAmount.toNumber(),
+      maxAmount: this.state.maxAmount.toNumber(),
+      feeAmount: this.state.feeAmount.toFixed(8),
+      quoteAmount: this.state.quoteAmount.toNumber(),
+      baseAmount: this.state.baseAmount.toNumber(),
       classes: this.props.classes,
       onPress: this.props.onPress,
       fees: this.props.fees,
-      rates: this.props.rates,
       limits: this.props.limits,
       currencies: this.props.currencies,
-      parseRate: this.parseRate,
+      rate: this.parseRate(),
       updateQuoteAmount: this.updateQuoteAmount,
       updateBaseAmount: this.updateBaseAmount,
       switchPair: this.switchPair,
