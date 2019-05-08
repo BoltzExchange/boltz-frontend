@@ -30,7 +30,7 @@ const DeskTopSwapTabContent = ({
   updatePair,
   shouldSubmit,
   baseStep,
-  qouteStep,
+  quoteStep,
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.stats}>
@@ -47,7 +47,7 @@ const DeskTopSwapTabContent = ({
           className={classes.inputMobile}
           min={minAmount}
           max={maxAmount}
-          step={qouteStep}
+          step={quoteStep}
           error={inputError}
           value={baseAmount}
           onChange={updateQuoteAmount}
@@ -199,7 +199,7 @@ DeskTopSwapTabContent.propTypes = {
   updatePair: PropTypes.func,
   shouldSubmit: PropTypes.func,
   baseStep: PropTypes.string,
-  qouteStep: PropTypes.any,
+  quoteStep: PropTypes.string,
 };
 
 const DeskTopSwapTab = props => (

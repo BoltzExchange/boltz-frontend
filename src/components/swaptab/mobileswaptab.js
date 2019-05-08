@@ -30,7 +30,7 @@ const MobileSwapTabContent = ({
   updatePair,
   shouldSubmit,
   baseStep,
-  qouteStep,
+  quoteStep,
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.info}>
@@ -48,7 +48,7 @@ const MobileSwapTabContent = ({
             className={classes.inputMobile}
             min={minAmount}
             max={maxAmount}
-            step={qouteStep}
+            step={quoteStep}
             error={inputError}
             value={baseAmount}
             onChange={updateQuoteAmount}
@@ -176,7 +176,7 @@ MobileSwapTabContent.propTypes = {
   updatePair: PropTypes.func,
   shouldSubmit: PropTypes.func,
   baseStep: PropTypes.string,
-  qouteStep: PropTypes.any,
+  quoteStep: PropTypes.string,
 };
 
 const MobileSwapTab = props => (

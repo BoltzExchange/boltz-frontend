@@ -12,7 +12,7 @@ class SwapTabWrapper extends React.Component {
       this.reverseSwapsDisabled = true;
     }
 
-    this.qouteStep = new BigNumber('0.001').toFixed(8);
+    this.quoteStep = new BigNumber('0.001').toFixed(8);
     this.baseStep = new BigNumber('1').dividedBy(decimals).toFixed(8);
 
     this.state = {
@@ -288,19 +288,13 @@ class SwapTabWrapper extends React.Component {
   };
 
   switchPair = () => {
-    if (this.state.rate) {
-      this.setState(
-        {
-          base: this.state.quote,
-          quote: this.state.base,
-        },
-        () => {
-          const symbol = this.getSymbol();
-          const limits = this.props.limits[symbol].minimal / decimals;
-          this.updateQuoteAmount(limits);
-        }
-      );
-    }
+    this.setState(
+      state => ({
+        base: state.quote,
+        quote: state.base,
+        baseAmount: state.quoteAmount }),
+      () => this.updateQuoteAmount(this.state.baseAmount)
+    );
   };
 
   render() {
@@ -329,7 +323,7 @@ class SwapTabWrapper extends React.Component {
       updatePair: this.updatePair,
       shouldSubmit: this.shouldSubmit,
       baseStep: this.baseStep,
-      qouteStep: this.qouteStep,
+      quoteStep: this.quoteStep,
     });
   }
 }
