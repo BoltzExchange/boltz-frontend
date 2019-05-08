@@ -292,7 +292,8 @@ class SwapTabWrapper extends React.Component {
       state => ({
         base: state.quote,
         quote: state.base,
-        baseAmount: state.quoteAmount }),
+        baseAmount: state.quoteAmount,
+      }),
       () => this.updateQuoteAmount(this.state.baseAmount)
     );
   };
