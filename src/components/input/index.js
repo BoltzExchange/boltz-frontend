@@ -34,7 +34,7 @@ class Input extends React.PureComponent {
         min={min}
         max={max}
         className={classname}
-        onChange={e => this.onChange(e)}
+        onChange={this.onChange}
         value={value}
         type={'number'}
       />
