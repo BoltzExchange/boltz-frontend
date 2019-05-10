@@ -42,7 +42,7 @@ class StyledInputInvoice extends React.Component {
     error: false,
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { swapInfo, webln } = this.props;
 
     if (webln) {
@@ -53,7 +53,7 @@ class StyledInputInvoice extends React.Component {
         this.onChange(invoice);
       });
     }
-  }
+  };
 
   onChange = input => {
     if (input.slice(0, 2) === 'ln' || input.slice(0, 10) === 'lightning:') {

@@ -21,18 +21,18 @@ const styles = () => ({
 
 class Swap extends Component {
   componentDidMount = () => {
-    this.redirectIfLoggedOut();
+    this.redirectIfNotInSwap();
   };
 
   componentDidUpdate = () => {
-    this.redirectIfLoggedOut();
+    this.redirectIfNotInSwap();
   };
 
   componentWillUnmount = () => {
     this.props.completeSwap();
   };
 
-  redirectIfLoggedOut = () => {
+  redirectIfNotInSwap = () => {
     if (!this.props.inSwapMode) {
       navigation.navHome();
     }

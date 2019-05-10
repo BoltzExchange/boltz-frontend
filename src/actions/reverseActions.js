@@ -10,6 +10,7 @@ import {
   getHexBuffer,
   getFeeEstimation,
 } from '../utils';
+import { notificationManager } from '../actions';
 
 let latestSwapEvent = '';
 
@@ -252,8 +253,10 @@ const broadcastClaimTransaction = (currency, claimTransaction, cb) => {
       .then(() => cb())
       .catch(error => {
         const message = error.response.data.error;
-
-        window.alert(`Failed to broadcast claim transaction: ${message}`);
+        notificationManager.spawnNotification(
+          'Failed to broadcast claim transaction:',
+          message
+        );
         dispatch(reverseSwapResponse(false, message));
       });
   };

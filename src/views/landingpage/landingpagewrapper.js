@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { requestProvider } from 'webln';
 import { notificationData } from '../../utils';
-
+import { notificationManager } from '../../actions';
 class LandingPageWrapper extends React.Component {
   constructor(props) {
     super(props);
@@ -15,6 +15,7 @@ class LandingPageWrapper extends React.Component {
   }
 
   componentDidMount = () => {
+    notificationManager.init();
     this.props.getPairs();
     try {
       requestProvider().then(provider => {
