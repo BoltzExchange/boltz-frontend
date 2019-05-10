@@ -230,6 +230,7 @@ class SwapTabWrapper extends React.Component {
   };
 
   updateQuoteAmount = baseAmount => {
+    if (!this.state.rate) return;
     const amount = new BigNumber(baseAmount.toString());
     const rate = new BigNumber(this.state.rate.rate);
     const { orderSide } = this.state.rate;
