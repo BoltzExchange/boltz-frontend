@@ -45,7 +45,7 @@ const DeskTopSwapTabContent = ({
         <Input
           disable={disabled}
           className={classes.inputMobile}
-          min={minAmount}
+          min={0}
           max={maxAmount}
           step={quoteStep}
           error={inputError}
@@ -185,7 +185,7 @@ DeskTopSwapTabContent.propTypes = {
   quoteAmount: PropTypes.number,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  feeAmount: PropTypes.string,
+  feeAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   minAmount: PropTypes.number,
   maxAmount: PropTypes.number,
   inputError: PropTypes.bool,

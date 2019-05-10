@@ -12,7 +12,7 @@ class SwapTabWrapper extends React.Component {
       this.reverseSwapsDisabled = true;
     }
 
-    this.quoteStep = new BigNumber('0.001').toFixed(3);
+    this.quoteStep = new BigNumber('0.0001').toFixed(4);
     this.baseStep = new BigNumber('1').dividedBy(decimals).toFixed(8);
 
     this.state = {

@@ -53,8 +53,8 @@ Input.propTypes = {
   className: PropTypes.string,
   disable: PropTypes.bool,
   error: PropTypes.bool,
-  min: PropTypes.string,
-  max: PropTypes.number,
+  min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   step: PropTypes.string,
 };
