@@ -18,6 +18,7 @@ describe('swap reducer', () => {
       )
     ).toEqual({
       isFetching: true,
+      retry: false,
     });
   });
 
@@ -31,6 +32,7 @@ describe('swap reducer', () => {
         }
       )
     ).toEqual({
+      retry: true,
       isFetching: false,
       swapResponse: 'payload',
     });
