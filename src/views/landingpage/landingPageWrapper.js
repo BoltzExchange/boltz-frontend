@@ -19,6 +19,7 @@ class LandingPageWrapper extends React.Component {
     try {
       requestProvider().then(provider => {
         this.webln = provider;
+        this.forceUpdate();
       });
     } catch (error) {
       console.log(`Could not enable WebLN: ${error}`);
