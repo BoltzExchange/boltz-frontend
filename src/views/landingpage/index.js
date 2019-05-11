@@ -17,7 +17,6 @@ const LandingPage = props => (
 
 const mapStateToProps = state => ({
   warnings: state.landingpageReducer.warnings,
-
   fees: state.landingpageReducer.fees,
   rates: state.landingpageReducer.rates,
   limits: state.landingpageReducer.limits,

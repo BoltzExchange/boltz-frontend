@@ -1,10 +1,20 @@
 import React from 'react';
+import BigNumber from 'bignumber.js';
 import PropTypes from 'prop-types';
+import { ServiceWarnings } from '../../constants';
 import { decimals } from '../../utils';
 
 class SwapTabWrapper extends React.Component {
   constructor(props) {
     super(props);
+
+    if (props.warnings.includes(ServiceWarnings.ReverseSwapsDisabled)) {
+      this.reverseSwapsDisabled = true;
+    }
+
+    this.quoteStep = new BigNumber('0.0001').toFixed(4);
+    this.baseStep = new BigNumber('1').dividedBy(decimals).toFixed(8);
+
     this.state = {
       baseAsset: {},
       quoteAsset: {},
@@ -13,30 +23,26 @@ class SwapTabWrapper extends React.Component {
       inputError: false,
       base: 'LTC',
       quote: 'BTC ⚡',
-      minAmount: 0,
-      maxAmount: 0,
-      baseAmount: 0.05,
-      quoteAmount: 0,
-      feeAmount: 0,
+      minAmount: new BigNumber('0'),
+      maxAmount: new BigNumber('0'),
+      baseAmount: new BigNumber('0.05'),
+      quoteAmount: new BigNumber('0'),
+      feeAmount: new BigNumber('0'),
       errorMessage: '',
     };
   }
 
   updateAssets = (isBase, symbol, isLightning) => {
     if (isBase) {
-      this.setState({
-        baseAsset: {
-          symbol,
-          isLightning,
-        },
-      });
+      this.baseAsset = {
+        symbol,
+        isLightning,
+      };
     } else {
-      this.setState({
-        quoteAsset: {
-          symbol,
-          isLightning,
-        },
-      });
+      this.quoteAsset = {
+        symbol,
+        isLightning,
+      };
     }
   };
 
@@ -63,7 +69,7 @@ class SwapTabWrapper extends React.Component {
       this.setState({
         base: localStorage.getItem('base'),
         quote: localStorage.getItem('quote'),
-        baseAmount: localStorage.getItem('baseAmount'),
+        baseAmount: new BigNumber(localStorage.getItem('baseAmount')),
       });
     }
   };
@@ -73,8 +79,8 @@ class SwapTabWrapper extends React.Component {
     const limits = this.props.limits[symbol];
     this.setState(
       {
-        minAmount: limits.minimal,
-        maxAmount: limits.maximal,
+        minAmount: new BigNumber(limits.minimal),
+        maxAmount: new BigNumber(limits.maximal),
         rate: this.props.rates[symbol],
       },
       () => {
@@ -85,9 +91,9 @@ class SwapTabWrapper extends React.Component {
   };
 
   componentDidUpdate = (_, prevState) => {
-    const { base, quote, baseAmount } = this.state;
+    const { base, quote, baseAmount, inputError } = this.state;
 
-    // If rate if undefined disable input
+    // If rate is undefined disable input
     if (this.state.rate !== prevState.rate) {
       this.noRateAvailable();
     }
@@ -99,10 +105,20 @@ class SwapTabWrapper extends React.Component {
     ) {
       const symbol = this.getSymbol();
 
+      // Swapping from chain to chain or from Lightning to Lightning is not supported right now
       if (
-        !this.state.baseAsset.isLightning &&
-        !this.state.quoteAsset.isLightning
+        base === quote ||
+        (this.baseAsset.isLightning && this.quoteAsset.isLightning)
       ) {
+        this.setState({
+          rate: undefined,
+          error: true,
+          errorMessage: 'Choose a different asset',
+        });
+        return;
+      }
+
+      if (!this.baseAsset.isLightning && !this.quoteAsset.isLightning) {
         this.setState({
           rate: undefined,
           error: true,
@@ -111,16 +127,32 @@ class SwapTabWrapper extends React.Component {
         return;
       }
 
+      // Show an error for reverse swaps if they are disabled
+      if (this.reverseSwapsDisabled && this.baseAsset.isLightning) {
+        this.setState({
+          rate: undefined,
+          error: true,
+          errorMessage: 'Currently not available',
+        });
+        return;
+      }
+
+      if (inputError) {
+        this.setState({
+          error: true,
+          errorMessage: 'Invalid amount',
+        });
+      }
+
       const rate = this.props.rates[symbol];
       const limits = this.props.limits[symbol];
       const feePercentage = this.props.fees.percentages[symbol];
-
       this.setState(
         {
           rate,
           feePercentage,
-          minAmount: limits.minimal / decimals,
-          maxAmount: limits.maximal / decimals,
+          minAmount: new BigNumber(limits.minimal).dividedBy(decimals),
+          maxAmount: new BigNumber(limits.maximal).dividedBy(decimals),
           error: false,
         },
         () => this.updateQuoteAmount(this.state.baseAmount)
@@ -137,28 +169,43 @@ class SwapTabWrapper extends React.Component {
   calculateMinerFee = () => {
     const { minerFees } = this.props.fees;
 
-    if (this.state.baseAsset.isLightning) {
-      const { lockup, claim } = minerFees[this.state.quoteAsset.symbol].reverse;
+    if (this.baseAsset.isLightning) {
+      const { lockup, claim } = minerFees[this.quoteAsset.symbol].reverse;
 
       return lockup + claim;
     } else {
-      return minerFees[this.state.baseAsset.symbol].normal;
+      return minerFees[this.baseAsset.symbol].normal;
     }
   };
 
+  /**
+   * @param { BigNumber } baseAmount
+   */
   calculateFee = baseAmount => {
-    const { feePercentage } = this.state;
+    const feePercentage = new BigNumber(this.state.feePercentage);
 
-    const percentageFee = baseAmount * feePercentage;
-    const minerFee = this.calculateMinerFee() / decimals;
+    const percentageFee = feePercentage.times(baseAmount);
+    const minerFee = new BigNumber(this.calculateMinerFee()).dividedBy(
+      decimals
+    );
 
-    return percentageFee + minerFee;
+    let fee = percentageFee.plus(minerFee);
+    if (isNaN(fee.toNumber())) {
+      fee = new BigNumber('0');
+    }
+    return fee;
   };
 
+  /**
+   * @param { BigNumber } baseAmount
+   */
   checkBaseAmount = baseAmount => {
     const { minAmount, maxAmount } = this.state;
 
-    return baseAmount <= maxAmount && baseAmount >= minAmount;
+    return (
+      baseAmount.isLessThanOrEqualTo(maxAmount) &&
+      baseAmount.isGreaterThanOrEqualTo(minAmount)
+    );
   };
 
   updatePair = (quote, base) => {
@@ -172,52 +219,63 @@ class SwapTabWrapper extends React.Component {
   };
 
   updateBaseAmount = quoteAmount => {
-    const { rate } = this.state.rate;
+    const amount = new BigNumber(quoteAmount);
+    const rate = new BigNumber(this.state.rate.rate);
 
-    const newBase = quoteAmount / rate;
+    const newBase = amount.dividedBy(rate);
     const fee = this.calculateFee(newBase);
 
-    const newBaseWithFee = Number((newBase + fee).toFixed(8));
+    const newBaseWithFee = fee.plus(newBase);
 
     const inputError = !this.checkBaseAmount(newBaseWithFee);
-
     this.setState({
-      quoteAmount: quoteAmount,
-      baseAmount: newBaseWithFee,
-      feeAmount: fee.toFixed(8),
+      quoteAmount: amount,
+      baseAmount: new BigNumber(newBaseWithFee.toFixed(8)),
+      feeAmount: fee,
       inputError,
+      errorMessage: 'Invalid amount',
     });
   };
 
   updateQuoteAmount = baseAmount => {
-    const { rate, orderSide } = this.state.rate;
-    let fee = this.calculateFee(baseAmount);
+    if (!this.state.rate) return;
+    const amount = new BigNumber(baseAmount.toString());
+    const rate = new BigNumber(this.state.rate.rate);
+    const { orderSide } = this.state.rate;
+    let fee = this.calculateFee(amount);
 
     if (orderSide === 'sell') {
-      fee = fee * rate;
+      fee = fee.times(rate);
     }
 
-    const quote = Number((baseAmount * rate - fee).toFixed(8));
+    const quote = amount
+      .times(rate)
+      .minus(fee)
+      .toFixed(8);
 
-    const inputError = !this.checkBaseAmount(baseAmount);
-
+    let newQuote = new BigNumber(quote);
+    if (newQuote.isLessThanOrEqualTo(0)) {
+      newQuote = new BigNumber('0');
+    }
+    const inputError = !this.checkBaseAmount(amount);
     this.setState({
-      quoteAmount: Math.max(quote, 0),
-      baseAmount: baseAmount,
-      feeAmount: fee.toFixed(8),
+      quoteAmount: newQuote,
+      baseAmount: amount,
+      feeAmount: fee,
       inputError,
+      errorMessage: 'Invalid amount',
     });
   };
 
   shouldSubmit = () => {
-    const { error, rate } = this.state;
-
+    const { error, rate, baseAmount, quoteAmount } = this.state;
     if (error === false && this.rate !== 'Not found') {
       const state = {
-        ...this.state,
-        base: this.state.baseAsset.symbol,
-        quote: this.state.quoteAsset.symbol,
-        isReverseSwap: this.state.baseAsset.isLightning,
+        baseAmount: baseAmount.toFixed(8),
+        quoteAmount: quoteAmount.toFixed(8),
+        base: this.baseAsset.symbol,
+        quote: this.quoteAsset.symbol,
+        isReverseSwap: this.baseAsset.isLightning,
         pair: {
           id: rate.pair,
           orderSide: rate.orderSide,
@@ -232,36 +290,51 @@ class SwapTabWrapper extends React.Component {
     const rate = this.state.rate;
 
     if (rate) {
-      return rate.rate.toFixed(5);
+      const exactRate = new BigNumber(rate.rate);
+      return exactRate.toFixed(5);
     } else {
       return 'Not found';
     }
   };
 
   switchPair = () => {
-    this.setState({
-      base: this.state.quote,
-      baseAmount: this.state.quoteAmount,
-      quote: this.state.base,
-      quoteAmount: this.state.baseAmount,
-    });
+    this.setState(
+      state => ({
+        base: state.quote,
+        quote: state.base,
+        baseAmount: state.quoteAmount,
+      }),
+      () => this.updateQuoteAmount(this.state.baseAmount)
+    );
   };
 
   render() {
+    const { feeAmount } = this.state;
     return this.props.children({
-      ...this.state,
+      quote: this.state.quote,
+      disabled: this.state.disabled,
+      base: this.state.base,
+      errorMessage: this.state.errorMessage,
+      error: this.state.error,
+      inputError: this.state.inputError,
+      minAmount: this.state.minAmount.toNumber(),
+      maxAmount: this.state.maxAmount.toNumber(),
+      feeAmount: feeAmount.isZero() ? 0 : feeAmount.toFixed(8),
+      quoteAmount: this.state.quoteAmount.toNumber(),
+      baseAmount: this.state.baseAmount.toNumber(),
       classes: this.props.classes,
       onPress: this.props.onPress,
       fees: this.props.fees,
-      rates: this.props.rates,
       limits: this.props.limits,
       currencies: this.props.currencies,
-      parseRate: this.parseRate,
+      rate: this.parseRate(),
       updateQuoteAmount: this.updateQuoteAmount,
       updateBaseAmount: this.updateBaseAmount,
       switchPair: this.switchPair,
       updatePair: this.updatePair,
       shouldSubmit: this.shouldSubmit,
+      baseStep: this.baseStep,
+      quoteStep: this.quoteStep,
     });
   }
 }
@@ -269,6 +342,7 @@ class SwapTabWrapper extends React.Component {
 SwapTabWrapper.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   classes: PropTypes.object,
+  warnings: PropTypes.array.isRequired,
   onPress: PropTypes.func,
   fees: PropTypes.object.isRequired,
   rates: PropTypes.object.isRequired,

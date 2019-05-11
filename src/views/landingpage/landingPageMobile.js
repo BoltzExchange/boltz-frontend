@@ -22,6 +22,7 @@ const MobileLandingPageContent = ({
   limits,
   currencies,
   webln,
+  warnings,
 }) => {
   const loading = currencies.length === 0;
   return (
@@ -39,6 +40,7 @@ const MobileLandingPageContent = ({
         <span>LOADING</span>
       ) : (
         <MobileSwapTab
+          warnings={warnings}
           onPress={state => {
             const keys = generateKeys(
               state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
@@ -98,6 +100,7 @@ MobileLandingPageContent.propTypes = {
   toggleModal: PropTypes.func,
   isOpen: PropTypes.bool,
   webln: PropTypes.object,
+  warnings: PropTypes.array,
 };
 
 const MobileLandingPage = props => (

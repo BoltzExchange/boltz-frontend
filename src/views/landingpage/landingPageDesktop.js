@@ -26,6 +26,7 @@ const LandingPageDeskTopContent = ({
   toggleModal,
   isOpen,
   webln,
+  warnings,
 }) => {
   const loading = currencies.length === 0;
   return (
@@ -57,6 +58,7 @@ const LandingPageDeskTopContent = ({
           </View>
         ) : (
           <DeskTopSwapTab
+            warnings={warnings}
             onPress={state => {
               const keys = generateKeys(
                 state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
@@ -141,6 +143,7 @@ const styles = theme => ({
 });
 
 LandingPageDeskTopContent.propTypes = {
+  warnings: PropTypes.array,
   classes: PropTypes.object.isRequired,
   initSwap: PropTypes.func.isRequired,
   initReverseSwap: PropTypes.func.isRequired,

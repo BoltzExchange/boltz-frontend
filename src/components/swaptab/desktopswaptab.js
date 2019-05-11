@@ -8,14 +8,12 @@ import Input from '../input';
 import DropDown from '../dropdown';
 import Controls from '../controls';
 import Text, { InfoText } from '../text';
-import { decimals } from '../../utils';
 
 const DeskTopSwapTabContent = ({
   classes,
   feeAmount,
   minAmount,
   maxAmount,
-  rates,
   inputError,
   baseAmount,
   base,
@@ -25,19 +23,21 @@ const DeskTopSwapTabContent = ({
   error,
   errorMessage,
   disabled,
-  parseRate,
+  rate,
   switchPair,
   updateQuoteAmount,
   updateBaseAmount,
   updatePair,
   shouldSubmit,
+  baseStep,
+  quoteStep,
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.stats}>
       <InfoText title="Min amount" text={`${minAmount}`} />
       <InfoText title="Max amount" text={`${maxAmount}`} />
       <InfoText title="Fee" text={`${feeAmount}`} />
-      <InfoText title="Rate" text={`${parseRate(rates)}`} />
+      <InfoText title="Rate" text={`${rate}`} />
     </View>
     <View className={classes.options}>
       <View className={classes.select}>
@@ -45,12 +45,12 @@ const DeskTopSwapTabContent = ({
         <Input
           disable={disabled}
           className={classes.inputMobile}
-          min={minAmount}
+          min={0}
           max={maxAmount}
-          step={0.001}
+          step={quoteStep}
           error={inputError}
           value={baseAmount}
-          onChange={e => updateQuoteAmount(e)}
+          onChange={updateQuoteAmount}
         />
         <DropDown
           className={classes.inputMobile}
@@ -59,21 +59,18 @@ const DeskTopSwapTabContent = ({
           onChange={e => updatePair(quote, e)}
         />
       </View>
-      <MdCompareArrows
-        className={classes.arrows}
-        onClick={() => switchPair()}
-      />
+      <MdCompareArrows className={classes.arrows} onClick={switchPair} />
       <View className={classes.select}>
         <Text text="You receive:" className={classes.text} />
         <Input
           disable={disabled}
           className={classes.inputMobile}
-          min={1 / decimals}
+          min={baseStep}
           max={Number.MAX_SAFE_INTEGER}
-          step={1 / decimals}
+          step={baseStep}
           error={inputError}
           value={quoteAmount}
-          onChange={e => updateBaseAmount(e)}
+          onChange={updateBaseAmount}
         />
         <DropDown
           className={classes.inputMobile}
@@ -88,7 +85,7 @@ const DeskTopSwapTabContent = ({
         text={'Start swap'}
         error={error || inputError}
         onPress={error ? () => {} : () => shouldSubmit()}
-        errorText={inputError ? 'Invalid amount' : errorMessage}
+        errorText={errorMessage}
       />
     </View>
   </View>
@@ -182,26 +179,27 @@ DeskTopSwapTabContent.propTypes = {
   classes: PropTypes.object,
   onPress: PropTypes.func,
   fees: PropTypes.object.isRequired,
-  rates: PropTypes.object.isRequired,
   limits: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
   quote: PropTypes.string,
   quoteAmount: PropTypes.number,
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  feeAmount: PropTypes.number,
+  feeAmount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   minAmount: PropTypes.number,
   maxAmount: PropTypes.number,
   inputError: PropTypes.bool,
-  baseAmount: PropTypes.string,
+  baseAmount: PropTypes.number,
   base: PropTypes.string,
   disabled: PropTypes.bool,
-  parseRate: PropTypes.func,
+  rate: PropTypes.string,
   switchPair: PropTypes.func,
   updateQuoteAmount: PropTypes.func,
   updateBaseAmount: PropTypes.func,
   updatePair: PropTypes.func,
   shouldSubmit: PropTypes.func,
+  baseStep: PropTypes.string,
+  quoteStep: PropTypes.string,
 };
 
 const DeskTopSwapTab = props => (
