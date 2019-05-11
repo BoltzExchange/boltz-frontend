@@ -91,7 +91,7 @@ class SwapTabWrapper extends React.Component {
   };
 
   componentDidUpdate = (_, prevState) => {
-    const { base, quote, baseAmount } = this.state;
+    const { base, quote, baseAmount, inputError } = this.state;
 
     // If rate is undefined disable input
     if (this.state.rate !== prevState.rate) {
@@ -135,6 +135,13 @@ class SwapTabWrapper extends React.Component {
           errorMessage: 'Currently not available',
         });
         return;
+      }
+
+      if (inputError) {
+        this.setState({
+          error: true,
+          errorMessage: 'Invalid amount',
+        });
       }
 
       const rate = this.props.rates[symbol];
@@ -226,6 +233,7 @@ class SwapTabWrapper extends React.Component {
       baseAmount: new BigNumber(newBaseWithFee.toFixed(8)),
       feeAmount: fee,
       inputError,
+      errorMessage: 'Invalid amount',
     });
   };
 
@@ -255,6 +263,7 @@ class SwapTabWrapper extends React.Component {
       baseAmount: amount,
       feeAmount: fee,
       inputError,
+      errorMessage: 'Invalid amount',
     });
   };
 

@@ -90,7 +90,7 @@ const MobileSwapTabContent = ({
         text={'Start swap'}
         error={error || inputError}
         onPress={error ? () => {} : shouldSubmit}
-        errorText={inputError ? 'Invalid amount' : errorMessage}
+        errorText={errorMessage}
       />
     </View>
   </View>
