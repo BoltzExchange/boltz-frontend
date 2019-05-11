@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
   webln: state.swapReducer.webln,
   swapInfo: state.swapReducer.swapInfo,
   swapResponse: state.swapReducer.swapResponse.response,
+  retrySwap: state.swapReducer.retry,
   swapStatus: state.swapReducer.swapStatus,
   inSwapMode: state.swapReducer.inSwapMode,
 });
