@@ -104,7 +104,7 @@ const getClaimTransaction = (swapInfo, response, preimage, feeEstimation) => {
       {
         ...detectSwap(redeemScript, lockupTransaction),
         redeemScript,
-        preimage: Buffer.from(preimage, 'base64'),
+        preimage: Buffer.from(preimage, 'hex'),
         txHash: lockupTransaction.getHash(),
         keys: ECPair.fromPrivateKey(getHexBuffer(swapInfo.keys.privateKey)),
       },
