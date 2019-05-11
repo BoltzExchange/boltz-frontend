@@ -38,15 +38,31 @@ class Swap extends Component {
     }
   };
 
+  onExit = () => {
+    if (window.confirm('Are you sure you want to exit')) {
+      this.props.completeSwap();
+      navigation.navHome();
+    }
+  };
+
+  startSwap = cb => {
+    if (this.props.swapInfo.invoice && this.props.retrySwap) {
+      this.props.startSwap(this.props.swapInfo, cb);
+    }
+  };
+
+  completeSwap = () => {
+    this.props.completeSwap();
+    navigation.navHome();
+  };
+
   render() {
     const {
       classes,
       webln,
       setSwapInvoice,
-      completeSwap,
       swapInfo,
       swapResponse,
-      startSwap,
       swapStatus,
     } = this.props;
     return (
@@ -57,12 +73,7 @@ class Swap extends Component {
             range={4}
             stage={1}
             id={swapResponse ? swapResponse.id : null}
-            onExit={() => {
-              if (window.confirm('Are you sure you want to exit')) {
-                completeSwap();
-                navigation.navHome();
-              }
-            }}
+            onExit={this.onExit}
           >
             <StepsWizard.Steps>
               <StepsWizard.Step
@@ -115,14 +126,14 @@ class Swap extends Component {
                 num={1}
                 render={props => (
                   <Controls
-                    loading={swapStatus.error}
+                    loading={swapStatus.error || !this.props.retrySwap}
                     text={`Next`}
-                    loadingText={'Invalid invoice'}
-                    onPress={() => {
-                      if (swapInfo.invoice) {
-                        startSwap(swapInfo, props.nextStage);
-                      }
-                    }}
+                    loadingText={
+                      !this.props.retrySwap
+                        ? 'Executing swap...'
+                        : 'Invalid invoice'
+                    }
+                    onPress={() => this.startSwap(props.nextStage)}
                   />
                 )}
               />
@@ -132,9 +143,7 @@ class Swap extends Component {
                   <Controls
                     mobile
                     text={'I have downloaded the refund file'}
-                    onPress={() => {
-                      props.nextStage();
-                    }}
+                    onPress={props.nextStage}
                   />
                 )}
               />
@@ -149,22 +158,14 @@ class Swap extends Component {
                     errorText={swapStatus.message}
                     errorRender={() => {}}
                     loadingRender={() => <Loading />}
-                    onPress={() => {
-                      props.nextStage();
-                    }}
+                    onPress={props.nextStage}
                   />
                 )}
               />
               <StepsWizard.Control
                 num={4}
                 render={() => (
-                  <Controls
-                    text={'Swap Again!'}
-                    onPress={() => {
-                      completeSwap();
-                      navigation.navHome();
-                    }}
-                  />
+                  <Controls text={'Swap Again!'} onPress={this.completeSwap} />
                 )}
               />
             </StepsWizard.Controls>
@@ -184,6 +185,7 @@ Swap.propTypes = {
   completeSwap: PropTypes.func,
   setSwapInvoice: PropTypes.func,
   onExit: PropTypes.func,
+  retrySwap: PropTypes.bool,
   nextStage: PropTypes.func,
   startSwap: PropTypes.func.isRequired,
   swapStatus: PropTypes.string.isRequired,

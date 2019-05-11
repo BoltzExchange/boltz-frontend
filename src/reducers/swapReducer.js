@@ -1,6 +1,7 @@
 import * as actionTypes from '../constants/actions';
 
 export const initialState = {
+  retry: true,
   inSwapMode: false,
   webln: null,
   isFetching: false,
@@ -26,6 +27,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SWAP_REQUEST:
       return {
         ...state,
+        retry: false,
         isFetching: true,
       };
 
@@ -33,6 +35,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        retry: true,
         swapResponse: action.payload,
       };
 
