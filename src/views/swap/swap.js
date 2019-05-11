@@ -128,7 +128,11 @@ class Swap extends Component {
                   <Controls
                     loading={swapStatus.error || !this.props.retrySwap}
                     text={`Next`}
-                    loadingText={!this.props.retrySwap ? 'asdsadad' : 'Invalid invoice'}
+                    loadingText={
+                      !this.props.retrySwap
+                        ? 'Executing swap...'
+                        : 'Invalid invoice'
+                    }
                     onPress={() => this.startSwap(props.nextStage)}
                   />
                 )}
