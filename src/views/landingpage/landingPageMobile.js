@@ -8,7 +8,7 @@ import { generateKeys, navigation } from '../../actions';
 import { MobileSwapTab } from '../../components/swaptab';
 import View from '../../components/view';
 import BackGround from '../../components/background';
-import LandingPageWrapper from './landingpagewrapper';
+import LandingPageWrapper from './landingPageWrapper';
 
 // TODO: discuss implementing the info modal on mobile
 

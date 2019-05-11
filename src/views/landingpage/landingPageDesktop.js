@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import LandingPageWrapper from './landingpagewrapper';
+import LandingPageWrapper from './landingPageWrapper';
 import ReactNotification from 'react-notifications-component';
 import View from '../../components/view';
 import { generateKeys, navigation } from '../../actions';
@@ -12,6 +12,7 @@ import ModalComponent from '../../components/modal';
 import ModalContent from '../../components/modalcontent';
 import BackGround from '../../components/background';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
+
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 const LandingPageDeskTopContent = ({
