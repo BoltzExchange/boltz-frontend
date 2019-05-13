@@ -20,7 +20,7 @@ describe('data storage actions', () => {
       type: actionTypes.SET_ASSET,
       payload,
     };
-    expect(actions.dataStorageSetAsset(payload.asset, payload.amount)).toEqual(
+    expect(actions.dataStorageSetAsset(payload, payload.amount)).toEqual(
       expectedAction
     );
   });

@@ -1,7 +1,7 @@
 import React, { lazy } from 'react';
 import { connect } from 'react-redux';
-import PlatformSelector from '../../hoc/platformSelector';
 import { initSwap } from '../../actions/swapActions';
+import PlatformSelector from '../../hoc/platformSelector';
 import * as actions from '../../actions/landingPageActions';
 import { initReverseSwap } from '../../actions/reverseActions';
 

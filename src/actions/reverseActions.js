@@ -143,6 +143,7 @@ const handleReverseSwapStatus = (
     case SwapUpdateEvent.TransactionRefunded:
       source.close();
       dispatch(timelockExpired());
+
       break;
 
     case SwapUpdateEvent.InvoiceSettled:

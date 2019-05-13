@@ -40,22 +40,20 @@ class ReverseSwap extends React.Component {
       swapResponse,
       swapInfo,
       dataStorageSetId,
+      dataStorageSetAsset,
     } = this.props;
 
     this.redirectIfLoggedOut();
 
-    if (
-      prevProps.swapInfo.quote !== swapInfo.quote &&
-      prevProps.swapInfo.quoteAmount !== swapInfo.quoteAmount
-    ) {
-      this.props.dataStorageSetAsset({
+    if (swapInfo.quote && swapInfo.quoteAmount) {
+      dataStorageSetAsset({
         asset: swapInfo.quote,
         amount: swapInfo.quoteAmount,
       });
     }
 
-    if (swapResponse.id !== prevProps.swapResponse.id && swapResponse.id) {
-      dataStorageSetId(swapResponse);
+    if (swapResponse.id) {
+      dataStorageSetId(swapResponse.id);
     }
 
     if (isReconnecting && !prevProps.isReconnecting) {
@@ -250,7 +248,7 @@ ReverseSwap.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   isReconnecting: PropTypes.bool.isRequired,
   inSwapMode: PropTypes.bool.isRequired,
-  goTimelockExpired: PropTypes.func,
+  goTimelockExpired: PropTypes.func.isRequired,
   webln: PropTypes.object,
   swapInfo: PropTypes.object,
   swapResponse: PropTypes.object,

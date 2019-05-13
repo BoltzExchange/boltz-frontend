@@ -9,9 +9,11 @@ import {
   dataStorageSetAsset,
   dataStorageSetId,
 } from '../../actions/datastorageActions';
+import { navigation } from '../../actions';
 
 const mapStateToProps = state => ({
   webln: state.reverseSwapReducer.webln,
+
   inSwapMode: state.reverseSwapReducer.inSwapMode,
   isFetching: state.reverseSwapReducer.isFetching,
   isReconnecting: state.reverseSwapReducer.isReconnecting,
@@ -31,6 +33,7 @@ const mapDispatchToProps = dispatch => ({
   dataStorageSetAsset: (asset, amount) =>
     dispatch(dataStorageSetAsset(asset, amount)),
   dataStorageSetId: id => dispatch(dataStorageSetId(id)),
+  goTimelockExpired: () => dispatch(navigation.navReverseExpired()),
 });
 
 export default connect(
