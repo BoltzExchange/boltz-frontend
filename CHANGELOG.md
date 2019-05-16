@@ -1,3 +1,20 @@
+# [1.0.0-beta.2](https://github.com/BoltzExchange/boltz-frontend/compare/v1.0.0-beta...v1.0.0-beta.2) (2019-05-16)
+
+
+### Bug Fixes
+
+* input on landing page ([#177](https://github.com/BoltzExchange/boltz-frontend/issues/177)) ([948a1e4](https://github.com/BoltzExchange/boltz-frontend/commit/948a1e4))
+* reverse lockup timeout component ([5ec379d](https://github.com/BoltzExchange/boltz-frontend/commit/5ec379d))
+* set encoding of preimages to hex ([70c70ec](https://github.com/BoltzExchange/boltz-frontend/commit/70c70ec))
+* webln undefined in landing page ([#186](https://github.com/BoltzExchange/boltz-frontend/issues/186)) ([726ccfe](https://github.com/BoltzExchange/boltz-frontend/commit/726ccfe))
+
+
+### Features
+
+* wait for response before sending another request ([#185](https://github.com/BoltzExchange/boltz-frontend/issues/185)) ([c95f361](https://github.com/BoltzExchange/boltz-frontend/commit/c95f361))
+
+
+
 # 1.0.0-beta (2019-04-27)
 
 
