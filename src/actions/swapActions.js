@@ -104,6 +104,7 @@ const handleSwapStatus = (data, source, dispatch, callback) => {
       break;
 
     case SwapUpdateEvent.InvoicePaid:
+    case SwapUpdateEvent.TransactionClaimed:
       source.close();
       callback();
       break;

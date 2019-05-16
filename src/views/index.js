@@ -14,6 +14,7 @@ const Faq = lazy(() => import('./faq'));
 const Swap = lazy(() => import('./swap'));
 const Refund = lazy(() => import('./refund'));
 const ReverseSwap = lazy(() => import('./reverse'));
+const ReverseSwapTimelockExpired = lazy(() => import('./reversetimelock'));
 
 jss.setup(preset);
 const App = () => {
@@ -28,6 +29,11 @@ const App = () => {
               <Route exact path={routes.swap} component={Swap} />
               <Route exact path={routes.refund} component={Refund} />
               <Route exact path={routes.reverseSwap} component={ReverseSwap} />
+              <Route
+                exact
+                path={routes.reverseExpired}
+                component={ReverseSwapTimelockExpired}
+              />
               <Route path={'*'} component={LandingPage} />
             </Switch>
           </Router>

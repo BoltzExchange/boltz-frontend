@@ -28,6 +28,10 @@ class Navigation {
   navReverseSwap = () => {
     this._push(routes.reverseSwap);
   };
+
+  navReverseExpired = () => {
+    this._push(routes.reverseExpired);
+  };
 }
 
 export default Navigation;
