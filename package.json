@@ -8,7 +8,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "zip": "cd build && zip -r build.zip * && mv build.zip .. && cd .."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,37 +28,37 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bignumber.js": "^8.1.1",
-    "bitcoinjs-lib": "^4.0.3",
-    "boltz-core": "^0.0.6",
+    "bitcoinjs-lib": "^5.0.3",
+    "boltz-core": "^0.0.7",
     "eventsource": "^1.0.7",
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.7.2",
     "qrious": "^4.0.2",
     "react": "^16.8.6",
-    "react-confetti": "^2.7.0",
+    "react-confetti": "^3.1.0",
     "react-dom": "^16.8.6",
-    "react-icons": "^3.5.0",
+    "react-icons": "^3.7.0",
     "react-jss": "^8.6.1",
     "react-loader-spinner": "^2.3.0",
     "react-notifications-component": "^1.1.1",
-    "react-redux": "^5.1.1",
-    "react-responsive-modal": "^3.6.0",
+    "react-redux": "^7.0.3",
+    "react-responsive-modal": "^4.0.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "^2.1.8",
+    "react-scripts": "^3.0.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "webln": "^0.1.0"
+    "webln": "^0.2.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-decorators": "^7.2.0",
     "babel-eslint": "^10.0.1",
-    "conventional-changelog": "^3.1.4",
-    "eslint-config-google": "^0.11.0",
-    "eslint-config-prettier": "^3.6.0",
-    "eslint-plugin-html": "^5.0.3",
-    "eslint-plugin-prettier": "^3.0.1",
-    "eslint-plugin-react": "^7.12.4",
-    "prettier": "^1.16.4"
+    "conventional-changelog": "^3.1.8",
+    "eslint-config-google": "^0.13.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-html": "^5.0.5",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
+    "prettier": "^1.17.1"
   }
 }
