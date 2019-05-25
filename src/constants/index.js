@@ -12,6 +12,8 @@ export const SwapUpdateEvent = {
   TransactionClaimed: 'transaction.claimed',
   TransactionRefunded: 'transaction.refunded',
   TransactionConfirmed: 'transaction.confirmed',
+
+  SwapExpired: 'swap.expired',
 };
 
 export const ServiceWarnings = {
