@@ -103,6 +103,17 @@ const handleSwapStatus = (data, source, dispatch, callback) => {
       );
       break;
 
+    case SwapUpdateEvent.SwapExpired:
+      source.close();
+      dispatch(
+        setSwapStatus({
+          error: true,
+          pending: false,
+          message: 'Swap expired. Please refund your coins.',
+        })
+      );
+      break;
+
     case SwapUpdateEvent.InvoicePaid:
     case SwapUpdateEvent.TransactionClaimed:
       source.close();

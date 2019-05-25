@@ -28,7 +28,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bignumber.js": "^8.1.1",
-    "bitcoinjs-lib": "^5.0.3",
+    "bitcoinjs-lib": "^5.0.4",
     "boltz-core": "^0.0.7",
     "eventsource": "^1.0.7",
     "lodash.throttle": "^4.1.1",
@@ -48,7 +48,7 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "webln": "^0.2.0"
+    "webln": "^0.2.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-decorators": "^7.2.0",
