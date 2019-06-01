@@ -166,6 +166,9 @@ class SwapTabWrapper extends React.Component {
     }
   };
 
+  /**
+   * @returns the miner fee in the smallest denomination of the currency
+   */
   calculateMinerFee = () => {
     const { minerFees } = this.props.fees;
 
@@ -180,20 +183,24 @@ class SwapTabWrapper extends React.Component {
 
   /**
    * @param { BigNumber } baseAmount
+   * @param { BigNumber } rate
    */
-  calculateFee = baseAmount => {
+  calculateFee = (baseAmount, rate) => {
     const feePercentage = new BigNumber(this.state.feePercentage);
 
     const percentageFee = feePercentage.times(baseAmount);
-    const minerFee = new BigNumber(this.calculateMinerFee()).dividedBy(
-      decimals
-    );
 
-    let fee = percentageFee.plus(minerFee);
-    if (isNaN(fee.toNumber())) {
-      fee = new BigNumber('0');
+    let minerFee = new BigNumber(this.calculateMinerFee()).dividedBy(decimals);
+
+    if (this.baseAsset.isLightning) {
+      minerFee = minerFee.times(new BigNumber(1).dividedBy(rate));
     }
-    return fee;
+
+    if (isNaN(percentageFee.toNumber())) {
+      return new BigNumber(0);
+    }
+
+    return percentageFee.plus(minerFee);
   };
 
   /**
@@ -223,11 +230,11 @@ class SwapTabWrapper extends React.Component {
     const rate = new BigNumber(this.state.rate.rate);
 
     const newBase = amount.dividedBy(rate);
-    const fee = this.calculateFee(newBase);
+    const fee = this.calculateFee(newBase, rate);
 
     const newBaseWithFee = fee.plus(newBase);
-
     const inputError = !this.checkBaseAmount(newBaseWithFee);
+
     this.setState({
       quoteAmount: amount,
       baseAmount: new BigNumber(newBaseWithFee.toFixed(8)),
@@ -239,24 +246,23 @@ class SwapTabWrapper extends React.Component {
 
   updateQuoteAmount = baseAmount => {
     if (!this.state.rate) return;
+
     const amount = new BigNumber(baseAmount.toString());
     const rate = new BigNumber(this.state.rate.rate);
-    const { orderSide } = this.state.rate;
-    let fee = this.calculateFee(amount);
 
-    if (orderSide === 'sell') {
-      fee = fee.times(rate);
-    }
+    let fee = this.calculateFee(amount, rate);
 
     const quote = amount
       .times(rate)
-      .minus(fee)
+      .minus(fee.times(rate))
       .toFixed(8);
 
     let newQuote = new BigNumber(quote);
+
     if (newQuote.isLessThanOrEqualTo(0)) {
       newQuote = new BigNumber('0');
     }
+
     const inputError = !this.checkBaseAmount(amount);
     this.setState({
       quoteAmount: newQuote,
