@@ -1,5 +1,6 @@
-import swapReducer, { initialState } from '../../../reducers/swapReducer';
+import { toWholeCoins } from '../../../utils';
 import * as actions from '../../../constants/actions';
+import swapReducer, { initialState } from '../../../reducers/swapReducer';
 
 describe('swap reducer', () => {
   it('should return the initial state', () => {
@@ -23,18 +24,28 @@ describe('swap reducer', () => {
   });
 
   it(`should handle ${actions.SWAP_RESPONSE}`, () => {
+    const payload = {
+      response: {
+        someOther: 'data',
+        expectedAmount: 123456789,
+      },
+    };
+
     expect(
       swapReducer(
         {},
         {
+          payload,
           type: actions.SWAP_RESPONSE,
-          payload: 'payload',
         }
       )
     ).toEqual({
       retry: true,
       isFetching: false,
-      swapResponse: 'payload',
+      swapInfo: {
+        baseAmount: toWholeCoins(payload.response.expectedAmount),
+      },
+      swapResponse: payload,
     });
   });
 

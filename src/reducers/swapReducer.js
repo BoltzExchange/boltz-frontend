@@ -1,4 +1,5 @@
 import * as actionTypes from '../constants/actions';
+import { toWholeCoins } from '../utils';
 
 export const initialState = {
   retry: true,
@@ -36,6 +37,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         isFetching: false,
         retry: true,
+        swapInfo: {
+          ...state.swapInfo,
+          baseAmount: toWholeCoins(action.payload.response.expectedAmount),
+        },
         swapResponse: action.payload,
       };
 
