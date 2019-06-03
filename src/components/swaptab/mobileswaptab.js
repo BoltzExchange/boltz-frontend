@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import SwapTabWrapper from './swaptabwrapper';
-import View from '../view';
-import Text, { InfoText } from '../text';
-import Input from '../input';
-import DropDown from '../dropdown';
 import { MdCompareArrows } from 'react-icons/md';
+import View from '../view';
+import Input from '../input';
 import Controls from '../controls';
+import DropDown from '../dropdown';
+import Text, { InfoText } from '../text';
+import SwapTabWrapper from './swaptabwrapper';
 
 const MobileSwapTabContent = ({
   classes,
@@ -34,9 +34,9 @@ const MobileSwapTabContent = ({
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.info}>
-      <InfoText title="Min amount" text={`${minAmount}`} />
-      <InfoText title="Max amount" text={`${maxAmount}`} />
-      <InfoText title="Fee" text={`${feeAmount}`} />
+      <InfoText title="Min amount" text={`${minAmount} ${base}`} />
+      <InfoText title="Max amount" text={`${maxAmount} ${base}`} />
+      <InfoText title="Fee" text={`${feeAmount} ${base}`} />
       <InfoText title="Rate" text={`${rate}`} />
     </View>
     <View className={classes.inputs}>

@@ -34,9 +34,9 @@ const DeskTopSwapTabContent = ({
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.stats}>
-      <InfoText title="Min amount" text={`${minAmount}`} />
-      <InfoText title="Max amount" text={`${maxAmount}`} />
-      <InfoText title="Fee" text={`${feeAmount}`} />
+      <InfoText title="Min amount" text={`${minAmount} ${base}`} />
+      <InfoText title="Max amount" text={`${maxAmount} ${base}`} />
+      <InfoText title="Fee" text={`${feeAmount} ${base}`} />
       <InfoText title="Rate" text={`${rate}`} />
     </View>
     <View className={classes.options}>

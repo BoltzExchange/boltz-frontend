@@ -70,8 +70,8 @@ export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
     dispatch(reverseSwapRequest());
     axios
       .post(url, {
-        amount,
         pairId: pair.id,
+        invoiceAmount: amount,
         orderSide: pair.orderSide,
         claimPublicKey: keys.publicKey,
       })
