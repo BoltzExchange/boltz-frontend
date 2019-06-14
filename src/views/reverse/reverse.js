@@ -26,7 +26,12 @@ const styles = () => ({
 class ReverseSwap extends React.Component {
   constructor(props) {
     super(props);
+
     this.notificationDom = React.createRef();
+
+    this.state = {
+      allowZeroConf: false,
+    };
   }
 
   componentDidMount = () => {
@@ -112,8 +117,8 @@ class ReverseSwap extends React.Component {
         <Prompt />
         <View className={classes.wrapper}>
           <StepsWizard
-            range={4}
             stage={1}
+            range={4}
             id={swapResponse ? swapResponse.id : null}
             onExit={() => {
               if (window.confirm('Are you sure you want to exit')) {
@@ -138,6 +143,11 @@ class ReverseSwap extends React.Component {
                   <LockingFunds
                     swapInfo={swapInfo}
                     swapResponse={swapResponse}
+                    setAllowZeroConf={allow => {
+                      this.setState({
+                        allowZeroConf: allow,
+                      });
+                    }}
                   />
                 )}
               />
@@ -198,7 +208,9 @@ class ReverseSwap extends React.Component {
                 num={2}
                 render={props => (
                   <Controls
-                    loading={isFetching}
+                    loading={isFetching && !this.state.allowZeroConf}
+                    text={'Accept 0-conf transaction'}
+                    onPress={() => props.nextStage()}
                     loadingText={'Locking your funds...'}
                     loadingRender={() => <Loading />}
                     error={!swapFailResponse === true}
