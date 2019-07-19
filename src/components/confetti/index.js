@@ -35,7 +35,7 @@ const Confetti = ({ classes, notifie }) => (
       recycle={false}
       style={{ pointerEvents: 'none' }}
     />
-    <span className={classes.text}>Viola! Swap successful!</span>
+    <span className={classes.text}>Voilà! Swap successful!</span>
     {notifie(classes.notifie)}
   </View>
 );
