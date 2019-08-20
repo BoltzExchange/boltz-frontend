@@ -11,7 +11,10 @@ import {
 } from '../utils';
 
 const verifyRefundFile = (fileJSON, keys) => {
-  const verify = keys.every(key => fileJSON.hasOwnProperty(key));
+  const verify = keys.every(key =>
+    Object.prototype.hasOwnProperty.call(fileJSON, key)
+  );
+
   return verify;
 };
 

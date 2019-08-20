@@ -7,6 +7,7 @@ import Input from '../input';
 import Controls from '../controls';
 import DropDown from '../dropdown';
 import Text, { InfoText } from '../text';
+import { formatAmount } from '../../utils';
 import SwapTabWrapper from './swaptabwrapper';
 
 const MobileSwapTabContent = ({
@@ -34,8 +35,14 @@ const MobileSwapTabContent = ({
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.info}>
-      <InfoText title="Min amount" text={`${minAmount} ${base}`} />
-      <InfoText title="Max amount" text={`${maxAmount} ${base}`} />
+      <InfoText
+        title="Min amount"
+        text={`${formatAmount(minAmount)} ${base}`}
+      />
+      <InfoText
+        title="Max amount"
+        text={`${formatAmount(maxAmount)} ${base}`}
+      />
       <InfoText title="Fee" text={`${feeAmount} ${base}`} />
       <InfoText title="Rate" text={`${rate}`} />
     </View>

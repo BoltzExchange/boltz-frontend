@@ -27,14 +27,8 @@ const styles = () => ({
 });
 
 class LockingFunds extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
-
-    const { swapInfo, swapResponse } = props;
-
-    this.link = swapResponse
-      ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionHash}`
-      : '#0';
 
     this.state = {
       checked: false,
@@ -42,7 +36,11 @@ class LockingFunds extends React.Component {
   }
 
   render() {
-    const { classes, swapInfo, setAllowZeroConf } = this.props;
+    const { classes, swapInfo, swapResponse, setAllowZeroConf } = this.props;
+
+    const link = swapResponse
+      ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionId}`
+      : '#0';
 
     return (
       <View className={classes.wrapper}>
@@ -52,8 +50,7 @@ class LockingFunds extends React.Component {
           trustless. It might take up to 10 minutes.
           <br />
           <br />
-          <Link to={this.link} text={'Click here'} /> to see the lockup{' '}
-          transaction.
+          <Link to={link} text={'Click here'} /> to see the lockup transaction.
           <br />
           <br />
           If you are #reckless and impatient you can accept the 0-conf

@@ -27,12 +27,12 @@ const parseCurrencies = pairs => {
     }
   };
 
-  for (const pair in pairs) {
-    const { base, quote } = splitPairId(pair);
+  Object.keys(pairs).forEach(id => {
+    const { base, quote } = splitPairId(id);
 
     pushCurrency(base);
     pushCurrency(quote);
-  }
+  });
 
   return currencies;
 };
@@ -40,7 +40,7 @@ const parseCurrencies = pairs => {
 const parseRates = pairs => {
   const rates = {};
 
-  for (const id in pairs) {
+  Object.keys(pairs).forEach(id => {
     const pair = pairs[id];
 
     // Set the rate for a sell order
@@ -60,7 +60,7 @@ const parseRates = pairs => {
         orderSide: 'buy',
       };
     }
-  }
+  });
 
   return rates;
 };
@@ -68,7 +68,7 @@ const parseRates = pairs => {
 const parseLimits = (pairs, rates) => {
   const limits = {};
 
-  for (const id in pairs) {
+  Object.keys(pairs).forEach(id => {
     const pair = pairs[id];
     const { base, quote } = splitPairId(id);
 
@@ -84,7 +84,7 @@ const parseLimits = (pairs, rates) => {
         maximal: Math.round(pair.limits.maximal / reverseRate),
       };
     }
-  }
+  });
 
   return limits;
 };
@@ -93,7 +93,7 @@ const parseFees = pairs => {
   const minerFees = {};
   const percentages = {};
 
-  for (const id in pairs) {
+  Object.keys(pairs).forEach(id => {
     const fees = pairs[id].fees;
     const percentage = fees.percentage / 100;
 
@@ -107,7 +107,7 @@ const parseFees = pairs => {
 
       minerFees[quote] = fees.minerFees.quoteAsset;
     }
-  }
+  });
 
   return {
     minerFees,
