@@ -194,3 +194,10 @@ export const notificationData = (info, alertType) => {
     dismissable: { click: true },
   };
 };
+
+/**
+ * Formats a number so that it is shown in decimal form without trailing zeros
+ */
+export const formatAmount = number => {
+  return number.toFixed(8).replace(/\.?0+$/, '');
+};

@@ -124,17 +124,17 @@ const handleReverseSwapStatus = (
   swapInfo,
   response
 ) => {
-  const event = data.event;
+  const status = data.status;
 
   // If this function is called with the data from the GET endpoint "/swapstatus"
-  // it could be that the received event has already been handled
-  if (event === latestSwapEvent) {
+  // it could be that the received status has already been handled
+  if (status === latestSwapEvent) {
     return;
   } else {
-    latestSwapEvent = event;
+    latestSwapEvent = status;
   }
 
-  switch (event) {
+  switch (status) {
     case SwapUpdateEvent.TransactionConfirmed:
       dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
       nextStage();
@@ -173,7 +173,7 @@ const handleReverseSwapStatus = (
       break;
 
     default:
-      console.log(`Unknown swap status: ${data}`);
+      console.log(`Unknown swap status: ${JSON.stringify(data)}`);
       break;
   }
 };

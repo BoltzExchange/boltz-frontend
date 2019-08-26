@@ -80,9 +80,9 @@ export const startSwap = (swapInfo, cb) => {
 };
 
 const handleSwapStatus = (data, source, dispatch, callback) => {
-  const event = data.event;
+  const status = data.status;
 
-  switch (event) {
+  switch (status) {
     case SwapUpdateEvent.TransactionConfirmed:
       dispatch(
         setSwapStatus({
