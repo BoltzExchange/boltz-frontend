@@ -72,17 +72,18 @@ const parseLimits = (pairs, rates) => {
     const pair = pairs[id];
     const { base, quote } = splitPairId(id);
 
-    limits[id] = pair.limits;
-
-    // Add the limits for buy orders
     if (base !== quote) {
       const reverseId = `${quote}/${base}`;
       const reverseRate = rates[reverseId].rate;
 
-      limits[reverseId] = {
-        minimal: Math.round(pair.limits.minimal / reverseRate),
-        maximal: Math.round(pair.limits.maximal / reverseRate),
+      limits[reverseId] = pair.limits;
+
+      limits[id] = {
+        minimal: Math.round(pair.limits.minimal * reverseRate),
+        maximal: Math.round(pair.limits.maximal * reverseRate),
       };
+    } else {
+      limits[id] = limits.pair;
     }
   });
 
