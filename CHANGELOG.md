@@ -1,3 +1,24 @@
+# [1.1.0-beta](https://github.com/BoltzExchange/boltz-frontend/compare/v1.0.0-beta.2...v1.1.0-beta) (2019-08-27)
+
+
+### Bug Fixes
+
+* calculation of limits of LTC/BTC pair ([#201](https://github.com/BoltzExchange/boltz-frontend/issues/201)) ([dbe8545](https://github.com/BoltzExchange/boltz-frontend/commit/dbe8545))
+* fee calculation ([#192](https://github.com/BoltzExchange/boltz-frontend/issues/192)) ([a38a159](https://github.com/BoltzExchange/boltz-frontend/commit/a38a159))
+* remove whitespace when copying addresses and invoices ([#207](https://github.com/BoltzExchange/boltz-frontend/issues/207)) ([ea8280e](https://github.com/BoltzExchange/boltz-frontend/commit/ea8280e))
+* typo in "Voilà" screen ([5072fb3](https://github.com/BoltzExchange/boltz-frontend/commit/5072fb3))
+* undefined limits for BTC/BTC and LTC/LTC pair ([#202](https://github.com/BoltzExchange/boltz-frontend/issues/202)) ([5de799c](https://github.com/BoltzExchange/boltz-frontend/commit/5de799c))
+* wrong API parameter when refunding swaps ([#206](https://github.com/BoltzExchange/boltz-frontend/issues/206)) ([5eb248b](https://github.com/BoltzExchange/boltz-frontend/commit/5eb248b))
+
+
+### Features
+
+* handle aborted swaps ([#191](https://github.com/BoltzExchange/boltz-frontend/issues/191)) ([2c7843a](https://github.com/BoltzExchange/boltz-frontend/commit/2c7843a))
+* handle zero conf swaps ([#195](https://github.com/BoltzExchange/boltz-frontend/issues/195)) ([7555fb9](https://github.com/BoltzExchange/boltz-frontend/commit/7555fb9))
+* handle zero conf swaps from backend ([#198](https://github.com/BoltzExchange/boltz-frontend/issues/198)) ([c097865](https://github.com/BoltzExchange/boltz-frontend/commit/c097865))
+
+
+
 # [1.0.0-beta.2](https://github.com/BoltzExchange/boltz-frontend/compare/v1.0.0-beta...v1.0.0-beta.2) (2019-05-16)
 
 
