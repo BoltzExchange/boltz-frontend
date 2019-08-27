@@ -1,9 +1,9 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import PropTypes from 'prop-types';
-import { getCurrencyName } from '../../../utils';
 import View from '../../../components/view';
 import InputArea from '../../../components/inputarea';
+import { getCurrencyName, getSampleAddress } from '../../../utils';
 
 const InputDestinationAddressStyles = theme => ({
   wrapper: {
@@ -36,7 +36,7 @@ const StyledInputDestinationAddress = ({
       height={150}
       width={500}
       onChange={setDestinationAddress}
-      placeholder={'tb1qjnxa3c36s524qv4uqsclcjefuxrgzktcrky4zd'}
+      placeholder={`EG: ${getSampleAddress(currency)}`}
     />
   </View>
 );
