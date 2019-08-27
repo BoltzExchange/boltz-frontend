@@ -103,9 +103,11 @@ export const getSmallestDenomination = symbol => {
  */
 export const copyToClipBoard = () => {
   const range = document.createRange();
-  range.selectNode(document.getElementById('copy'));
+  range.selectNodeContents(document.getElementById('copy'));
+
   window.getSelection().removeAllRanges();
   window.getSelection().addRange(range);
+
   document.execCommand('copy');
 };
 
