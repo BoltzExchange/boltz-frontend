@@ -108,7 +108,7 @@ export const startRefund = (
     axios
       .post(url, {
         currency,
-        transactionHash,
+        transactionId: transactionHash,
       })
       .then(response => {
         dispatch(
