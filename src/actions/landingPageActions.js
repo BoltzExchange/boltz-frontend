@@ -83,7 +83,7 @@ const parseLimits = (pairs, rates) => {
         maximal: Math.round(pair.limits.maximal * reverseRate),
       };
     } else {
-      limits[id] = limits.pair;
+      limits[id] = pair.limits;
     }
   });
 
