@@ -53,7 +53,9 @@ class Swap extends Component {
 
   completeSwap = () => {
     this.props.completeSwap();
-    navigation.navHome();
+
+    window.onbeforeunload = () => {};
+    window.location.reload();
   };
 
   render() {
