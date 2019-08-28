@@ -242,7 +242,9 @@ class ReverseSwap extends React.Component {
                     text={'Swap Again!'}
                     onPress={() => {
                       completeSwap();
-                      navigation.navHome();
+
+                      window.onbeforeunload = () => {};
+                      window.location.reload();
                     }}
                   />
                 )}
