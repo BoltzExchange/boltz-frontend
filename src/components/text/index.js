@@ -36,10 +36,15 @@ const infoTextStyles = () => ({
   },
 });
 
-const StyledInfoText = ({ title, text, classes, style }) => (
+const StyledInfoText = ({ title, text, lineTwo, classes, style }) => (
   <View className={classes.wrapper}>
     <Text text={`${title}:`} className={classes.title} style={style} />
     <Text text={text} className={classes.text} style={style} />
+    {lineTwo !== undefined ? (
+      <Text text={lineTwo} className={classes.text} style={style} />
+    ) : (
+      undefined
+    )}
   </View>
 );
 
@@ -47,6 +52,7 @@ StyledInfoText.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   text: PropTypes.string,
+  lineTwo: PropTypes.string,
   style: PropTypes.object,
 };
 

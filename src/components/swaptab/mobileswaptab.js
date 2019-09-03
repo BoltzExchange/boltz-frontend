@@ -32,6 +32,7 @@ const MobileSwapTabContent = ({
   shouldSubmit,
   baseStep,
   quoteStep,
+  feePercentage,
 }) => (
   <View className={classes.wrapper}>
     <View className={classes.info}>
@@ -43,7 +44,11 @@ const MobileSwapTabContent = ({
         title="Max amount"
         text={`${formatAmount(maxAmount)} ${base}`}
       />
-      <InfoText title="Fee" text={`${feeAmount} ${base}`} />
+      <InfoText
+        title="Current fee"
+        text={`${feeAmount} ${base}`}
+        lineTwo={`(${feePercentage}%)`}
+      />
       <InfoText title="Rate" text={`${rate}`} />
     </View>
     <View className={classes.inputs}>
@@ -163,6 +168,7 @@ MobileSwapTabContent.propTypes = {
   classes: PropTypes.object,
   onPress: PropTypes.func,
   fees: PropTypes.object.isRequired,
+  feePercentage: PropTypes.number.isRequired,
   limits: PropTypes.object.isRequired,
   currencies: PropTypes.array.isRequired,
   quote: PropTypes.string,
