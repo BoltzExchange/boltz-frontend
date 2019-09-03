@@ -316,7 +316,10 @@ class SwapTabWrapper extends React.Component {
 
   render() {
     const { feeAmount } = this.state;
+    const feePercentage = this.props.fees.percentages[this.getSymbol()];
+
     return this.props.children({
+      feePercentage,
       quote: this.state.quote,
       disabled: this.state.disabled,
       base: this.state.base,
@@ -330,7 +333,6 @@ class SwapTabWrapper extends React.Component {
       baseAmount: this.state.baseAmount.toNumber(),
       classes: this.props.classes,
       onPress: this.props.onPress,
-      fees: this.props.fees,
       limits: this.props.limits,
       currencies: this.props.currencies,
       rate: this.parseRate(),
