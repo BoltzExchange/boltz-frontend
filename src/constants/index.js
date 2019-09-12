@@ -29,7 +29,10 @@ export const boltzApi = process.env.REACT_APP_BOLTZ_API;
 
 // LND node URIs
 export const bitcoinLnd = process.env.REACT_APP_BITCOIN_LND;
+export const bitcoinLndOnion = process.env.REACT_APP_BITCOIN_LND_ONION;
+
 export const litecoinLnd = process.env.REACT_APP_LITECOIN_LND;
+export const litecoinLndOnion = process.env.REACT_APP_LITECOIN_LND_ONION;
 
 // Network configurations
 export const network = process.env.REACT_APP_NETWORK;

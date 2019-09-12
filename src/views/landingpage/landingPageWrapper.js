@@ -16,14 +16,14 @@ class LandingPageWrapper extends React.Component {
 
   componentDidMount = () => {
     this.props.getPairs();
-    try {
-      requestProvider().then(provider => {
+    requestProvider()
+      .then(provider => {
         this.webln = provider;
         this.forceUpdate();
+      })
+      .catch(error => {
+        console.log(`Could not enable WebLN: ${error}`);
       });
-    } catch (error) {
-      console.log(`Could not enable WebLN: ${error}`);
-    }
   };
 
   componentDidUpdate = () => {

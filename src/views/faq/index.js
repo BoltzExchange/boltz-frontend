@@ -7,7 +7,12 @@ import NavigationBar from '../../components/navigationbar';
 import Question from '../../components/question';
 import NodeInfo from '../../components/nodeinfo';
 import BackGround from '../../components/background';
-import { bitcoinLnd, litecoinLnd } from '../../constants';
+import {
+  bitcoinLnd,
+  litecoinLnd,
+  bitcoinLndOnion,
+  litecoinLndOnion,
+} from '../../constants';
 
 const styles = theme => ({
   wrapper: {
@@ -136,11 +141,17 @@ class Faq extends React.Component {
                   We appreciate any channels you open with our Lightning nodes
                   and <Link to={twitterLink} text={'on request'} /> we will also
                   open one to you:
-                  <NodeInfo name={'BTC LND NODE'} size={150} uri={bitcoinLnd} />
                   <NodeInfo
-                    name={'LTC LND NODE'}
+                    name={'BTC LND node'}
+                    size={150}
+                    uri={bitcoinLnd}
+                    onionUri={bitcoinLndOnion}
+                  />
+                  <NodeInfo
+                    name={'LTC LND node'}
                     size={150}
                     uri={litecoinLnd}
+                    onionUri={litecoinLndOnion}
                   />
                 </p>
               )}
