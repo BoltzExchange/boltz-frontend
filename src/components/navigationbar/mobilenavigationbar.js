@@ -62,6 +62,12 @@ class MobileNavigationBar extends React.Component {
             <Button
               className={classes.btn}
               external
+              text="Onion URL"
+              to="http://boltzzzbnus4m7mta3cxmflnps4fp7dueu2tgurstbvrbt6xswzcocyd.onion/"
+            />
+            <Button
+              className={classes.btn}
+              external
               text="Twitter"
               to="https://twitter.com/boltzhq"
             />
