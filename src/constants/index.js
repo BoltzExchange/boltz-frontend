@@ -24,8 +24,22 @@ export const ServiceWarnings = {
  * Values from the environment
  */
 
-// API endpoint
-export const boltzApi = process.env.REACT_APP_BOLTZ_API;
+// Onion URL
+export const boltzOnion = process.env.REACT_APP_BOLTZ_ONION;
+
+// API endpoint; will be set to the onion endpoint if Boltz is accessed via Tor
+const splitHost = window.location.hostname.split('.');
+
+if (splitHost[0] === 'www') {
+  splitHost.shift();
+}
+
+export const boltzApi =
+  splitHost[1] !== 'onion'
+    ? process.env.REACT_APP_BOLTZ_API
+    : process.env.REACT_APP_BOLTZ_API_ONION;
+
+console.log(boltzApi);
 
 // LND node URIs
 export const bitcoinLnd = process.env.REACT_APP_BITCOIN_LND;
