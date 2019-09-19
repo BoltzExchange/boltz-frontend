@@ -24,6 +24,8 @@ const styles = () => ({
 });
 
 class ReverseSwap extends React.Component {
+  acceptedZeroConf = false;
+
   constructor(props) {
     super(props);
 
@@ -144,6 +146,8 @@ class ReverseSwap extends React.Component {
                     swapInfo={swapInfo}
                     swapResponse={swapResponse}
                     setAllowZeroConf={allow => {
+                      this.acceptedZeroConf = true;
+
                       this.setState({
                         allowZeroConf: allow,
                       });
@@ -195,7 +199,11 @@ class ReverseSwap extends React.Component {
                       if (swapInfo.address && swapInfo.address !== '') {
                         startReverseSwap(
                           swapInfo,
-                          props.nextStage,
+                          confirmedEvent => {
+                            if (!confirmedEvent || !this.acceptedZeroConf) {
+                              props.nextStage();
+                            }
+                          },
                           goTimelockExpired
                         );
                         props.nextStage();
