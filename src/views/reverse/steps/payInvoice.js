@@ -75,7 +75,7 @@ class PayInvoice extends React.Component {
   render() {
     const { classes, swapInfo, swapResponse } = this.props;
     const link = swapResponse
-      ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionHash}`
+      ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionId}`
       : '';
 
     return (
