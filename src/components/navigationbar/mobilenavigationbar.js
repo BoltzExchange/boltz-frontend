@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { MdMenu } from 'react-icons/md';
 import View from '../view';
 import Button from '../button';
 import { navigation } from '../../actions';
-import { MdMenu } from 'react-icons/md';
+import { boltzOnion } from '../../constants';
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
 class MobileNavigationBar extends React.Component {
@@ -63,7 +64,7 @@ class MobileNavigationBar extends React.Component {
               className={classes.btn}
               external
               text="Onion URL"
-              to="http://boltzzzbnus4m7mta3cxmflnps4fp7dueu2tgurstbvrbt6xswzcocyd.onion/"
+              to={boltzOnion}
             />
             <Button
               className={classes.btn}
