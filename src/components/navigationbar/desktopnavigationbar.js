@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
 import Button from '../button';
-import { network } from '../../constants';
 import { navigation } from '../../actions';
+import { network, boltzOnion } from '../../constants';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
@@ -41,7 +41,7 @@ const DeskTopNavigationBar = ({ classes }) => (
         className={classes.responsiveBtn}
         external
         text="Onion URL"
-        to="http://boltzzzbnus4m7mta3cxmflnps4fp7dueu2tgurstbvrbt6xswzcocyd.onion/"
+        to={boltzOnion}
       />
       <Button
         className={classes.responsiveBtn}
