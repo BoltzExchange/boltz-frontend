@@ -137,7 +137,7 @@ const handleReverseSwapStatus = (
   switch (status) {
     case SwapUpdateEvent.TransactionConfirmed:
       dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
-      nextStage();
+      nextStage(true);
       break;
 
     case SwapUpdateEvent.TransactionRefunded:
