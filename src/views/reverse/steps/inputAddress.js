@@ -51,14 +51,15 @@ class StyledInputAddress extends React.Component {
     return (
       <View className={classes.wrapper}>
         <p className={classes.title}>
-          Paste a <b>{getCurrencyName(swapInfo.quote)}</b> address to which you
-          want to receive
+          Paste or scan a <b>{getCurrencyName(swapInfo.quote)}</b> address to
+          which you want to receive
         </p>
         <InputArea
           width={600}
           autoFocus={true}
           height={150}
           error={error}
+          showQrScanner={true}
           onChange={this.onChange}
           placeholder={`EG: ${getSampleAddress(swapInfo.quote)}`}
         />

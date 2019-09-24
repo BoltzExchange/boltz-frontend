@@ -74,7 +74,7 @@ class StyledInputInvoice extends React.Component {
     return (
       <View className={classes.wrapper}>
         <p className={classes.title}>
-          Paste a <b>{getCurrencyName(swapInfo.quote)}</b> Lightning {}
+          Paste or scan a <b>{getCurrencyName(swapInfo.quote)}</b> Lightning {}
           <FaBolt size={25} color="#FFFF00" /> invoice for <br />
           <b>
             {toSatoshi(swapInfo.quoteAmount)}{' '}
@@ -86,6 +86,7 @@ class StyledInputInvoice extends React.Component {
           height={150}
           error={error}
           autoFocus={true}
+          showQrScanner={true}
           value={this.state.value}
           onChange={this.onChange}
           placeholder={`EG: ${getSampleInvoice(swapInfo.quote)}`}
