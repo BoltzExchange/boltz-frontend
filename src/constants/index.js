@@ -39,8 +39,6 @@ export const boltzApi =
     ? process.env.REACT_APP_BOLTZ_API
     : process.env.REACT_APP_BOLTZ_API_ONION;
 
-console.log(boltzApi);
-
 // LND node URIs
 export const bitcoinLnd = process.env.REACT_APP_BITCOIN_LND;
 export const bitcoinLndOnion = process.env.REACT_APP_BITCOIN_LND_ONION;

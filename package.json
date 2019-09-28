@@ -41,6 +41,7 @@
     "react-jss": "^8.6.1",
     "react-loader-spinner": "^3.1.2",
     "react-notifications-component": "^1.1.1",
+    "react-qr-reader": "^2.2.1",
     "react-redux": "^7.1.0",
     "react-responsive-modal": "^4.0.1",
     "react-router-dom": "^5.0.1",

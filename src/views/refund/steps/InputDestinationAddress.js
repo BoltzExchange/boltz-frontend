@@ -35,6 +35,7 @@ const StyledInputDestinationAddress = ({
     <InputArea
       height={150}
       width={500}
+      showQrScanner={true}
       onChange={setDestinationAddress}
       placeholder={`EG: ${getSampleAddress(currency)}`}
     />
