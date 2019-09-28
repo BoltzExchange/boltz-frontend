@@ -78,6 +78,10 @@ class InputArea extends React.Component {
     if (data !== null) {
       console.log(`Scanned QR code: ${data}`);
 
+      if (data.includes(':')) {
+        data = data.split(':')[1];
+      }
+
       this.props.onChange(data);
 
       this.setState({
