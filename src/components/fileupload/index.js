@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../view';
-import { readFile } from '../../utils';
 
 const fileBtnStyles = theme => ({
   wrapper: {
@@ -33,17 +32,16 @@ const fileBtnStyles = theme => ({
   },
 });
 
-const FileUpload = ({ classes, text, onFileRead }) => (
+const FileUpload = ({ classes, text, onFileRead, acceptMimeType }) => (
   <View noFlex className={classes.wrapper}>
     {text}
     <input
       className={classes.input}
       onChange={event => {
-        readFile(event.target.files[0], content => {
-          onFileRead(content);
-        });
+        onFileRead(event.target.files[0]);
       }}
       type="file"
+      accept={acceptMimeType}
     />
   </View>
 );
@@ -52,6 +50,7 @@ FileUpload.propTypes = {
   classes: PropTypes.object.isRequired,
   text: PropTypes.string.isRequired,
   onFileRead: PropTypes.func.isRequired,
+  acceptMimeType: PropTypes.string,
 };
 
 export default injectSheet(fileBtnStyles)(FileUpload);

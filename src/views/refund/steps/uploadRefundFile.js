@@ -58,9 +58,13 @@ const StyledUploadRefundFile = ({
       <FaCheckCircle size={240} className={classes.icon} />
     ) : (
       <DropZone className={classes.dropZone} onFileRead={setRefundFile}>
-        <p className={classes.info}>Drag the refund JSON file here</p>
+        <p className={classes.info}>Drag the refund.png file here</p>
         <span className={classes.info}>or</span>
-        <FileUpload text={'Select file'} onFileRead={setRefundFile} />
+        <FileUpload
+          text={'Select file'}
+          onFileRead={setRefundFile}
+          acceptMimeType={'image/png'}
+        />
       </DropZone>
     )}
     <p className={`${classes.info} ${classes.mobileInfo}`}>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
 import View from '../../../components/view';
+import { createRefundQr } from '../../../utils/refundUtils';
 
 const DownloadRefundStyles = () => ({
   wrapper: {
@@ -46,28 +47,31 @@ class StyledDownloadRefund extends React.Component {
     const {
       classes,
       currency,
-      redeemScript,
       privateKey,
+      redeemScript,
       timeoutBlockHeight,
     } = this.props;
+
+    createRefundQr();
+
     return (
       <View className={classes.wrapper}>
         <View className={classes.placer}>
           <p className={classes.info}>
             <a
               ref={this.ref}
-              href={`data:application/json;charset=utf-8,${JSON.stringify({
+              href={createRefundQr(
                 currency,
-                redeemScript,
                 privateKey,
-                timeoutBlockHeight,
-              })}`}
-              download={'refund.json'}
+                redeemScript,
+                timeoutBlockHeight
+              )}
+              download={'refund.png'}
             >
               Click here
             </a>{' '}
-            if the download of &lsquo;refund.json&lsquo; <br /> didn&apos;t
-            start automatically.
+            if the download of &lsquo;refund.png&lsquo; <br /> didn&apos;t start
+            automatically.
           </p>
           <p className={classes.address}>
             This refund file can be used to trustlessly <br />

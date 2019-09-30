@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import View from '../view';
-import { readFile } from '../../utils';
 
 class DropZone extends React.Component {
   constructor(props) {
@@ -28,11 +27,8 @@ class DropZone extends React.Component {
 
   onDrop = e => {
     e.preventDefault();
-    const file = e.dataTransfer.items[0].getAsFile();
 
-    readFile(file, content => {
-      this.props.onFileRead(content);
-    });
+    this.props.onFileRead(e.dataTransfer.items[0].getAsFile());
 
     this.setState({ active: false });
     return false;

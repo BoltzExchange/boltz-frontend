@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qrcodeParser from 'qrcode-parser';
 import { ECPair, address, Transaction } from 'bitcoinjs-lib';
 import { constructRefundTransaction, detectSwap } from 'boltz-core';
 import { boltzApi } from '../constants';
@@ -25,16 +26,22 @@ export const completeRefund = () => {
 };
 
 export const setRefundFile = file => {
-  const fileJSON = JSON.parse(file);
-  const verifyFile = verifyRefundFile(fileJSON, [
-    'currency',
-    'redeemScript',
-    'privateKey',
-    'timeoutBlockHeight',
-  ]);
-  return {
-    type: actionTypes.SET_REFUND_FILE,
-    payload: verifyFile ? fileJSON : {},
+  return dispatch => {
+    qrcodeParser(file).then(res => {
+      const fileJson = JSON.parse(res.data);
+
+      const verifyFile = verifyRefundFile(fileJson, [
+        'currency',
+        'redeemScript',
+        'privateKey',
+        'timeoutBlockHeight',
+      ]);
+
+      dispatch({
+        type: actionTypes.SET_REFUND_FILE,
+        payload: verifyFile ? fileJson : {},
+      });
+    });
   };
 };
 
