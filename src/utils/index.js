@@ -35,22 +35,6 @@ export const getHexBuffer = input => {
 };
 
 /**
- * Read the content of a file
- *
- * @param file file that should be read
- * @param cb callback that will be called once the file is read
- */
-export const readFile = (file, cb) => {
-  const reader = new window.FileReader();
-
-  reader.onload = () => {
-    cb(reader.result);
-  };
-
-  reader.readAsText(file);
-};
-
-/**
  * Get the quote and base asset of a pair id
  */
 export const splitPairId = pairId => {

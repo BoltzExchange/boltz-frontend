@@ -33,6 +33,7 @@
     "eventsource": "^1.0.7",
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.7.2",
+    "qrcode-parser": "^1.2.0",
     "qrious": "^4.0.2",
     "react": "^16.9.0",
     "react-confetti": "^4.0.1",

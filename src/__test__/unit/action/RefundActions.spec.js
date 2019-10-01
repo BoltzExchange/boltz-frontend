@@ -9,28 +9,6 @@ describe('refund actions', () => {
     expect(actions.refundRequest()).toEqual(expectedAction);
   });
 
-  it('should set refund file action', () => {
-    const validJson = JSON.stringify({
-      currency: 'BTC',
-      redeemScript: 'script',
-      privateKey: 'pvk',
-      timeoutBlockHeight: 5,
-    });
-    const invalidJson = JSON.stringify({ currency: 'BTC' });
-
-    const validAction = {
-      type: actionTypes.SET_REFUND_FILE,
-      payload: JSON.parse(validJson),
-    };
-
-    const invaliAction = {
-      type: actionTypes.SET_REFUND_FILE,
-      payload: {},
-    };
-    expect(actions.setRefundFile(validJson)).toEqual(validAction);
-    expect(actions.setRefundFile(invalidJson)).toEqual(invaliAction);
-  });
-
   it('should set transaction hash action', () => {
     const hash = 'hash';
     const expectedAction = {
