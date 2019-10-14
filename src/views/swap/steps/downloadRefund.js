@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
+import { isIOS } from 'react-device-detect';
 import View from '../../../components/view';
+import { navigation } from '../../../actions';
 import { createRefundQr } from '../../../utils/refundUtils';
 
 const DownloadRefundStyles = () => ({
@@ -39,11 +41,23 @@ class StyledDownloadRefund extends React.Component {
     super(props);
     this.ref = React.createRef();
   }
+
   componentDidMount() {
     this.ref.current.click();
   }
 
   render() {
+    if (isIOS) {
+      const dialog = window.confirm(
+        'Tapping OK will open refund.png in a new tab which will be needed in case of a refund.' +
+          'Please save it in your gallary. This is important for conserving the non-custodial nature of the swap'
+      );
+
+      if (dialog !== true) {
+        navigation.navHome();
+      }
+    }
+
     const {
       classes,
       currency,
@@ -59,6 +73,8 @@ class StyledDownloadRefund extends React.Component {
         <View className={classes.placer}>
           <p className={classes.info}>
             <a
+              target="_blank"
+              rel="noopener noreferrer"
               ref={this.ref}
               href={createRefundQr(
                 currency,
