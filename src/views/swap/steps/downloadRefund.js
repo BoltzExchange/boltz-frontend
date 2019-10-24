@@ -50,7 +50,7 @@ class StyledDownloadRefund extends React.Component {
     if (isIOS) {
       const dialog = window.confirm(
         'Tapping OK will open refund.png in a new tab which will be needed in case of a refund.' +
-          'Please save it in your gallary. This is important for conserving the non-custodial nature of the swap'
+          ' Please save it in your gallary. This is important for conserving the non-custodial nature of the swap'
       );
 
       if (dialog !== true) {

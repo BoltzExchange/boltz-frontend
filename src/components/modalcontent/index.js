@@ -12,7 +12,7 @@ const ModalContent = () => (
         }
         text={'blogpost'}
       />
-      , Shapeshift, one of the largest cryptocurrency entities, scummed to user
+      , Shapeshift, one of the largest cryptocurrency entities, succumbed to user
       data collection.
     </p>
     <p>
