@@ -12,8 +12,8 @@ const ModalContent = () => (
         }
         text={'blogpost'}
       />
-      , Shapeshift, one of the largest cryptocurrency entities, scummed to user
-      data collection.
+      , Shapeshift, one of the largest cryptocurrency entities, succumbed to
+      user data collection.
     </p>
     <p>
       By creating an account on a custodial exchange like Shapeshift, you are
