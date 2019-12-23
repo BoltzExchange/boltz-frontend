@@ -73,17 +73,17 @@ class MobileNavigationBar extends React.Component {
               to="https://twitter.com/boltzhq"
             />
             <Button
+              className={classes.responsiveBtn}
+              external
+              text="API"
+              to="https://docs.boltz.exchange/en/latest/"
+            />
+            <Button
               className={classes.btn}
               external
               text="Github"
               to="https://github.com/BoltzExchange"
             />
-            <Button
-              className={classes.responsiveBtn}
-              external
-              text="API"
-              to="https://docs.boltz.exchange/en/latest/"
-      />
           </View>
         ) : (
           undefined

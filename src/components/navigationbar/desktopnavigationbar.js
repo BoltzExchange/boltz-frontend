@@ -52,14 +52,14 @@ const DeskTopNavigationBar = ({ classes }) => (
       <Button
         className={classes.responsiveBtn}
         external
-        text="Github"
-        to="https://github.com/BoltzExchange"
+        text="API"
+        to="https://docs.boltz.exchange/en/latest/"
       />
       <Button
         className={classes.responsiveBtn}
         external
-        text="API"
-        to="https://docs.boltz.exchange/en/latest/"
+        text="Github"
+        to="https://github.com/BoltzExchange"
       />
     </View>
   </View>
