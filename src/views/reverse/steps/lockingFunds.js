@@ -39,7 +39,7 @@ class LockingFunds extends React.Component {
     const { classes, swapInfo, swapResponse, setAllowZeroConf } = this.props;
 
     const link = swapResponse
-      ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionId}`
+      ? `${getExplorer(swapInfo.quote)}/${swapResponse.transactionId}`
       : '#0';
 
     return (

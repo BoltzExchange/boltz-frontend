@@ -23,6 +23,8 @@ export const initReverseSwap = state => ({
     quoteAmount: state.quoteAmount,
     keys: state.keys,
     pair: state.pair,
+    preimage: state.preimage,
+    preimageHash: state.preimageHash,
   },
 });
 
@@ -61,7 +63,7 @@ export const setIsReconnecting = isReconnecting => ({
 });
 
 export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
-  const url = `${boltzApi}/createreverseswap`;
+  const url = `${boltzApi}/createswap`;
   const { pair, keys, baseAmount } = swapInfo;
 
   const amount = toSatoshi(Number.parseFloat(baseAmount));
@@ -70,10 +72,12 @@ export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
     dispatch(reverseSwapRequest());
     axios
       .post(url, {
+        type: 'reversesubmarine',
         pairId: pair.id,
         invoiceAmount: amount,
         orderSide: pair.orderSide,
         claimPublicKey: keys.publicKey,
+        preimageHash: swapInfo.preimageHash,
       })
       .then(response => {
         dispatch(reverseSwapResponse(true, response.data));
@@ -95,17 +99,40 @@ export const startReverseSwap = (swapInfo, nextStage, timelockExpired) => {
   };
 };
 
-const getClaimTransaction = (swapInfo, response, preimage, feeEstimation) => {
+export const claimSwap = (dispatch, nextStage, swapInfo, swapResponse) => {
+  dispatch(
+    getFeeEstimation(feeEstimation => {
+      const claimTransaction = getClaimTransaction(
+        swapInfo,
+        swapResponse,
+        feeEstimation
+      );
+
+      dispatch(
+        broadcastClaimTransaction(
+          swapInfo.quote,
+          claimTransaction.toHex(),
+          () => {
+            dispatch(reverseSwapResponse(true, swapResponse));
+            nextStage();
+          }
+        )
+      );
+    })
+  );
+};
+
+const getClaimTransaction = (swapInfo, response, feeEstimation) => {
   const redeemScript = getHexBuffer(response.redeemScript);
-  const lockupTransaction = Transaction.fromHex(response.lockupTransaction);
+  const lockupTransaction = Transaction.fromHex(response.transactionHex);
 
   return constructClaimTransaction(
     [
       {
         ...detectSwap(redeemScript, lockupTransaction),
         redeemScript,
-        preimage: Buffer.from(preimage, 'hex'),
         txHash: lockupTransaction.getHash(),
+        preimage: getHexBuffer(swapInfo.preimage),
         keys: ECPair.fromPrivateKey(getHexBuffer(swapInfo.keys.privateKey)),
       },
     ],
@@ -113,6 +140,24 @@ const getClaimTransaction = (swapInfo, response, preimage, feeEstimation) => {
     feeEstimation[swapInfo.quote],
     false
   );
+};
+
+const broadcastClaimTransaction = (currency, claimTransaction, cb) => {
+  const url = `${boltzApi}/broadcasttransaction`;
+  return dispatch => {
+    axios
+      .post(url, {
+        currency,
+        transactionHex: claimTransaction,
+      })
+      .then(() => cb())
+      .catch(error => {
+        const message = error.response.data.error;
+
+        window.alert(`Failed to broadcast claim transaction: ${message}`);
+        dispatch(reverseSwapResponse(false, message));
+      });
+  };
 };
 
 const handleReverseSwapStatus = (
@@ -134,42 +179,40 @@ const handleReverseSwapStatus = (
     latestSwapEvent = status;
   }
 
+  // TODO: handle transaction failed
   switch (status) {
-    case SwapUpdateEvent.TransactionConfirmed:
-      dispatch(setReverseSwapStatus('Waiting for invoice to be paid...'));
-      nextStage(true);
+    case SwapUpdateEvent.TransactionMempool:
+      dispatch(
+        reverseSwapResponse(true, {
+          transactionId: data.transactionId,
+          transactionHex: data.transactionHex,
+        })
+      );
+
+      nextStage();
       break;
 
+    case SwapUpdateEvent.TransactionConfirmed:
+      source.close();
+
+      claimSwap(dispatch, nextStage, swapInfo, {
+        ...response,
+        transactionId: data.transactionId,
+        transactionHex: data.transactionHex,
+      });
+      break;
+
+    case SwapUpdateEvent.SwapExpired:
     case SwapUpdateEvent.TransactionRefunded:
       source.close();
       dispatch(timelockExpired());
 
       break;
 
-    case SwapUpdateEvent.InvoiceSettled:
+    case SwapUpdateEvent.TransactionFailed:
       source.close();
-
-      dispatch(
-        getFeeEstimation(feeEstimation => {
-          const claimTransaction = getClaimTransaction(
-            swapInfo,
-            response,
-            data.preimage,
-            feeEstimation
-          );
-
-          dispatch(
-            broadcastClaimTransaction(
-              swapInfo.quote,
-              claimTransaction.toHex(),
-              () => {
-                dispatch(reverseSwapResponse(true, response));
-                nextStage();
-              }
-            )
-          );
-        })
-      );
+      dispatch(setReverseSwapStatus('Could not send onchain coins'));
+      dispatch(reverseSwapResponse(false, {}));
       break;
 
     default:
@@ -239,23 +282,5 @@ const startListening = (
       swapInfo,
       response
     );
-  };
-};
-
-const broadcastClaimTransaction = (currency, claimTransaction, cb) => {
-  const url = `${boltzApi}/broadcasttransaction`;
-  return dispatch => {
-    axios
-      .post(url, {
-        currency,
-        transactionHex: claimTransaction,
-      })
-      .then(() => cb())
-      .catch(error => {
-        const message = error.response.data.error;
-
-        window.alert(`Failed to broadcast claim transaction: ${message}`);
-        dispatch(reverseSwapResponse(false, message));
-      });
   };
 };

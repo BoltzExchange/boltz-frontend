@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import InjectSheet from 'react-jss';
+import { crypto } from 'bitcoinjs-lib';
 import ReactNotification from 'react-notifications-component';
-import MobileNavigationBar from '../../components/navigationbar/mobilenavigationbar';
-import { bitcoinNetwork, litecoinNetwork } from '../../constants';
-import { generateKeys, navigation } from '../../actions';
-import { MobileSwapTab } from '../../components/swaptab';
 import View from '../../components/view';
+import { getHexString } from '../../utils';
 import BackGround from '../../components/background';
 import LandingPageWrapper from './landingPageWrapper';
+import { MobileSwapTab } from '../../components/swaptab';
+import { generateKeys, randomBytes, navigation } from '../../actions';
+import { bitcoinNetwork, litecoinNetwork } from '../../constants';
+import MobileNavigationBar from '../../components/navigationbar/mobilenavigationbar';
 
 // TODO: discuss implementing the info modal on mobile
 
@@ -46,11 +48,15 @@ const MobileLandingPageContent = ({
               state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
             );
 
+            const preimage = randomBytes(32);
+
             if (state.isReverseSwap) {
               initReverseSwap({
                 ...state,
                 keys,
                 webln,
+                preimage: getHexString(preimage),
+                preimageHash: getHexString(crypto.sha256(preimage)),
               });
 
               navigation.navReverseSwap();

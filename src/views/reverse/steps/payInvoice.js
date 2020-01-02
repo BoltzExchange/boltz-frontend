@@ -4,8 +4,8 @@ import injectSheet from 'react-jss';
 import Link from '../../../components/link';
 import View from '../../../components/view';
 import QrCode from '../../../components/qrcode';
+import { copyToClipBoard } from '../../../utils';
 import DetectResize from '../../../components/detectresize';
-import { copyToClipBoard, getExplorer } from '../../../utils';
 
 const styles = () => ({
   wrapper: {
@@ -64,19 +64,17 @@ const styles = () => ({
 });
 
 class PayInvoice extends React.Component {
-  componentDidMount() {
-    const { swapResponse, webln } = this.props;
-
-    if (webln) {
-      webln.sendPayment(swapResponse.invoice);
-    }
-  }
+  showedWebln = false;
 
   render() {
-    const { classes, swapInfo, swapResponse } = this.props;
-    const link = swapResponse
-      ? `${getExplorer(swapInfo.quote)}/${swapResponse.lockupTransactionId}`
-      : '';
+    const { classes, webln, swapInfo, swapResponse } = this.props;
+
+    if (webln && !this.showedWebln) {
+      if (swapResponse.invoice) {
+        this.showedWebln = true;
+        webln.sendPayment(swapResponse.invoice);
+      }
+    }
 
     return (
       <View className={classes.wrapper}>
@@ -90,15 +88,19 @@ class PayInvoice extends React.Component {
               )
             }
           </DetectResize>
-          <Link
-            className={classes.link}
-            to={link}
-            text={'Click here to see the lockup transaction.'}
-          />
         </View>
         <View className={classes.info}>
           <p className={classes.title}>
             Pay this {swapInfo.base} Lightning invoice:
+          </p>
+          <p>
+            This is a{' '}
+            <Link
+              text="HOLD invoice"
+              to="https://wiki.ion.radar.tech/tech/research/hodl-invoice"
+            />{' '}
+            and its preimage was generated in your browser. Which means that we
+            do not get the lightning coins until you claim your onchain ones.
           </p>
           <p className={classes.invoice} id="copy">
             {swapResponse.invoice}
