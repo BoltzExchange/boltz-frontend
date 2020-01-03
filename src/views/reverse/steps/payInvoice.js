@@ -37,6 +37,9 @@ const styles = () => ({
       fontSize: '10px',
     },
   },
+  invoiceInfo: {
+    paddingRight: '15px',
+  },
   link: {
     '@media (max-width: 425px)': {
       fontSize: '16px',
@@ -93,14 +96,15 @@ class PayInvoice extends React.Component {
           <p className={classes.title}>
             Pay this {swapInfo.base} Lightning invoice:
           </p>
-          <p>
+          <p className={classes.invoiceInfo}>
             This is a{' '}
             <Link
               text="HOLD invoice"
               to="https://wiki.ion.radar.tech/tech/research/hodl-invoice"
             />{' '}
-            and its preimage was generated in your browser. Which means that we
-            do not get the lightning coins until you claim your onchain ones.
+            and its preimage was generated in your browser. Which means we
+            cannot receive the lightning coins unless your browser claims the
+            onchain funds for you.
           </p>
           <p className={classes.invoice} id="copy">
             {swapResponse.invoice}
