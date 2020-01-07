@@ -1,15 +1,16 @@
 import { connect } from 'react-redux';
 import ReverseSwap from './reverse';
+import { navigation } from '../../actions';
 import {
+  dataStorageSetId,
+  dataStorageSetAsset,
+} from '../../actions/datastorageActions';
+import {
+  claimSwap,
+  startReverseSwap,
   completeReverseSwap,
   setReverseSwapAddress,
-  startReverseSwap,
 } from '../../actions/reverseActions';
-import {
-  dataStorageSetAsset,
-  dataStorageSetId,
-} from '../../actions/datastorageActions';
-import { navigation } from '../../actions';
 
 const mapStateToProps = state => ({
   webln: state.reverseSwapReducer.webln,
@@ -25,6 +26,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  claimSwap: (nextStage, swapInfo, swapResponse) =>
+    claimSwap(dispatch, nextStage, swapInfo, swapResponse),
   completeSwap: () => dispatch(completeReverseSwap()),
   setReverseSwapAddress: (address, error) =>
     dispatch(setReverseSwapAddress(address, error)),

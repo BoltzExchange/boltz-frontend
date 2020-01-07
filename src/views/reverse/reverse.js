@@ -42,11 +42,12 @@ class ReverseSwap extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {
-      isReconnecting,
-      swapFailResponse,
-      swapResponse,
       swapInfo,
+      swapStatus,
+      swapResponse,
+      isReconnecting,
       dataStorageSetId,
+      swapFailResponse,
       dataStorageSetAsset,
     } = this.props;
 
@@ -74,7 +75,7 @@ class ReverseSwap extends React.Component {
       this.addNotification(
         {
           title: 'Failed to execute reverse swap',
-          message: swapResponse,
+          message: swapStatus,
         },
         0
       );
@@ -102,6 +103,7 @@ class ReverseSwap extends React.Component {
       webln,
       classes,
       swapInfo,
+      claimSwap,
       swapStatus,
       isFetching,
       swapResponse,
@@ -142,26 +144,26 @@ class ReverseSwap extends React.Component {
               <StepsWizard.Step
                 num={2}
                 render={() => (
-                  <LockingFunds
+                  <PayInvoice
                     swapInfo={swapInfo}
                     swapResponse={swapResponse}
-                    setAllowZeroConf={allow => {
-                      this.acceptedZeroConf = true;
-
-                      this.setState({
-                        allowZeroConf: allow,
-                      });
-                    }}
+                    webln={webln}
                   />
                 )}
               />
               <StepsWizard.Step
                 num={3}
                 render={() => (
-                  <PayInvoice
+                  <LockingFunds
                     swapInfo={swapInfo}
                     swapResponse={swapResponse}
-                    webln={webln}
+                    setAllowZeroConf={allow => {
+                      this.acceptedZeroConf = allow;
+
+                      this.setState({
+                        allowZeroConf: allow,
+                      });
+                    }}
                   />
                 )}
               />
@@ -217,29 +219,28 @@ class ReverseSwap extends React.Component {
                 render={props => (
                   <Controls
                     loading={isFetching && !this.state.allowZeroConf}
-                    text={'Accept 0-conf transaction'}
                     onPress={() => props.nextStage()}
-                    loadingText={'Locking your funds...'}
+                    loadingText={'Waiting for invoice to be paid...'}
                     loadingRender={() => <Loading />}
+                    errorRender={() => {}}
                     error={!swapFailResponse === true}
-                    errorAction={() =>
-                      startReverseSwap(
-                        swapInfo,
-                        props.nextStage,
-                        goTimelockExpired
-                      )
-                    }
-                    errorText={`Reverse swap failed`}
+                    errorText={`Reverse swap failed: ${swapStatus}`}
                   />
                 )}
               />
               <StepsWizard.Control
                 num={3}
-                render={() => (
+                render={props => (
                   <Controls
-                    loading={isFetching}
                     loadingText={swapStatus}
+                    loading={!this.acceptedZeroConf}
+                    text={'Accept 0-conf transaction'}
                     loadingRender={() => <Loading />}
+                    onPress={() => {
+                      if (this.acceptedZeroConf) {
+                        claimSwap(props.nextStage, swapInfo, swapResponse);
+                      }
+                    }}
                   />
                 )}
               />
@@ -284,6 +285,7 @@ ReverseSwap.propTypes = {
   invalidAddress: PropTypes.bool.isRequired,
   dataStorageSetAsset: PropTypes.func.isRequired,
   dataStorageSetId: PropTypes.func.isRequired,
+  claimSwap: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(ReverseSwap);

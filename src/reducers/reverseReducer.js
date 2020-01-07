@@ -13,6 +13,8 @@ export const initialState = {
     keys: null,
     pair: null,
     address: null,
+    preimage: null,
+    preimageHash: null,
   },
   swapResponse: {
     response: {
@@ -33,15 +35,21 @@ const reducer = (state = initialState, action) => {
         isFetching: true,
       };
 
-    case actionTypes.REVERSE_SWAP_RESPONSE:
+    case actionTypes.REVERSE_SWAP_RESPONSE: {
+      const existing = state.swapResponse ? state.swapResponse.response : {};
+
       return {
         ...state,
         isFetching: false,
         swapResponse: {
-          response: action.payload.response,
+          response: {
+            ...existing,
+            ...action.payload.response,
+          },
           success: action.payload.success,
         },
       };
+    }
 
     case actionTypes.INIT_REVERSE_SWAP:
       return {
@@ -56,6 +64,8 @@ const reducer = (state = initialState, action) => {
           quoteAmount: action.payload.quoteAmount,
           keys: action.payload.keys,
           pair: action.payload.pair,
+          preimage: action.payload.preimage,
+          preimageHash: action.payload.preimageHash,
         },
       };
 

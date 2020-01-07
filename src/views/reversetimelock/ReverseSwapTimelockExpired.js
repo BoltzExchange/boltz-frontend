@@ -70,10 +70,9 @@ class ReverseSwapTimelockExpired extends React.Component {
                   Aw swap! We could not lock your {amount} {asset} for you.
                 </h1>
                 <p className={classes.reason}>
-                  The time lock of the locked up funds expired before the
-                  invoice got paid. Therefore, we refunded the coins back to our
-                  platform and aborted the Swap. Please report your Swap ID{' '}
-                  <i>{id}</i>{' '}
+                  The time lock of the onchain coins expired before they were
+                  claimed. Therefore, we refunded the coins back to our platform
+                  and aborted the Swap. Please report your Swap ID <i>{id}</i>{' '}
                   <a href={'https://discordapp.com/invite/cq4dkwQ'}>here</a> to{' '}
                   learn further details.
                 </p>

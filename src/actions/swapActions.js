@@ -60,6 +60,7 @@ export const startSwap = (swapInfo, cb) => {
     dispatch(swapRequest());
     axios
       .post(url, {
+        type: 'submarine',
         pairId: pair.id,
         orderSide: pair.orderSide,
         invoice: invoice,

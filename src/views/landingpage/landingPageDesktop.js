@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import LandingPageWrapper from './landingPageWrapper';
+import { crypto } from 'bitcoinjs-lib';
 import ReactNotification from 'react-notifications-component';
 import View from '../../components/view';
-import { generateKeys, navigation } from '../../actions';
 import Button from '../../components/button';
-import NavigationBar from '../../components/navigationbar';
-import { DeskTopSwapTab } from '../../components/swaptab';
 import ModalComponent from '../../components/modal';
-import ModalContent from '../../components/modalcontent';
 import BackGround from '../../components/background';
+import LandingPageWrapper from './landingPageWrapper';
+import ModalContent from '../../components/modalcontent';
+import { DeskTopSwapTab } from '../../components/swaptab';
+import NavigationBar from '../../components/navigationbar';
 import { bitcoinNetwork, litecoinNetwork } from '../../constants';
+import { generateKeys, randomBytes, navigation } from '../../actions';
+import { getHexString } from '../../utils';
 
 const boltz_logo = require('../../asset/icons/boltz_logo.png');
 
@@ -65,11 +67,15 @@ const LandingPageDeskTopContent = ({
                 state.base === 'BTC' ? bitcoinNetwork : litecoinNetwork
               );
 
+              const preimage = randomBytes(32);
+
               if (state.isReverseSwap) {
                 initReverseSwap({
                   ...state,
                   keys,
                   webln,
+                  preimage: getHexString(preimage),
+                  preimageHash: getHexString(crypto.sha256(preimage)),
                 });
 
                 navigation.navReverseSwap();

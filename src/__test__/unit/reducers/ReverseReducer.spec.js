@@ -19,7 +19,9 @@ describe('reverse swap reducer', () => {
     const action = {
       type: actions.REVERSE_SWAP_RESPONSE,
       payload: {
-        response: 'response',
+        response: {
+          test: 'response',
+        },
         success: false,
       },
     };
