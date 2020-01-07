@@ -179,13 +179,13 @@ const handleReverseSwapStatus = (
     latestSwapEvent = status;
   }
 
-  // TODO: handle transaction failed
   switch (status) {
     case SwapUpdateEvent.TransactionMempool:
+      console.log(data);
       dispatch(
         reverseSwapResponse(true, {
-          transactionId: data.transactionId,
-          transactionHex: data.transactionHex,
+          transactionId: data.transaction.id,
+          transactionHex: data.transaction.hex,
         })
       );
 
@@ -197,8 +197,8 @@ const handleReverseSwapStatus = (
 
       claimSwap(dispatch, nextStage, swapInfo, {
         ...response,
-        transactionId: data.transactionId,
-        transactionHex: data.transactionHex,
+        transactionId: data.transaction.id,
+        transactionHex: data.transaction.hex,
       });
       break;
 
