@@ -3,13 +3,13 @@ import Qrious from 'qrious';
 import PropTypes from 'prop-types';
 
 class QrCode extends React.Component {
-  render() {
-    const { size, link } = this.props;
+  id = '';
 
-    if (link) {
-      this.id = `qr-${link.substring(0, 4)}`;
-
+  drawQrCode = () => {
+    if (this.id !== '') {
+      const { size, link } = this.props;
       const element = document.getElementById(this.id);
+
       this.qr = new Qrious({
         element,
       });
@@ -24,8 +24,26 @@ class QrCode extends React.Component {
         foregroundAlpha: 1,
       });
     }
+  };
 
-    return <canvas id={this.id} />;
+  componentDidUpdate() {
+    this.drawQrCode();
+  }
+
+  componentDidMount() {
+    this.drawQrCode();
+  }
+
+  render() {
+    const { link } = this.props;
+
+    if (link) {
+      this.id = `qr-${link.substring(0, 4)}`;
+
+      return <canvas id={this.id} />;
+    } else {
+      return <div />;
+    }
   }
 }
 
