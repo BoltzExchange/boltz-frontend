@@ -81,17 +81,21 @@ class PayInvoice extends React.Component {
 
     return (
       <View className={classes.wrapper}>
-        <View className={classes.qrcode}>
-          <DetectResize>
-            {width =>
-              width <= 375 ? (
-                <QrCode size={200} link={swapResponse.invoice} />
-              ) : (
-                <QrCode size={300} link={swapResponse.invoice} />
-              )
-            }
-          </DetectResize>
-        </View>
+        {window.innerWidth < 768 ? (
+          <div />
+        ) : (
+          <View className={classes.qrcode}>
+            <DetectResize>
+              {width =>
+                width <= 375 ? (
+                  <QrCode size={200} link={swapResponse.invoice} />
+                ) : (
+                  <QrCode size={300} link={swapResponse.invoice} />
+                )
+              }
+            </DetectResize>
+          </View>
+        )}
         <View className={classes.info}>
           <p className={classes.title}>
             Pay this {swapInfo.base} Lightning invoice:
