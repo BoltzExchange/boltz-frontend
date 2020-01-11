@@ -110,14 +110,23 @@ class InputArea extends React.Component {
 
   render() {
     const {
-      classes,
-      autoFocus,
-      height,
+      value,
       width,
+      height,
+      classes,
       onChange,
+      autoFocus,
       placeholder,
       showQrScanner,
     } = this.props;
+
+    if (this.state.value !== value) {
+      this.previousValueProp = value;
+
+      this.setState({
+        value: value,
+      });
+    }
 
     return (
       <div className={classes.formGroup}>
@@ -172,6 +181,7 @@ InputArea.propTypes = {
   width: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.bool.isRequired,
+  value: PropTypes.string,
   autoFocus: PropTypes.bool,
   placeholder: PropTypes.string,
   showQrScanner: PropTypes.bool,
