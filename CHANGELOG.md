@@ -1,3 +1,35 @@
+# [1.2.0-beta](https://github.com/BoltzExchange/boltz-frontend/compare/v1.1.0-beta...v1.2.0-beta) (2020-01-14)
+
+
+### Bug Fixes
+
+* block explorer link on invoice page ([#220](https://github.com/BoltzExchange/boltz-frontend/issues/220)) ([005d107](https://github.com/BoltzExchange/boltz-frontend/commit/005d107))
+* bug that caused success page after confirmation of 0-conf ([#219](https://github.com/BoltzExchange/boltz-frontend/issues/219)) ([2c0f6b1](https://github.com/BoltzExchange/boltz-frontend/commit/2c0f6b1))
+* claim transaction when doing two reverse swaps ([#209](https://github.com/BoltzExchange/boltz-frontend/issues/209)) ([016757a](https://github.com/BoltzExchange/boltz-frontend/commit/016757a))
+* hardcoded onion URL ([#218](https://github.com/BoltzExchange/boltz-frontend/issues/218)) ([60ae870](https://github.com/BoltzExchange/boltz-frontend/commit/60ae870))
+* parsing of transaction events ([293906e](https://github.com/BoltzExchange/boltz-frontend/commit/293906e))
+* QR code of normal swaps ([82355c7](https://github.com/BoltzExchange/boltz-frontend/commit/82355c7))
+* show fee as percentage and not relative amount ([#214](https://github.com/BoltzExchange/boltz-frontend/issues/214)) ([aa6ec8f](https://github.com/BoltzExchange/boltz-frontend/commit/aa6ec8f))
+* style of pay invoice page on mobile ([11d5bed](https://github.com/BoltzExchange/boltz-frontend/commit/11d5bed))
+* trim prefix of scanned QR code data ([#222](https://github.com/BoltzExchange/boltz-frontend/issues/222)) ([358b319](https://github.com/BoltzExchange/boltz-frontend/commit/358b319))
+* update invoice wording ([b256c16](https://github.com/BoltzExchange/boltz-frontend/commit/b256c16))
+* use onion address for API requests ([1ce7538](https://github.com/BoltzExchange/boltz-frontend/commit/1ce7538))
+* WebLN invoice pasting ([55b5613](https://github.com/BoltzExchange/boltz-frontend/commit/55b5613))
+
+
+### Features
+
+* add fee percentage ([#213](https://github.com/BoltzExchange/boltz-frontend/issues/213)) ([50326d0](https://github.com/BoltzExchange/boltz-frontend/commit/50326d0))
+* add onion URL to header ([cc7e3ca](https://github.com/BoltzExchange/boltz-frontend/commit/cc7e3ca))
+* add QR code scanner ([#221](https://github.com/BoltzExchange/boltz-frontend/issues/221)) ([e0ce5c3](https://github.com/BoltzExchange/boltz-frontend/commit/e0ce5c3))
+* add-api-route ([#228](https://github.com/BoltzExchange/boltz-frontend/issues/228)) ([8918808](https://github.com/BoltzExchange/boltz-frontend/commit/8918808))
+* iOS compatible refund flow ([#224](https://github.com/BoltzExchange/boltz-frontend/issues/224)) ([2a2f166](https://github.com/BoltzExchange/boltz-frontend/commit/2a2f166))
+* show onion addresses of LNDs ([#216](https://github.com/BoltzExchange/boltz-frontend/issues/216)) ([b0bd9b2](https://github.com/BoltzExchange/boltz-frontend/commit/b0bd9b2))
+* support new hold reverse swaps ([e6e5ce6](https://github.com/BoltzExchange/boltz-frontend/commit/e6e5ce6))
+* switch from refund JSON to QR code ([927d019](https://github.com/BoltzExchange/boltz-frontend/commit/927d019))
+
+
+
 # [1.1.0-beta](https://github.com/BoltzExchange/boltz-frontend/compare/v1.0.0-beta.2...v1.1.0-beta) (2019-08-27)
 
 
