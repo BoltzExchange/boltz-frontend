@@ -30,7 +30,7 @@
     "bignumber.js": "^9.0.0",
     "bitcoinjs-lib": "^5.1.6",
     "boltz-core": "^0.0.10",
-    "eventsource": "^1.0.7",
+    "eventsource": "^2.0.2",
     "lodash.throttle": "^4.1.1",
     "prop-types": "^15.7.2",
     "qrcode-parser": "^1.2.0",
